@@ -3,7 +3,6 @@
 //  libPhoneNumber
 //
 //  Created by ishtar on 13. 2. 25..
-//  Copyright (c) 2013년 NHN. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

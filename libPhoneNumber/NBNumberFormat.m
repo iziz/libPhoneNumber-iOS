@@ -2,7 +2,6 @@
 //  NBPhoneNumberFormat.m
 //  libPhoneNumber
 //
-//  Created by NHN Corp. Last Edited by BAND dev team (band_dev@nhn.com)
 //
 
 #import "NBNumberFormat.h"

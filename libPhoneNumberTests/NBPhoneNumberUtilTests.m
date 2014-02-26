@@ -2,7 +2,6 @@
 //  NBPhoneNumberUtilTests.m
 //  NBPhoneNumberUtilTests
 //
-//  Created by NHN Corp. Last Edited by BAND dev team (band_dev@nhn.com)
 //
 
 #import "NBPhoneNumberUtilTests.h"
