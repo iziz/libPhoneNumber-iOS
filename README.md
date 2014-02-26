@@ -54,7 +54,7 @@
     NSLog (@"extractCountryCode [%lu] [%@]", dRes, res);
 
 
-##### Visit [libPhoneNumber](http://code.google.com/p/libphonenumber/) for more information or [mail](zen.isis@gmail.com)
+##### Visit [libPhoneNumber](http://code.google.com/p/libphonenumber/) for more information or mail (zen.isis@gmail.com)
 
 ### Metadata managing (updating metadata)
 ##### Step1. Fetch "metadata.js" and "metadatafortesting.js" from Repositories
