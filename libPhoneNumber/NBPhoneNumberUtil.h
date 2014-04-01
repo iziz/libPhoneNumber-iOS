@@ -31,7 +31,7 @@ extern NSString * const REGION_CODE_FOR_NON_GEO_ENTITY;
 + (NSString*)stringByTrimming:(NSString*)aString;
 
 //- (NSString*)numbersOnly:(NSString*)phoneNumber;
-- (NSArray*)regionCodeFromCountryCode:(UInt32)countryCodeNumber;
+- (NSArray*)regionCodeFromCountryCode:(NSNumber*)countryCodeNumber;
 - (NSString*)countryCodeFromRegionCode:(NSString*)regionCode;
 
 - (NSArray*)getAllMetadata;
@@ -45,7 +45,7 @@ extern NSString * const REGION_CODE_FOR_NON_GEO_ENTITY;
 - (BOOL)isNumberGeographical:(NBPhoneNumber*)phoneNumber;
 
 - (NSString*)extractPossibleNumber:(NSString*)phoneNumber;
-- (UInt32)extractCountryCode:(NSString*)fullNumber nationalNumber:(NSString**)nationalNumber;
+- (NSNumber*)extractCountryCode:(NSString*)fullNumber nationalNumber:(NSString**)nationalNumber;
 - (NSString *)countryCodeByCarrier;
 
 - (NSString*)getNddPrefixForRegion:(NSString*)regionCode stripNonDigits:(BOOL)stripNonDigits;
@@ -53,17 +53,17 @@ extern NSString * const REGION_CODE_FOR_NON_GEO_ENTITY;
 
 - (NBEPhoneNumberType)getNumberType:(NBPhoneNumber*)phoneNumber;
 
-- (UInt32)getCountryCodeForRegion:(NSString*)regionCode;
+- (NSNumber*)getCountryCodeForRegion:(NSString*)regionCode;
 
-- (NSString*)getRegionCodeForCountryCode:(UInt32)countryCallingCode;
-- (NSArray*)getRegionCodesForCountryCode:(UInt32)countryCallingCode;
+- (NSString*)getRegionCodeForCountryCode:(NSNumber*)countryCallingCode;
+- (NSArray*)getRegionCodesForCountryCode:(NSNumber*)countryCallingCode;
 - (NSString*)getRegionCodeForNumber:(NBPhoneNumber*)phoneNumber;
 
 - (NBPhoneNumber*)getExampleNumber:(NSString*)regionCode error:(NSError**)error;
 - (NBPhoneNumber*)getExampleNumberForType:(NSString*)regionCode type:(NBEPhoneNumberType)type error:(NSError**)error;
-- (NBPhoneNumber*)getExampleNumberForNonGeoEntity:(UInt32)countryCallingCode error:(NSError**)error;
+- (NBPhoneNumber*)getExampleNumberForNonGeoEntity:(NSNumber*)countryCallingCode error:(NSError**)error;
 
-- (NBPhoneMetaData*)getMetadataForNonGeographicalRegion:(UInt32)countryCallingCode;
+- (NBPhoneMetaData*)getMetadataForNonGeographicalRegion:(NSNumber*)countryCallingCode;
 - (NBPhoneMetaData*)getMetadataForRegion:(NSString*)regionCode;
 
 - (BOOL)canBeInternationallyDialled:(NBPhoneNumber*)number error:(NSError**)error;
@@ -75,7 +75,7 @@ extern NSString * const REGION_CODE_FOR_NON_GEO_ENTITY;
 - (BOOL)isAlphaNumber:(NSString*)number;
 - (BOOL)isValidNumberForRegion:(NBPhoneNumber*)number regionCode:(NSString*)regionCode;
 - (BOOL)isNANPACountry:(NSString*)regionCode;
-- (BOOL)isLeadingZeroPossible:(UInt32)countryCallingCode;
+- (BOOL)isLeadingZeroPossible:(NSNumber*)countryCallingCode;
 
 - (NBEValidationResult)isPossibleNumberWithReason:(NBPhoneNumber*)number error:(NSError**)error;
 
@@ -90,8 +90,9 @@ extern NSString * const REGION_CODE_FOR_NON_GEO_ENTITY;
 - (BOOL)maybeStripNationalPrefixAndCarrierCode:(NSString**)numberStr metadata:(NBPhoneMetaData*)metadata carrierCode:(NSString**)carrierCode;
 - (NBECountryCodeSource)maybeStripInternationalPrefixAndNormalize:(NSString**)numberStr possibleIddPrefix:(NSString*)possibleIddPrefix;
 
-- (UInt32)maybeExtractCountryCode:(NSString*)number metadata:(NBPhoneMetaData*)defaultRegionMetadata
-                   nationalNumber:(NSString**)nationalNumber keepRawInput:(BOOL)keepRawInput phoneNumber:(NBPhoneNumber**)phoneNumber error:(NSError**)error;
+- (NSNumber*)maybeExtractCountryCode:(NSString*)number metadata:(NBPhoneMetaData*)defaultRegionMetadata
+                      nationalNumber:(NSString**)nationalNumber keepRawInput:(BOOL)keepRawInput
+                         phoneNumber:(NBPhoneNumber**)phoneNumber error:(NSError**)error;
 
 - (NBPhoneNumber*)parse:(NSString*)numberToParse defaultRegion:(NSString*)defaultRegion error:(NSError**)error;
 - (NBPhoneNumber*)parseAndKeepRawInput:(NSString*)numberToParse defaultRegion:(NSString*)defaultRegion error:(NSError**)error;

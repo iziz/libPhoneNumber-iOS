@@ -4,7 +4,7 @@
 //
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface NBPhoneNumberUtilTests : SenTestCase
+@interface NBPhoneNumberUtilTests : XCTestCase
 @end

@@ -34,8 +34,8 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"* codeID[%@] countryCode[%u] generalDesc[%@] fixedLine[%@] mobile[%@] tollFree[%@] premiumRate[%@] sharedCost[%@] personalNumber[%@] voip[%@] pager[%@] uan[%@] emergency[%@] voicemail[%@] noInternationalDialling[%@] internationalPrefix[%@] preferredInternationalPrefix[%@] nationalPrefix[%@] preferredExtnPrefix[%@] nationalPrefixForParsing[%@] nationalPrefixTransformRule[%@] sameMobileAndFixedLinePattern[%@] numberFormats[%@] intlNumberFormats[%@] mainCountryForCode[%@] leadingDigits[%@] leadingZeroPossible[%@]",
-             self.codeID, (unsigned int)self.countryCode, self.generalDesc, self.fixedLine, self.mobile, self.tollFree, self.premiumRate, self.sharedCost, self.personalNumber, self.voip, self.pager, self.uan, self.emergency, self.voicemail, self.noInternationalDialling, self.internationalPrefix, self.preferredInternationalPrefix, self.nationalPrefix, self.preferredExtnPrefix, self.nationalPrefixForParsing, self.nationalPrefixTransformRule, self.sameMobileAndFixedLinePattern?@"Y":@"N", self.numberFormats, self.intlNumberFormats, self.mainCountryForCode?@"Y":@"N", self.leadingDigits, self.leadingZeroPossible?@"Y":@"N"];
+    return [NSString stringWithFormat:@"* codeID[%@] countryCode[%@] generalDesc[%@] fixedLine[%@] mobile[%@] tollFree[%@] premiumRate[%@] sharedCost[%@] personalNumber[%@] voip[%@] pager[%@] uan[%@] emergency[%@] voicemail[%@] noInternationalDialling[%@] internationalPrefix[%@] preferredInternationalPrefix[%@] nationalPrefix[%@] preferredExtnPrefix[%@] nationalPrefixForParsing[%@] nationalPrefixTransformRule[%@] sameMobileAndFixedLinePattern[%@] numberFormats[%@] intlNumberFormats[%@] mainCountryForCode[%@] leadingDigits[%@] leadingZeroPossible[%@]",
+             self.codeID, self.countryCode, self.generalDesc, self.fixedLine, self.mobile, self.tollFree, self.premiumRate, self.sharedCost, self.personalNumber, self.voip, self.pager, self.uan, self.emergency, self.voicemail, self.noInternationalDialling, self.internationalPrefix, self.preferredInternationalPrefix, self.nationalPrefix, self.preferredExtnPrefix, self.nationalPrefixForParsing, self.nationalPrefixTransformRule, self.sameMobileAndFixedLinePattern?@"Y":@"N", self.numberFormats, self.intlNumberFormats, self.mainCountryForCode?@"Y":@"N", self.leadingDigits, self.leadingZeroPossible?@"Y":@"N"];
 }
 
 
@@ -57,7 +57,7 @@
         /* 28 */ self.voicemail = [[NBPhoneNumberDesc alloc] initWithData:[data safeObjectAtIndex:28]];
         /* 24 */ self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithData:[data safeObjectAtIndex:24]];
         /*  9 */ self.codeID = [data safeObjectAtIndex:9];
-        /* 10 */ self.countryCode = (UInt32)[[data safeObjectAtIndex:10] intValue];
+        /* 10 */ self.countryCode = [data safeObjectAtIndex:10];
         /* 11 */ self.internationalPrefix = [data safeObjectAtIndex:11];
         /* 17 */ self.preferredInternationalPrefix = [data safeObjectAtIndex:17];
         /* 12 */ self.nationalPrefix = [data safeObjectAtIndex:12];
@@ -96,7 +96,7 @@
         self.voicemail = [coder decodeObjectForKey:@"voicemail"];
         self.noInternationalDialling = [coder decodeObjectForKey:@"noInternationalDialling"];
         self.codeID = [coder decodeObjectForKey:@"codeID"];
-        self.countryCode = [[coder decodeObjectForKey:@"countryCode"] longValue];
+        self.countryCode = [coder decodeObjectForKey:@"countryCode"];
         self.internationalPrefix = [coder decodeObjectForKey:@"internationalPrefix"];
         self.preferredInternationalPrefix = [coder decodeObjectForKey:@"preferredInternationalPrefix"];
         self.nationalPrefix = [coder decodeObjectForKey:@"nationalPrefix"];
@@ -130,7 +130,7 @@
     [coder encodeObject:self.voicemail forKey:@"voicemail"];
     [coder encodeObject:self.noInternationalDialling forKey:@"noInternationalDialling"];
     [coder encodeObject:self.codeID forKey:@"codeID"];
-    [coder encodeObject:[NSNumber numberWithLong:self.countryCode] forKey:@"countryCode"];
+    [coder encodeObject:self.countryCode forKey:@"countryCode"];
     [coder encodeObject:self.internationalPrefix forKey:@"internationalPrefix"];
     [coder encodeObject:self.preferredInternationalPrefix forKey:@"preferredInternationalPrefix"];
     [coder encodeObject:self.nationalPrefix forKey:@"nationalPrefix"];

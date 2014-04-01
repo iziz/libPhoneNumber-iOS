@@ -10,6 +10,7 @@
 		29F3A15D17B98AE1005D8E07 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F3A15C17B98AE1005D8E07 /* CoreTelephony.framework */; };
 		29F3A15E17B98B3C005D8E07 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F3A15C17B98AE1005D8E07 /* CoreTelephony.framework */; };
 		8F04BE90176F062500076CB4 /* NBAsYouTypeFormatterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FD57B66C16E5B71F000772AF /* NBAsYouTypeFormatterTest.m */; };
+		8FB1926F18E2B8CB000520E7 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDAD44B418E11B300041825C /* XCTest.framework */; };
 		8FE047B5174389F300CCA610 /* NBAsYouTypeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4C786916DB62AC00473849 /* NBAsYouTypeFormatter.m */; };
 		E1A8557317FE874700A4CDFF /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A8557217FE874700A4CDFF /* NSArray+NBAdditions.m */; };
 		FD0BD7781679DDA700B19065 /* NBPhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0BD7771679DDA600B19065 /* NBPhoneNumber.m */; };
@@ -22,7 +23,6 @@
 		FD7A0633167715A0004BBEB6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7A0632167715A0004BBEB6 /* Default.png */; };
 		FD7A0635167715A0004BBEB6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7A0634167715A0004BBEB6 /* Default@2x.png */; };
 		FD7A0637167715A0004BBEB6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7A0636167715A0004BBEB6 /* Default-568h@2x.png */; };
-		FD7A063F167715A1004BBEB6 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7A063E167715A1004BBEB6 /* SenTestingKit.framework */; };
 		FD7A0640167715A1004BBEB6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7A0620167715A0004BBEB6 /* UIKit.framework */; };
 		FD7A0641167715A1004BBEB6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7A0622167715A0004BBEB6 /* Foundation.framework */; };
 		FD7A0649167715A1004BBEB6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD7A0647167715A1004BBEB6 /* InfoPlist.strings */; };
@@ -113,8 +113,7 @@
 		FD7A0632167715A0004BBEB6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		FD7A0634167715A0004BBEB6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		FD7A0636167715A0004BBEB6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		FD7A063D167715A1004BBEB6 /* libPhoneNumberTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = libPhoneNumberTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FD7A063E167715A1004BBEB6 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		FD7A063D167715A1004BBEB6 /* libPhoneNumberTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = libPhoneNumberTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD7A0646167715A1004BBEB6 /* libPhoneNumberTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "libPhoneNumberTests-Info.plist"; sourceTree = "<group>"; };
 		FD7A0648167715A1004BBEB6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD7A064A167715A1004BBEB6 /* NBPhoneNumberUtilTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBPhoneNumberUtilTests.h; sourceTree = "<group>"; };
@@ -131,6 +130,7 @@
 		FD7A066E167736BD004BBEB6 /* NBPhoneMetaDataGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPhoneMetaDataGenerator.m; sourceTree = "<group>"; };
 		FD9E3ADB169E5176007E06CC /* liblibPhoneNumberiOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibPhoneNumberiOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD9E3ADF169E5176007E06CC /* libPhoneNumberiOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "libPhoneNumberiOS-Prefix.pch"; sourceTree = "<group>"; };
+		FDAD44B418E11B300041825C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		FDAE1B2E16CE2C1C007EB0ED /* PhoneNumberMetaData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneNumberMetaData.json; sourceTree = "<group>"; };
 		FDAE1B2F16CE2C1C007EB0ED /* PhoneNumberMetaDataForTesting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneNumberMetaDataForTesting.json; sourceTree = "<group>"; };
 		FDAE1B3416CE2C92007EB0ED /* NBPhoneNumberMetadata.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = NBPhoneNumberMetadata.plist; sourceTree = "<group>"; };
@@ -154,8 +154,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FB1926F18E2B8CB000520E7 /* XCTest.framework in Frameworks */,
 				FDAACB55167F3F11002DB4D4 /* CoreGraphics.framework in Frameworks */,
-				FD7A063F167715A1004BBEB6 /* SenTestingKit.framework in Frameworks */,
 				FD7A0640167715A1004BBEB6 /* UIKit.framework in Frameworks */,
 				FD7A0641167715A1004BBEB6 /* Foundation.framework in Frameworks */,
 				29F3A15E17B98B3C005D8E07 /* CoreTelephony.framework in Frameworks */,
@@ -220,7 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				FD7A061C167715A0004BBEB6 /* libPhoneNumber.app */,
-				FD7A063D167715A1004BBEB6 /* libPhoneNumberTests.octest */,
+				FD7A063D167715A1004BBEB6 /* libPhoneNumberTests.xctest */,
 				FD9E3ADB169E5176007E06CC /* liblibPhoneNumberiOS.a */,
 			);
 			name = Products;
@@ -229,9 +229,9 @@
 		FD7A061F167715A0004BBEB6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FDAD44B418E11B300041825C /* XCTest.framework */,
 				FD7A0624167715A0004BBEB6 /* CoreGraphics.framework */,
 				FD7A0622167715A0004BBEB6 /* Foundation.framework */,
-				FD7A063E167715A1004BBEB6 /* SenTestingKit.framework */,
 				FD7A0620167715A0004BBEB6 /* UIKit.framework */,
 				29F3A15C17B98AE1005D8E07 /* CoreTelephony.framework */,
 			);
@@ -353,8 +353,8 @@
 			);
 			name = libPhoneNumberTests;
 			productName = libPhoneNumberTests;
-			productReference = FD7A063D167715A1004BBEB6 /* libPhoneNumberTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = FD7A063D167715A1004BBEB6 /* libPhoneNumberTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		FD9E3ADA169E5176007E06CC /* libPhoneNumberiOS */ = {
 			isa = PBXNativeTarget;
@@ -379,6 +379,7 @@
 		FD7A0613167715A0004BBEB6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = NHN;
 			};
@@ -648,8 +649,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/libPhoneNumber.app/libPhoneNumber";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"/**",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libPhoneNumber/libPhoneNumber-Prefix.pch";
@@ -657,7 +660,6 @@
 				INFOPLIST_FILE = "libPhoneNumberTests/libPhoneNumberTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -666,8 +668,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/libPhoneNumber.app/libPhoneNumber";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"/**",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libPhoneNumber/libPhoneNumber-Prefix.pch";
@@ -675,7 +679,6 @@
 				INFOPLIST_FILE = "libPhoneNumberTests/libPhoneNumberTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

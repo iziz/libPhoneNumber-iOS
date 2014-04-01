@@ -20,7 +20,7 @@
 - (NSString*)removeLastDigit;
 - (NSString*)removeLastDigitAndRememberPosition;
 
-- (int)getRememberedPosition;
+- (NSInteger)getRememberedPosition;
 - (void)clear;
 
 @end

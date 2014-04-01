@@ -19,8 +19,8 @@
     {
         self.countryCodeSource = nil;
         self.italianLeadingZero = NO;
-        self.nationalNumber = -1;
-        self.countryCode = -1;
+        self.nationalNumber = @-1;
+        self.countryCode = @-1;
     }
     
     return self;
@@ -61,7 +61,7 @@
         return NO;
     
     NBPhoneNumber *other = object;
-    return (self.countryCode == other.countryCode) && (self.nationalNumber == other.nationalNumber) &&
+    return ([self.countryCode isEqualToNumber:other.countryCode]) && ([self.nationalNumber isEqualToNumber:other.nationalNumber]) &&
         (self.italianLeadingZero == other.italianLeadingZero) &&
         ((self.extension == nil && other.extension == nil) || [self.extension isEqualToString:other.extension]);
 }
@@ -71,8 +71,8 @@
 {
 	NBPhoneNumber *phoneNumberCopy = [[NBPhoneNumber allocWithZone:zone] init];
     
-	phoneNumberCopy.countryCode = self.countryCode;
-    phoneNumberCopy.nationalNumber = self.nationalNumber;
+	phoneNumberCopy.countryCode = [self.countryCode copy];
+    phoneNumberCopy.nationalNumber = [self.nationalNumber copy];
     phoneNumberCopy.extension = [self.extension copy];
     phoneNumberCopy.italianLeadingZero = self.italianLeadingZero;
     phoneNumberCopy.rawInput = [self.rawInput copy];
@@ -87,8 +87,8 @@
 {
     if (self = [super init])
     {
-        self.countryCode = [[coder decodeObjectForKey:@"countryCode"] longValue];
-        self.nationalNumber = [[coder decodeObjectForKey:@"nationalNumber"] longLongValue];
+        self.countryCode = [coder decodeObjectForKey:@"countryCode"];
+        self.nationalNumber = [coder decodeObjectForKey:@"nationalNumber"];
         self.extension = [coder decodeObjectForKey:@"extension"];
         self.italianLeadingZero = [[coder decodeObjectForKey:@"italianLeadingZero"] boolValue];
         self.rawInput = [coder decodeObjectForKey:@"rawInput"];
@@ -101,8 +101,8 @@
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
-    [coder encodeObject:[NSNumber numberWithLong:self.countryCode] forKey:@"countryCode"];
-    [coder encodeObject:[NSNumber numberWithLongLong:self.nationalNumber] forKey:@"nationalNumber"];
+    [coder encodeObject:self.countryCode forKey:@"countryCode"];
+    [coder encodeObject:self.nationalNumber forKey:@"nationalNumber"];
     [coder encodeObject:self.extension forKey:@"extension"];
     [coder encodeObject:[NSNumber numberWithBool:self.italianLeadingZero] forKey:@"italianLeadingZero"];
     [coder encodeObject:self.rawInput forKey:@"rawInput"];
@@ -114,7 +114,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@" - countryCode[%u], nationalNumber[%llu], extension[%@], italianLeadingZero[%@], rawInput[%@] countryCodeSource[%d] preferredDomesticCarrierCode[%@]", (unsigned int)self.countryCode, self.nationalNumber, self.extension, self.italianLeadingZero?@"Y":@"N", self.rawInput, [self.countryCodeSource intValue], self.preferredDomesticCarrierCode];
+    return [NSString stringWithFormat:@" - countryCode[%@], nationalNumber[%@], extension[%@], italianLeadingZero[%@], rawInput[%@] countryCodeSource[%d] preferredDomesticCarrierCode[%@]", self.countryCode, self.nationalNumber, self.extension, self.italianLeadingZero?@"Y":@"N", self.rawInput, [self.countryCodeSource intValue], self.preferredDomesticCarrierCode];
 }
 
 @end

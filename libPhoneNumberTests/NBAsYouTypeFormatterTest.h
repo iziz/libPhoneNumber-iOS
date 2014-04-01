@@ -5,8 +5,8 @@
 //  Created by ishtar on 13. 3. 5..
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface NBAsYouTypeFormatterTest : SenTestCase
+@interface NBAsYouTypeFormatterTest : XCTestCase
 
 @end

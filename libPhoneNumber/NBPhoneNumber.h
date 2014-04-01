@@ -10,8 +10,8 @@
 @interface NBPhoneNumber : NSObject <NSCopying>
 
 // from phonemetadata.pb.js
-/* 1 */ @property (nonatomic, assign, readwrite) UInt32 countryCode;
-/* 2 */ @property (nonatomic, assign, readwrite) UInt64 nationalNumber;
+/* 1 */ @property (nonatomic, strong, readwrite) NSNumber *countryCode;
+/* 2 */ @property (nonatomic, strong, readwrite) NSNumber *nationalNumber;
 /* 3 */ @property (nonatomic, strong, readwrite) NSString *extension;
 /* 4 */ @property (nonatomic, assign, readwrite) BOOL italianLeadingZero;
 /* 5 */ @property (nonatomic, strong, readwrite) NSString *rawInput;

@@ -25,8 +25,8 @@
 @property (nonatomic, strong, readwrite) NSRegularExpression *ELIGIBLE_FORMAT_PATTERN_;
 @property (nonatomic, assign, readwrite) BOOL ableToFormat_, inputHasFormatting_, isCompleteNumber_, isExpectingCountryCallingCode_, shouldAddSpaceAfterNationalPrefix_;
 @property (nonatomic, strong, readwrite) NBPhoneNumberUtil *phoneUtil_;
-@property (nonatomic, assign, readwrite) unsigned int lastMatchPosition_, originalPosition_, positionToRemember_;
-@property (nonatomic, assign, readwrite) unsigned int MIN_LEADING_DIGITS_LENGTH_;
+@property (nonatomic, assign, readwrite) NSUInteger lastMatchPosition_, originalPosition_, positionToRemember_;
+@property (nonatomic, assign, readwrite) NSUInteger MIN_LEADING_DIGITS_LENGTH_;
 @property (nonatomic, strong, readwrite) NSMutableArray *possibleFormats_;
 @property (nonatomic, strong, readwrite) NBPhoneMetaData *currentMetaData_, *defaultMetaData_, *EMPTY_METADATA_;
 
@@ -326,7 +326,7 @@
 {
     
     /** @type {number} */
-    int countryCallingCode = [self.phoneUtil_ getCountryCodeForRegion:regionCode];
+    NSNumber *countryCallingCode = [self.phoneUtil_ getCountryCodeForRegion:regionCode];
     /** @type {string} */
     NSString *mainCountry = [self.phoneUtil_ getRegionCodeForCountryCode:countryCallingCode];
     /** @type {i18n.phonenumbers.PhoneMetadata} */
@@ -442,10 +442,11 @@
     /** @type {Array.<i18n.phonenumbers.NumberFormat>} */
     NSMutableArray *possibleFormats = [[NSMutableArray alloc] init];
     /** @type {number} */
-    unsigned int indexOfLeadingDigitsPattern = (unsigned int)leadingDigits.length - self.MIN_LEADING_DIGITS_LENGTH_;
+    NSUInteger indexOfLeadingDigitsPattern = (unsigned int)leadingDigits.length - self.MIN_LEADING_DIGITS_LENGTH_;
     /** @type {number} */
-    unsigned int possibleFormatsLength = (unsigned int)self.possibleFormats_.count;
-    for (unsigned int i = 0; i < possibleFormatsLength; ++i)
+    NSUInteger possibleFormatsLength = (unsigned int)self.possibleFormats_.count;
+    
+    for (NSUInteger i = 0; i < possibleFormatsLength; ++i)
     {
         /** @type {i18n.phonenumbers.NumberFormat} */
         NBNumberFormat *format = [self.possibleFormats_ safeObjectAtIndex:i];
@@ -877,15 +878,15 @@
  *
  * @return {number}
  */
-- (int)getRememberedPosition
+- (NSInteger)getRememberedPosition
 {
     if (!self.ableToFormat_) {
         return self.originalPosition_;
     }
     /** @type {number} */
-    unsigned int accruedInputIndex = 0;
+    NSInteger accruedInputIndex = 0;
     /** @type {number} */
-    unsigned int currentOutputIndex = 0;
+    NSInteger currentOutputIndex = 0;
     /** @type {string} */
     NSString *accruedInputWithoutFormatting = self.accruedInputWithoutFormatting_;
     /** @type {string} */
@@ -963,7 +964,7 @@
     // prefix. The reason is that national significant numbers in NANPA always
     // start with [2-9] after the national prefix. Numbers beginning with 1[01]
     // can only be short/emergency numbers, which don't need the national prefix.
-    if (self.currentMetaData_.countryCode != 1) {
+    if (![self.currentMetaData_.countryCode isEqual:@1]) {
         return NO;
     }
     
@@ -1072,9 +1073,9 @@
     NSString *numberWithoutCountryCallingCode = @"";
     
     /** @type {number} */
-    int countryCode = [self.phoneUtil_ extractCountryCode:self.nationalNumber_ nationalNumber:&numberWithoutCountryCallingCode];
+    NSNumber *countryCode = [self.phoneUtil_ extractCountryCode:self.nationalNumber_ nationalNumber:&numberWithoutCountryCallingCode];
     
-    if (countryCode == 0) {
+    if ([countryCode isEqualToNumber:@0]) {
         return NO;
     }
     
@@ -1092,7 +1093,7 @@
     }
     
     /** @type {string} */
-    NSString *countryCodeString = [NSString stringWithFormat:@"%d", countryCode];
+    NSString *countryCodeString = [NSString stringWithFormat:@"%@", countryCode];
     [self.prefixBeforeNationalNumber_ appendString:countryCodeString];
     [self.prefixBeforeNationalNumber_ appendString:[NSString stringWithFormat: @"%@", self.SEPARATOR_BEFORE_NATIONAL_NUMBER_]];
     return YES;

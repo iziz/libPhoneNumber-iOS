@@ -25,7 +25,7 @@
 /* 28 */ @property (nonatomic, strong, readwrite) NBPhoneNumberDesc *voicemail;
 /* 24 */ @property (nonatomic, strong, readwrite) NBPhoneNumberDesc *noInternationalDialling;
 /*  9 */ @property (nonatomic, strong, readwrite) NSString *codeID;
-/* 10 */ @property (nonatomic, assign, readwrite) UInt32 countryCode;
+/* 10 */ @property (nonatomic, strong, readwrite) NSNumber *countryCode;
 /* 11 */ @property (nonatomic, strong, readwrite) NSString *internationalPrefix;
 /* 17 */ @property (nonatomic, strong, readwrite) NSString *preferredInternationalPrefix;
 /* 12 */ @property (nonatomic, strong, readwrite) NSString *nationalPrefix;
