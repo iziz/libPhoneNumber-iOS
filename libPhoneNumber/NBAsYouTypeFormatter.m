@@ -25,8 +25,8 @@
 @property (nonatomic, strong, readwrite) NSRegularExpression *ELIGIBLE_FORMAT_PATTERN_;
 @property (nonatomic, assign, readwrite) BOOL ableToFormat_, inputHasFormatting_, isCompleteNumber_, isExpectingCountryCallingCode_, shouldAddSpaceAfterNationalPrefix_;
 @property (nonatomic, strong, readwrite) NBPhoneNumberUtil *phoneUtil_;
-@property (nonatomic, assign, readwrite) unsigned int lastMatchPosition_, originalPosition_, positionToRemember_;
-@property (nonatomic, assign, readwrite) unsigned int MIN_LEADING_DIGITS_LENGTH_;
+@property (nonatomic, assign, readwrite) NSUInteger lastMatchPosition_, originalPosition_, positionToRemember_;
+@property (nonatomic, assign, readwrite) NSUInteger MIN_LEADING_DIGITS_LENGTH_;
 @property (nonatomic, strong, readwrite) NSMutableArray *possibleFormats_;
 @property (nonatomic, strong, readwrite) NBPhoneMetaData *currentMetaData_, *defaultMetaData_, *EMPTY_METADATA_;
 
@@ -442,10 +442,10 @@
     /** @type {Array.<i18n.phonenumbers.NumberFormat>} */
     NSMutableArray *possibleFormats = [[NSMutableArray alloc] init];
     /** @type {number} */
-    unsigned int indexOfLeadingDigitsPattern = (unsigned int)leadingDigits.length - self.MIN_LEADING_DIGITS_LENGTH_;
+    NSUInteger indexOfLeadingDigitsPattern = leadingDigits.length - self.MIN_LEADING_DIGITS_LENGTH_;
     /** @type {number} */
-    unsigned int possibleFormatsLength = (unsigned int)self.possibleFormats_.count;
-    for (unsigned int i = 0; i < possibleFormatsLength; ++i)
+    NSUInteger possibleFormatsLength = self.possibleFormats_.count;
+    for (NSUInteger i = 0; i < possibleFormatsLength; ++i)
     {
         /** @type {i18n.phonenumbers.NumberFormat} */
         NBNumberFormat *format = [self.possibleFormats_ safeObjectAtIndex:i];
@@ -877,7 +877,7 @@
  *
  * @return {number}
  */
-- (int)getRememberedPosition
+- (NSUInteger)getRememberedPosition
 {
     if (!self.ableToFormat_) {
         return self.originalPosition_;
