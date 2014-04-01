@@ -285,50 +285,50 @@
         /** @type {i18n.phonenumbers.AsYouTypeFormatter} */
         NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCodeForTest:@"US"];
         STAssertEqualObjects(@"1", [f inputDigitAndRememberPosition:@"1"], nil);
-        STAssertEquals(1, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)1, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"16", [f inputDigit:@"6"], nil);
         STAssertEqualObjects(@"1 65", [f inputDigit:@"5"], nil);
-        STAssertEquals(1, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)1, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"1 650", [f inputDigitAndRememberPosition:@"0"], nil);
-        STAssertEquals(5, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)5, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"1 650 2", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"1 650 25", [f inputDigit:@"5"], nil);
         // Note the remembered position for digit '0' changes from 4 to 5, because a
         // space is now inserted in the front.
-        STAssertEquals(5, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)5, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"1 650 253", [f inputDigit:@"3"], nil);
         STAssertEqualObjects(@"1 650 253 2", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"1 650 253 22", [f inputDigit:@"2"], nil);
-        STAssertEquals(5, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)5, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"1 650 253 222", [f inputDigitAndRememberPosition:@"2"], nil);
-        STAssertEquals(13, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)13, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"1 650 253 2222", [f inputDigit:@"2"], nil);
-        STAssertEquals(13, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)13, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"165025322222", [f inputDigit:@"2"], nil);
-        STAssertEquals(10, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)10, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"1650253222222", [f inputDigit:@"2"], nil);
-        STAssertEquals(10, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)10, [f getRememberedPosition], nil);
         
         [f clear];
         STAssertEqualObjects(@"1", [f inputDigit:@"1"], nil);
         STAssertEqualObjects(@"16", [f inputDigitAndRememberPosition:@"6"], nil);
-        STAssertEquals(2, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)2, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"1 65", [f inputDigit:@"5"], nil);
         STAssertEqualObjects(@"1 650", [f inputDigit:@"0"], nil);
-        STAssertEquals(3, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)3, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"1 650 2", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"1 650 25", [f inputDigit:@"5"], nil);
-        STAssertEquals(3, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)3, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"1 650 253", [f inputDigit:@"3"], nil);
         STAssertEqualObjects(@"1 650 253 2", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"1 650 253 22", [f inputDigit:@"2"], nil);
-        STAssertEquals(3, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)3, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"1 650 253 222", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"1 650 253 2222", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"165025322222", [f inputDigit:@"2"], nil);
-        STAssertEquals(2, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)2, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"1650253222222", [f inputDigit:@"2"], nil);
-        STAssertEquals(2, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)2, [f getRememberedPosition], nil);
         
         [f clear];
         STAssertEqualObjects(@"6", [f inputDigit:@"6"], nil);
@@ -338,13 +338,13 @@
         STAssertEqualObjects(@"650 25", [f inputDigit:@"5"], nil);
         STAssertEqualObjects(@"650 253", [f inputDigit:@"3"], nil);
         STAssertEqualObjects(@"650 2532", [f inputDigitAndRememberPosition:@"2"], nil);
-        STAssertEquals(8, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)8, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"650 253 22", [f inputDigit:@"2"], nil);
-        STAssertEquals(9, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)9, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"650 253 222", [f inputDigit:@"2"], nil);
         // No more formatting when semicolon is entered.
         STAssertEqualObjects(@"650253222;", [f inputDigit:@";"], nil);
-        STAssertEquals(7, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)7, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"650253222;2", [f inputDigit:@"2"], nil);
         
         [f clear];
@@ -354,11 +354,11 @@
         // No more formatting when users choose to do their own formatting.
         STAssertEqualObjects(@"650-", [f inputDigit:@"-"], nil);
         STAssertEqualObjects(@"650-2", [f inputDigitAndRememberPosition:@"2"], nil);
-        STAssertEquals(5, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)5, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"650-25", [f inputDigit:@"5"], nil);
-        STAssertEquals(5, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)5, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"650-253", [f inputDigit:@"3"], nil);
-        STAssertEquals(5, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)5, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"650-253-", [f inputDigit:@"-"], nil);
         STAssertEqualObjects(@"650-253-2", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"650-253-22", [f inputDigit:@"2"], nil);
@@ -371,13 +371,13 @@
         STAssertEqualObjects(@"011 ", [f inputDigit:@"1"], nil);
         STAssertEqualObjects(@"011 4", [f inputDigitAndRememberPosition:@"4"], nil);
         STAssertEqualObjects(@"011 48 ", [f inputDigit:@"8"], nil);
-        STAssertEquals(5, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)5, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"011 48 8", [f inputDigit:@"8"], nil);
-        STAssertEquals(5, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)5, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"011 48 88", [f inputDigit:@"8"], nil);
         STAssertEqualObjects(@"011 48 88 1", [f inputDigit:@"1"], nil);
         STAssertEqualObjects(@"011 48 88 12", [f inputDigit:@"2"], nil);
-        STAssertEquals(5, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)5, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"011 48 88 123", [f inputDigit:@"3"], nil);
         STAssertEqualObjects(@"011 48 88 123 1", [f inputDigit:@"1"], nil);
         STAssertEqualObjects(@"011 48 88 123 12", [f inputDigit:@"2"], nil);
@@ -390,15 +390,15 @@
         STAssertEqualObjects(@"+1 6", [f inputDigitAndRememberPosition:@"6"], nil);
         STAssertEqualObjects(@"+1 65", [f inputDigit:@"5"], nil);
         STAssertEqualObjects(@"+1 650", [f inputDigit:@"0"], nil);
-        STAssertEquals(4, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)4, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"+1 650 2", [f inputDigit:@"2"], nil);
-        STAssertEquals(4, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)4, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"+1 650 25", [f inputDigit:@"5"], nil);
         STAssertEqualObjects(@"+1 650 253", [f inputDigitAndRememberPosition:@"3"], nil);
         STAssertEqualObjects(@"+1 650 253 2", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"+1 650 253 22", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"+1 650 253 222", [f inputDigit:@"2"], nil);
-        STAssertEquals(10, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)10, [f getRememberedPosition], nil);
         
         [f clear];
         STAssertEqualObjects(@"+", [f inputDigit:@"+"], nil);
@@ -406,16 +406,16 @@
         STAssertEqualObjects(@"+1 6", [f inputDigitAndRememberPosition:@"6"], nil);
         STAssertEqualObjects(@"+1 65", [f inputDigit:@"5"], nil);
         STAssertEqualObjects(@"+1 650", [f inputDigit:@"0"], nil);
-        STAssertEquals(4, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)4, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"+1 650 2", [f inputDigit:@"2"], nil);
-        STAssertEquals(4, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)4, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"+1 650 25", [f inputDigit:@"5"], nil);
         STAssertEqualObjects(@"+1 650 253", [f inputDigit:@"3"], nil);
         STAssertEqualObjects(@"+1 650 253 2", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"+1 650 253 22", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"+1 650 253 222", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"+1650253222;", [f inputDigit:@";"], nil);
-        STAssertEquals(3, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)3, [f getRememberedPosition], nil);
     }
     
     // testAYTFGBFixedLine()
@@ -426,10 +426,10 @@
         STAssertEqualObjects(@"02", [f inputDigit:@"2"], nil);
         STAssertEqualObjects(@"020", [f inputDigit:@"0"], nil);
         STAssertEqualObjects(@"020 7", [f inputDigitAndRememberPosition:@"7"], nil);
-        STAssertEquals(5, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)5, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"020 70", [f inputDigit:@"0"], nil);
         STAssertEqualObjects(@"020 703", [f inputDigit:@"3"], nil);
-        STAssertEquals(5, [f getRememberedPosition], nil);
+        STAssertEquals((NSUInteger)5, [f getRememberedPosition], nil);
         STAssertEqualObjects(@"020 7031", [f inputDigit:@"1"], nil);
         STAssertEqualObjects(@"020 7031 3", [f inputDigit:@"3"], nil);
         STAssertEqualObjects(@"020 7031 30", [f inputDigit:@"0"], nil);
