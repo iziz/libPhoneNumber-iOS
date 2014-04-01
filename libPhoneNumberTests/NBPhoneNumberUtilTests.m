@@ -1791,7 +1791,7 @@
 
         {
             NSError *aError = nil;
-            XCTAssertEqual(countryCallingCode, [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
+            XCTAssertEqualObjects(countryCallingCode, [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
                                                                    nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&aError]);
             XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITH_IDD, [number.countryCodeSource intValue]);
             // Should strip and normalize national significant number.
@@ -1858,7 +1858,7 @@
         numberToFill = @"";
         {
             NSError *aError = nil;
-            XCTAssertEqual(countryCallingCode, [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
+            XCTAssertEqualObjects(countryCallingCode, [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
                                                                    nationalNumber:&numberToFill keepRawInput:NO phoneNumber:&number error:&aError]);
         }
                 
@@ -1867,7 +1867,7 @@
         numberToFill = @"";
         {
             NSError *aError = nil;
-            XCTAssertEqual(@0, [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
+            XCTAssertEqualObjects(@0, [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
                                                           nationalNumber:&numberToFill keepRawInput:NO phoneNumber:&number error:&aError]);
             XCTAssertFalse(number.countryCodeSource != nil, @"Should not contain CountryCodeSource.");
         }
