@@ -1123,6 +1123,8 @@
         [self.accruedInputWithoutFormatting_ appendString:nextChar];
     } else {
         normalizedChar = [[self.phoneUtil_ DIGIT_MAPPINGS] objectForKey:nextChar];
+        if (!normalizedChar) return @"";
+        
         [self.accruedInputWithoutFormatting_ appendString:normalizedChar];
         [self.nationalNumber_ appendString:normalizedChar];
     }
