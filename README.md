@@ -1,5 +1,5 @@
 # libPhoneNumber for iOS 
-(ARC only)
+(ARC only, or add the -fobjc-arc flag if your project is non-ARC)
 
 * NBPhoneNumberUtil
 * NBAsYouTypeFormatter
