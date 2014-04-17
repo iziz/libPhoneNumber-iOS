@@ -19,6 +19,8 @@
     - NBPhoneNumberMetadata.h, .m
     - NBPhoneNumberMetadataForTesting.h, .m
     
+    - NSArray+NBAdditions.h, .m
+    
     - Add "NBPhoneNumberMetadata.plist" and "NBPhoneNumberMetadataForTesting.plist" to bundle resources
     - Add "CoreTelephony.framework"
 
