@@ -19,6 +19,38 @@
     
     NBPhoneMetaDataGenerator *generator = [[NBPhoneMetaDataGenerator alloc] init];
     [generator generateMetadataClasses];
+
+    /* 
+     
+    // Unit test for isValidNumber is failing some valid numbers. #7
+     
+    NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
+    
+    {
+        NSError *error = nil;
+        NBPhoneNumber *phoneNumberUS = [phoneUtil parse:@"(366) 522-8999" defaultRegion:@"US" error:&error];
+        if (error) {
+            NSLog(@"err [%@]", [error localizedDescription]);
+        }
+        NSLog(@"- isValidNumber [%@]", [phoneUtil isValidNumber:phoneNumberUS] ? @"YES" : @"NO");
+        NSLog(@"- isPossibleNumber [%@]", [phoneUtil isPossibleNumber:phoneNumberUS error:&error] ? @"YES" : @"NO");
+        NSLog(@"- getRegionCodeForNumber [%@]", [phoneUtil getRegionCodeForNumber:phoneNumberUS]);
+    }
+    
+    NSLog(@"- - - - -");
+    
+    {
+        NSError *error = nil;
+        NBPhoneNumber *phoneNumberZZ = [phoneUtil parse:@"+84 74 883313" defaultRegion:@"ZZ" error:&error];
+        if (error) {
+            NSLog(@"err [%@]", [error localizedDescription]);
+        }
+        NSLog(@"- isValidNumber [%@]", [phoneUtil isValidNumber:phoneNumberZZ] ? @"YES" : @"NO");
+        NSLog(@"- isPossibleNumber [%@]", [phoneUtil isPossibleNumber:phoneNumberZZ error:&error] ? @"YES" : @"NO");
+        NSLog(@"- getRegionCodeForNumber [%@]", [phoneUtil getRegionCodeForNumber:phoneNumberZZ]);
+    }
+     
+    */
     
     return YES;
 }
