@@ -39,14 +39,23 @@ See sample test code from
     if (aError == nil) {
         // Should check error
         NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
+        
+        // E164          : +436766077303
         NSLog(@"E164          : %@", [phoneUtil format:myNumber 
-                                          numberFormat:NBEPhoneNumberFormatE164 error:&aError]);
+                                          numberFormat:NBEPhoneNumberFormatE164
+                                                 error:&aError]);
+        // INTERNATIONAL : +43 676 6077303
         NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber 
-                                          numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&aError]);
+                                          numberFormat:NBEPhoneNumberFormatINTERNATIONAL 
+                                                 error:&aError]);
+        // NATIONAL      : 0676 6077303
         NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber 
-                                          numberFormat:NBEPhoneNumberFormatNATIONAL error:&aError]);
+                                          numberFormat:NBEPhoneNumberFormatNATIONAL 
+                                                 error:&aError]);
+        // RFC3966       : tel:+43-676-6077303
         NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber
-                                          numberFormat:NBEPhoneNumberFormatRFC3966 error:&aError]);
+                                          numberFormat:NBEPhoneNumberFormatRFC3966 
+                                                 error:&aError]);
     } else {
         NSLog(@"Error : %@", [aError localizedDescription]);
     }
