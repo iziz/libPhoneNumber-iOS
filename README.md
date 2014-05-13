@@ -1,12 +1,14 @@
-# libPhoneNumber for iOS 
-(with ARC, or add the "-fobjc-arc" flag if your project is non-ARC)
+# **libPhoneNumber for iOS** 
 
-* NBPhoneNumberUtil
-* NBAsYouTypeFormatter
+ - NBPhoneNumberUtil
+ - NBAsYouTypeFormatter
 
-### - Install with [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
+> ARC only, or add the **"-fobjc-arc"** flag for non-ARC
+ 
+### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
+> pod 'libPhoneNumber-iOS', '~> 0.7'
 
-### - Install without CocoaPods
+### Setting up Manually
 ##### Add source files to your projects from libPhoneNumber
     - NBPhoneNumberUtil.h, .m
     - NBAsYouTypeFormatter.h, .m
@@ -24,9 +26,11 @@
     - Add "NBPhoneNumberMetadata.plist" and "NBPhoneNumberMetadataForTesting.plist" to bundle resources
     - Add "CoreTelephony.framework"
 
-    See sample test code from "libPhoneNumber-iOS / libPhoneNumberTests / libPhoneNumberTests.m"
+See sample test code from
+> libPhoneNumber-iOS/libPhoneNumberTests/libPhoneNumberTests.m 
 
-### Sample Usage
+### Usage - **NBPhoneNumberUtil**
+```obj-c
     NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
     
     NSError *aError = nil;
@@ -55,18 +59,39 @@
     UInt32 dRes = [phoneUtil extractCountryCode:@"823213123123" nationalNumber:&res];
     
     NSLog (@"extractCountryCode [%lu] [%@]", dRes, res);
+```
 
+### Usage - **NBAsYouTypeFormatter**
+```obj-c
+    // +82 51 234 5678
+    NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+    NSLog(@"%@", [f inputDigit:@"6"]); // "6"
+    NSLog(@"%@", [f inputDigit:@"5"]); // "65"
+    NSLog(@"%@", [f inputDigit:@"0"]); // "650"
+    NSLog(@"%@", [f inputDigit:@"2"]); // "650 2"
+    NSLog(@"%@", [f inputDigit:@"5"]); // "650 25"
+    NSLog(@"%@", [f inputDigit:@"3"]); // "650 253"
+    
+    // Note this is how a US local number (without area code) should be formatted.
+    NSLog(@"%@", [f inputDigit:@"2"]); // "650 2532"
+    NSLog(@"%@", [f inputDigit:@"2"]); // "650 253 22"
+    NSLog(@"%@", [f inputDigit:@"2"]); // "650 253 222"
+    NSLog(@"%@", [f inputDigit:@"2"]); // "650 253 2222"
+    // Can remove last digit
+    NSLog(@"%@", [f removeLastDigit]); // "650 253 222"
+```
 
 ##### Visit [libphonenumber](http://code.google.com/p/libphonenumber/) for more information or mail (zen.isis@gmail.com)
 
-### Metadata managing (updating metadata)
-##### Step1. Fetch "metadata.js" and "metadatafortesting.js" from Repositories
+##### **Metadata managing (updating metadata)**
+
+###### Step1. Fetch "metadata.js" and "metadatafortesting.js" from Repositories
     svn checkout http://libphonenumber.googlecode.com/svn/trunk/ libphonenumber-read-only
-      
-##### Step2. Convert Javascript Object to JSON using PHP scripts 
+    
+###### Step2. Convert Javascript Object to JSON using PHP scripts 
     Output - "PhoneNumberMetaData.json" and "PhoneNumberMetaDataForTesting.json"
-
-##### Step3. Generate binary file from NBPhoneMetaDataGenerator
+    
+###### Step3. Generate binary file from NBPhoneMetaDataGenerator
     Output - "NBPhoneNumberMetadata.plist" and "NBPhoneNumberMetadataForTesting.plist"
-
-##### Step4. Update exists "NBPhoneNumberMetadata.plist" and "NBPhoneNumberMetadataForTesting.plist" files
+    
+###### Step4. Update exists "NBPhoneNumberMetadata.plist" and "NBPhoneNumberMetadataForTesting.plist" files
