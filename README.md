@@ -51,8 +51,7 @@ See sample test code from
         NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber
                                           numberFormat:NBEPhoneNumberFormatRFC3966 
                                                  error:&aError]);
-    }
-    else {
+    } else {
         NSLog(@"Error : %@", [aError localizedDescription]);
     }
     
