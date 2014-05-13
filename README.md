@@ -66,7 +66,6 @@ See sample test code from
 
 ### Usage - **NBAsYouTypeFormatter**
 ```obj-c
-    // +82 51 234 5678
     NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
     NSLog(@"%@", [f inputDigit:@"6"]); // "6"
     NSLog(@"%@", [f inputDigit:@"5"]); // "65"
