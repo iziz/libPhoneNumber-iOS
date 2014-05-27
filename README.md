@@ -34,7 +34,8 @@ See sample test code from
     NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
     
     NSError *aError = nil;
-    NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303" defaultRegion:@"AT" error:&aError];
+    NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303"
+                                 defaultRegion:@"AT" error:&aError];
     
     if (aError == nil) {
         // Should check error
