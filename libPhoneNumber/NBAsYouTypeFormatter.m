@@ -612,6 +612,9 @@
  */
 - (NSString*)inputDigit:(NSString*)nextChar
 {
+    if (!nextChar || nextChar.length <= 0) {
+        return self.currentOutput_;
+    }
     self.currentOutput_ = [self inputDigitWithOptionToRememberPosition_:nextChar rememberPosition:NO];
     return self.currentOutput_;
 }
@@ -629,6 +632,9 @@
  */
 - (NSString*)inputDigitAndRememberPosition:(NSString*)nextChar
 {
+    if (!nextChar || nextChar.length <= 0) {
+        return self.currentOutput_;
+    }
     self.currentOutput_ = [self inputDigitWithOptionToRememberPosition_:nextChar rememberPosition:YES];
     return self.currentOutput_;
 };
@@ -642,6 +648,10 @@
  */
 - (NSString*)inputDigitWithOptionToRememberPosition_:(NSString*)nextChar rememberPosition:(BOOL)rememberPosition
 {
+    if (!nextChar || nextChar.length <= 0) {
+        return self.currentOutput_;
+    }
+    
     [self.accruedInput_ appendString:nextChar];
     
     if (rememberPosition) {
