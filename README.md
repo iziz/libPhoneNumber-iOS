@@ -17,6 +17,7 @@
     - NBPhoneNumber.h, .m
     - NBPhoneNumberDesc.h, .m
     - NBPhoneNumberDefines.h
+    - NBPhoneMetaData.h, .m
     
     - NSArray+NBAdditions.h, .m
     
