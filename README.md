@@ -29,7 +29,7 @@ See sample test code from
 
 ### Usage - **NBPhoneNumberUtil**
 ```obj-c
-    NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
+        NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
     
     NSError *aError = nil;
     NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303"
@@ -40,32 +40,31 @@ See sample test code from
         NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
         
         // E164          : +436766077303
-        NSLog(@"E164          : %@", [phoneUtil format:myNumber 
+        NSLog(@"E164          : %@", [phoneUtil format:myNumber
                                           numberFormat:NBEPhoneNumberFormatE164
                                                  error:&aError]);
         // INTERNATIONAL : +43 676 6077303
-        NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber 
-                                          numberFormat:NBEPhoneNumberFormatINTERNATIONAL 
+        NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber
+                                          numberFormat:NBEPhoneNumberFormatINTERNATIONAL
                                                  error:&aError]);
         // NATIONAL      : 0676 6077303
-        NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber 
-                                          numberFormat:NBEPhoneNumberFormatNATIONAL 
+        NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber
+                                          numberFormat:NBEPhoneNumberFormatNATIONAL
                                                  error:&aError]);
         // RFC3966       : tel:+43-676-6077303
         NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber
-                                          numberFormat:NBEPhoneNumberFormatRFC3966 
+                                          numberFormat:NBEPhoneNumberFormatRFC3966
                                                  error:&aError]);
     } else {
         NSLog(@"Error : %@", [aError localizedDescription]);
     }
     
-    NSLog (@"extractCountryCode [%ld]", [phoneUtil extractCountryCode:@"823213123123" 
-                                                       nationalNumber:nil]);
+    NSLog (@"extractCountryCode [%@]", [phoneUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
     
-    NSString *res = nil;
-    UInt32 dRes = [phoneUtil extractCountryCode:@"823213123123" nationalNumber:&res];
+    NSString *nationalNumber = nil;
+    NSNumber *countryCode = [phoneUtil extractCountryCode:@"823213123123" nationalNumber:&nationalNumber];
     
-    NSLog (@"extractCountryCode [%lu] [%@]", dRes, res);
+    NSLog (@"extractCountryCode [%@] [%@]", countryCode, nationalNumber);
 ```
 
 ### Usage - **NBAsYouTypeFormatter**
