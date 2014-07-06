@@ -29,7 +29,7 @@ See sample test code from
 
 ### Usage - **NBPhoneNumberUtil**
 ```obj-c
-        NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
+    NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
     
     NSError *aError = nil;
     NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303"
@@ -65,6 +65,17 @@ See sample test code from
     NSNumber *countryCode = [phoneUtil extractCountryCode:@"823213123123" nationalNumber:&nationalNumber];
     
     NSLog (@"extractCountryCode [%@] [%@]", countryCode, nationalNumber);
+```
+
+#### Output
+```
+2014-07-06 12:39:37.240 libPhoneNumberTest[1581:60b] isValidPhoneNumber ? [YES]
+2014-07-06 12:39:37.242 libPhoneNumberTest[1581:60b] E164          : +436766077303
+2014-07-06 12:39:37.243 libPhoneNumberTest[1581:60b] INTERNATIONAL : +43 676 6077303
+2014-07-06 12:39:37.243 libPhoneNumberTest[1581:60b] NATIONAL      : 0676 6077303
+2014-07-06 12:39:37.244 libPhoneNumberTest[1581:60b] RFC3966       : tel:+43-676-6077303
+2014-07-06 12:39:37.244 libPhoneNumberTest[1581:60b] extractCountryCode [82]
+2014-07-06 12:39:37.245 libPhoneNumberTest[1581:60b] extractCountryCode [82] [3213123123]
 ```
 
 ### Usage - **NBAsYouTypeFormatter**
