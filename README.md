@@ -66,8 +66,7 @@ See sample test code from
     
     NSLog (@"extractCountryCode [%@] [%@]", countryCode, nationalNumber);
 ```
-
-#### Output
+##### Output
 ```
 2014-07-06 12:39:37.240 libPhoneNumberTest[1581:60b] isValidPhoneNumber ? [YES]
 2014-07-06 12:39:37.242 libPhoneNumberTest[1581:60b] E164          : +436766077303
