@@ -11,8 +11,10 @@
 #import "NBPhoneMetaData.h"
 #import "math.h"
 
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
-#import <CoreTelephony/CTCarrier.h>
+#if TARGET_OS_IPHONE
+    #import <CoreTelephony/CTTelephonyNetworkInfo.h>
+    #import <CoreTelephony/CTCarrier.h>
+#endif
 
 
 #pragma mark - Static Int variables -
@@ -3499,10 +3501,10 @@ static NSDictionary *DIGIT_MAPPINGS;
     numberToParse = [NBPhoneNumberUtil normalizeNonBreakingSpace:numberToParse];
     
     NSString *defaultRegion = nil;
-#if TARGET_IPHONE_SIMULATOR
-    defaultRegion = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
-#else
+#if TARGET_OS_IPHONE
     defaultRegion = [self countryCodeByCarrier];
+#else
+    defaultRegion = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
 #endif
     if ([UNKNOWN_REGION_ isEqualToString:defaultRegion]) {
         // get region from device as a failover (e.g. iPad)
@@ -3512,6 +3514,8 @@ static NSDictionary *DIGIT_MAPPINGS;
     
     return [self parse:numberToParse defaultRegion:defaultRegion error:error];
 }
+
+#if TARGET_OS_IPHONE
 
 - (NSString *)countryCodeByCarrier
 {
@@ -3524,6 +3528,8 @@ static NSDictionary *DIGIT_MAPPINGS;
     
     return isoCode;
 }
+
+#endif
 
 
 /**
