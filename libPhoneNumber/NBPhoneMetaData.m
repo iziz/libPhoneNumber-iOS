@@ -9,11 +9,9 @@
 #import "NBNumberFormat.h"
 #import "NSArray+NBAdditions.h"
 
+
 @implementation NBPhoneMetaData
 
-@synthesize generalDesc, fixedLine, mobile, tollFree, premiumRate, sharedCost, personalNumber, voip, pager, uan, emergency, voicemail, noInternationalDialling;
-@synthesize codeID, countryCode;
-@synthesize internationalPrefix, preferredInternationalPrefix, nationalPrefix, preferredExtnPrefix, nationalPrefixForParsing, nationalPrefixTransformRule, sameMobileAndFixedLinePattern, numberFormats, intlNumberFormats, mainCountryForCode, leadingDigits, leadingZeroPossible;
 
 - (id)init
 {

@@ -7,6 +7,7 @@
 
 #import "NSArray+NBAdditions.h"
 
+
 @implementation NSArray (NBAdditions)
 
 - (id)safeObjectAtIndex:(NSUInteger)index

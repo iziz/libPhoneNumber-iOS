@@ -7,9 +7,8 @@
 #import "NBPhoneNumberDesc.h"
 #import "NSArray+NBAdditions.h"
 
-@implementation NBPhoneNumberDesc
 
-@synthesize nationalNumberPattern, possibleNumberPattern, exampleNumber;
+@implementation NBPhoneNumberDesc
 
 
 - (id)initWithData:(id)data

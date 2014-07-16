@@ -7,9 +7,9 @@
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDefines.h"
 
+
 @implementation NBPhoneNumber
 
-@synthesize countryCode, nationalNumber, extension, italianLeadingZero, rawInput, countryCodeSource, preferredDomesticCarrierCode;
 
 - (id)init
 {

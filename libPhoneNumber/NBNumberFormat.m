@@ -7,9 +7,8 @@
 #import "NBNumberFormat.h"
 #import "NSArray+NBAdditions.h"
 
-@implementation NBNumberFormat
 
-@synthesize pattern, format, leadingDigitsPatterns, nationalPrefixFormattingRule, nationalPrefixOptionalWhenFormatting, domesticCarrierCodeFormattingRule;
+@implementation NBNumberFormat
 
 
 - (id)initWithData:(id)data
