@@ -100,6 +100,8 @@ static NSDictionary *DIGIT_MAPPINGS;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *i18nPhoneNumberDesc;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *i18nPhoneMetadata;
 
+@property (nonatomic, strong) CTTelephonyNetworkInfo *telephonyNetworkInfo;
+
 @end
 
 
@@ -3519,8 +3521,17 @@ static NSDictionary *DIGIT_MAPPINGS;
 
 - (NSString *)countryCodeByCarrier
 {
-    CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
-    NSString *isoCode = [[networkInfo subscriberCellularProvider] isoCountryCode];
+    // cache telephony network info;
+    // CTTelephonyNetworkInfo objects are unnecessarily created for every call to parseWithPhoneCarrierRegion:error:
+    // when in reality this information not change while an app lives in memory
+    // real-world performance test while parsing 93 phone numbers:
+    // before change:   126ms
+    // after change:    32ms
+    if (!self.telephonyNetworkInfo) {
+        self.telephonyNetworkInfo = [[CTTelephonyNetworkInfo alloc] init];
+    }
+    
+    NSString *isoCode = [[self.telephonyNetworkInfo subscriberCellularProvider] isoCountryCode];
     
 	if (!isoCode) {
 		isoCode = UNKNOWN_REGION_;
