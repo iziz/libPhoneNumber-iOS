@@ -4094,12 +4094,13 @@ static NSDictionary *DIGIT_MAPPINGS;
     
     NSError *error = nil;
     NSRegularExpression *currentPattern = [self regularExpressionWithPattern:regex options:0 error:&error];
-    NSTextCheckingResult *matchResult = [currentPattern firstMatchInString:str options:0 range:NSMakeRange(0, str.length)];
+    NSRange stringRange = NSMakeRange(0, str.length);
+    NSTextCheckingResult *matchResult = [currentPattern firstMatchInString:str options:NSMatchingAnchored range:stringRange];
     
     if (matchResult != nil) {
-        NSString *founds = [str substringWithRange:matchResult.range];
-        
-        if ([founds isEqualToString:str]) {
+        BOOL matchIsEntireString = NSEqualRanges(matchResult.range, stringRange);
+        if (matchIsEntireString)
+        {
             return YES;
         }
     }
