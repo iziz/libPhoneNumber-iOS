@@ -181,9 +181,15 @@ static NSDictionary *DIGIT_MAPPINGS;
 #pragma mark - Regular expression Utilities -
 - (BOOL)hasValue:(NSString*)string
 {
-    string = [NBPhoneNumberUtil normalizeNonBreakingSpace:string];
+    static dispatch_once_t onceToken;
+    static NSCharacterSet *whitespaceCharSet = nil;
+    dispatch_once(&onceToken, ^{
+        NSMutableCharacterSet *spaceCharSet = [NSMutableCharacterSet characterSetWithCharactersInString:NON_BREAKING_SPACE];
+        [spaceCharSet formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        whitespaceCharSet = spaceCharSet;
+    });
     
-    if (string == nil || [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length <= 0) {
+    if (string == nil || [string stringByTrimmingCharactersInSet:whitespaceCharSet].length <= 0) {
         return NO;
     }
     
