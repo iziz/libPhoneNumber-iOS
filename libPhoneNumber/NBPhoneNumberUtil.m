@@ -81,6 +81,8 @@ static NSDictionary *DIGIT_MAPPINGS;
 
 #pragma mark - NBPhoneNumberUtil interface -
 @interface NBPhoneNumberUtil () {
+    NSMutableDictionary *entireStringRegexCache;
+    NSLock *entireStringCacheLock;
     NSMutableDictionary *regexPatternCache;
     NSLock *lockPatternCache;
 }
@@ -181,13 +183,50 @@ static NSDictionary *DIGIT_MAPPINGS;
 #pragma mark - Regular expression Utilities -
 - (BOOL)hasValue:(NSString*)string
 {
-    string = [NBPhoneNumberUtil normalizeNonBreakingSpace:string];
+    static dispatch_once_t onceToken;
+    static NSCharacterSet *whitespaceCharSet = nil;
+    dispatch_once(&onceToken, ^{
+        NSMutableCharacterSet *spaceCharSet = [NSMutableCharacterSet characterSetWithCharactersInString:NON_BREAKING_SPACE];
+        [spaceCharSet formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        whitespaceCharSet = spaceCharSet;
+    });
     
-    if (string == nil || [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length <= 0) {
+    if (string == nil || [string stringByTrimmingCharactersInSet:whitespaceCharSet].length <= 0) {
         return NO;
     }
     
     return YES;
+}
+
+
+- (NSRegularExpression *)entireRegularExpressionWithPattern:(NSString *)regexPattern
+                                                    options:(NSRegularExpressionOptions)options
+                                                      error:(NSError **)error
+{
+    [entireStringCacheLock lock];
+    
+    @try {
+        if (! entireStringRegexCache) {
+            entireStringRegexCache = [[NSMutableDictionary alloc] init];
+        }
+        
+        NSRegularExpression *regex = [entireStringRegexCache objectForKey:regexPattern];
+        if (! regex)
+        {
+            NSString *finalRegexString = regexPattern;
+            if ([regexPattern rangeOfString:@"^"].location == NSNotFound) {
+                finalRegexString = [NSString stringWithFormat:@"^(?:%@)$", regexPattern];
+            }
+            
+            regex = [self regularExpressionWithPattern:finalRegexString options:0 error:error];
+            [entireStringRegexCache setObject:regex forKey:regexPattern];
+        }
+        
+        return regex;
+    }
+    @finally {
+        [entireStringCacheLock unlock];
+    }
 }
 
 
@@ -404,7 +443,7 @@ static NSDictionary *DIGIT_MAPPINGS;
         return [NSString stringWithFormat:@"0%@", phoneNumber.nationalNumber];
     }
     
-    return [NSString stringWithFormat:@"%@", phoneNumber.nationalNumber];
+    return [phoneNumber.nationalNumber stringValue];
 }
 
 
@@ -414,7 +453,7 @@ static NSDictionary *DIGIT_MAPPINGS;
         return nil;
     }
     
-    id res = [self.mapCN2CCode objectForKey:[NSString stringWithFormat:@"%@", countryCodeNumber]];
+    id res = [self.mapCN2CCode objectForKey:[countryCodeNumber stringValue]];
     
     if (res && [res isKindOfClass:[NSArray class]] && [((NSArray*)res) count] > 0) {
         return res;
@@ -448,6 +487,7 @@ static NSDictionary *DIGIT_MAPPINGS;
     if (self)
     {
         lockPatternCache = [[NSLock alloc] init];
+        entireStringCacheLock = [[NSLock alloc] init];
         [self initRegularExpressionSet];
         [self initNormalizationMappings];
     }
@@ -4082,18 +4122,20 @@ static NSDictionary *DIGIT_MAPPINGS;
  */
 - (BOOL)matchesEntirely:(NSString*)regex string:(NSString*)str
 {
-    if ([regex rangeOfString:@"^"].location == NSNotFound) {
-        regex = [NSString stringWithFormat:@"^(?:%@)$", regex];
+    if ([regex isEqualToString:@"NA"])
+    {
+        return NO;
     }
     
     NSError *error = nil;
-    NSRegularExpression *currentPattern = [self regularExpressionWithPattern:regex options:0 error:&error];
-    NSTextCheckingResult *matchResult = [currentPattern firstMatchInString:str options:0 range:NSMakeRange(0, str.length)];
+    NSRegularExpression *currentPattern = [self entireRegularExpressionWithPattern:regex options:0 error:&error];
+    NSRange stringRange = NSMakeRange(0, str.length);
+    NSTextCheckingResult *matchResult = [currentPattern firstMatchInString:str options:NSMatchingAnchored range:stringRange];
     
     if (matchResult != nil) {
-        NSString *founds = [str substringWithRange:matchResult.range];
-        
-        if ([founds isEqualToString:str]) {
+        BOOL matchIsEntireString = NSEqualRanges(matchResult.range, stringRange);
+        if (matchIsEntireString)
+        {
             return YES;
         }
     }
