@@ -31,32 +31,32 @@ See sample test code from
 ```obj-c
     NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
     
-    NSError *aError = nil;
+    NSError *anError = nil;
     NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303"
-                                 defaultRegion:@"AT" error:&aError];
+                                 defaultRegion:@"AT" error:&anError];
     
-    if (aError == nil) {
+    if (anError == nil) {
         // Should check error
         NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
         
         // E164          : +436766077303
         NSLog(@"E164          : %@", [phoneUtil format:myNumber
                                           numberFormat:NBEPhoneNumberFormatE164
-                                                 error:&aError]);
+                                                 error:&anError]);
         // INTERNATIONAL : +43 676 6077303
         NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber
                                           numberFormat:NBEPhoneNumberFormatINTERNATIONAL
-                                                 error:&aError]);
+                                                 error:&anError]);
         // NATIONAL      : 0676 6077303
         NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber
                                           numberFormat:NBEPhoneNumberFormatNATIONAL
-                                                 error:&aError]);
+                                                 error:&anError]);
         // RFC3966       : tel:+43-676-6077303
         NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber
                                           numberFormat:NBEPhoneNumberFormatRFC3966
-                                                 error:&aError]);
+                                                 error:&anError]);
     } else {
-        NSLog(@"Error : %@", [aError localizedDescription]);
+        NSLog(@"Error : %@", [anError localizedDescription]);
     }
     
     NSLog (@"extractCountryCode [%@]", [phoneUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
