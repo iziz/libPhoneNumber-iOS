@@ -3695,7 +3695,7 @@ static NSDictionary *DIGIT_MAPPINGS;
     // Check to see if the number is given in international format so we know
     // whether this number is from the default region or not.
     NSString *normalizedNationalNumber = @"";
-    NSNumber *countryCode = @0;
+    NSNumber *countryCode = nil;
     NSString *nationalNumberStr = [nationalNumber copy];
     {
         NSError *aError = nil;
