@@ -114,14 +114,14 @@
 // FIXME: This unit test ALWAYS FAIL ... until google libPhoneNumber fix this issue
 - (void)testAustriaNationalNumberParsing
 {
-    NSError *aError = nil;
+    NSError *anError = nil;
     
     NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
     NSString *internationalNumberForInput = @"436606545646";
     NSString *nationalNumberForExpect = @"6606545646";
     NSString *defaultRegion = @"AT";
     
-    NBPhoneNumber *phoneNumber = [phoneUtil parse:internationalNumberForInput defaultRegion:defaultRegion error:&aError];
+    NBPhoneNumber *phoneNumber = [phoneUtil parse:internationalNumberForInput defaultRegion:defaultRegion error:&anError];
     NSString *nationalNumberForActual = [NSString stringWithFormat:@"%@", phoneNumber.nationalNumber];
     
     // ALWAYS FAIL need fix "google libPhoneNumber"
@@ -132,19 +132,19 @@
 {
     NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
     
-    NSError *aError = nil;
-    NBPhoneNumber *myNumber = [phoneUtil parse:@"0174 2340XXX" defaultRegion:@"DE" error:&aError];
-    if (aError == nil)
+    NSError *anError = nil;
+    NBPhoneNumber *myNumber = [phoneUtil parse:@"0174 2340XXX" defaultRegion:@"DE" error:&anError];
+    if (anError == nil)
     {
         NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
-        NSLog(@"E164          : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatE164 error:&aError]);
-        NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&aError]);
-        NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&aError]);
-        NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatRFC3966 error:&aError]);
+        NSLog(@"E164          : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatE164 error:&anError]);
+        NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&anError]);
+        NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&anError]);
+        NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatRFC3966 error:&anError]);
     }
     else
     {
-        NSLog(@"Error : %@", [aError localizedDescription]);
+        NSLog(@"Error : %@", [anError localizedDescription]);
     }
 }
 
@@ -165,13 +165,13 @@
 - (void)testNSDictionaryalbeKey
 {
     NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
-    NSError *aError = nil;
+    NSError *anError = nil;
 
-    NBPhoneNumber *myNumber1 = [phoneUtil parse:@"971600123456" defaultRegion:@"AE" error:&aError];
-    NBPhoneNumber *myNumber2 = [phoneUtil parse:@"5491187654321" defaultRegion:@"AR" error:&aError];
-    NBPhoneNumber *myNumber3 = [phoneUtil parse:@"12423570000" defaultRegion:@"BS" error:&aError];
-    NBPhoneNumber *myNumber4 = [phoneUtil parse:@"39236618300" defaultRegion:@"IT" error:&aError];
-    NBPhoneNumber *myNumber5 = [phoneUtil parse:@"16502530000" defaultRegion:@"US" error:&aError];
+    NBPhoneNumber *myNumber1 = [phoneUtil parse:@"971600123456" defaultRegion:@"AE" error:&anError];
+    NBPhoneNumber *myNumber2 = [phoneUtil parse:@"5491187654321" defaultRegion:@"AR" error:&anError];
+    NBPhoneNumber *myNumber3 = [phoneUtil parse:@"12423570000" defaultRegion:@"BS" error:&anError];
+    NBPhoneNumber *myNumber4 = [phoneUtil parse:@"39236618300" defaultRegion:@"IT" error:&anError];
+    NBPhoneNumber *myNumber5 = [phoneUtil parse:@"16502530000" defaultRegion:@"US" error:&anError];
     
     NSMutableDictionary *dicTest = [[NSMutableDictionary alloc] init];
     [dicTest setObject:@"AE" forKey:myNumber1];
@@ -195,19 +195,19 @@
 #pragma mark - customTest
     NSLog(@"-------------- customTest");
     
-    NSError *aError = nil;
-    NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303" defaultRegion:@"AT" error:&aError];
-    if (aError == nil)
+    NSError *anError = nil;
+    NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303" defaultRegion:@"AT" error:&anError];
+    if (anError == nil)
     {
         NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
-        NSLog(@"E164          : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatE164 error:&aError]);
-        NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&aError]);
-        NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&aError]);
-        NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatRFC3966 error:&aError]);
+        NSLog(@"E164          : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatE164 error:&anError]);
+        NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&anError]);
+        NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&anError]);
+        NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatRFC3966 error:&anError]);
     }
     else
     {
-        NSLog(@"Error : %@", [aError localizedDescription]);
+        NSLog(@"Error : %@", [anError localizedDescription]);
     }
     
     NSLog (@"extractCountryCode [%ld]", (unsigned long)[phoneUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
@@ -219,7 +219,7 @@
 
 - (void)testWithTestData
 {
-    // NSError *aError = nil;
+    // NSError *anError = nil;
     
     NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstanceForTest];
     
@@ -1041,101 +1041,101 @@
 
     #pragma mark - testFormatInOriginalFormat
     {
-        NSError *aError = nil;
-        NBPhoneNumber *number1 = [phoneUtil parseAndKeepRawInput:@"+442087654321" defaultRegion:@"GB" error:&aError];
+        NSError *anError = nil;
+        NBPhoneNumber *number1 = [phoneUtil parseAndKeepRawInput:@"+442087654321" defaultRegion:@"GB" error:&anError];
         XCTAssertEqualObjects(@"+44 20 8765 4321", [phoneUtil formatInOriginalFormat:number1 regionCallingFrom:@"GB"]);
         
-        NBPhoneNumber *number2 = [phoneUtil parseAndKeepRawInput:@"02087654321" defaultRegion:@"GB" error:&aError];
+        NBPhoneNumber *number2 = [phoneUtil parseAndKeepRawInput:@"02087654321" defaultRegion:@"GB" error:&anError];
         XCTAssertEqualObjects(@"(020) 8765 4321", [phoneUtil formatInOriginalFormat:number2 regionCallingFrom:@"GB"]);
         
-        NBPhoneNumber *number3 = [phoneUtil parseAndKeepRawInput:@"011442087654321" defaultRegion:@"US" error:&aError];
+        NBPhoneNumber *number3 = [phoneUtil parseAndKeepRawInput:@"011442087654321" defaultRegion:@"US" error:&anError];
         XCTAssertEqualObjects(@"011 44 20 8765 4321", [phoneUtil formatInOriginalFormat:number3 regionCallingFrom:@"US"]);
         
-        NBPhoneNumber *number4 = [phoneUtil parseAndKeepRawInput:@"442087654321" defaultRegion:@"GB" error:&aError];
+        NBPhoneNumber *number4 = [phoneUtil parseAndKeepRawInput:@"442087654321" defaultRegion:@"GB" error:&anError];
         XCTAssertEqualObjects(@"44 20 8765 4321", [phoneUtil formatInOriginalFormat:number4 regionCallingFrom:@"GB"]);
         
-        NBPhoneNumber *number5 = [phoneUtil parse:@"+442087654321" defaultRegion:@"GB" error:&aError];
+        NBPhoneNumber *number5 = [phoneUtil parse:@"+442087654321" defaultRegion:@"GB" error:&anError];
         XCTAssertEqualObjects(@"(020) 8765 4321", [phoneUtil formatInOriginalFormat:number5 regionCallingFrom:@"GB"]);
         
         // Invalid numbers that we have a formatting pattern for should be formatted
         // properly. Note area codes starting with 7 are intentionally excluded in
         // the test metadata for testing purposes.
-        NBPhoneNumber *number6 = [phoneUtil parseAndKeepRawInput:@"7345678901" defaultRegion:@"US" error:&aError];
+        NBPhoneNumber *number6 = [phoneUtil parseAndKeepRawInput:@"7345678901" defaultRegion:@"US" error:&anError];
         XCTAssertEqualObjects(@"734 567 8901", [phoneUtil formatInOriginalFormat:number6 regionCallingFrom:@"US"]);
         
         // US is not a leading zero country, and the presence of the leading zero
         // leads us to format the number using raw_input.
-        NBPhoneNumber *number7 = [phoneUtil parseAndKeepRawInput:@"0734567 8901" defaultRegion:@"US" error:&aError];
+        NBPhoneNumber *number7 = [phoneUtil parseAndKeepRawInput:@"0734567 8901" defaultRegion:@"US" error:&anError];
         XCTAssertEqualObjects(@"0734567 8901", [phoneUtil formatInOriginalFormat:number7 regionCallingFrom:@"US"]);
         
         // This number is valid, but we don't have a formatting pattern for it.
         // Fall back to the raw input.
-        NBPhoneNumber *number8 = [phoneUtil parseAndKeepRawInput:@"02-4567-8900" defaultRegion:@"KR" error:&aError];
+        NBPhoneNumber *number8 = [phoneUtil parseAndKeepRawInput:@"02-4567-8900" defaultRegion:@"KR" error:&anError];
         XCTAssertEqualObjects(@"02-4567-8900", [phoneUtil formatInOriginalFormat:number8 regionCallingFrom:@"KR"]);
         
-        NBPhoneNumber *number9 = [phoneUtil parseAndKeepRawInput:@"01180012345678" defaultRegion:@"US" error:&aError];
+        NBPhoneNumber *number9 = [phoneUtil parseAndKeepRawInput:@"01180012345678" defaultRegion:@"US" error:&anError];
         XCTAssertEqualObjects(@"011 800 1234 5678", [phoneUtil formatInOriginalFormat:number9 regionCallingFrom:@"US"]);
         
-        NBPhoneNumber *number10 = [phoneUtil parseAndKeepRawInput:@"+80012345678" defaultRegion:@"KR" error:&aError];
+        NBPhoneNumber *number10 = [phoneUtil parseAndKeepRawInput:@"+80012345678" defaultRegion:@"KR" error:&anError];
         XCTAssertEqualObjects(@"+800 1234 5678", [phoneUtil formatInOriginalFormat:number10 regionCallingFrom:@"KR"]);
         
         // US local numbers are formatted correctly, as we have formatting patterns
         // for them.
-        NBPhoneNumber *localNumberUS = [phoneUtil parseAndKeepRawInput:@"2530000" defaultRegion:@"US" error:&aError];
+        NBPhoneNumber *localNumberUS = [phoneUtil parseAndKeepRawInput:@"2530000" defaultRegion:@"US" error:&anError];
         XCTAssertEqualObjects(@"253 0000", [phoneUtil formatInOriginalFormat:localNumberUS regionCallingFrom:@"US"]);
         
-        NBPhoneNumber *numberWithNationalPrefixUS = [phoneUtil parseAndKeepRawInput:@"18003456789" defaultRegion:@"US" error:&aError];
+        NBPhoneNumber *numberWithNationalPrefixUS = [phoneUtil parseAndKeepRawInput:@"18003456789" defaultRegion:@"US" error:&anError];
         XCTAssertEqualObjects(@"1 800 345 6789", [phoneUtil formatInOriginalFormat:numberWithNationalPrefixUS regionCallingFrom:@"US"]);
         
-        NBPhoneNumber *numberWithoutNationalPrefixGB = [phoneUtil parseAndKeepRawInput:@"2087654321" defaultRegion:@"GB" error:&aError];
+        NBPhoneNumber *numberWithoutNationalPrefixGB = [phoneUtil parseAndKeepRawInput:@"2087654321" defaultRegion:@"GB" error:&anError];
         XCTAssertEqualObjects(@"20 8765 4321", [phoneUtil formatInOriginalFormat:numberWithoutNationalPrefixGB regionCallingFrom:@"GB"]);
         
         // Make sure no metadata is modified as a result of the previous function
         // call.
-        XCTAssertEqualObjects(@"(020) 8765 4321", [phoneUtil formatInOriginalFormat:number5 regionCallingFrom:@"GB" error:&aError]);
+        XCTAssertEqualObjects(@"(020) 8765 4321", [phoneUtil formatInOriginalFormat:number5 regionCallingFrom:@"GB" error:&anError]);
         
-        NBPhoneNumber *numberWithNationalPrefixMX = [phoneUtil parseAndKeepRawInput:@"013312345678" defaultRegion:@"MX" error:&aError];
+        NBPhoneNumber *numberWithNationalPrefixMX = [phoneUtil parseAndKeepRawInput:@"013312345678" defaultRegion:@"MX" error:&anError];
         XCTAssertEqualObjects(@"01 33 1234 5678", [phoneUtil formatInOriginalFormat:numberWithNationalPrefixMX regionCallingFrom:@"MX"]);
         
-        NBPhoneNumber *numberWithoutNationalPrefixMX = [phoneUtil parseAndKeepRawInput:@"3312345678" defaultRegion:@"MX" error:&aError];
+        NBPhoneNumber *numberWithoutNationalPrefixMX = [phoneUtil parseAndKeepRawInput:@"3312345678" defaultRegion:@"MX" error:&anError];
         XCTAssertEqualObjects(@"33 1234 5678", [phoneUtil formatInOriginalFormat:numberWithoutNationalPrefixMX regionCallingFrom:@"MX"]);
         
-        NBPhoneNumber *italianFixedLineNumber = [phoneUtil parseAndKeepRawInput:@"0212345678" defaultRegion:@"IT" error:&aError];
+        NBPhoneNumber *italianFixedLineNumber = [phoneUtil parseAndKeepRawInput:@"0212345678" defaultRegion:@"IT" error:&anError];
         XCTAssertEqualObjects(@"02 1234 5678", [phoneUtil formatInOriginalFormat:italianFixedLineNumber regionCallingFrom:@"IT"]);
         
-        NBPhoneNumber *numberWithNationalPrefixJP = [phoneUtil parseAndKeepRawInput:@"00777012" defaultRegion:@"JP" error:&aError];
+        NBPhoneNumber *numberWithNationalPrefixJP = [phoneUtil parseAndKeepRawInput:@"00777012" defaultRegion:@"JP" error:&anError];
         XCTAssertEqualObjects(@"0077-7012", [phoneUtil formatInOriginalFormat:numberWithNationalPrefixJP regionCallingFrom:@"JP"]);
         
-        NBPhoneNumber *numberWithoutNationalPrefixJP = [phoneUtil parseAndKeepRawInput:@"0777012" defaultRegion:@"JP" error:&aError];
+        NBPhoneNumber *numberWithoutNationalPrefixJP = [phoneUtil parseAndKeepRawInput:@"0777012" defaultRegion:@"JP" error:&anError];
         XCTAssertEqualObjects(@"0777012", [phoneUtil formatInOriginalFormat:numberWithoutNationalPrefixJP regionCallingFrom:@"JP"]);
         
-        NBPhoneNumber *numberWithCarrierCodeBR = [phoneUtil parseAndKeepRawInput:@"012 3121286979" defaultRegion:@"BR" error:&aError];
+        NBPhoneNumber *numberWithCarrierCodeBR = [phoneUtil parseAndKeepRawInput:@"012 3121286979" defaultRegion:@"BR" error:&anError];
         XCTAssertEqualObjects(@"012 3121286979", [phoneUtil formatInOriginalFormat:numberWithCarrierCodeBR regionCallingFrom:@"BR"]);
         
         // The default national prefix used in this case is 045. When a number with
         // national prefix 044 is entered, we return the raw input as we don't want to
         // change the number entered.
-        NBPhoneNumber *numberWithNationalPrefixMX1 = [phoneUtil parseAndKeepRawInput:@"044(33)1234-5678" defaultRegion:@"MX" error:&aError];
+        NBPhoneNumber *numberWithNationalPrefixMX1 = [phoneUtil parseAndKeepRawInput:@"044(33)1234-5678" defaultRegion:@"MX" error:&anError];
         XCTAssertEqualObjects(@"044(33)1234-5678", [phoneUtil formatInOriginalFormat:numberWithNationalPrefixMX1 regionCallingFrom:@"MX"]);
         
-        NBPhoneNumber *numberWithNationalPrefixMX2 = [phoneUtil parseAndKeepRawInput:@"045(33)1234-5678" defaultRegion:@"MX" error:&aError];
+        NBPhoneNumber *numberWithNationalPrefixMX2 = [phoneUtil parseAndKeepRawInput:@"045(33)1234-5678" defaultRegion:@"MX" error:&anError];
         XCTAssertEqualObjects(@"045 33 1234 5678", [phoneUtil formatInOriginalFormat:numberWithNationalPrefixMX2 regionCallingFrom:@"MX"]);
         
         // The default international prefix used in this case is 0011. When a number
         // with international prefix 0012 is entered, we return the raw input as we
         // don't want to change the number entered.
-        id outOfCountryNumberFromAU1 = [phoneUtil parseAndKeepRawInput:@"0012 16502530000" defaultRegion:@"AU" error:&aError];
+        id outOfCountryNumberFromAU1 = [phoneUtil parseAndKeepRawInput:@"0012 16502530000" defaultRegion:@"AU" error:&anError];
         XCTAssertEqualObjects(@"0012 16502530000", [phoneUtil formatInOriginalFormat:outOfCountryNumberFromAU1 regionCallingFrom:@"AU"]);
         
-        id outOfCountryNumberFromAU2 = [phoneUtil parseAndKeepRawInput:@"0011 16502530000" defaultRegion:@"AU" error:&aError];
+        id outOfCountryNumberFromAU2 = [phoneUtil parseAndKeepRawInput:@"0011 16502530000" defaultRegion:@"AU" error:&anError];
         XCTAssertEqualObjects(@"0011 1 650 253 0000", [phoneUtil formatInOriginalFormat:outOfCountryNumberFromAU2 regionCallingFrom:@"AU"]);
         
         // Test the star sign is not removed from or added to the original input by
         // this method.
-        id starNumber = [phoneUtil parseAndKeepRawInput:@"*1234" defaultRegion:@"JP" error:&aError];
+        id starNumber = [phoneUtil parseAndKeepRawInput:@"*1234" defaultRegion:@"JP" error:&anError];
         XCTAssertEqualObjects(@"*1234", [phoneUtil formatInOriginalFormat:starNumber regionCallingFrom:@"JP"]);
         
-        NBPhoneNumber *numberWithoutStar = [phoneUtil parseAndKeepRawInput:@"1234" defaultRegion:@"JP" error:&aError];
+        NBPhoneNumber *numberWithoutStar = [phoneUtil parseAndKeepRawInput:@"1234" defaultRegion:@"JP" error:&anError];
         XCTAssertEqualObjects(@"1234", [phoneUtil formatInOriginalFormat:numberWithoutStar regionCallingFrom:@"JP"]);
         
         // Test an invalid national number without raw input is just formatted as the
@@ -1790,14 +1790,14 @@
         NSString *numberToFill = @"";
 
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             XCTAssertEqualObjects(countryCallingCode, [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
-                                                                   nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&aError]);
+                                                                   nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&anError]);
             XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITH_IDD, [number.countryCodeSource intValue]);
             // Should strip and normalize national significant number.
             XCTAssertEqualObjects(strippedNumber, numberToFill);
-            if (aError)
-                XCTFail(@"Should not have thrown an exception: %@", aError.description);
+            if (anError)
+                XCTFail(@"Should not have thrown an exception: %@", anError.description);
         }
         XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITH_IDD, [number.countryCodeSource intValue], @"Did not figure out CountryCodeSource correctly");
         // Should strip and normalize national significant number.
@@ -1831,13 +1831,13 @@
         phoneNumber = @"0119991123456789";
         numberToFill = @"";
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
-                                nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&aError];
-            if (aError == nil)
+                                nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&anError];
+            if (anError == nil)
                 XCTFail(@"Should have thrown an exception, no valid country calling code present.");
             else // Expected.
-                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", aError.domain);
+                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", anError.domain);
         }
         
         number = [[NBPhoneNumber alloc] init];
@@ -1845,9 +1845,9 @@
         countryCallingCode = @1;
         numberToFill = @"";
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             XCTAssertEqualObjects(countryCallingCode, [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
-                                                                   nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&aError],
+                                                                   nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&anError],
                                  @"Should have extracted the country calling code of the region passed in");
             XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITHOUT_PLUS_SIGN, [number.countryCodeSource intValue], @"Did not figure out CountryCodeSource correctly");
         }
@@ -1857,18 +1857,18 @@
         countryCallingCode = @1;
         numberToFill = @"";
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             XCTAssertEqualObjects(countryCallingCode, [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
-                                                                   nationalNumber:&numberToFill keepRawInput:NO phoneNumber:&number error:&aError]);
+                                                                   nationalNumber:&numberToFill keepRawInput:NO phoneNumber:&number error:&anError]);
         }
                 
         number = [[NBPhoneNumber alloc] init];
         phoneNumber = @"(1 610) 619 446";
         numberToFill = @"";
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             XCTAssertEqualObjects(@0, [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
-                                                          nationalNumber:&numberToFill keepRawInput:NO phoneNumber:&number error:&aError]);
+                                                          nationalNumber:&numberToFill keepRawInput:NO phoneNumber:&number error:&anError]);
             XCTAssertFalse(number.countryCodeSource != nil, @"Should not contain CountryCodeSource.");
         }
         
@@ -1876,9 +1876,9 @@
         phoneNumber = @"(1 610) 619";
         numberToFill = @"";
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             XCTAssertEqual(@0, [phoneUtil maybeExtractCountryCode:phoneNumber metadata:metadata
-                                                          nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&aError]);
+                                                          nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&anError]);
             XCTAssertEqual(NBECountryCodeSourceFROM_DEFAULT_COUNTRY, [number.countryCodeSource intValue]);
         }
     }
@@ -1886,96 +1886,96 @@
 
     #pragma mark - testParseNationalNumber
     {
-        NSError *aError;
+        NSError *anError;
         NSLog(@"-------------- testParseNationalNumber");
         // National prefix attached.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"033316005" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"33316005" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"033316005" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"33316005" defaultRegion:@"NZ" error:&anError]]);
         
         // National prefix attached and some formatting present.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"03-331 6005" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"03 331 6005" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"03-331 6005" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"03 331 6005" defaultRegion:@"NZ" error:&anError]]);
         
         // Test parsing RFC3966 format with a phone context.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:03-331-6005;phone-context=+64" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:331-6005;phone-context=+64-3" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:331-6005;phone-context=+64-3" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:03-331-6005;phone-context=+64" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:331-6005;phone-context=+64-3" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:331-6005;phone-context=+64-3" defaultRegion:@"US" error:&anError]]);
                       
         // Test parsing RFC3966 format with optional user-defined parameters. The
         // parameters will appear after the context if present.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:03-331-6005;phone-context=+64;a=%A1" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:03-331-6005;phone-context=+64;a=%A1" defaultRegion:@"NZ" error:&anError]]);
         
         // Test parsing RFC3966 with an ISDN subaddress.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:03-331-6005;isub=12345;phone-context=+64" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:+64-3-331-6005;isub=12345" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:03-331-6005;isub=12345;phone-context=+64" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:+64-3-331-6005;isub=12345" defaultRegion:@"NZ" error:&anError]]);
 
         // Testing international prefixes.
         // Should strip country calling code.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"0064 3 331 6005" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"0064 3 331 6005" defaultRegion:@"NZ" error:&anError]]);
 
         // Try again, but this time we have an international number with Region Code
         // US. It should recognise the country calling code and parse accordingly.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"01164 3 331 6005" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+64 3 331 6005" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"01164 3 331 6005" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+64 3 331 6005" defaultRegion:@"US" error:&anError]]);
         // We should ignore the leading plus here, since it is not followed by a valid
         // country code but instead is followed by the IDD for the US.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+01164 3 331 6005" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+0064 3 331 6005" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+ 00 64 3 331 6005" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+01164 3 331 6005" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+0064 3 331 6005" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+ 00 64 3 331 6005" defaultRegion:@"NZ" error:&anError]]);
         
-        XCTAssertTrue([US_LOCAL_NUMBER isEqual:[phoneUtil parse:@"tel:253-0000;phone-context=www.google.com" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([US_LOCAL_NUMBER isEqual:[phoneUtil parse:@"tel:253-0000;isub=12345;phone-context=www.google.com" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([US_LOCAL_NUMBER isEqual:[phoneUtil parse:@"tel:253-0000;phone-context=www.google.com" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([US_LOCAL_NUMBER isEqual:[phoneUtil parse:@"tel:253-0000;isub=12345;phone-context=www.google.com" defaultRegion:@"US" error:&anError]]);
         // This is invalid because no "+" sign is present as part of phone-context.
         // The phone context is simply ignored in this case just as if it contains a
         // domain.
-        XCTAssertTrue([US_LOCAL_NUMBER isEqual:[phoneUtil parse:@"tel:2530000;isub=12345;phone-context=1-650" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([US_LOCAL_NUMBER isEqual:[phoneUtil parse:@"tel:2530000;isub=12345;phone-context=1234.com" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([US_LOCAL_NUMBER isEqual:[phoneUtil parse:@"tel:2530000;isub=12345;phone-context=1-650" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([US_LOCAL_NUMBER isEqual:[phoneUtil parse:@"tel:2530000;isub=12345;phone-context=1234.com" defaultRegion:@"US" error:&anError]]);
         
         NBPhoneNumber *nzNumber = [[NBPhoneNumber alloc] init];
         [nzNumber setCountryCode:@64];
         [nzNumber setNationalNumber:@64123456];
-        XCTAssertTrue([nzNumber isEqual:[phoneUtil parse:@"64(0)64123456" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([nzNumber isEqual:[phoneUtil parse:@"64(0)64123456" defaultRegion:@"NZ" error:&anError]]);
         // Check that using a '/' is fine in a phone number.
-        XCTAssertTrue([DE_NUMBER isEqual:[phoneUtil parse:@"301/23456" defaultRegion:@"DE" error:&aError]]);
+        XCTAssertTrue([DE_NUMBER isEqual:[phoneUtil parse:@"301/23456" defaultRegion:@"DE" error:&anError]]);
         
         NBPhoneNumber *usNumber = [[NBPhoneNumber alloc] init];
         // Check it doesn't use the '1' as a country calling code when parsing if the
         // phone number was already possible.
         [usNumber setCountryCode:@1];
         [usNumber setNationalNumber:@1234567890];
-        XCTAssertTrue([usNumber isEqual:[phoneUtil parse:@"123-456-7890" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([usNumber isEqual:[phoneUtil parse:@"123-456-7890" defaultRegion:@"US" error:&anError]]);
         
         // Test star numbers. Although this is not strictly valid, we would like to
         // make sure we can parse the output we produce when formatting the number.
-        XCTAssertTrue([JP_STAR_NUMBER isEqual:[phoneUtil parse:@"+81 *2345" defaultRegion:@"JP" error:&aError]]);
+        XCTAssertTrue([JP_STAR_NUMBER isEqual:[phoneUtil parse:@"+81 *2345" defaultRegion:@"JP" error:&anError]]);
         
         NBPhoneNumber *shortNumber = [[NBPhoneNumber alloc] init];
         [shortNumber setCountryCode:@64];
         [shortNumber setNationalNumber:@12];
-        XCTAssertTrue([shortNumber isEqual:[phoneUtil parse:@"12" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([shortNumber isEqual:[phoneUtil parse:@"12" defaultRegion:@"NZ" error:&anError]]);
     }
 
 
     #pragma mark - testParseNumberWithAlphaCharacters
     {
-        NSError *aError;
+        NSError *anError;
         NSLog(@"-------------- testParseNumberWithAlphaCharacters");
         // Test case with alpha characters.
         NBPhoneNumber *tollfreeNumber = [[NBPhoneNumber alloc] init];
         [tollfreeNumber setCountryCode:@64];
         [tollfreeNumber setNationalNumber:@800332005];
-        XCTAssertTrue([tollfreeNumber isEqual:[phoneUtil parse:@"0800 DDA 005" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([tollfreeNumber isEqual:[phoneUtil parse:@"0800 DDA 005" defaultRegion:@"NZ" error:&anError]]);
         
         NBPhoneNumber *premiumNumber = [[NBPhoneNumber alloc] init];
         [premiumNumber setCountryCode:@64];
         [premiumNumber setNationalNumber:@9003326005];
-        XCTAssertTrue([premiumNumber isEqual:[phoneUtil parse:@"0900 DDA 6005" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([premiumNumber isEqual:[phoneUtil parse:@"0900 DDA 6005" defaultRegion:@"NZ" error:&anError]]);
         // Not enough alpha characters for them to be considered intentional, so they
         // are stripped.
-        XCTAssertTrue([premiumNumber isEqual:[phoneUtil parse:@"0900 332 6005a" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([premiumNumber isEqual:[phoneUtil parse:@"0900 332 600a5" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([premiumNumber isEqual:[phoneUtil parse:@"0900 332 600A5" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([premiumNumber isEqual:[phoneUtil parse:@"0900 a332 600A5" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([premiumNumber isEqual:[phoneUtil parse:@"0900 332 6005a" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([premiumNumber isEqual:[phoneUtil parse:@"0900 332 600a5" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([premiumNumber isEqual:[phoneUtil parse:@"0900 332 600A5" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([premiumNumber isEqual:[phoneUtil parse:@"0900 a332 600A5" defaultRegion:@"NZ" error:&anError]]);
     }
     
         
@@ -1992,12 +1992,12 @@
         
         maliciousNumber = [maliciousNumber stringByAppendingString:@"12222-33-244 extensioB 343+"];
         {
-            NSError *aError = nil;
-            [phoneUtil parse:maliciousNumber defaultRegion:@"US" error:&aError];
-            if (aError == nil) {
+            NSError *anError = nil;
+            [phoneUtil parse:maliciousNumber defaultRegion:@"US" error:&anError];
+            if (anError == nil) {
                 XCTFail(@"This should not parse without throwing an exception %@", maliciousNumber);
             } else {
-                XCTAssertEqualObjects(@"TOO_LONG", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"TOO_LONG", anError.domain, @"Wrong error type stored in exception.");
             }
         }
 
@@ -2010,12 +2010,12 @@
         [maliciousNumberWithAlmostExt stringByAppendingString:@" extensiOB 345"];
         
         {
-            NSError *aError = nil;
-            [phoneUtil parse:maliciousNumberWithAlmostExt defaultRegion:@"US" error:&aError];
-            if (aError == nil) {
+            NSError *anError = nil;
+            [phoneUtil parse:maliciousNumberWithAlmostExt defaultRegion:@"US" error:&anError];
+            if (anError == nil) {
                 XCTFail(@"This should not parse without throwing an exception %@", maliciousNumberWithAlmostExt);
             } else {
-                XCTAssertEqualObjects(@"TOO_LONG", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"TOO_LONG", anError.domain, @"Wrong error type stored in exception.");
             }
         }
     }
@@ -2023,38 +2023,38 @@
 
     #pragma mark - testParseWithInternationalPrefixes
     {
-        NSError *aError = nil;
+        NSError *anError = nil;
         NSLog(@"-------------- testParseWithInternationalPrefixes");
-        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"+1 (650) 253-0000" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([INTERNATIONAL_TOLL_FREE isEqual:[phoneUtil parse:@"011 800 1234 5678" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"1-650-253-0000" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"+1 (650) 253-0000" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([INTERNATIONAL_TOLL_FREE isEqual:[phoneUtil parse:@"011 800 1234 5678" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"1-650-253-0000" defaultRegion:@"US" error:&anError]]);
         // Calling the US number from Singapore by using different service providers
         // 1st test: calling using SingTel IDD service (IDD is 001)
-        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"0011-650-253-0000" defaultRegion:@"SG" error:&aError]]);
+        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"0011-650-253-0000" defaultRegion:@"SG" error:&anError]]);
         // 2nd test: calling using StarHub IDD service (IDD is 008)
-        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"0081-650-253-0000" defaultRegion:@"SG" error:&aError]]);
+        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"0081-650-253-0000" defaultRegion:@"SG" error:&anError]]);
         // 3rd test: calling using SingTel V019 service (IDD is 019)
-        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"0191-650-253-0000" defaultRegion:@"SG" error:&aError]]);
+        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"0191-650-253-0000" defaultRegion:@"SG" error:&anError]]);
         // Calling the US number from Poland
-        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"0~01-650-253-0000" defaultRegion:@"PL" error:&aError]]);
+        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"0~01-650-253-0000" defaultRegion:@"PL" error:&anError]]);
         // Using '++' at the start.
-        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"++1 (650) 253-0000" defaultRegion:@"PL" error:&aError]]);
+        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"++1 (650) 253-0000" defaultRegion:@"PL" error:&anError]]);
     }
 
     
     #pragma mark - testParseNonAscii
     {
-        NSError *aError = nil;
+        NSError *anError = nil;
         NSLog(@"-------------- testParseNonAscii");
         // Using a full-width plus sign.
-        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"\uFF0B1 (650) 253-0000" defaultRegion:@"SG" error:&aError]]);
+        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"\uFF0B1 (650) 253-0000" defaultRegion:@"SG" error:&anError]]);
         // Using a soft hyphen U+00AD.
-        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"1 (650) 253\u00AD-0000" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"1 (650) 253\u00AD-0000" defaultRegion:@"US" error:&anError]]);
         // The whole number, including punctuation, is here represented in full-width
         // form.
-        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"\uFF0B\uFF11\u3000\uFF08\uFF16\uFF15\uFF10\uFF09\u3000\uFF12\uFF15\uFF13\uFF0D\uFF10\uFF10\uFF10\uFF10" defaultRegion:@"SG" error:&aError]]);
+        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"\uFF0B\uFF11\u3000\uFF08\uFF16\uFF15\uFF10\uFF09\u3000\uFF12\uFF15\uFF13\uFF0D\uFF10\uFF10\uFF10\uFF10" defaultRegion:@"SG" error:&anError]]);
         // Using U+30FC dash instead.
-        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"\uFF0B\uFF11\u3000\uFF08\uFF16\uFF15\uFF10\uFF09\u3000\uFF12\uFF15\uFF13\u30FC\uFF10\uFF10\uFF10\uFF10" defaultRegion:@"SG" error:&aError]]);
+        XCTAssertTrue([US_NUMBER isEqual:[phoneUtil parse:@"\uFF0B\uFF11\u3000\uFF08\uFF16\uFF15\uFF10\uFF09\u3000\uFF12\uFF15\uFF13\u30FC\uFF10\uFF10\uFF10\uFF10" defaultRegion:@"SG" error:&anError]]);
         
         // Using a very strange decimal digit range (Mongolian digits).
         // TODO(user): Support Mongolian digits
@@ -2066,60 +2066,60 @@
     
     #pragma mark - testParseWithLeadingZero
     {
-        NSError *aError = nil;
+        NSError *anError = nil;
         NSLog(@"-------------- testParseWithLeadingZero");
-        XCTAssertTrue([IT_NUMBER isEqual:[phoneUtil parse:@"+39 02-36618 300" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([IT_NUMBER isEqual:[phoneUtil parse:@"02-36618 300" defaultRegion:@"IT" error:&aError]]);
-        XCTAssertTrue([IT_MOBILE isEqual:[phoneUtil parse:@"345 678 901" defaultRegion:@"IT" error:&aError]]);
+        XCTAssertTrue([IT_NUMBER isEqual:[phoneUtil parse:@"+39 02-36618 300" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([IT_NUMBER isEqual:[phoneUtil parse:@"02-36618 300" defaultRegion:@"IT" error:&anError]]);
+        XCTAssertTrue([IT_MOBILE isEqual:[phoneUtil parse:@"345 678 901" defaultRegion:@"IT" error:&anError]]);
     }
 
     
     #pragma mark - testParseNationalNumberArgentina
     {
-        NSError *aError = nil;
+        NSError *anError = nil;
         NSLog(@"-------------- testParseNationalNumberArgentina");
         // Test parsing mobile numbers of Argentina.
         NBPhoneNumber *arNumber = [[NBPhoneNumber alloc] init];
         [arNumber setCountryCode:@54];
         [arNumber setNationalNumber:@93435551212];
-        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"+54 9 343 555 1212" defaultRegion:@"AR" error:&aError]]);
-        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"0343 15 555 1212" defaultRegion:@"AR" error:&aError]]);
+        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"+54 9 343 555 1212" defaultRegion:@"AR" error:&anError]]);
+        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"0343 15 555 1212" defaultRegion:@"AR" error:&anError]]);
         
         arNumber = [[NBPhoneNumber alloc] init];
         [arNumber setCountryCode:@54];
         [arNumber setNationalNumber:@93715654320];
-        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"+54 9 3715 65 4320" defaultRegion:@"AR" error:&aError]]);
-        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"03715 15 65 4320" defaultRegion:@"AR" error:&aError]]);
-        XCTAssertTrue([AR_MOBILE isEqual:[phoneUtil parse:@"911 876 54321" defaultRegion:@"AR" error:&aError]]);
+        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"+54 9 3715 65 4320" defaultRegion:@"AR" error:&anError]]);
+        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"03715 15 65 4320" defaultRegion:@"AR" error:&anError]]);
+        XCTAssertTrue([AR_MOBILE isEqual:[phoneUtil parse:@"911 876 54321" defaultRegion:@"AR" error:&anError]]);
         
         // Test parsing fixed-line numbers of Argentina.
-        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"+54 11 8765 4321" defaultRegion:@"AR" error:&aError]]);
-        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"011 8765 4321" defaultRegion:@"AR" error:&aError]]);
+        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"+54 11 8765 4321" defaultRegion:@"AR" error:&anError]]);
+        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"011 8765 4321" defaultRegion:@"AR" error:&anError]]);
         
         arNumber = [[NBPhoneNumber alloc] init];
         [arNumber setCountryCode:@54];
         [arNumber setNationalNumber:@3715654321];
-        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"+54 3715 65 4321" defaultRegion:@"AR" error:&aError]]);
-        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"03715 65 4321" defaultRegion:@"AR" error:&aError]]);
+        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"+54 3715 65 4321" defaultRegion:@"AR" error:&anError]]);
+        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"03715 65 4321" defaultRegion:@"AR" error:&anError]]);
         
         arNumber = [[NBPhoneNumber alloc] init];
         [arNumber setCountryCode:@54];
         [arNumber setNationalNumber:@2312340000];
-        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"+54 23 1234 0000" defaultRegion:@"AR" error:&aError]]);
-        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"023 1234 0000" defaultRegion:@"AR" error:&aError]]);
+        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"+54 23 1234 0000" defaultRegion:@"AR" error:&anError]]);
+        XCTAssertTrue([arNumber isEqual:[phoneUtil parse:@"023 1234 0000" defaultRegion:@"AR" error:&anError]]);
     }
 
     
     #pragma mark - testParseWithXInNumber
     {
-        NSError *aError = nil;
+        NSError *anError = nil;
         NSLog(@"-------------- testParseWithXInNumber");
         // Test that having an 'x' in the phone number at the start is ok and that it
         // just gets removed.
-        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"01187654321" defaultRegion:@"AR" error:&aError]]);
-        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"(0) 1187654321" defaultRegion:@"AR" error:&aError]]);
-        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"0 1187654321" defaultRegion:@"AR" error:&aError]]);
-        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"(0xx) 1187654321" defaultRegion:@"AR" error:&aError]]);
+        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"01187654321" defaultRegion:@"AR" error:&anError]]);
+        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"(0) 1187654321" defaultRegion:@"AR" error:&anError]]);
+        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"0 1187654321" defaultRegion:@"AR" error:&anError]]);
+        XCTAssertTrue([AR_NUMBER isEqual:[phoneUtil parse:@"(0xx) 1187654321" defaultRegion:@"AR" error:&anError]]);
         
         id arFromUs = [[NBPhoneNumber alloc] init];
         [arFromUs setCountryCode:@54];
@@ -2129,30 +2129,30 @@
         // extension, as we allow extensions up to 7 digits. This assumption is okay
         // for now as all the countries where a carrier selection code is written in
         // the form of xx have a national significant number of length larger than 7.
-        XCTAssertTrue([arFromUs isEqual:[phoneUtil parse:@"011xx5481429712" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([arFromUs isEqual:[phoneUtil parse:@"011xx5481429712" defaultRegion:@"US" error:&anError]]);
     }
 
     
     #pragma mark - testParseNumbersMexico
     {
-        NSError *aError = nil;
+        NSError *anError = nil;
         NSLog(@"-------------- testParseNumbersMexico");
         // Test parsing fixed-line numbers of Mexico.
         
         id mxNumber = [[NBPhoneNumber alloc] init];
         [mxNumber setCountryCode:@52];
         [mxNumber setNationalNumber:@4499780001];
-        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"+52 (449)978-0001" defaultRegion:@"MX" error:&aError]]);
-        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"01 (449)978-0001" defaultRegion:@"MX" error:&aError]]);
-        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"(449)978-0001" defaultRegion:@"MX" error:&aError]]);
+        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"+52 (449)978-0001" defaultRegion:@"MX" error:&anError]]);
+        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"01 (449)978-0001" defaultRegion:@"MX" error:&anError]]);
+        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"(449)978-0001" defaultRegion:@"MX" error:&anError]]);
         
         // Test parsing mobile numbers of Mexico.
         mxNumber = [[NBPhoneNumber alloc] init];
         [mxNumber setCountryCode:@52];
         [mxNumber setNationalNumber:@13312345678];
-        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"+52 1 33 1234-5678" defaultRegion:@"MX" error:&aError]]);
-        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"044 (33) 1234-5678" defaultRegion:@"MX" error:&aError]]);
-        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"045 33 1234-5678" defaultRegion:@"MX" error:&aError]]);
+        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"+52 1 33 1234-5678" defaultRegion:@"MX" error:&anError]]);
+        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"044 (33) 1234-5678" defaultRegion:@"MX" error:&anError]]);
+        XCTAssertTrue([mxNumber isEqual:[phoneUtil parse:@"045 33 1234-5678" defaultRegion:@"MX" error:&anError]]);
     }
 
     
@@ -2160,267 +2160,267 @@
     {
         NSLog(@"-------------- testFailedParseOnInvalidNumbers");
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *sentencePhoneNumber = @"This is not a phone number";
-            [phoneUtil parse:sentencePhoneNumber defaultRegion:@"NZ" error:&aError];
+            [phoneUtil parse:sentencePhoneNumber defaultRegion:@"NZ" error:&anError];
             
-            if (aError == nil)
+            if (anError == nil)
                 XCTFail(@"This should not parse without throwing an exception %@", sentencePhoneNumber);
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"NOT_A_NUMBER", aError.domain ,@"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain ,@"Wrong error type stored in exception.");
         }
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *sentencePhoneNumber = @"1 Still not a number";
-            [phoneUtil parse:sentencePhoneNumber defaultRegion:@"NZ" error:&aError];
+            [phoneUtil parse:sentencePhoneNumber defaultRegion:@"NZ" error:&anError];
             
-            if (aError == nil)
+            if (anError == nil)
                 XCTFail(@"This should not parse without throwing an exception %@", sentencePhoneNumber);
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"NOT_A_NUMBER", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *sentencePhoneNumber = @"1 MICROSOFT";
-            [phoneUtil parse:sentencePhoneNumber defaultRegion:@"NZ" error:&aError];
+            [phoneUtil parse:sentencePhoneNumber defaultRegion:@"NZ" error:&anError];
             
-            if (aError == nil)
+            if (anError == nil)
                 XCTFail(@"This should not parse without throwing an exception %@", sentencePhoneNumber);
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"NOT_A_NUMBER", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain, @"Wrong error type stored in exception.");
         }
                    
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *sentencePhoneNumber = @"12 MICROSOFT";
-            [phoneUtil parse:sentencePhoneNumber defaultRegion:@"NZ" error:&aError];
+            [phoneUtil parse:sentencePhoneNumber defaultRegion:@"NZ" error:&anError];
             
-            if (aError == nil)
+            if (anError == nil)
                 XCTFail(@"This should not parse without throwing an exception %@", sentencePhoneNumber);
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"NOT_A_NUMBER", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain, @"Wrong error type stored in exception.");
         }
                    
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *tooLongPhoneNumber = @"01495 72553301873 810104";
-            [phoneUtil parse:tooLongPhoneNumber defaultRegion:@"GB" error:&aError];
+            [phoneUtil parse:tooLongPhoneNumber defaultRegion:@"GB" error:&anError];
             
-            if (aError == nil)
+            if (anError == nil)
                 XCTFail(@"This should not parse without throwing an exception %@", tooLongPhoneNumber);
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"TOO_LONG", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"TOO_LONG", anError.domain, @"Wrong error type stored in exception.");
         }
                    
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *plusMinusPhoneNumber = @"+---";
-            [phoneUtil parse:plusMinusPhoneNumber defaultRegion:@"DE" error:&aError];
+            [phoneUtil parse:plusMinusPhoneNumber defaultRegion:@"DE" error:&anError];
             
-            if (aError == nil)
+            if (anError == nil)
                 XCTFail(@"This should not parse without throwing an exception %@", plusMinusPhoneNumber);
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"NOT_A_NUMBER", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain, @"Wrong error type stored in exception.");
         }
                    
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *plusStar = @"+***";
-            [phoneUtil parse:plusStar defaultRegion:@"DE" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:plusStar defaultRegion:@"DE" error:&anError];
+            if (anError == nil)
                 XCTFail(@"This should not parse without throwing an exception %@", plusStar);
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"NOT_A_NUMBER", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *plusStarPhoneNumber = @"+*******91";
-            [phoneUtil parse:plusStarPhoneNumber defaultRegion:@"DE" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:plusStarPhoneNumber defaultRegion:@"DE" error:&anError];
+            if (anError == nil)
                 XCTFail(@"This should not parse without throwing an exception %@", plusStarPhoneNumber);
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"NOT_A_NUMBER", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *tooShortPhoneNumber = @"+49 0";
-            [phoneUtil parse:tooShortPhoneNumber defaultRegion:@"DE" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:tooShortPhoneNumber defaultRegion:@"DE" error:&anError];
+            if (anError == nil)
                 XCTFail(@"This should not parse without throwing an exception %@", tooShortPhoneNumber);
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"TOO_SHORT_NSN", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"TOO_SHORT_NSN", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *invalidcountryCode = @"+210 3456 56789";
-            [phoneUtil parse:invalidcountryCode defaultRegion:@"NZ" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:invalidcountryCode defaultRegion:@"NZ" error:&anError];
+            if (anError == nil)
                 XCTFail(@"This is not a recognised region code: should fail: %@", invalidcountryCode);
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *plusAndIddAndInvalidcountryCode = @"+ 00 210 3 331 6005";
-            [phoneUtil parse:plusAndIddAndInvalidcountryCode defaultRegion:@"NZ" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:plusAndIddAndInvalidcountryCode defaultRegion:@"NZ" error:&anError];
+            if (anError == nil)
                 XCTFail(@"This should not parse without throwing an exception.");
             else {
                 // Expected this exception. 00 is a correct IDD, but 210 is not a valid
                 // country code.
-                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", anError.domain, @"Wrong error type stored in exception.");
             }
         }
                    
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *someNumber = @"123 456 7890";
-            [phoneUtil parse:someNumber defaultRegion:@"ZZ" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:someNumber defaultRegion:@"ZZ" error:&anError];
+            if (anError == nil)
                 XCTFail(@"Unknown region code not allowed: should fail.");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *someNumber = @"123 456 7890";
-            [phoneUtil parse:someNumber defaultRegion:@"CS" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:someNumber defaultRegion:@"CS" error:&anError];
+            if (anError == nil)
                 XCTFail(@"Deprecated region code not allowed: should fail.");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *someNumber = @"123 456 7890";
-            [phoneUtil parse:someNumber defaultRegion:nil error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:someNumber defaultRegion:nil error:&anError];
+            if (anError == nil)
                 XCTFail(@"nil region code not allowed: should fail.");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", anError.domain, @"Wrong error type stored in exception.");
         }
         
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *someNumber = @"0044------";
-            [phoneUtil parse:someNumber defaultRegion:@"GB" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:someNumber defaultRegion:@"GB" error:&anError];
+            if (anError == nil)
                 XCTFail(@"No number provided, only region code: should fail");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"TOO_SHORT_AFTER_IDD", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"TOO_SHORT_AFTER_IDD", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *someNumber = @"0044";
-            [phoneUtil parse:someNumber defaultRegion:@"GB" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:someNumber defaultRegion:@"GB" error:&anError];
+            if (anError == nil)
                 XCTFail(@"No number provided, only region code: should fail");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"TOO_SHORT_AFTER_IDD", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"TOO_SHORT_AFTER_IDD", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *someNumber = @"011";
-            [phoneUtil parse:someNumber defaultRegion:@"US" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:someNumber defaultRegion:@"US" error:&anError];
+            if (anError == nil)
                 XCTFail(@"Only IDD provided - should fail.");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"TOO_SHORT_AFTER_IDD", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"TOO_SHORT_AFTER_IDD", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *someNumber = @"0119";
-            [phoneUtil parse:someNumber defaultRegion:@"US" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:someNumber defaultRegion:@"US" error:&anError];
+            if (anError == nil)
                 XCTFail(@"Only IDD provided and then 9 - should fail.");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"TOO_SHORT_AFTER_IDD", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"TOO_SHORT_AFTER_IDD", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *emptyNumber = @"";
             // Invalid region.
-            [phoneUtil parse:emptyNumber defaultRegion:@"ZZ" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:emptyNumber defaultRegion:@"ZZ" error:&anError];
+            if (anError == nil)
                 XCTFail(@"Empty string - should fail.");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"NOT_A_NUMBER", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             // Invalid region.
-            [phoneUtil parse:nil defaultRegion:@"ZZ" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:nil defaultRegion:@"ZZ" error:&anError];
+            if (anError == nil)
                 XCTFail(@"nil string - should fail.");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"NOT_A_NUMBER", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
-            [phoneUtil parse:nil defaultRegion:@"US" error:&aError];
-            if (aError == nil)
+            NSError *anError = nil;
+            [phoneUtil parse:nil defaultRegion:@"US" error:&anError];
+            if (anError == nil)
                 XCTFail(@"nil string - should fail.");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"NOT_A_NUMBER", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             NSString *domainRfcPhoneContext = @"tel:555-1234;phone-context=www.google.com";
-            [phoneUtil parse:domainRfcPhoneContext defaultRegion:@"ZZ" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:domainRfcPhoneContext defaultRegion:@"ZZ" error:&anError];
+            if (anError == nil)
                 XCTFail(@"Unknown region code not allowed: should fail.");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", anError.domain, @"Wrong error type stored in exception.");
         }
         
         {
-            NSError *aError = nil;
+            NSError *anError = nil;
             // This is invalid because no '+' sign is present as part of phone-context.
             // This should not succeed in being parsed.
             
             NSString *invalidRfcPhoneContext = @"tel:555-1234;phone-context=1-331";
-            [phoneUtil parse:invalidRfcPhoneContext defaultRegion:@"ZZ" error:&aError];
-            if (aError == nil)
+            [phoneUtil parse:invalidRfcPhoneContext defaultRegion:@"ZZ" error:&anError];
+            if (anError == nil)
                 XCTFail(@"Unknown region code not allowed: should fail.");
             else
                 // Expected this exception.
-                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", anError.domain, @"Wrong error type stored in exception.");
         }
     }
     
@@ -2428,22 +2428,22 @@
     #pragma mark - testParseNumbersWithPlusWithNoRegion
     {
         NSLog(@"-------------- testParseNumbersWithPlusWithNoRegion");
-        NSError *aError;
+        NSError *anError;
         // @"ZZ is allowed only if the number starts with a '+' - then the
         // country calling code can be calculated.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+64 3 331 6005" defaultRegion:@"ZZ" error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+64 3 331 6005" defaultRegion:@"ZZ" error:&anError]]);
         // Test with full-width plus.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"\uFF0B64 3 331 6005" defaultRegion:@"ZZ" error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"\uFF0B64 3 331 6005" defaultRegion:@"ZZ" error:&anError]]);
         // Test with normal plus but leading characters that need to be stripped.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"Tel: +64 3 331 6005" defaultRegion:@"ZZ" error:&aError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+64 3 331 6005" defaultRegion:nil error:&aError]]);
-        XCTAssertTrue([INTERNATIONAL_TOLL_FREE isEqual:[phoneUtil parse:@"+800 1234 5678" defaultRegion:nil error:&aError]]);
-        XCTAssertTrue([UNIVERSAL_PREMIUM_RATE isEqual:[phoneUtil parse:@"+979 123 456 789" defaultRegion:nil error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"Tel: +64 3 331 6005" defaultRegion:@"ZZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"+64 3 331 6005" defaultRegion:nil error:&anError]]);
+        XCTAssertTrue([INTERNATIONAL_TOLL_FREE isEqual:[phoneUtil parse:@"+800 1234 5678" defaultRegion:nil error:&anError]]);
+        XCTAssertTrue([UNIVERSAL_PREMIUM_RATE isEqual:[phoneUtil parse:@"+979 123 456 789" defaultRegion:nil error:&anError]]);
         
         // Test parsing RFC3966 format with a phone context.
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:03-331-6005;phone-context=+64" defaultRegion:@"ZZ" error:&aError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"  tel:03-331-6005;phone-context=+64" defaultRegion:@"ZZ" error:&aError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:03-331-6005;isub=12345;phone-context=+64" defaultRegion:@"ZZ" error:&aError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:03-331-6005;phone-context=+64" defaultRegion:@"ZZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"  tel:03-331-6005;phone-context=+64" defaultRegion:@"ZZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[phoneUtil parse:@"tel:03-331-6005;isub=12345;phone-context=+64" defaultRegion:@"ZZ" error:&anError]]);
         
         // It is important that we set the carrier code to an empty string, since we
         // used ParseAndKeepRawInput and no carrier code was found.
@@ -2452,36 +2452,36 @@
         [nzNumberWithRawInput setRawInput:@"+64 3 331 6005"];
         [nzNumberWithRawInput setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN]];
         [nzNumberWithRawInput setPreferredDomesticCarrierCode:@""];
-        XCTAssertTrue([nzNumberWithRawInput isEqual:[phoneUtil parseAndKeepRawInput:@"+64 3 331 6005" defaultRegion:@"ZZ" error:&aError]]);
+        XCTAssertTrue([nzNumberWithRawInput isEqual:[phoneUtil parseAndKeepRawInput:@"+64 3 331 6005" defaultRegion:@"ZZ" error:&anError]]);
         // nil is also allowed for the region code in these cases.
-        XCTAssertTrue([nzNumberWithRawInput isEqual:[phoneUtil parseAndKeepRawInput:@"+64 3 331 6005" defaultRegion:nil error:&aError]]);
+        XCTAssertTrue([nzNumberWithRawInput isEqual:[phoneUtil parseAndKeepRawInput:@"+64 3 331 6005" defaultRegion:nil error:&anError]]);
     }
 
 
     #pragma mark - testParseExtensions
     {
-        NSError *aError = nil;
+        NSError *anError = nil;
         NSLog(@"-------------- testParseExtensions");
         NBPhoneNumber *nzNumber = [[NBPhoneNumber alloc] init];
         [nzNumber setCountryCode:@64];
         [nzNumber setNationalNumber:@33316005];
         [nzNumber setExtension:@"3456"];
-        XCTAssertTrue([nzNumber isEqual:[phoneUtil parse:@"03 331 6005 ext 3456" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([nzNumber isEqual:[phoneUtil parse:@"03-3316005x3456" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([nzNumber isEqual:[phoneUtil parse:@"03-3316005 int.3456" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([nzNumber isEqual:[phoneUtil parse:@"03 3316005 #3456" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([nzNumber isEqual:[phoneUtil parse:@"03 331 6005 ext 3456" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([nzNumber isEqual:[phoneUtil parse:@"03-3316005x3456" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([nzNumber isEqual:[phoneUtil parse:@"03-3316005 int.3456" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([nzNumber isEqual:[phoneUtil parse:@"03 3316005 #3456" defaultRegion:@"NZ" error:&anError]]);
         
         // Test the following do not extract extensions:
-        XCTAssertTrue([ALPHA_NUMERIC_NUMBER isEqual:[phoneUtil parse:@"1800 six-flags" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([ALPHA_NUMERIC_NUMBER isEqual:[phoneUtil parse:@"1800 SIX FLAGS" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([ALPHA_NUMERIC_NUMBER isEqual:[phoneUtil parse:@"0~0 1800 7493 5247" defaultRegion:@"PL" error:&aError]]);
-        XCTAssertTrue([ALPHA_NUMERIC_NUMBER isEqual:[phoneUtil parse:@"(1800) 7493.5247" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([ALPHA_NUMERIC_NUMBER isEqual:[phoneUtil parse:@"1800 six-flags" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([ALPHA_NUMERIC_NUMBER isEqual:[phoneUtil parse:@"1800 SIX FLAGS" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([ALPHA_NUMERIC_NUMBER isEqual:[phoneUtil parse:@"0~0 1800 7493 5247" defaultRegion:@"PL" error:&anError]]);
+        XCTAssertTrue([ALPHA_NUMERIC_NUMBER isEqual:[phoneUtil parse:@"(1800) 7493.5247" defaultRegion:@"US" error:&anError]]);
         
         // Check that the last instance of an extension token is matched.
         
         id extnNumber = [ALPHA_NUMERIC_NUMBER copy];
         [extnNumber setExtension:@"1234"];
-        XCTAssertTrue([extnNumber isEqual:[phoneUtil parse:@"0~0 1800 7493 5247 ~1234" defaultRegion:@"PL" error:&aError]]);
+        XCTAssertTrue([extnNumber isEqual:[phoneUtil parse:@"0~0 1800 7493 5247 ~1234" defaultRegion:@"PL" error:&anError]]);
         
         // Verifying bug-fix where the last digit of a number was previously omitted
         // if it was a 0 when extracting the extension. Also verifying a few different
@@ -2491,46 +2491,46 @@
         [ukNumber setCountryCode:@44];
         [ukNumber setNationalNumber:@2034567890];
         [ukNumber setExtension:@"456"];
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890x456" defaultRegion:@"NZ" error:&aError]]);
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890x456" defaultRegion:@"GB" error:&aError]]);
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890 x456" defaultRegion:@"GB" error:&aError]]);
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890 X456" defaultRegion:@"GB" error:&aError]]);
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890 X 456" defaultRegion:@"GB" error:&aError]]);
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890 X  456" defaultRegion:@"GB" error:&aError]]);
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890 x 456  " defaultRegion:@"GB" error:&aError]]);
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890  X 456" defaultRegion:@"GB" error:&aError]]);
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44-2034567890;ext=456" defaultRegion:@"GB" error:&aError]]);
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"tel:2034567890;ext=456;phone-context=+44" defaultRegion:@"ZZ" error:&aError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890x456" defaultRegion:@"NZ" error:&anError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890x456" defaultRegion:@"GB" error:&anError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890 x456" defaultRegion:@"GB" error:&anError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890 X456" defaultRegion:@"GB" error:&anError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890 X 456" defaultRegion:@"GB" error:&anError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890 X  456" defaultRegion:@"GB" error:&anError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890 x 456  " defaultRegion:@"GB" error:&anError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44 2034567890  X 456" defaultRegion:@"GB" error:&anError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+44-2034567890;ext=456" defaultRegion:@"GB" error:&anError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"tel:2034567890;ext=456;phone-context=+44" defaultRegion:@"ZZ" error:&anError]]);
         // Full-width extension, @"extn' only.
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+442034567890\uFF45\uFF58\uFF54\uFF4E456" defaultRegion:@"GB" error:&aError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+442034567890\uFF45\uFF58\uFF54\uFF4E456" defaultRegion:@"GB" error:&anError]]);
         // 'xtn' only.
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+442034567890\uFF58\uFF54\uFF4E456" defaultRegion:@"GB" error:&aError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+442034567890\uFF58\uFF54\uFF4E456" defaultRegion:@"GB" error:&anError]]);
         // 'xt' only.
-        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+442034567890\uFF58\uFF54456" defaultRegion:@"GB" error:&aError]]);
+        XCTAssertTrue([ukNumber isEqual:[phoneUtil parse:@"+442034567890\uFF58\uFF54456" defaultRegion:@"GB" error:&anError]]);
         
         id usWithExtension = [[NBPhoneNumber alloc] init];
         [usWithExtension setCountryCode:@1];
         [usWithExtension setNationalNumber:@8009013355];
         [usWithExtension setExtension:@"7246433"];
-        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 x 7246433" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 , ext 7246433" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 ,extension 7246433" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 ,extensi\u00F3n 7246433" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 x 7246433" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 , ext 7246433" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 ,extension 7246433" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 ,extensi\u00F3n 7246433" defaultRegion:@"US" error:&anError]]);
         
         // Repeat with the small letter o with acute accent created by combining
         // characters.
-        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 ,extensio\u0301n 7246433" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 , 7246433" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 ext: 7246433" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 ,extensio\u0301n 7246433" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 , 7246433" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"(800) 901-3355 ext: 7246433" defaultRegion:@"US" error:&anError]]);
         
         // Test that if a number has two extensions specified, we ignore the second.
         id usWithTwoExtensionsNumber = [[NBPhoneNumber alloc] init];
         [usWithTwoExtensionsNumber setCountryCode:@1];
         [usWithTwoExtensionsNumber setNationalNumber:@2121231234];
         [usWithTwoExtensionsNumber setExtension:@"508"];
-        XCTAssertTrue([usWithTwoExtensionsNumber isEqual:[phoneUtil parse:@"(212)123-1234 x508/x1234" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([usWithTwoExtensionsNumber isEqual:[phoneUtil parse:@"(212)123-1234 x508/ x1234" defaultRegion:@"US" error:&aError]]);
-        XCTAssertTrue([usWithTwoExtensionsNumber isEqual:[phoneUtil parse:@"(212)123-1234 x508\\x1234" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([usWithTwoExtensionsNumber isEqual:[phoneUtil parse:@"(212)123-1234 x508/x1234" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([usWithTwoExtensionsNumber isEqual:[phoneUtil parse:@"(212)123-1234 x508/ x1234" defaultRegion:@"US" error:&anError]]);
+        XCTAssertTrue([usWithTwoExtensionsNumber isEqual:[phoneUtil parse:@"(212)123-1234 x508\\x1234" defaultRegion:@"US" error:&anError]]);
         
         // Test parsing numbers in the form (645) 123-1234-910# works, where the last
         // 3 digits before the # are an extension.
@@ -2538,21 +2538,21 @@
         [usWithExtension setCountryCode:@1];
         [usWithExtension setNationalNumber:@6451231234];
         [usWithExtension setExtension:@"910"];
-        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"+1 (645) 123 1234-910#" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"+1 (645) 123 1234-910#" defaultRegion:@"US" error:&anError]]);
         // Retry with the same number in a slightly different format.
-        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"+1 (645) 123 1234 ext. 910#" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([usWithExtension isEqual:[phoneUtil parse:@"+1 (645) 123 1234 ext. 910#" defaultRegion:@"US" error:&anError]]);
     }
     
         
     #pragma mark - testParseAndKeepRaw
     {
-        NSError *aError;
+        NSError *anError;
         NSLog(@"-------------- testParseAndKeepRaw");
         NBPhoneNumber *alphaNumericNumber = [ALPHA_NUMERIC_NUMBER copy];
         [alphaNumericNumber setRawInput:@"800 six-flags"];
         [alphaNumericNumber setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_DEFAULT_COUNTRY]];
         [alphaNumericNumber setPreferredDomesticCarrierCode:@""];
-        XCTAssertTrue([alphaNumericNumber isEqual:[phoneUtil parseAndKeepRawInput:@"800 six-flags" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([alphaNumericNumber isEqual:[phoneUtil parseAndKeepRawInput:@"800 six-flags" defaultRegion:@"US" error:&anError]]);
         
         id shorterAlphaNumber = [[NBPhoneNumber alloc] init];
         [shorterAlphaNumber setCountryCode:@1];
@@ -2560,26 +2560,26 @@
         [shorterAlphaNumber setRawInput:@"1800 six-flag"];
         [shorterAlphaNumber setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_NUMBER_WITHOUT_PLUS_SIGN]];
         [shorterAlphaNumber setPreferredDomesticCarrierCode:@""];
-        XCTAssertTrue([shorterAlphaNumber isEqual:[phoneUtil parseAndKeepRawInput:@"1800 six-flag" defaultRegion:@"US" error:&aError]]);
+        XCTAssertTrue([shorterAlphaNumber isEqual:[phoneUtil parseAndKeepRawInput:@"1800 six-flag" defaultRegion:@"US" error:&anError]]);
         
         [shorterAlphaNumber setRawInput:@"+1800 six-flag"];
         [shorterAlphaNumber setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN]];
-        XCTAssertTrue([shorterAlphaNumber isEqual:[phoneUtil parseAndKeepRawInput:@"+1800 six-flag" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([shorterAlphaNumber isEqual:[phoneUtil parseAndKeepRawInput:@"+1800 six-flag" defaultRegion:@"NZ" error:&anError]]);
         
         [alphaNumericNumber setCountryCode:@1];
         [alphaNumericNumber setNationalNumber:@8007493524];
         [alphaNumericNumber setRawInput:@"001800 six-flag"];
         [alphaNumericNumber setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_NUMBER_WITH_IDD]];
-        XCTAssertTrue([alphaNumericNumber isEqual:[phoneUtil parseAndKeepRawInput:@"001800 six-flag" defaultRegion:@"NZ" error:&aError]]);
+        XCTAssertTrue([alphaNumericNumber isEqual:[phoneUtil parseAndKeepRawInput:@"001800 six-flag" defaultRegion:@"NZ" error:&anError]]);
         
         // Invalid region code supplied.
         {
-            [phoneUtil parseAndKeepRawInput:@"123 456 7890" defaultRegion:@"CS" error:&aError];
-            if (aError == nil)
+            [phoneUtil parseAndKeepRawInput:@"123 456 7890" defaultRegion:@"CS" error:&anError];
+            if (anError == nil)
                 XCTFail(@"Deprecated region code not allowed: should fail.");
             else {
                 // Expected this exception.
-                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", aError.domain, @"Wrong error type stored in exception.");
+                XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", anError.domain, @"Wrong error type stored in exception.");
             }
         }
         
@@ -2589,7 +2589,7 @@
         [koreanNumber setRawInput:@"08122123456"];
         [koreanNumber setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_DEFAULT_COUNTRY]];
         [koreanNumber setPreferredDomesticCarrierCode:@"81"];
-        XCTAssertTrue([koreanNumber isEqual:[phoneUtil parseAndKeepRawInput:@"08122123456" defaultRegion:@"KR" error:&aError]]);
+        XCTAssertTrue([koreanNumber isEqual:[phoneUtil parseAndKeepRawInput:@"08122123456" defaultRegion:@"KR" error:&anError]]);
     }
     
         
@@ -2629,10 +2629,10 @@
         // Test simple matches where formatting is different, or leading zeroes,
         // or country calling code has been specified.
         
-        NSError *aError = nil;
+        NSError *anError = nil;
         
-        NBPhoneNumber *num1 = [phoneUtil parse:@"+64 3 331 6005" defaultRegion:@"NZ" error:&aError];
-        NBPhoneNumber *num2 = [phoneUtil parse:@"+64 03 331 6005" defaultRegion:@"NZ" error:&aError];
+        NBPhoneNumber *num1 = [phoneUtil parse:@"+64 3 331 6005" defaultRegion:@"NZ" error:&anError];
+        NBPhoneNumber *num2 = [phoneUtil parse:@"+64 03 331 6005" defaultRegion:@"NZ" error:&anError];
         XCTAssertEqual(NBEMatchTypeEXACT_MATCH, [phoneUtil isNumberMatch:num1 second:num2]);
         XCTAssertEqual(NBEMatchTypeEXACT_MATCH, [phoneUtil isNumberMatch:@"+64 3 331 6005" second:@"+64 03 331 6005"]);
         XCTAssertEqual(NBEMatchTypeEXACT_MATCH, [phoneUtil isNumberMatch:@"+800 1234 5678" second:@"+80012345678"]);

@@ -81,13 +81,13 @@
          */
         self.formattingTemplate_ = [NSMutableString stringWithString:@""];
         
-        NSError *aError = nil;
+        NSError *anError = nil;
         
         /**
          * @type {RegExp}
          * @private
          */
-        self.DIGIT_PATTERN_ = [NSRegularExpression regularExpressionWithPattern:self.DIGIT_PLACEHOLDER_ options:0 error:&aError];
+        self.DIGIT_PATTERN_ = [NSRegularExpression regularExpressionWithPattern:self.DIGIT_PLACEHOLDER_ options:0 error:&anError];
         
         /**
          * A set of characters that, if found in a national prefix formatting rules, are
@@ -97,7 +97,7 @@
          * @type {RegExp}
          * @private
          */
-        self.NATIONAL_PREFIX_SEPARATORS_PATTERN_ = [NSRegularExpression regularExpressionWithPattern:@"[- ]" options:0 error:&aError];
+        self.NATIONAL_PREFIX_SEPARATORS_PATTERN_ = [NSRegularExpression regularExpressionWithPattern:@"[- ]" options:0 error:&anError];
         
         /**
          * A pattern that is used to match character classes in regular expressions.
@@ -106,7 +106,7 @@
          * @type {RegExp}
          * @private
          */
-        self.CHARACTER_CLASS_PATTERN_ = [NSRegularExpression regularExpressionWithPattern:@"\\[([^\\[\\]])*\\]" options:0 error:&aError];
+        self.CHARACTER_CLASS_PATTERN_ = [NSRegularExpression regularExpressionWithPattern:@"\\[([^\\[\\]])*\\]" options:0 error:&anError];
         
         /**
          * Any digit in a regular expression that actually denotes a digit. For
@@ -118,7 +118,7 @@
          * @type {RegExp}
          * @private
          */
-        self.STANDALONE_DIGIT_PATTERN_ = [NSRegularExpression regularExpressionWithPattern:@"\\d(?=[^,}][^,}])" options:0 error:&aError];
+        self.STANDALONE_DIGIT_PATTERN_ = [NSRegularExpression regularExpressionWithPattern:@"\\d(?=[^,}][^,}])" options:0 error:&anError];
         
         /**
          * A pattern that is used to determine if a numberFormat under availableFormats
@@ -132,7 +132,7 @@
          * @private
          */
         NSString *eligible_format = @"^[-x‐-―−ー－-／ ­​⁠　()（）［］.\\[\\]/~⁓∼～]*(\\$\\d[-x‐-―−ー－-／ ­​⁠　()（）［］.\\[\\]/~⁓∼～]*)+$";
-        self.ELIGIBLE_FORMAT_PATTERN_ = [NSRegularExpression regularExpressionWithPattern:eligible_format options:0 error:&aError];
+        self.ELIGIBLE_FORMAT_PATTERN_ = [NSRegularExpression regularExpressionWithPattern:eligible_format options:0 error:&anError];
         
         /**
          * The pattern from numberFormat that is currently used to create

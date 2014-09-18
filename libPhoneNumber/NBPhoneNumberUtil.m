@@ -1895,10 +1895,10 @@ static NSDictionary *DIGIT_MAPPINGS;
         // the assumed national prefix is removed (777123 won't be valid in
         // Japan).
         NSString *subString = [normalizedNationalNumber substringFromIndex:nationalPrefix.length];
-        NSError *aError = nil;
-        isValid = [self isValidNumber:[self parse:subString defaultRegion:regionCode error:&aError]];
+        NSError *anError = nil;
+        isValid = [self isValidNumber:[self parse:subString defaultRegion:regionCode error:&anError]];
         
-        if (aError != nil)
+        if (anError != nil)
             return NO;
     }
     return isValid;
@@ -3520,12 +3520,12 @@ static NSDictionary *DIGIT_MAPPINGS;
  */
 - (NBPhoneNumber*)parse:(NSString*)numberToParse defaultRegion:(NSString*)defaultRegion error:(NSError**)error
 {
-    NSError *aError = nil;
-    NBPhoneNumber *phoneNumber = [self parseHelper:numberToParse defaultRegion:defaultRegion keepRawInput:NO checkRegion:YES error:&aError];
+    NSError *anError = nil;
+    NBPhoneNumber *phoneNumber = [self parseHelper:numberToParse defaultRegion:defaultRegion keepRawInput:NO checkRegion:YES error:&anError];
     
-    if (aError != nil) {
+    if (anError != nil) {
         if (error != NULL) {
-            (*error) = [self errorWithObject:aError.description withDomain:aError.domain];
+            (*error) = [self errorWithObject:anError.description withDomain:anError.domain];
         }
     }
     return phoneNumber;
@@ -3698,16 +3698,16 @@ static NSDictionary *DIGIT_MAPPINGS;
     NSNumber *countryCode = nil;
     NSString *nationalNumberStr = [nationalNumber copy];
     {
-        NSError *aError = nil;
+        NSError *anError = nil;
         countryCode = [self maybeExtractCountryCode:nationalNumberStr
                                            metadata:regionMetadata
                                      nationalNumber:&normalizedNationalNumber
                                        keepRawInput:keepRawInput
-                                        phoneNumber:&phoneNumber error:&aError];
+                                        phoneNumber:&phoneNumber error:&anError];
         
-        if (aError != nil)
+        if (anError != nil)
         {
-            if ([aError.domain isEqualToString:@"INVALID_COUNTRY_CODE"] && [self stringPositionByRegex:nationalNumberStr
+            if ([anError.domain isEqualToString:@"INVALID_COUNTRY_CODE"] && [self stringPositionByRegex:nationalNumberStr
                                                                                                  regex:LEADING_PLUS_CHARS_PATTERN] >= 0)
             {
                 // Strip the plus-char, and try again.
@@ -3721,13 +3721,13 @@ static NSDictionary *DIGIT_MAPPINGS;
                 if ([countryCode isEqualToNumber:@0])
                 {
                     if (error != NULL)
-                        (*error) = [self errorWithObject:aError.description withDomain:aError.domain];
+                        (*error) = [self errorWithObject:anError.description withDomain:anError.domain];
                     
                     return nil;
                 }
             } else {
                 if (error != NULL)
-                    (*error) = [self errorWithObject:aError.description withDomain:aError.domain];
+                    (*error) = [self errorWithObject:anError.description withDomain:anError.domain];
                 
                 return nil;
             }
@@ -3931,10 +3931,10 @@ static NSDictionary *DIGIT_MAPPINGS;
     {
         // First see if the first number has an implicit country calling code, by
         // attempting to parse it.
-        NSError *aError;
-        firstNumber = [self parse:firstNumberIn defaultRegion:UNKNOWN_REGION_ error:&aError];
-        if (aError != nil) {
-            if ([aError.domain isEqualToString:@"INVALID_COUNTRY_CODE"] == NO)
+        NSError *anError;
+        firstNumber = [self parse:firstNumberIn defaultRegion:UNKNOWN_REGION_ error:&anError];
+        if (anError != nil) {
+            if ([anError.domain isEqualToString:@"INVALID_COUNTRY_CODE"] == NO)
             {
                 return NBEMatchTypeNOT_A_NUMBER;
             }
