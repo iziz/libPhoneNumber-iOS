@@ -578,6 +578,11 @@
     [self clear];
     
     NSString *result = @"";
+    
+    if (accruedInputWithoutFormatting.length <= 0) {
+        return result;
+    }
+    
     for (unsigned int i=0; i<accruedInputWithoutFormatting.length - 1; i++) {
         NSString *ch = [accruedInputWithoutFormatting substringWithRange:NSMakeRange(i, 1)];
         result = [self inputDigitAndRememberPosition:ch];
@@ -592,6 +597,11 @@
     [self clear];
     
     NSString *result = @"";
+    
+    if (accruedInputWithoutFormatting.length <= 0) {
+        return result;
+    }
+    
     for (unsigned int i=0; i<accruedInputWithoutFormatting.length - 1; i++) {
         NSString *ch = [accruedInputWithoutFormatting substringWithRange:NSMakeRange(i, 1)];
         result = [self inputDigit:ch];
