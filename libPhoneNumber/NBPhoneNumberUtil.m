@@ -3573,9 +3573,9 @@ static NSDictionary *DIGIT_MAPPINGS;
     
     NSString *isoCode = [[self.telephonyNetworkInfo subscriberCellularProvider] isoCountryCode];
     
-	if (!isoCode) {
-		isoCode = UNKNOWN_REGION_;
-	}
+    if (!isoCode || [isoCode isEqualToString:@""]) {
+        isoCode = UNKNOWN_REGION_;
+    }
     
     return isoCode;
 }
