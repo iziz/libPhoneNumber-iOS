@@ -3550,8 +3550,8 @@ static NSDictionary *DIGIT_MAPPINGS;
 #endif
     if ([UNKNOWN_REGION_ isEqualToString:defaultRegion]) {
         // get region from device as a failover (e.g. iPad)
- 	NSLocale *currentLocale = [NSLocale currentLocale];
- 	defaultRegion = [currentLocale objectForKey:NSLocaleCountryCode];
+        NSLocale *currentLocale = [NSLocale currentLocale];
+        defaultRegion = [currentLocale objectForKey:NSLocaleCountryCode];
     }
     
     return [self parse:numberToParse defaultRegion:defaultRegion error:error];
