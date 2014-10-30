@@ -6,9 +6,11 @@
 > ARC only, or add the **"-fobjc-arc"** flag for non-ARC
  
 ### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
-> source 'https://github.com/CocoaPods/Specs.git'
-> platform :ios, "8.0"
-> pod 'libPhoneNumber-iOS', '~> 0.7'
+```
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, "8.0"
+pod 'libPhoneNumber-iOS', '~> 0.7'
+```
 
 ### Setting up Manually
 ##### Add source files to your projects from libPhoneNumber
