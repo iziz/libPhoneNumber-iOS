@@ -4157,8 +4157,8 @@ static NSDictionary *DIGIT_MAPPINGS;
         NSString *country = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
         
         NSMutableDictionary *countryMeta = [[NSMutableDictionary alloc] init];
-        [countryMeta setObject:country forKey:@"name"];
-        [countryMeta setObject:countryCode forKey:@"code"];
+        if (country) [countryMeta setObject:country forKey:@"name"];
+        if (countryCode) [countryMeta setObject:countryCode forKey:@"code"];
         
         NBPhoneMetaData *metaData = [self getMetadataForRegion:countryCode];
         if (metaData)
