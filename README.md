@@ -100,7 +100,7 @@ See sample test code from
     NSLog(@"%@", [f removeLastDigit]); // "650 253 222"
 ```
 
-##### Visit [libphonenumber](http://code.google.com/p/libphonenumber/) for more information or mail (zen.isis@gmail.com)
+##### Visit [libphonenumber](https://github.com/googlei18n/libphonenumber) for more information or mail (zen.isis@gmail.com)
 
 ##### **Metadata managing (updating metadata)**
 
