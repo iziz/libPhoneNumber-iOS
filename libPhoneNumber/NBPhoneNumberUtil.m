@@ -102,7 +102,9 @@ static NSDictionary *DIGIT_MAPPINGS;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *i18nPhoneNumberDesc;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *i18nPhoneMetadata;
 
+#if TARGET_OS_IPHONE
 @property (nonatomic, strong) CTTelephonyNetworkInfo *telephonyNetworkInfo;
+#endif
 
 @end
 
