@@ -11,8 +11,7 @@ DESC
   s.license      = 'Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)'
   s.authors      = { "iziz" => "zen.isis@gmail.com", "hyukhur" => "hyukhur@gmail.com" }
   s.source       = { :git => "https://github.com/iziz/libPhoneNumber-iOS.git", :tag => "0.7.5" }
-  s.platform = :ios 
-  s.ios.framework    = 'CoreTelephony', 'CTTelephonyNetworkInfo'
+  s.ios.framework    = 'CoreTelephony'
   s.ios.deployment_target = "4.3"
   s.osx.deployment_target = "10.9"
   s.requires_arc = true
