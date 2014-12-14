@@ -1226,6 +1226,9 @@
         
         [f removeLastDigit];
         XCTAssertEqualObjects(@"", [f description]);
+        
+        [f inputString:@"16502532222"];
+        XCTAssertEqualObjects(@"1 650 253 2222", [f description]);
     }
 }
 

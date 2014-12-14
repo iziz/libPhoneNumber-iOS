@@ -610,6 +610,34 @@
     return result;
 }
 
+- (NSString *)inputStringAndRememberPosition:(NSString *)string
+{
+    [self clear];
+    
+    NSString *result = @"";
+    
+    for (unsigned int i=0; i<string.length; i++) {
+        NSString *ch = [string substringWithRange:NSMakeRange(i, 1)];
+        result = [self inputDigitAndRememberPosition:ch];
+    }
+    
+    return result;
+}
+
+- (NSString *)inputString:(NSString *)string
+{
+    [self clear];
+    
+    NSString *result = @"";
+    
+    for (unsigned int i=0; i<string.length; i++) {
+        NSString *ch = [string substringWithRange:NSMakeRange(i, 1)];
+        result = [self inputDigit:ch];
+    }
+    
+    return result;
+}
+
 /**
  * Formats a phone number on-the-fly as each digit is entered.
  *
