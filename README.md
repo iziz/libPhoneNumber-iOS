@@ -1,3 +1,7 @@
+[![CocoaPods](https://img.shields.io/cocoapods/p/libPhoneNumber-iOS.svg?style=flat)](http://cocoapods.org/?q=libPhoneNumber-iOS)
+[![CocoaPods](https://img.shields.io/cocoapods/v/libPhoneNumber-iOS.svg?style=flat)](http://cocoapods.org/?q=libPhoneNumber-iOS)
+[![Travis](https://img.shields.io/travis/iziz/libPhoneNumber-iOS.svg?style=flat)](https://travis-ci.org/iziz/libPhoneNumber-iOS)
+
 # **libPhoneNumber for iOS** 
 
  - NBPhoneNumberUtil
