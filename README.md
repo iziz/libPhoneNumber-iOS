@@ -102,6 +102,8 @@ See sample test code from
     NSLog(@"%@", [f inputDigit:@"2"]); // "650 253 2222"
     // Can remove last digit
     NSLog(@"%@", [f removeLastDigit]); // "650 253 222"
+    
+    NSLog(@"%@", [f inputString:@"16502532222"]); // 1 650 253 2222
 ```
 
 ##### Visit [libphonenumber](https://github.com/googlei18n/libphonenumber) for more information or mail (zen.isis@gmail.com)
