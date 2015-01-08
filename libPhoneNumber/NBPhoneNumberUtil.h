@@ -21,6 +21,7 @@ extern NSString * const REGION_CODE_FOR_NON_GEO_ENTITY;
 + (NBPhoneNumberUtil*)sharedInstanceForTest;
 + (NBPhoneNumberUtil*)sharedInstanceWithBundle:(NSBundle *)bundle;
 + (NBPhoneNumberUtil*)sharedInstanceForTestWithBundle:(NSBundle *)bundle;
+- (instancetype)initWithBundle:(NSBundle *)bundle metaData:(NSString *)metaData;
 
 // regular expressions
 - (NSArray*)matchesByRegex:(NSString*)sourceString regex:(NSString*)pattern;
