@@ -497,7 +497,7 @@ static NSDictionary *DIGIT_MAPPINGS;
     return self;
 }
 
-- (id)initWithBundle:(NSBundle *)bundle metaData:(NSString *)metaData
+- (instancetype)initWithBundle:(NSBundle *)bundle metaData:(NSString *)metaData
 {
 	self = [self init];
 	if (self) {
