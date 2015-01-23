@@ -145,15 +145,15 @@
 				187A618A1A25DF04000D8BB6 /* PhoneNumberMetaData.json */,
 				187A618B1A25DF04000D8BB6 /* PhoneNumberMetaDataForTesting.json */,
 			);
-			path = generatedJSON;
-			sourceTree = "<group>";
+			name = generatedJSON;
+			path = libPhoneNumberTests/generatedJSON;
+			sourceTree = SOURCE_ROOT;
 		};
 		FD2014DF169A8A88003491D9 /* Javascript Object to JSON Converter (PHP) */ = {
 			isa = PBXGroup;
 			children = (
 				FD2014DC169A8A82003491D9 /* index.php */,
 				FD2014DD169A8A82003491D9 /* libPhoneNumberGenerator.php */,
-				187A61891A25DF04000D8BB6 /* generatedJSON */,
 			);
 			name = "Javascript Object to JSON Converter (PHP)";
 			path = libPhoneNumberTests;
@@ -205,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				4D43EF831740825100C24FF3 /* libPhoneNumber-iOS.podspec */,
+				187A61891A25DF04000D8BB6 /* generatedJSON */,
 				FD8B841F1934C1A600C350EB /* XCodeEditor */,
 				FD2014DF169A8A88003491D9 /* Javascript Object to JSON Converter (PHP) */,
 				FD7A066D167736BD004BBEB6 /* NBPhoneMetaDataGenerator.h */,
