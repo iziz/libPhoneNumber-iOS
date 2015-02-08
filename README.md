@@ -12,7 +12,6 @@
 ### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
 ```
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, "8.0"
 pod 'libPhoneNumber-iOS', '~> 0.7'
 ```
 
@@ -33,7 +32,7 @@ pod 'libPhoneNumber-iOS', '~> 0.7'
     - Add "CoreTelephony.framework"
 
 See sample test code from
-> libPhoneNumber-iOS/libPhoneNumberTests/libPhoneNumberTests.m 
+> [libPhoneNumber-iOS/libPhoneNumberTests/libPhoneNumberTests.m] (https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberTests/NBPhoneNumberUtilTests.m)
 
 ### Usage - **NBPhoneNumberUtil**
 ```obj-c
