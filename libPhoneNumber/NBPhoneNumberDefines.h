@@ -77,4 +77,9 @@ typedef enum {
     NBECountryCodeSourceFROM_DEFAULT_COUNTRY = 20
 } NBECountryCodeSource;
 
+static NSString *NB_NON_BREAKING_SPACE = @"\u00a0";
+static NSString *NB_PLUS_CHARS = @"+＋";
+static NSString *NB_VALID_DIGITS_STRING = @"0-9０-９٠-٩۰-۹";
+static NSString *NB_REGION_CODE_FOR_NON_GEO_ENTITY = @"001";
+
 #endif

@@ -7,8 +7,15 @@
 #import "NBPhoneMetaDataGenerator.h"
 #import "NBPhoneMetaData.h"
 
+#import "NSArray+NBAdditions.h"
+
+
 #define INDENT_TAB @"    "
+#define STR_VAL(val) [self stringForSourceCode:val]
+#define NUM_VAL(val) [self numberForSourceCode:val]
+
 NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 
 @implementation NBPhoneMetaDataGenerator
 
@@ -27,25 +34,19 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 - (void)generateMetadataClasses
 {
-    NSDictionary *realMetadata = nil, *testMetadata = nil;
-    realMetadata = [self generateMetaData];
-    testMetadata = [self generateMetaDataWithTest];
+    NSDictionary *realMetadata = [self generateMetaData];
+    NSDictionary *testMetadata = [self generateMetaDataWithTest];
     
-    @try
-    {
+    @try {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
         NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"src"];
         
-        if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
-        {
-            
-            NSError* error;
-            if( [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error])
-            {
-            }
-            else
-            {
+        NSError* error = nil;
+        
+        if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath]) {
+            if( [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]) {
+            } else {
                 NSLog(@"[%@] ERROR: attempting to write create MyFolder directory", [self class]);
             }
         }
@@ -53,41 +54,39 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         NSDictionary *mappedRealData = [self mappingObject:realMetadata];
         NSDictionary *mappedTestData = [self mappingObject:testMetadata];
         
-        [self createClassWithDictionary:mappedRealData name:@"NBPhoneNumberMetadata"];
-        [self createClassWithDictionary:mappedTestData name:@"NBPhoneNumberMetadataForTesting"];
-    }
-    @catch (NSException *exception)
-    {
+        [self createClassWithDictionary:mappedRealData name:@"NBMetadataCore" isTestData:NO];
+        [self createClassWithDictionary:mappedTestData name:@"NBMetadataCoreTest" isTestData:YES];
+    } @catch (NSException *exception) {
         NSLog(@"Error for creating metadata classes : %@", exception.reason);
     }
 }
 
 
-- (void)createClassWithDictionary:(NSDictionary*)data name:(NSString*)name
+- (void)createClassWithDictionary:(NSDictionary*)data name:(NSString*)name isTestData:(BOOL)isTest
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"src"];
     
-    NSString *filePathData = [NSString stringWithFormat:@"%@/%@.plist", dataPath, name];
-    NSData *objData = [NSKeyedArchiver archivedDataWithRootObject:data];
-    [objData writeToFile:filePathData atomically:YES];
-    
-    /*
-    NSString *codeStringHeader = [self generateSourceCodeWith:data name:name type:0];
-    NSString *codeStringSource = [self generateSourceCodeWith:data name:name type:1];
-    
+    NSString *codeStringHeader = [self generateSourceCodeWith:data name:name type:0 isTestData:isTest];
+    NSString *codeStringSource = [self generateSourceCodeWith:data name:name type:1 isTestData:isTest];
+    NSString *headerFilePath = [NSString stringWithFormat:@"%@/%@.h", dataPath, name];
+    NSString *sourceFilePath = [NSString stringWithFormat:@"%@/%@.m", dataPath, name];
     NSData *dataToWrite = [codeStringHeader dataUsingEncoding:NSUTF8StringEncoding];
-    [fileManager createFileAtPath:filePathHeader contents:dataToWrite attributes:nil];
-    
+    BOOL successCreate = [[NSFileManager defaultManager] createFileAtPath:headerFilePath contents:dataToWrite attributes:nil];
     dataToWrite = [codeStringSource dataUsingEncoding:NSUTF8StringEncoding];
-    [fileManager createFileAtPath:filePathSource contents:dataToWrite attributes:nil];
-    */
+    successCreate = successCreate && [[NSFileManager defaultManager] createFileAtPath:sourceFilePath contents:dataToWrite attributes:nil];
     
-    NSData *fileData = [NSData dataWithContentsOfFile:filePathData];
-    NSDictionary *unarchiveData = [NSKeyedUnarchiver unarchiveObjectWithData:fileData];
+    NSString *codeMapStringHeader = [self generateMappingSourceCodeWith:data name:name type:0 isTestData:isTest];
+    NSString *codeMapStringSource = [self generateMappingSourceCodeWith:data name:name type:1 isTestData:isTest];
+    NSString *headerMapFilePath = [NSString stringWithFormat:@"%@/%@Mapper.h", dataPath, name];
+    NSString *sourceMapFilePath = [NSString stringWithFormat:@"%@/%@Mapper.m", dataPath, name];
+    NSData *mapToWrite = [codeMapStringHeader dataUsingEncoding:NSUTF8StringEncoding];
+    BOOL successMapCreate = [[NSFileManager defaultManager] createFileAtPath:headerMapFilePath contents:mapToWrite attributes:nil];
+    mapToWrite = [codeMapStringSource dataUsingEncoding:NSUTF8StringEncoding];
+    successMapCreate = successMapCreate && [[NSFileManager defaultManager] createFileAtPath:sourceMapFilePath contents:mapToWrite attributes:nil];
     
-    NSLog(@"Created file to...[%@ / %zu]", filePathData, (unsigned long)[unarchiveData count]);
+    NSLog(@"Create [%@] file to...\n%@", successCreate && successMapCreate?@"success":@"fail", dataPath);
 }
 
 
@@ -99,20 +98,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     NSLog(@"- countryCodeToRegionCodeMap count [%zu]", (unsigned long)[countryCodeToRegionCodeMap count]);
     NSLog(@"- countryToMetadata          count [%zu]", (unsigned long)[countryToMetadata count]);
     
-    NSMutableDictionary *genetatedMetaData = [[NSMutableDictionary alloc] init];
-    
-    for (id key in [countryToMetadata allKeys])
-    {
-        id metaData = [countryToMetadata objectForKey:key];
-        
-        NBPhoneMetaData *newMetaData = [[NBPhoneMetaData alloc] init];
-        [newMetaData buildData:metaData];
-        
-        [genetatedMetaData setObject:newMetaData forKey:key];
-    }
-    
     [resMedata setObject:countryCodeToRegionCodeMap forKey:@"countryCodeToRegionCodeMap"];
-    [resMedata setObject:genetatedMetaData forKey:@"countryToMetadata"];
+    [resMedata setObject:countryToMetadata forKey:@"countryToMetadata"];
     
     return resMedata;
 }
@@ -179,182 +166,224 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 }
 
 
-/*
-- (NSString *)generateSourceCodeWith:(NSDictionary*)data name:(NSString*)name type:(int)type
+- (NSString *)generateSourceCodeWith:(NSDictionary*)data name:(NSString*)name type:(int)type isTestData:(BOOL)isTest
 {
-    NSString *srcCode = @"";
+    NSString *classPrefix = isTest ? @"NBPhoneMetadataTest" : @"NBPhoneMetadata";
     
-    if (type == 0)
-    {
-        NSString *curDir = [[NSFileManager defaultManager] currentDirectoryPath];
-        NSString *filePath = [NSString stringWithFormat:@"%@/%@", curDir, @"resources/PhoneNumberTemplateClass.h"];
-        NSString *stringContent =  [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-        
-        // header code
-        srcCode = [NSString stringWithFormat:stringContent, name, name];
-    }
-    else if (type == 1)
-    {
-        NSMutableString *srcImplement = [[NSMutableString alloc] initWithString:@""];
-        
-        NSString *curDir = [[NSFileManager defaultManager] currentDirectoryPath];
-        NSString *filePath = [NSString stringWithFormat:@"%@/%@", curDir, @"resources/PhoneNumberTemplateClass.m"];
-        NSString *stringContent =  [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-        
-        // source code
-        NSString *instanceName = @"";
-        [srcImplement appendString:[self encodeNSDictionary:data indent:0 createdInstanceName:&instanceName]];
-        
-        srcCode = [NSString stringWithFormat:stringContent, name, name, name, srcImplement, instanceName];
-    }
+    NSMutableString *contents = [[NSMutableString alloc] init];
     
-    return srcCode;
-}
+    NSDictionary *metadata = [data objectForKey:@"countryToMetadata"];
+    
+    if (type == 0) {
+        NSArray *allKeys = metadata.allKeys;
+        
+        [contents appendString:@"#import <Foundation/Foundation.h>\n"];
+        [contents appendString:@"#import \"NBPhoneMetaData.h\"\n\n"];
+        
+        for (NSString *key in allKeys) {
+            NSString *className = [NSString stringWithFormat:@"%@%@", classPrefix, key];
+            [contents appendFormat:@"@interface %@ : NBPhoneMetaData\n", className];
+            [contents appendString:@"@end\n\n"];
+        }
+        
+    } else if (type == 1) {
+        NSArray *allKeys = metadata.allKeys;
+        
+        [contents appendFormat:@"#import \"%@.h\"\n", name];
+        [contents appendString:@"#import \"NBPhoneNumberDefines.h\"\n"];
+        [contents appendString:@"#import \"NBPhoneNumberDesc.h\"\n\n"];
+        [contents appendString:@"#import \"NBNumberFormat.h\"\n\n"];
+        
+        for (NSString *key in allKeys) {
+            NSArray *currentMetadata = [metadata objectForKey:key];
+            NSString *className = [NSString stringWithFormat:@"%@%@", classPrefix, key];
+            [contents appendFormat:@"@implementation %@\n", className];
+            [contents appendString:@"- (id)init\n"];
+            [contents appendString:@"{\n"];
+            [contents appendString:@"    self = [super init];\n"];
+            [contents appendString:@"    if (self) {\n"];
+            
+            /*  1 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:1] name:@"self.generalDesc"]];
+            /*  2 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:2] name:@"self.fixedLine"]];
+            /*  3 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:3] name:@"self.mobile"]];
+            /*  4 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:4] name:@"self.tollFree"]];
+            /*  5 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:5] name:@"self.premiumRate"]];
+            /*  6 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:6] name:@"self.sharedCost"]];
+            /*  7 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:7] name:@"self.personalNumber"]];
+            /*  8 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:8] name:@"self.voip"]];
+            
+            /* 21 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:21] name:@"self.pager"]];
+            /* 25 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:25] name:@"self.uan"]];
+            /* 27 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:27] name:@"self.emergency"]];
+            /* 28 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:28] name:@"self.voicemail"]];
+            /* 24 */ [contents appendString:[self phoneNumberDescWithData:[currentMetadata safeObjectAtIndex:24] name:@"self.noInternationalDialling"]];
+            /*  9 */ [contents appendFormat:@"        self.codeID = %@;\n", STR_VAL([currentMetadata safeObjectAtIndex:9])];
+            /* 10 */ [contents appendFormat:@"        self.countryCode = %@;\n", NUM_VAL([currentMetadata safeObjectAtIndex:10])];
+            /* 11 */ [contents appendFormat:@"        self.internationalPrefix = %@;\n", STR_VAL([currentMetadata safeObjectAtIndex:11])];
+            /* 17 */ [contents appendFormat:@"        self.preferredInternationalPrefix = %@;\n", STR_VAL([currentMetadata safeObjectAtIndex:17])];
+            /* 12 */ [contents appendFormat:@"        self.nationalPrefix = %@;\n", STR_VAL([currentMetadata safeObjectAtIndex:12])];
+            /* 13 */ [contents appendFormat:@"        self.preferredExtnPrefix = %@;\n", STR_VAL([currentMetadata safeObjectAtIndex:13])];
+            /* 15 */ [contents appendFormat:@"        self.nationalPrefixForParsing = %@;\n", STR_VAL([currentMetadata safeObjectAtIndex:15])];
+            /* 16 */ [contents appendFormat:@"        self.nationalPrefixTransformRule = %@;\n", STR_VAL([currentMetadata safeObjectAtIndex:16])];
+            /* 18 */ [contents appendFormat:@"        self.sameMobileAndFixedLinePattern = %@;\n", [[currentMetadata safeObjectAtIndex:18] boolValue] ? @"YES":@"NO"];
+            /* 19 */ [contents appendString:[self phoneNumberFormatArrayWithData:[currentMetadata safeObjectAtIndex:19] name:@"self.numberFormats"]]; // NBNumberFormat array
+            /* 20 */ [contents appendString:[self phoneNumberFormatArrayWithData:[currentMetadata safeObjectAtIndex:20] name:@"self.intlNumberFormats"]]; // NBNumberFormat array
+            /* 22 */ [contents appendFormat:@"        self.mainCountryForCode = %@;\n", [[currentMetadata safeObjectAtIndex:22] boolValue] ? @"YES":@"NO"];
+            /* 23 */ [contents appendFormat:@"        self.leadingDigits = %@;\n", STR_VAL([currentMetadata safeObjectAtIndex:23])];
+            /* 26 */ [contents appendFormat:@"        self.leadingZeroPossible = %@;\n", [[currentMetadata safeObjectAtIndex:26] boolValue] ? @"YES":@"NO"];
 
- 
-- (NSString*)encodeNSDictionary:(NSDictionary*)object indent:(int)depth createdInstanceName:(NSString**)instanceName
-{
-    NSMutableString *curImplement = [[NSMutableString alloc] initWithString:@""];
-    NSEnumerator *enumerator = [object keyEnumerator];
-    id curKey = nil;
-    
-    NSString *tempInstanceName = [NSString stringWithFormat:@"%@_%@_%d", [self genRandStringLength:16], @"NSDictionary", depth];
-    
-    if (instanceName != NULL && (*instanceName) != nil)
-        (*instanceName) = [tempInstanceName copy];
-    
-    NSString *createInstancFromat = @"%@NSMutableDictionary *%@ = [[NSMutableDictionary alloc] init];\n";
-    
-    NSString *currentSyntaxFormat = nil;
-    NSString *buildedSyntax = nil;
-    
-    [curImplement appendFormat:createInstancFromat, [self indentTab:depth], tempInstanceName];
-    
-    while ((curKey = [enumerator nextObject]))
-    {
-        id curObject = [object objectForKey:curKey];
-        currentSyntaxFormat = @"%@[%@ setObject:%@ forKey:@\"%@\"];\n";
-        
-        if ([curObject isKindOfClass:[NSString class]])
-        {
-            [curImplement appendFormat:currentSyntaxFormat, [self indentTab:depth], tempInstanceName, [self encodeNSString:curObject], curKey];
-        }
-        else if ([curObject isKindOfClass:[NSArray class]])
-        {
-            [curImplement appendFormat:@"%@{\n", [self indentTab:depth]];
-            NSString *tempArrayInstanceName = @"";
-            buildedSyntax = [self encodeNSArray:curObject indent:depth+1 createdInstanceName:&tempArrayInstanceName];
-            [curImplement appendString:buildedSyntax];
-            [curImplement appendString:[NSString stringWithFormat:currentSyntaxFormat, [self indentTab:depth + 1], tempInstanceName, tempArrayInstanceName, curKey]];
-            [curImplement appendFormat:@"%@}\n", [self indentTab:depth]];
-        }
-        else if ([curObject isKindOfClass:[NSDictionary class]])
-        {
-            [curImplement appendFormat:@"%@{\n", [self indentTab:depth]];
-            NSString *tempDictionaryInstanceName = @"";
-            buildedSyntax = [self encodeNSDictionary:curObject indent:depth+1 createdInstanceName:&tempDictionaryInstanceName];
-            [curImplement appendString:buildedSyntax];
-            [curImplement appendString:[NSString stringWithFormat:currentSyntaxFormat, [self indentTab:depth + 1], tempInstanceName, tempDictionaryInstanceName, curKey]];
-            [curImplement appendFormat:@"%@}\n", [self indentTab:depth]];
-        }
-        else if ([curObject isKindOfClass:[NSNumber class]])
-        {
-            [curImplement appendFormat:currentSyntaxFormat, [self indentTab:depth], tempInstanceName, [self encodeNSNumber:curObject], curKey];
-        }
-        else if ([curObject isKindOfClass:[NSNull class]])
-        {
-            [curImplement appendFormat:currentSyntaxFormat, [self indentTab:depth], tempInstanceName, [self encodeNSNull:curObject], curKey];
-        }
-        else
-        {
-            NSString *warningString = [NSString stringWithFormat:@"#warning cant parse data %@ key %@", curObject, curKey];
-            [curImplement appendString:warningString];
-            NSLog(@"!!! ERROR !!! - %@", warningString);
+            [contents appendString:@"    }\n"];
+            [contents appendString:@"    return self;\n"];
+            [contents appendString:@"}\n"];
+            
+            [contents appendString:@"@end\n\n"];
         }
     }
     
-    return curImplement;
+    return contents;
 }
 
 
-- (NSString*)encodeNSArray:(NSArray*)object indent:(int)depth createdInstanceName:(NSString**)instanceName
+- (NSString *)generateMappingSourceCodeWith:(NSDictionary*)data name:(NSString*)name type:(int)type isTestData:(BOOL)isTest
 {
-    NSMutableString *curImplement = [[NSMutableString alloc] initWithString:@""];
-    NSString *tempInstanceName = [NSString stringWithFormat:@"%@_%@_%d", [self genRandStringLength:16], @"NSArray", depth];
+    NSMutableString *contents = [[NSMutableString alloc] init];
     
-    if (instanceName != NULL && (*instanceName) != nil)
-        (*instanceName) = [tempInstanceName copy];
+    NSDictionary *mapCN2CCode = [data objectForKey:@"countryCodeToRegionCodeMap"];
+    NSArray *allCallingCodeKey = mapCN2CCode.allKeys;
+    
+    if (type == 0) {
+        [contents appendString:@"#import <Foundation/Foundation.h>\n\n"];
+        [contents appendFormat:@"@interface %@Mapper : NSObject\n\n", name];
+        [contents appendString:@"+ (NSArray *)ISOCodeFromCallingNumber:(NSString *)key;\n\n"];
+        [contents appendString:@"@end\n\n"];
+    } else if (type == 1) {
+        [contents appendFormat:@"#import \"%@Mapper.h\"\n", name];
         
-    NSString *createInstancFromat = @"%@NSMutableArray *%@ = [[NSMutableArray alloc] init];\n";
-    
-    NSString *currentSyntaxFormat = nil;
-    NSString *buildedSyntax = nil;
-    
-    [curImplement appendFormat:createInstancFromat, [self indentTab:depth], tempInstanceName];
-    
-    for (id data in object)
-    {
-        currentSyntaxFormat = @"%@[%@ addObject:%@];\n";
+        [contents appendFormat:@"@implementation %@Mapper\n\n", name];
+        [contents appendString:@"static NSMutableDictionary *kMapCCode2CN;\n\n"];
+        [contents appendString:@"+ (NSArray *)ISOCodeFromCallingNumber:(NSString *)key\n"];
+        [contents appendString:@"{\n"];
+        [contents appendString:@"    static dispatch_once_t onceToken;\n"];
+        [contents appendString:@"    dispatch_once(&onceToken, ^{\n"];
+        [contents appendString:@"        kMapCCode2CN = [[NSMutableDictionary alloc] init];\n"];
         
-        if ([data isKindOfClass:[NSString class]])
-        {
-            [curImplement appendFormat:currentSyntaxFormat, [self indentTab:depth], tempInstanceName, [self encodeNSString:data]];
+        for (NSString *callingKey in allCallingCodeKey) {
+            NSArray *countryCodeArray = [mapCN2CCode objectForKey:callingKey];
+            [contents appendString:@"\n"];
+            [contents appendFormat:@"        NSMutableArray *countryCode%@Array = [[NSMutableArray alloc] init];\n", callingKey];
+            for (NSString *code in countryCodeArray) {
+                [contents appendFormat:@"        [countryCode%@Array addObject:%@];\n", callingKey, STR_VAL(code)];
+            }
+            [contents appendFormat:@"        [kMapCCode2CN setObject:countryCode%@Array forKey:%@];\n", callingKey, STR_VAL(callingKey)];
         }
-        else if ([data isKindOfClass:[NSNumber class]])
-        {
-            [curImplement appendFormat:currentSyntaxFormat, [self indentTab:depth], tempInstanceName, [self encodeNSNumber:data]];
-        }
-        else if ([data isKindOfClass:[NSArray class]])
-        {
-            [curImplement appendFormat:@"%@{\n", [self indentTab:depth]];
-            NSString *tempArrayInstanceName = @"";
-            buildedSyntax = [self encodeNSArray:data indent:depth+1 createdInstanceName:&tempArrayInstanceName];
-            [curImplement appendString:buildedSyntax];
-            [curImplement appendString:[NSString stringWithFormat:currentSyntaxFormat, [self indentTab:depth + 1], tempInstanceName, tempArrayInstanceName]];
-            [curImplement appendFormat:@"%@}\n", [self indentTab:depth]];
-        }
-        else if ([data isKindOfClass:[NSDictionary class]])
-        {
-            [curImplement appendFormat:@"%@{\n", [self indentTab:depth]];
-            NSString *tempDictionaryInstanceName = @"";
-            buildedSyntax = [self encodeNSDictionary:data indent:depth+1 createdInstanceName:&tempDictionaryInstanceName];
-            [curImplement appendString:buildedSyntax];
-            [curImplement appendString:[NSString stringWithFormat:currentSyntaxFormat, [self indentTab:depth + 1], tempInstanceName, tempDictionaryInstanceName]];
-            [curImplement appendFormat:@"%@}\n", [self indentTab:depth]];
-        }
-        else if ([data isKindOfClass:[NSNull class]])
-        {
-            [curImplement appendFormat:currentSyntaxFormat, [self indentTab:depth], tempInstanceName, [self encodeNSNull:data]];
-        }
-        else
-        {
-            NSString *warningString = [NSString stringWithFormat:@"#warning cant parse data %@ class %@", data, [data class]];
-            [curImplement appendString:warningString];
-            NSLog(@"!!! ERROR !!! - %@", warningString);
-        }
-    
+        [contents appendString:@"});\n"];
+        [contents appendString:@"     return [kMapCCode2CN objectForKey:key];\n"];
+        [contents appendString:@"}\n\n"];
+        [contents appendString:@"@end\n\n"];
     }
-    return curImplement;
+    
+    return contents;
 }
 
 
-- (NSString*)encodeNSNull:(NSNull*)object
+- (NSString *)stringForSourceCode:(id)value
 {
-    return [NSString stringWithFormat:@"%@", @"[NSNull null]"];
+    if (value && [value isKindOfClass:[NSString class]]) {
+        value = [value stringByReplacingOccurrencesOfString:@"\\d" withString:@"\\\\d"];
+        return [NSString stringWithFormat:@"@\"%@\"", value];
+    }
+    
+    return @"nil";
 }
 
 
-- (NSString*)encodeNSString:(NSString*)object
+- (NSString *)numberForSourceCode:(id)value
 {
-    return [NSString stringWithFormat:@"@\"%@\"", [object stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"]];
+    if (value && [value isKindOfClass:[NSNumber class]]) {
+        return [NSString stringWithFormat:@"[NSNumber numberWithInteger:%@]", value];
+    }
+    return @"nil";
 }
 
 
-- (NSString*)encodeNSNumber:(NSNumber*)object
+- (NSString *)phoneNumberDescWithData:(id)value name:(NSString *)varName
 {
-    return [NSString stringWithFormat:@"[NSNumber numberWithLongLong:%@]", object];
+    NSMutableString *contents = [[NSMutableString alloc] init];
+    
+    NSString *initSentance = [self phoneNumberDescWithData:value];
+    [contents appendFormat:@"        %@ = %@;\n", varName, initSentance];
+    return contents;
 }
-*/
+
+
+- (NSString *)phoneNumberDescWithData:(id)value
+{
+    NSString *initSentance = [NSString stringWithFormat:@"[[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:%@ withPossibleNumberPattern:%@ withExample:%@]",
+                              STR_VAL([value safeObjectAtIndex:2]), STR_VAL([value safeObjectAtIndex:3]), STR_VAL([value safeObjectAtIndex:6])];
+    return initSentance;
+}
+
+
+- (NSString *)phoneNumberFormatWithData:(id)value name:(NSString *)varName
+{
+    NSMutableString *contents = [[NSMutableString alloc] init];
+    
+    NSString *cleanName = [[varName stringByReplacingOccurrencesOfString:@"." withString:@""] stringByReplacingOccurrencesOfString:@"self" withString:@""];
+    NSString *arrayName = [NSString stringWithFormat:@"%@_patternArray", cleanName];
+    
+    if (value != nil && [value isKindOfClass:[NSArray class]]) {
+        /* 1 */ NSString *pattern = [value safeObjectAtIndex:1];
+        /* 2 */ NSString *format = [value safeObjectAtIndex:2];
+        /* 4 */ NSString *nationalPrefixFormattingRule = [value safeObjectAtIndex:4];
+        /* 6 */ BOOL nationalPrefixOptionalWhenFormatting = [[value safeObjectAtIndex:6] boolValue];
+        /* 5 */ NSString *domesticCarrierCodeFormattingRule = [value safeObjectAtIndex:5];
+    
+        [contents appendFormat:@"\n        NSMutableArray *%@ = [[NSMutableArray alloc] init];\n", arrayName];
+        
+        /* 3 */ id tmpData = [value safeObjectAtIndex:3];
+    
+        if (tmpData != nil && [tmpData isKindOfClass:[NSArray class]]) {
+            for (id numFormat in tmpData) {
+                if ([numFormat isKindOfClass:[NSString class]]) {
+                    [contents appendFormat:@"        [%@ addObject:%@];\n", arrayName, STR_VAL(numFormat)];
+                } else {
+                    [contents appendFormat:@"        [%@ addObject:%@];\n", arrayName, STR_VAL([numFormat stringValue])];
+                }
+            }
+        }
+        
+        NSString *initSentance = [NSString stringWithFormat:@"        NBNumberFormat *%@ = [[NBNumberFormat alloc] initWithPattern:%@ withFormat:%@ withLeadingDigitsPatterns:%@ withNationalPrefixFormattingRule:%@ whenFormatting:%@ withDomesticCarrierCodeFormattingRule:%@];\n",
+                                  varName, STR_VAL(pattern), STR_VAL(format), arrayName, STR_VAL(nationalPrefixFormattingRule),
+                                  nationalPrefixOptionalWhenFormatting ? @"YES":@"NO", STR_VAL(domesticCarrierCodeFormattingRule)];
+        
+        [contents appendString:initSentance];
+    }
+    
+    return contents;
+}
+
+
+- (NSString *)phoneNumberFormatArrayWithData:(id)value name:(NSString *)varName
+{
+    NSMutableString *contents = [[NSMutableString alloc] init];
+    
+    NSString *cleanName = [[varName stringByReplacingOccurrencesOfString:@"." withString:@""] stringByReplacingOccurrencesOfString:@"self" withString:@""];
+    NSString *arrayName = [NSString stringWithFormat:@"%@_FormatArray", cleanName];
+    
+    [contents appendFormat:@"\n        NSMutableArray *%@ = [[NSMutableArray alloc] init];\n", arrayName];
+    
+    NSInteger index = 0;
+    
+    for (id data in value) {
+        NSString *tmpVarName = [NSString stringWithFormat:@"%@%@", cleanName, @(index++)];
+        NSString *initSentance = [self phoneNumberFormatWithData:data name:tmpVarName];
+        [contents appendString:initSentance];
+        [contents appendFormat:@"        [%@ addObject:%@];\n", arrayName, tmpVarName];
+    }
+    
+    [contents appendFormat:@"        %@ = %@;\n", varName, arrayName];
+    return contents;
+}
 
 
 @end

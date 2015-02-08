@@ -6,6 +6,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NBPhoneNumberDesc : NSObject
 
 // from phonemetadata.pb.js
@@ -13,6 +14,6 @@
 /* 3 */ @property (nonatomic, strong, readwrite) NSString *possibleNumberPattern;
 /* 6 */ @property (nonatomic, strong, readwrite) NSString *exampleNumber;
 
-- (id)initWithData:(id)data;
+- (id)initWithNationalNumberPattern:(NSString *)nnp withPossibleNumberPattern:(NSString *)pnp withExample:(NSString *)exp;
 
 @end

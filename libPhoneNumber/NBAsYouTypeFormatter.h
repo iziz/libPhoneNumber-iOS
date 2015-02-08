@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NBAsYouTypeFormatter : NSObject
 
 - (id)initWithRegionCode:(NSString *)regionCode;
@@ -24,6 +25,7 @@
 - (NSString *)removeLastDigitAndRememberPosition;
 
 - (NSInteger)getRememberedPosition;
+
 - (void)clear;
 
 @end

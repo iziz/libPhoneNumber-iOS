@@ -7,6 +7,8 @@
 
 #import "NBAsYouTypeFormatter.h"
 
+#import "NBMetadataHelper.h"
+
 #import "NBPhoneNumberUtil.h"
 #import "NBPhoneMetaData.h"
 #import "NBNumberFormat.h"
@@ -275,7 +277,7 @@
 		* @private
 		* @type {i18n.phonenumbers.PhoneNumberUtil}
 		*/
-        self.phoneUtil_ = [NBPhoneNumberUtil sharedInstanceWithBundle:bundle];
+        self.phoneUtil_ = [[NBPhoneNumberUtil alloc] init];
         self.defaultCountry_ = regionCode;
         self.currentMetaData_ = [self getMetadataForRegion_:self.defaultCountry_];
         /**
@@ -302,7 +304,7 @@
 	self = [self init];
     
     if (self) {
-        self.phoneUtil_ = [NBPhoneNumberUtil sharedInstanceForTestWithBundle:bundle];
+        self.phoneUtil_ = [[NBPhoneNumberUtil alloc] init];
         
         self.defaultCountry_ = regionCode;
         self.currentMetaData_ = [self getMetadataForRegion_:self.defaultCountry_];
@@ -330,7 +332,7 @@
     /** @type {string} */
     NSString *mainCountry = [self.phoneUtil_ getRegionCodeForCountryCode:countryCallingCode];
     /** @type {i18n.phonenumbers.PhoneMetadata} */
-    NBPhoneMetaData *metadata = [self.phoneUtil_ getMetadataForRegion:mainCountry];
+    NBPhoneMetaData *metadata = [NBMetadataHelper getMetadataForRegion:mainCountry];
     if (metadata != nil) {
         return metadata;
     }
@@ -837,8 +839,8 @@
  */
 - (BOOL)isDigitOrLeadingPlusSign_:(NSString*)nextChar
 {
-    NSString *digitPattern = [NSString stringWithFormat:@"([%@])", VALID_DIGITS_STRING];
-    NSString *plusPattern = [NSString stringWithFormat:@"[%@]+", PLUS_CHARS];
+    NSString *digitPattern = [NSString stringWithFormat:@"([%@])", NB_VALID_DIGITS_STRING];
+    NSString *plusPattern = [NSString stringWithFormat:@"[%@]+", NB_PLUS_CHARS];
     
     BOOL isDigitPattern = [[self.phoneUtil_ matchesByRegex:nextChar regex:digitPattern] count] > 0;
     BOOL isPlusPattern = [[self.phoneUtil_ matchesByRegex:nextChar regex:plusPattern] count] > 0;
@@ -1133,8 +1135,8 @@
     /** @type {string} */
     NSString *newRegionCode = [self.phoneUtil_ getRegionCodeForCountryCode:countryCode];
     
-    if ([REGION_CODE_FOR_NON_GEO_ENTITY isEqualToString:newRegionCode]) {
-        self.currentMetaData_ = [self.phoneUtil_ getMetadataForNonGeographicalRegion:countryCode];
+    if ([NB_REGION_CODE_FOR_NON_GEO_ENTITY isEqualToString:newRegionCode]) {
+        self.currentMetaData_ = [NBMetadataHelper getMetadataForNonGeographicalRegion:countryCode];
     } else if (newRegionCode != self.defaultCountry_)
     {
         self.currentMetaData_ = [self getMetadataForRegion_:newRegionCode];

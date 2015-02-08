@@ -1,41 +1,24 @@
 //
 //  NBPhoneNumberUtil.h
-//  Band
+//  libPhoneNumber
 //
+//  Created by tabby on 2015. 2. 8..
+//  Copyright (c) 2015년 ohtalk.me. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import "NBPhoneNumberDefines.h"
-
-extern NSString * const VALID_PUNCTUATION;
-extern NSString * const VALID_DIGITS_STRING;
-extern NSString * const PLUS_CHARS;
-extern NSString * const REGION_CODE_FOR_NON_GEO_ENTITY;
 
 
 @class NBPhoneMetaData, NBPhoneNumber;
 
 @interface NBPhoneNumberUtil : NSObject
 
-+ (NBPhoneNumberUtil*)sharedInstance;
-+ (NBPhoneNumberUtil*)sharedInstanceForTest;
-+ (NBPhoneNumberUtil*)sharedInstanceWithBundle:(NSBundle *)bundle;
-+ (NBPhoneNumberUtil*)sharedInstanceForTestWithBundle:(NSBundle *)bundle;
-- (instancetype)initWithBundle:(NSBundle *)bundle metaData:(NSString *)metaData;
-
 // regular expressions
 - (NSArray*)matchesByRegex:(NSString*)sourceString regex:(NSString*)pattern;
 - (NSArray*)matchedStringByRegex:(NSString*)sourceString regex:(NSString*)pattern;
 - (NSString*)replaceStringByRegex:(NSString*)sourceString regex:(NSString*)pattern withTemplate:(NSString*)templateString;
 - (int)stringPositionByRegex:(NSString*)sourceString regex:(NSString*)pattern;
-
-+ (NSString*)stringByTrimming:(NSString*)aString;
-
-//- (NSString*)numbersOnly:(NSString*)phoneNumber;
-- (NSArray*)regionCodeFromCountryCode:(NSNumber*)countryCodeNumber;
-- (NSString*)countryCodeFromRegionCode:(NSString*)regionCode;
-
-- (NSArray*)getAllMetadata;
 
 // libPhoneNumber Util functions
 - (NSString*)convertAlphaCharactersInNumber:(NSString*)number;
@@ -65,9 +48,6 @@ extern NSString * const REGION_CODE_FOR_NON_GEO_ENTITY;
 - (NBPhoneNumber*)getExampleNumber:(NSString*)regionCode error:(NSError**)error;
 - (NBPhoneNumber*)getExampleNumberForType:(NSString*)regionCode type:(NBEPhoneNumberType)type error:(NSError**)error;
 - (NBPhoneNumber*)getExampleNumberForNonGeoEntity:(NSNumber*)countryCallingCode error:(NSError**)error;
-
-- (NBPhoneMetaData*)getMetadataForNonGeographicalRegion:(NSNumber*)countryCallingCode;
-- (NBPhoneMetaData*)getMetadataForRegion:(NSString*)regionCode;
 
 - (BOOL)canBeInternationallyDialled:(NBPhoneNumber*)number error:(NSError**)error;
 

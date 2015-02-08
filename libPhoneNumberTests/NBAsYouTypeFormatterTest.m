@@ -7,6 +7,7 @@
 
 #import "NBAsYouTypeFormatterTest.h"
 #import "NBAsYouTypeFormatter.h"
+#import "NBMetadataHelper.h"
 
 @implementation NBAsYouTypeFormatterTest
 
@@ -14,7 +15,7 @@
 {
     [super setUp];
     
-    // ...
+    [NBMetadataHelper setTestMode:YES];
 }
 
 - (void)tearDown

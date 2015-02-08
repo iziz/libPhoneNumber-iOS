@@ -11,20 +11,17 @@
 @implementation NBNumberFormat
 
 
-- (id)initWithData:(id)data
+- (id)initWithPattern:(NSString *)pattern withFormat:(NSString *)format withLeadingDigitsPatterns:(NSMutableArray *)leadingDigitsPatterns withNationalPrefixFormattingRule:(NSString *)nationalPrefixFormattingRule whenFormatting:(BOOL)nationalPrefixOptionalWhenFormatting withDomesticCarrierCodeFormattingRule:(NSString *)domesticCarrierCodeFormattingRule
 {
     self = [self init];
     
-    if (self && data != nil && [data isKindOfClass:[NSArray class]])
-    {
-        /* 1 */ self.pattern = [data safeObjectAtIndex:1];
-        /* 2 */ self.format = [data safeObjectAtIndex:2];
-        /* 3 */ self.leadingDigitsPatterns = [self stringArrayFromData:[data safeObjectAtIndex:3]]; // NSString array
-        /* 4 */ self.nationalPrefixFormattingRule = [data safeObjectAtIndex:4];
-        /* 6 */ self.nationalPrefixOptionalWhenFormatting = [[data safeObjectAtIndex:6] boolValue];
-        /* 5 */ self.domesticCarrierCodeFormattingRule = [data safeObjectAtIndex:5];
-    }
-    
+    _pattern = pattern;
+    _format = format;
+    _leadingDigitsPatterns = leadingDigitsPatterns;
+    _nationalPrefixFormattingRule = nationalPrefixFormattingRule;
+    _nationalPrefixOptionalWhenFormatting = nationalPrefixOptionalWhenFormatting;
+    _domesticCarrierCodeFormattingRule = domesticCarrierCodeFormattingRule;
+        
     return self;
 }
 
@@ -33,35 +30,12 @@
 {
     self = [super init];
     
-    if (self)
-    {
+    if (self) {
         self.nationalPrefixOptionalWhenFormatting = NO;
         self.leadingDigitsPatterns = [[NSMutableArray alloc] init];
     }
     
     return self;
-}
-
-
-- (NSMutableArray*)stringArrayFromData:(id)data
-{
-    NSMutableArray *resArray = [[NSMutableArray alloc] init];
-    if (data != nil && [data isKindOfClass:[NSArray class]])
-    {
-        for (id numFormat in data)
-        {
-            if ([numFormat isKindOfClass:[NSString class]])
-            {
-                [resArray addObject:numFormat];
-            }
-            else
-            {
-                [resArray addObject:[numFormat stringValue]];
-            }
-        }
-    }
-    
-    return resArray;
 }
 
 
@@ -98,8 +72,7 @@
 
 - (id)initWithCoder:(NSCoder*)coder
 {
-    if (self = [super init])
-    {
+    if (self = [super init]) {
         self.pattern = [coder decodeObjectForKey:@"pattern"];
         self.format = [coder decodeObjectForKey:@"format"];
         self.leadingDigitsPatterns = [coder decodeObjectForKey:@"leadingDigitsPatterns"];
@@ -121,17 +94,5 @@
     [coder encodeObject:self.domesticCarrierCodeFormattingRule forKey:@"domesticCarrierCodeFormattingRule"];
 }
 
-
-- (void)setData:(id)data
-{
-    if ([data isKindOfClass:[NSArray class]] || [data isKindOfClass:[NSMutableArray class]])
-    {
-        
-    }
-    else if ([data isKindOfClass:[NSDictionary class]] || [data isKindOfClass:[NSMutableDictionary class]])
-    {
-        
-    }
-}
 
 @end

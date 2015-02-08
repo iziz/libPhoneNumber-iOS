@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSArray (NBAdditions)
 
 - (id)safeObjectAtIndex:(NSUInteger)index;

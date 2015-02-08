@@ -10,13 +10,11 @@
 
 @implementation NBPhoneNumber
 
-
 - (id)init
 {
     self = [super init];
     
-    if (self)
-    {
+    if (self) {
         self.countryCodeSource = nil;
         self.italianLeadingZero = NO;
         self.nationalNumber = @-1;
@@ -35,8 +33,9 @@
 
 - (NBECountryCodeSource)getCountryCodeSourceOrDefault
 {
-    if (self.countryCodeSource == nil)
+    if (!self.countryCodeSource) {
         return NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN;
+    }
     
     return [self.countryCodeSource intValue];
 }
@@ -57,8 +56,9 @@
 
 - (BOOL)isEqual:(id)object
 {
-    if ([object isKindOfClass:[NBPhoneNumber class]] == NO)
+    if (![object isKindOfClass:[NBPhoneNumber class]]) {
         return NO;
+    }
     
     NBPhoneNumber *other = object;
     return ([self.countryCode isEqualToNumber:other.countryCode]) && ([self.nationalNumber isEqualToNumber:other.nationalNumber]) &&
@@ -85,8 +85,7 @@
 
 - (id)initWithCoder:(NSCoder*)coder
 {
-    if (self = [super init])
-    {
+    if (self = [super init]) {
         self.countryCode = [coder decodeObjectForKey:@"countryCode"];
         self.nationalNumber = [coder decodeObjectForKey:@"nationalNumber"];
         self.extension = [coder decodeObjectForKey:@"extension"];

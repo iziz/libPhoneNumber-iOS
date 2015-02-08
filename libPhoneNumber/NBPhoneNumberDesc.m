@@ -10,19 +10,34 @@
 
 @implementation NBPhoneNumberDesc
 
-
 - (id)initWithData:(id)data
+{
+    NSString *nnp = nil;
+    NSString *pnp = nil;
+    NSString *exp = nil;
+    
+    if (data != nil && [data isKindOfClass:[NSArray class]]) {
+        /* 2 */ nnp = [data safeObjectAtIndex:2];
+        /* 3 */ pnp = [data safeObjectAtIndex:3];
+        /* 6 */ exp = [data safeObjectAtIndex:6];
+    }
+    
+    return [self initWithNationalNumberPattern:nnp withPossibleNumberPattern:pnp withExample:exp];
+}
+
+
+- (id)initWithNationalNumberPattern:(NSString *)nnp withPossibleNumberPattern:(NSString *)pnp withExample:(NSString *)exp
 {
     self = [self init];
     
-    if (self && data != nil && [data isKindOfClass:[NSArray class]])
-    {
-        /* 2 */ self.nationalNumberPattern = [data safeObjectAtIndex:2];
-        /* 3 */ self.possibleNumberPattern = [data safeObjectAtIndex:3];
-        /* 6 */ self.exampleNumber = [data safeObjectAtIndex:6];
+    if (self) {
+        self.nationalNumberPattern = nnp;
+        self.possibleNumberPattern = pnp;
+        self.exampleNumber = exp;
     }
     
     return self;
+
 }
 
 
@@ -30,8 +45,7 @@
 {
     self = [super init];
     
-    if (self)
-    {
+    if (self) {
     }
     
     return self;
@@ -40,8 +54,7 @@
 
 - (id)initWithCoder:(NSCoder*)coder
 {
-    if (self = [super init])
-    {
+    if (self = [super init]) {
         self.nationalNumberPattern = [coder decodeObjectForKey:@"nationalNumberPattern"];
         self.possibleNumberPattern = [coder decodeObjectForKey:@"possibleNumberPattern"];
         self.exampleNumber = [coder decodeObjectForKey:@"exampleNumber"];
@@ -60,8 +73,10 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"nationalNumberPattern[%@] possibleNumberPattern[%@] exampleNumber[%@]", self.nationalNumberPattern, self.possibleNumberPattern, self.exampleNumber];
+    return [NSString stringWithFormat:@"nationalNumberPattern[%@] possibleNumberPattern[%@] exampleNumber[%@]",
+            self.nationalNumberPattern, self.possibleNumberPattern, self.exampleNumber];
 }
+
 
 - (id)copyWithZone:(NSZone *)zone
 {
@@ -74,10 +89,12 @@
 	return phoneDescCopy;
 }
 
+
 - (BOOL)isEqual:(id)object
 {
-    if ([object isKindOfClass:[NBPhoneNumberDesc class]] == NO)
+    if ([object isKindOfClass:[NBPhoneNumberDesc class]] == NO) {
         return NO;
+    }
     
     NBPhoneNumberDesc *other = object;
     return [self.nationalNumberPattern isEqual:other.nationalNumberPattern] &&

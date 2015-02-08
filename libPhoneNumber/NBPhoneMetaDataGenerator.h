@@ -6,6 +6,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NBPhoneMetaDataGenerator : NSObject
 
 - (void)generateMetadataClasses;
