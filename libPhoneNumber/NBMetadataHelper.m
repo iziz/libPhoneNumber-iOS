@@ -212,13 +212,21 @@ static BOOL isTestMode = NO;
     
     regionCode = [regionCode uppercaseString];
     
-    NSString *classPrefix = isTestMode ? @"NBPhoneMetadataTest" : @"NBPhoneMetadata";
+    if ([cachedMetaDataKey isEqualToString:regionCode]) {
+        return cachedMetaData;
+    }
     
+    NSString *classPrefix = isTestMode ? @"NBPhoneMetadataTest" : @"NBPhoneMetadata";
     NSString *className = [NSString stringWithFormat:@"%@%@", classPrefix, regionCode];
+    
     Class metaClass = NSClassFromString(className);
     
     if (metaClass) {
         NBPhoneMetaData *metadata = [[metaClass alloc] init];
+        
+        cachedMetaData = metadata;
+        cachedMetaDataKey = regionCode;
+        
         return metadata;
     }
     
