@@ -36,7 +36,7 @@ See sample test code from
 
 ### Usage - **NBPhoneNumberUtil**
 ```obj-c
-    NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
+    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
     
     NSError *anError = nil;
     NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303"
