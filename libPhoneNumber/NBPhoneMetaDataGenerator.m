@@ -257,7 +257,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         [contents appendString:@"+ (NSArray *)ISOCodeFromCallingNumber:(NSString *)key;\n\n"];
         [contents appendString:@"@end\n\n"];
     } else if (type == 1) {
-        [contents appendFormat:@"#import \"%@Mapper.h\"\n", name];
+        [contents appendFormat:@"#import \"%@Mapper.h\"\n\n", name];
         
         [contents appendFormat:@"@implementation %@Mapper\n\n", name];
         [contents appendString:@"static NSMutableDictionary *kMapCCode2CN;\n\n"];
@@ -276,8 +276,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
             }
             [contents appendFormat:@"        [kMapCCode2CN setObject:countryCode%@Array forKey:%@];\n", callingKey, STR_VAL(callingKey)];
         }
-        [contents appendString:@"});\n"];
-        [contents appendString:@"     return [kMapCCode2CN objectForKey:key];\n"];
+        [contents appendString:@"    });\n"];
+        [contents appendString:@"    return [kMapCCode2CN objectForKey:key];\n"];
         [contents appendString:@"}\n\n"];
         [contents appendString:@"@end\n\n"];
     }

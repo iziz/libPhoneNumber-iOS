@@ -167,14 +167,14 @@
 		FD12C2711A8759AF00B53856 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FD8B84281934C35F00C350EB /* NBNumberFormat.h */,
-				FD8B84291934C35F00C350EB /* NBNumberFormat.m */,
-				FD8B842A1934C35F00C350EB /* NBPhoneMetaData.h */,
-				FD8B842B1934C35F00C350EB /* NBPhoneMetaData.m */,
 				FD8B842C1934C35F00C350EB /* NBPhoneNumber.h */,
 				FD8B842D1934C35F00C350EB /* NBPhoneNumber.m */,
+				FD8B84281934C35F00C350EB /* NBNumberFormat.h */,
+				FD8B84291934C35F00C350EB /* NBNumberFormat.m */,
 				FD8B842F1934C35F00C350EB /* NBPhoneNumberDesc.h */,
 				FD8B84301934C35F00C350EB /* NBPhoneNumberDesc.m */,
+				FD8B842A1934C35F00C350EB /* NBPhoneMetaData.h */,
+				FD8B842B1934C35F00C350EB /* NBPhoneMetaData.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -259,13 +259,13 @@
 			children = (
 				FDBCFA121A87ADAB00297F21 /* Meatadata */,
 				FD12C2711A8759AF00B53856 /* Model */,
-				FD12C2681A87401B00B53856 /* NBMetadataHelper.h */,
-				FD12C2691A87401B00B53856 /* NBMetadataHelper.m */,
 				FD8B842E1934C35F00C350EB /* NBPhoneNumberDefines.h */,
-				FD8B84261934C35F00C350EB /* NBAsYouTypeFormatter.h */,
-				FD8B84271934C35F00C350EB /* NBAsYouTypeFormatter.m */,
 				FD8B84311934C35F00C350EB /* NBPhoneNumberUtil.h */,
 				FD8B84321934C35F00C350EB /* NBPhoneNumberUtil.m */,
+				FD12C2681A87401B00B53856 /* NBMetadataHelper.h */,
+				FD12C2691A87401B00B53856 /* NBMetadataHelper.m */,
+				FD8B84261934C35F00C350EB /* NBAsYouTypeFormatter.h */,
+				FD8B84271934C35F00C350EB /* NBAsYouTypeFormatter.m */,
 			);
 			name = "libPhoneNumber-iOS";
 			sourceTree = "<group>";

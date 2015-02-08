@@ -1,4 +1,5 @@
 #import "NBMetadataCoreTestMapper.h"
+
 @implementation NBMetadataCoreTestMapper
 
 static NSMutableDictionary *kMapCCode2CN;
@@ -107,8 +108,8 @@ static NSMutableDictionary *kMapCCode2CN;
         [countryCode262Array addObject:@"RE"];
         [countryCode262Array addObject:@"YT"];
         [kMapCCode2CN setObject:countryCode262Array forKey:@"262"];
-});
-     return [kMapCCode2CN objectForKey:key];
+    });
+    return [kMapCCode2CN objectForKey:key];
 }
 
 @end

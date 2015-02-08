@@ -1,4 +1,5 @@
 #import "NBMetadataCoreMapper.h"
+
 @implementation NBMetadataCoreMapper
 
 static NSMutableDictionary *kMapCCode2CN;
@@ -906,8 +907,8 @@ static NSMutableDictionary *kMapCCode2CN;
         NSMutableArray *countryCode267Array = [[NSMutableArray alloc] init];
         [countryCode267Array addObject:@"BW"];
         [kMapCCode2CN setObject:countryCode267Array forKey:@"267"];
-});
-     return [kMapCCode2CN objectForKey:key];
+    });
+    return [kMapCCode2CN objectForKey:key];
 }
 
 @end
