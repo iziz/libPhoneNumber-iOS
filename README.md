@@ -15,7 +15,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 pod 'libPhoneNumber-iOS', '~> 0.7'
 ```
 
-### Setting up Manually
+### Setting up manually
 ##### Add source files to your projects from libPhoneNumber
     - Add "CoreTelephony.framework"
 
