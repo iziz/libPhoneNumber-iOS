@@ -22,7 +22,8 @@ pod 'libPhoneNumber-iOS', '~> 0.7'
 See sample test code from
 > [libPhoneNumber-iOS/libPhoneNumberTests/libPhoneNumberTests.m] (https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberTests/NBPhoneNumberUtilTests.m)
 
-### [Update Log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
+### Update Log
+[https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
 
 ### Usage - **NBPhoneNumberUtil**
 ```obj-c
