@@ -17,18 +17,6 @@ pod 'libPhoneNumber-iOS', '~> 0.7'
 
 ### Setting up Manually
 ##### Add source files to your projects from libPhoneNumber
-    - NBPhoneNumberUtil.h, .m
-    - NBAsYouTypeFormatter.h, .m
-    
-    - NBNumberFormat.h, .m
-    - NBPhoneNumber.h, .m
-    - NBPhoneNumberDesc.h, .m
-    - NBPhoneNumberDefines.h
-    - NBPhoneMetaData.h, .m
-    
-    - NSArray+NBAdditions.h, .m
-    
-    - Add "NBPhoneNumberMetadata.plist" and "NBPhoneNumberMetadataForTesting.plist" to bundle resources
     - Add "CoreTelephony.framework"
 
 See sample test code from
