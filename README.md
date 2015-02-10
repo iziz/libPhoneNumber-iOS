@@ -9,6 +9,9 @@
 
 > ARC only, or add the **"-fobjc-arc"** flag for non-ARC
  
+### Update Log
+[https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
+ 
 ### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
 ```
 source 'https://github.com/CocoaPods/Specs.git'
@@ -22,47 +25,42 @@ pod 'libPhoneNumber-iOS', '~> 0.7'
 See sample test code from
 > [libPhoneNumber-iOS/libPhoneNumberTests/libPhoneNumberTests.m] (https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberTests/NBPhoneNumberUtilTests.m)
 
-### Update Log
-[https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
-
 ### Usage - **NBPhoneNumberUtil**
 ```obj-c
-    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+ NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+ NSError *anError = nil;
+ NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303"
+                              defaultRegion:@"AT" error:&anError];
+ if (anError == nil) {
+     // Should check error
+     NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
+     
+     // E164          : +436766077303
+     NSLog(@"E164          : %@", [phoneUtil format:myNumber
+                                       numberFormat:NBEPhoneNumberFormatE164
+                                              error:&anError]);
+     // INTERNATIONAL : +43 676 6077303
+     NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber
+                                       numberFormat:NBEPhoneNumberFormatINTERNATIONAL
+                                              error:&anError]);
+     // NATIONAL      : 0676 6077303
+     NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber
+                                       numberFormat:NBEPhoneNumberFormatNATIONAL
+                                              error:&anError]);
+     // RFC3966       : tel:+43-676-6077303
+     NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber
+                                       numberFormat:NBEPhoneNumberFormatRFC3966
+                                              error:&anError]);
+ } else {
+     NSLog(@"Error : %@", [anError localizedDescription]);
+ }
     
-    NSError *anError = nil;
-    NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303"
-                                 defaultRegion:@"AT" error:&anError];
+ NSLog (@"extractCountryCode [%@]", [phoneUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
     
-    if (anError == nil) {
-        // Should check error
-        NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
-        
-        // E164          : +436766077303
-        NSLog(@"E164          : %@", [phoneUtil format:myNumber
-                                          numberFormat:NBEPhoneNumberFormatE164
-                                                 error:&anError]);
-        // INTERNATIONAL : +43 676 6077303
-        NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber
-                                          numberFormat:NBEPhoneNumberFormatINTERNATIONAL
-                                                 error:&anError]);
-        // NATIONAL      : 0676 6077303
-        NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber
-                                          numberFormat:NBEPhoneNumberFormatNATIONAL
-                                                 error:&anError]);
-        // RFC3966       : tel:+43-676-6077303
-        NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber
-                                          numberFormat:NBEPhoneNumberFormatRFC3966
-                                                 error:&anError]);
-    } else {
-        NSLog(@"Error : %@", [anError localizedDescription]);
-    }
+ NSString *nationalNumber = nil;
+ NSNumber *countryCode = [phoneUtil extractCountryCode:@"823213123123" nationalNumber:&nationalNumber];
     
-    NSLog (@"extractCountryCode [%@]", [phoneUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
-    
-    NSString *nationalNumber = nil;
-    NSNumber *countryCode = [phoneUtil extractCountryCode:@"823213123123" nationalNumber:&nationalNumber];
-    
-    NSLog (@"extractCountryCode [%@] [%@]", countryCode, nationalNumber);
+ NSLog (@"extractCountryCode [%@] [%@]", countryCode, nationalNumber);
 ```
 ##### Output
 ```
