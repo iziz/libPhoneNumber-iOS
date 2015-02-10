@@ -106,16 +106,3 @@ See sample test code from
 ```
 
 ##### Visit [libphonenumber](https://github.com/googlei18n/libphonenumber) for more information or mail (zen.isis@gmail.com)
-
-##### **Metadata managing (updating metadata)**
-
-###### Step1. Fetch "metadata.js" and "metadatafortesting.js" from Repositories
-    svn checkout http://libphonenumber.googlecode.com/svn/trunk/ libphonenumber-read-only
-    
-###### Step2. Convert Javascript Object to JSON using PHP scripts 
-    Output - "PhoneNumberMetaData.json" and "PhoneNumberMetaDataForTesting.json"
-    
-###### Step3. Generate binary file from NBPhoneMetaDataGenerator
-    Output - "NBPhoneNumberMetadata.plist" and "NBPhoneNumberMetadataForTesting.plist"
-    
-###### Step4. Update exists "NBPhoneNumberMetadata.plist" and "NBPhoneNumberMetadataForTesting.plist" files
