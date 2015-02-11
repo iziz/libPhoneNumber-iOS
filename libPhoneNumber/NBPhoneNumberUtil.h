@@ -14,6 +14,14 @@
 
 @interface NBPhoneNumberUtil : NSObject
 
++ (NBPhoneNumberUtil*)sharedInstance __attribute__((deprecated));
++ (NBPhoneNumberUtil*)sharedInstanceWithBundle:(NSBundle *)bundle __attribute__((deprecated));
+
++ (NBPhoneNumberUtil*)sharedInstanceForTest __attribute__((deprecated));
++ (NBPhoneNumberUtil*)sharedInstanceForTestWithBundle:(NSBundle *)bundle __attribute__((deprecated));
+
+- (instancetype)initWithBundle:(NSBundle *)bundle metaData:(NSString *)metaData __attribute__((deprecated));
+
 // regular expressions
 - (NSArray*)matchesByRegex:(NSString*)sourceString regex:(NSString*)pattern;
 - (NSArray*)matchedStringByRegex:(NSString*)sourceString regex:(NSString*)pattern;

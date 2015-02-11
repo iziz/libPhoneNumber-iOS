@@ -18,6 +18,7 @@
 		FD12C26A1A87401B00B53856 /* NBMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FD12C2691A87401B00B53856 /* NBMetadataHelper.m */; };
 		FD12C26B1A87401B00B53856 /* NBMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FD12C2691A87401B00B53856 /* NBMetadataHelper.m */; };
 		FD12C26E1A87546400B53856 /* NBMetadataCore.m in Sources */ = {isa = PBXBuildFile; fileRef = FD12C26D1A87546400B53856 /* NBMetadataCore.m */; };
+		FD379E2B1A8AE5150015C184 /* NBPhoneNumberMetadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD379E291A8AE5150015C184 /* NBPhoneNumberMetadata.plist */; };
 		FD7A0621167715A0004BBEB6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7A0620167715A0004BBEB6 /* UIKit.framework */; };
 		FD7A0623167715A0004BBEB6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7A0622167715A0004BBEB6 /* Foundation.framework */; };
 		FD7A0625167715A0004BBEB6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7A0624167715A0004BBEB6 /* CoreGraphics.framework */; };
@@ -77,6 +78,7 @@
 		FD12C26D1A87546400B53856 /* NBMetadataCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBMetadataCore.m; sourceTree = "<group>"; };
 		FD2014DC169A8A82003491D9 /* index.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = index.php; path = libPhoneNumberTests/index.php; sourceTree = SOURCE_ROOT; };
 		FD2014DD169A8A82003491D9 /* libPhoneNumberGenerator.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = libPhoneNumberGenerator.php; path = libPhoneNumberTests/libPhoneNumberGenerator.php; sourceTree = SOURCE_ROOT; };
+		FD379E291A8AE5150015C184 /* NBPhoneNumberMetadata.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = NBPhoneNumberMetadata.plist; sourceTree = "<group>"; };
 		FD57B66B16E5B71F000772AF /* NBAsYouTypeFormatterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBAsYouTypeFormatterTest.h; sourceTree = "<group>"; };
 		FD57B66C16E5B71F000772AF /* NBAsYouTypeFormatterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBAsYouTypeFormatterTest.m; sourceTree = "<group>"; };
 		FD7A061C167715A0004BBEB6 /* libPhoneNumber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libPhoneNumber.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -281,6 +283,7 @@
 				FDBCFA0B1A87AD8C00297F21 /* NBMetadataCoreMapper.m */,
 				FDBCFA0E1A87ADA300297F21 /* NBMetadataCoreTestMapper.h */,
 				FDBCFA0F1A87ADA300297F21 /* NBMetadataCoreTestMapper.m */,
+				FD379E291A8AE5150015C184 /* NBPhoneNumberMetadata.plist */,
 			);
 			name = Meatadata;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD379E2B1A8AE5150015C184 /* NBPhoneNumberMetadata.plist in Resources */,
 				FD7A062B167715A0004BBEB6 /* InfoPlist.strings in Resources */,
 				FD7A0633167715A0004BBEB6 /* Default.png in Resources */,
 				FD7A0635167715A0004BBEB6 /* Default@2x.png in Resources */,
