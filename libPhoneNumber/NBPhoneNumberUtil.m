@@ -3508,7 +3508,7 @@ static NSDictionary *DIGIT_MAPPINGS;
         [self maybeStripNationalPrefixAndCarrierCode:&normalizedNationalNumber metadata:regionMetadata carrierCode:&carrierCode];
         
         if (keepRawInput) {
-            phoneNumber.PreferredDomesticCarrierCode = [carrierCode copy];
+            phoneNumber.preferredDomesticCarrierCode = [carrierCode copy];
         }
     }
     
@@ -3723,11 +3723,11 @@ static NSDictionary *DIGIT_MAPPINGS;
     // that we can use the proto-buffer equality method.
     firstNumber.rawInput = @"";
     [firstNumber clearCountryCodeSource];
-    firstNumber.PreferredDomesticCarrierCode = @"";
+    firstNumber.preferredDomesticCarrierCode = @"";
     
     secondNumber.rawInput = @"";
     [secondNumber clearCountryCodeSource];
-    secondNumber.PreferredDomesticCarrierCode = @"";
+    secondNumber.preferredDomesticCarrierCode = @"";
     
     if (firstNumber.extension != nil && firstNumber.extension.length == 0) {
         firstNumber.extension = nil;
