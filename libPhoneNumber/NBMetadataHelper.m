@@ -212,7 +212,7 @@ static BOOL isTestMode = NO;
     
     regionCode = [regionCode uppercaseString];
     
-    if ([cachedMetaDataKey isEqualToString:regionCode]) {
+    if (cachedMetaDataKey && [cachedMetaDataKey isEqualToString:regionCode]) {
         return cachedMetaData;
     }
     
