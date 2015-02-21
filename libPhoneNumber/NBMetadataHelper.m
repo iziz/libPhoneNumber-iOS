@@ -31,11 +31,11 @@
  Ref. site (countrycode.org)
  */
 
-static NSMutableDictionary *kMapCCode2CN;
+static NSMutableDictionary *kMapCCode2CN = nil;
 
 // Cached metadata
-static NBPhoneMetaData *cachedMetaData;
-static NSString *cachedMetaDataKey;
+static NBPhoneMetaData *cachedMetaData = nil;
+static NSString *cachedMetaDataKey = nil;
 
 static BOOL isTestMode = NO;
 
