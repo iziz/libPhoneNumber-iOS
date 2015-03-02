@@ -326,13 +326,13 @@
  */
 - (NBPhoneMetaData*)getMetadataForRegion_:(NSString*)regionCode
 {
-    
+    NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
     /** @type {number} */
     NSNumber *countryCallingCode = [self.phoneUtil_ getCountryCodeForRegion:regionCode];
     /** @type {string} */
     NSString *mainCountry = [self.phoneUtil_ getRegionCodeForCountryCode:countryCallingCode];
     /** @type {i18n.phonenumbers.PhoneMetadata} */
-    NBPhoneMetaData *metadata = [NBMetadataHelper getMetadataForRegion:mainCountry];
+    NBPhoneMetaData *metadata = [helper getMetadataForRegion:mainCountry];
     if (metadata != nil) {
         return metadata;
     }
@@ -1136,9 +1136,9 @@
     NSString *newRegionCode = [self.phoneUtil_ getRegionCodeForCountryCode:countryCode];
     
     if ([NB_REGION_CODE_FOR_NON_GEO_ENTITY isEqualToString:newRegionCode]) {
-        self.currentMetaData_ = [NBMetadataHelper getMetadataForNonGeographicalRegion:countryCode];
-    } else if (newRegionCode != self.defaultCountry_)
-    {
+        NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
+        self.currentMetaData_ = [helper getMetadataForNonGeographicalRegion:countryCode];
+    } else if (newRegionCode != self.defaultCountry_) {
         self.currentMetaData_ = [self getMetadataForRegion_:newRegionCode];
     }
     
@@ -1234,7 +1234,8 @@
  *
  * @return {string}
  */
-- (NSString *)description {
+- (NSString *)description
+{
     return self.currentOutput_;
 }
 

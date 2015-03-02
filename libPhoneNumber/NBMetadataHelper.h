@@ -16,17 +16,17 @@
 
 + (void)setTestMode:(BOOL)isMode;
 
-+ (NSArray *)getAllMetadata;
+- (NSArray *)getAllMetadata;
 
-+ (NBPhoneMetaData *)getMetadataForNonGeographicalRegion:(NSNumber *)countryCallingCode;
-+ (NBPhoneMetaData *)getMetadataForRegion:(NSString *)regionCode;
+- (NBPhoneMetaData *)getMetadataForNonGeographicalRegion:(NSNumber *)countryCallingCode;
+- (NBPhoneMetaData *)getMetadataForRegion:(NSString *)regionCode;
 
-+ (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber;
-+ (NSString *)countryCodeFromRegionCode:(NSString *)regionCode;
+- (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber;
+- (NSString *)countryCodeFromRegionCode:(NSString *)regionCode;
 
-+ (NSString *)stringByTrimming:(NSString *)aString;
-+ (NSString *)normalizeNonBreakingSpace:(NSString *)aString;
+- (NSString *)stringByTrimming:(NSString *)aString;
+- (NSString *)normalizeNonBreakingSpace:(NSString *)aString;
 
-+ (BOOL)hasValue:(NSString *)string;
+- (BOOL)hasValue:(NSString *)string;
 
 @end

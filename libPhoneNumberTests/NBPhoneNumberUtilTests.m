@@ -50,8 +50,6 @@
 {
     [super setUp];
     
-    [NBMetadataHelper setTestMode:YES];
-    
     _aUtil = [[NBPhoneNumberUtil alloc] init];
 }
 
@@ -97,7 +95,9 @@
 {
     [NBMetadataHelper setTestMode:NO];
     
-    NSArray *arrayData = [NBMetadataHelper getAllMetadata];
+    NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
+    
+    NSArray *arrayData = [helper getAllMetadata];
     if (arrayData && arrayData.count > 0) {
         NSLog(@"Log sample metadata [%@]", [arrayData firstObject]);
     } else {
@@ -153,14 +153,15 @@
 
 - (void)testForGetMetadataForRegionTwice
 {
-    [NBMetadataHelper getMetadataForRegion:@"US"];
-    [NBMetadataHelper getMetadataForRegion:@"KR"];
-    [NBMetadataHelper getMetadataForRegion:nil];
-    [NBMetadataHelper getMetadataForRegion:NULL];
-    [NBMetadataHelper getMetadataForRegion:@""];
-    [NBMetadataHelper getMetadataForRegion:0];
-    [NBMetadataHelper getMetadataForRegion:@" AU"];
-    [NBMetadataHelper getMetadataForRegion:@" JP        "];
+    NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
+    [helper getMetadataForRegion:@"US"];
+    [helper getMetadataForRegion:@"KR"];
+    [helper getMetadataForRegion:nil];
+    [helper getMetadataForRegion:NULL];
+    [helper getMetadataForRegion:@""];
+    [helper getMetadataForRegion:0];
+    [helper getMetadataForRegion:@" AU"];
+    [helper getMetadataForRegion:@" JP        "];
 }
 
 - (void)testNSDictionaryalbeKey
@@ -365,10 +366,12 @@
     UNKNOWN_COUNTRY_CODE_NO_RAW_INPUT.countryCode = @2;
     UNKNOWN_COUNTRY_CODE_NO_RAW_INPUT.nationalNumber = @12345;
     
+    NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
     
     #pragma mark - testGetInstanceLoadUSMetadata
     {
-        NBPhoneMetaData *metadata = [NBMetadataHelper getMetadataForRegion:@"US"];
+        
+        NBPhoneMetaData *metadata = [helper getMetadataForRegion:@"US"];
 
         XCTAssertEqualObjects(@"US", metadata.codeID);
         XCTAssertEqualObjects(@1, metadata.countryCode);
@@ -389,7 +392,7 @@
                                            
     #pragma mark - testGetInstanceLoadDEMetadata
     {
-        NBPhoneMetaData *metadata = [NBMetadataHelper getMetadataForRegion:@"DE"];
+        NBPhoneMetaData *metadata = [helper getMetadataForRegion:@"DE"];
         XCTAssertEqualObjects(@"DE", metadata.codeID);
         XCTAssertEqualObjects(@49, metadata.countryCode);
         XCTAssertEqualObjects(@"00", metadata.internationalPrefix);
@@ -409,7 +412,7 @@
 
     #pragma mark - testGetInstanceLoadARMetadata
     {
-        NBPhoneMetaData *metadata = [NBMetadataHelper getMetadataForRegion:@"AR"];
+        NBPhoneMetaData *metadata = [helper getMetadataForRegion:@"AR"];
         XCTAssertEqualObjects(@"AR", metadata.codeID);
         XCTAssertEqualObjects(@54, metadata.countryCode);
         XCTAssertEqualObjects(@"00", metadata.internationalPrefix);
@@ -425,7 +428,7 @@
 
     #pragma mark - testGetInstanceLoadInternationalTollFreeMetadata
     {
-        NBPhoneMetaData *metadata = [NBMetadataHelper getMetadataForNonGeographicalRegion:@800];
+        NBPhoneMetaData *metadata = [helper getMetadataForNonGeographicalRegion:@800];
         XCTAssertEqualObjects(@"001", metadata.codeID);
         XCTAssertEqualObjects(@800, metadata.countryCode);
         XCTAssertEqualObjects(@"$1 $2", ((NBNumberFormat*)metadata.numberFormats[0]).format);
@@ -1780,7 +1783,7 @@
     {
         NSLog(@"-------------- testMaybeExtractCountryCode");
         NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
-        NBPhoneMetaData *metadata = [NBMetadataHelper getMetadataForRegion:@"US"];
+        NBPhoneMetaData *metadata = [helper getMetadataForRegion:@"US"];
         
         // Note that for the US, the IDD is 011.
         NSString *phoneNumber = @"011112-3456789";
