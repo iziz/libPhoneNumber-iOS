@@ -205,7 +205,7 @@ static BOOL isTestMode = NO;
 {
     [self initializeHelper];
     
-    if ([self hasValue:regionCode] == NO) {
+    if ([NBMetadataHelper hasValue:regionCode] == NO) {
         return nil;
     }
     
@@ -246,7 +246,7 @@ static BOOL isTestMode = NO;
 
 #pragma mark - Regular expression Utilities -
 
-- (BOOL)hasValue:(NSString*)string
++ (BOOL)hasValue:(NSString*)string
 {
     static dispatch_once_t onceToken;
     static NSCharacterSet *whitespaceCharSet = nil;

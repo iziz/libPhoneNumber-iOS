@@ -15,6 +15,7 @@
 @interface NBMetadataHelper : NSObject
 
 + (void)setTestMode:(BOOL)isMode;
++ (BOOL)hasValue:(NSString *)string;
 
 - (NSArray *)getAllMetadata;
 
@@ -26,7 +27,5 @@
 
 - (NSString *)stringByTrimming:(NSString *)aString;
 - (NSString *)normalizeNonBreakingSpace:(NSString *)aString;
-
-- (BOOL)hasValue:(NSString *)string;
 
 @end
