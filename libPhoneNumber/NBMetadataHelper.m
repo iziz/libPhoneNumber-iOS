@@ -19,6 +19,10 @@
 
 @interface NBMetadataHelper ()
 
+// Cached metadata
+@property(nonatomic, strong) NBPhoneMetaData *cachedMetaData;
+@property(nonatomic, strong) NSString *cachedMetaDataKey;
+
 @end
 
 
@@ -32,11 +36,6 @@
  */
 
 static NSMutableDictionary *kMapCCode2CN = nil;
-
-// Cached metadata
-static NBPhoneMetaData *cachedMetaData = nil;
-static NSString *cachedMetaDataKey = nil;
-
 static BOOL isTestMode = NO;
 
 + (void)setTestMode:(BOOL)isMode
@@ -212,8 +211,8 @@ static BOOL isTestMode = NO;
     
     regionCode = [regionCode uppercaseString];
     
-    if (cachedMetaDataKey && [cachedMetaDataKey isEqualToString:regionCode]) {
-        return cachedMetaData;
+    if (_cachedMetaDataKey && [_cachedMetaDataKey isEqualToString:regionCode]) {
+        return _cachedMetaData;
     }
     
     NSString *classPrefix = isTestMode ? @"NBPhoneMetadataTest" : @"NBPhoneMetadata";
@@ -224,8 +223,8 @@ static BOOL isTestMode = NO;
     if (metaClass) {
         NBPhoneMetaData *metadata = [[metaClass alloc] init];
         
-        cachedMetaData = metadata;
-        cachedMetaDataKey = regionCode;
+        _cachedMetaData = metadata;
+        _cachedMetaDataKey = regionCode;
         
         return metadata;
     }
