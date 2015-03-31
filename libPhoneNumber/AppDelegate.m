@@ -9,6 +9,7 @@
 
 #import "NBPhoneNumberUtil.h"
 
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -52,7 +53,27 @@
      
     */
     
+    NBAsYouTypeFormatter *formatter = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+    [formatter setDelegate:self];
+    
+    NSLog(@"%@", [formatter inputDigit:@"2"]);
+    NSLog(@"%@", [formatter inputDigit:@"1"]);
+    NSLog(@"%@", [formatter inputDigit:@"2"]);
+    NSLog(@"%@", [formatter inputDigit:@"5"]);
+    NSLog(@"%@", [formatter inputDigit:@"5"]);
+    NSLog(@"%@", [formatter inputDigit:@"5"]);
+    NSLog(@"%@", [formatter inputDigit:@"5"]);
+    NSLog(@"%@", [formatter inputDigit:@"5"]);
+    NSLog(@"%@", [formatter inputDigit:@"5"]);
+    NSLog(@"%@", [formatter inputDigit:@"5"]);
+    NSLog(@"%@", [formatter inputDigit:@"5"]);
+    
     return YES;
+}
+
+- (void)formatter:(NBAsYouTypeFormatter *)formatter didFormatted:(BOOL)withResult
+{
+    NSLog(@"didFormatted : %@", withResult ? @"YES":@"NO");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

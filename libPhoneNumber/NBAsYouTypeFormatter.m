@@ -686,9 +686,16 @@
  * @return {string}
  * @private
  */
+
+#define INVOKE_RESULT(result) \
+    if (self.delegate && [self.delegate respondsToSelector:@selector(formatter:didFormatted:)]) { \
+        [self.delegate formatter:self didFormatted:result]; \
+    }
+
 - (NSString*)inputDigitWithOptionToRememberPosition_:(NSString*)nextChar rememberPosition:(BOOL)rememberPosition
 {
     if (!nextChar || nextChar.length <= 0) {
+        INVOKE_RESULT(NO);
         return self.currentOutput_;
     }
     
@@ -713,11 +720,14 @@
         // formatting chars have been entered, it can be due to really long IDDs or
         // NDDs. If that is the case, we might be able to do formatting again after
         // extracting them.
+        
         if (self.inputHasFormatting_) {
+            INVOKE_RESULT(YES);
             return [NSString stringWithString:self.accruedInput_];
         }
         else if ([self attemptToExtractIdd_]) {
             if ([self attemptToExtractCountryCallingCode_]) {
+                INVOKE_RESULT(YES);
                 return [self attemptToChoosePatternWithPrefixExtracted_];
             }
         }
@@ -727,8 +737,11 @@
             // to YES, since we don't want this to change later when we choose
             // formatting templates.
             [self.prefixBeforeNationalNumber_ appendString:[NSString stringWithFormat: @"%@", self.SEPARATOR_BEFORE_NATIONAL_NUMBER_]];
+            INVOKE_RESULT(YES);
             return [self attemptToChoosePatternWithPrefixExtracted_];
         }
+        
+        INVOKE_RESULT(NO);
         return self.accruedInput_;
     }
     
@@ -740,6 +753,7 @@
         case 0:
         case 1:
         case 2:
+            INVOKE_RESULT(YES);
             return self.accruedInput_;
         case 3:
             if ([self attemptToExtractIdd_]) {
@@ -747,6 +761,7 @@
             } else {
                 // No IDD or plus sign is found, might be entering in national format.
                 self.nationalPrefixExtracted_ = [self removeNationalPrefixFromNationalNumber_];
+                INVOKE_RESULT(YES);
                 return [self attemptToChooseFormattingPattern_];
             }
         default:
@@ -754,6 +769,7 @@
                 if ([self attemptToExtractCountryCallingCode_]) {
                     self.isExpectingCountryCallingCode_ = NO;
                 }
+                INVOKE_RESULT(YES);
                 return [NSString stringWithFormat:@"%@%@", self.prefixBeforeNationalNumber_, self.nationalNumber_];
             }
             
@@ -767,21 +783,32 @@
                 /** @type {string} */
                 NSString *formattedNumber = [self attemptToFormatAccruedDigits_];
                 if (formattedNumber.length > 0) {
+                    INVOKE_RESULT(YES);
                     return formattedNumber;
                 }
                 
                 [self narrowDownPossibleFormats_:self.nationalNumber_];
                 
                 if ([self maybeCreateNewTemplate_]) {
+                    INVOKE_RESULT(YES);
                     return [self inputAccruedNationalNumber_];
                 }
                 
-                return self.ableToFormat_ ? [self appendNationalNumber_:tempNationalNumber] : self.accruedInput_;
+                if (self.ableToFormat_) {
+                    INVOKE_RESULT(YES);
+                    return [self appendNationalNumber_:tempNationalNumber];
+                } else {
+                    INVOKE_RESULT(NO);
+                    return self.accruedInput_;
+                }
             }
             else {
+                INVOKE_RESULT(NO);
                 return [self attemptToChooseFormattingPattern_];
             }
     }
+    
+    INVOKE_RESULT(NO);
 };
 
 
@@ -969,6 +996,11 @@
     // digits of national number (excluding national prefix) have been entered.
     if (nationalNumber.length >= self.MIN_LEADING_DIGITS_LENGTH_) {
         [self getAvailableFormats_:[nationalNumber substringWithRange:NSMakeRange(0, self.MIN_LEADING_DIGITS_LENGTH_)]];
+        if ([self maybeCreateNewTemplate_]) {
+            return [self inputAccruedNationalNumber_];
+        } else {
+            return self.accruedInput_;
+        }
         return [self maybeCreateNewTemplate_] ? [self inputAccruedNationalNumber_] : self.accruedInput_;
     } else {
         return [self appendNationalNumber_:nationalNumber];

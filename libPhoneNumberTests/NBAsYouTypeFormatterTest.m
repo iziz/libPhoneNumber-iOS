@@ -6,7 +6,6 @@
 //
 
 #import "NBAsYouTypeFormatterTest.h"
-#import "NBAsYouTypeFormatter.h"
 #import "NBMetadataHelper.h"
 
 @implementation NBAsYouTypeFormatterTest
@@ -25,7 +24,12 @@
     [super tearDown];
 }
 
-- (void)testNSDictionaryalbeKey
+- (void)formatter:(NBAsYouTypeFormatter *)formatter didInputString:(BOOL)withResult
+{
+    NSLog(@"formatter success : %@", withResult ? @"YES":@"NO");
+}
+
+- (void)testNSDictionaryalbeKey 
 {
     //testInvalidRegion()
     {

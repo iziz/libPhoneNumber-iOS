@@ -6,6 +6,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "NBAsYouTypeFormatter.h"
 
 @interface NBAsYouTypeFormatterTest : XCTestCase
 

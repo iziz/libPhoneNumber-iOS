@@ -6,7 +6,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+#import "NBAsYouTypeFormatter.h"
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate, NBAsYouTypeFormatterDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
