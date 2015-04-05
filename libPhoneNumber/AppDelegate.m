@@ -20,12 +20,24 @@
     
     NBPhoneMetaDataGenerator *generator = [[NBPhoneMetaDataGenerator alloc] init];
     [generator generateMetadataClasses];
-
-    /* 
-     
+    
+    NBAsYouTypeFormatter *formatter = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+    
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"2"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"1"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"2"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    
     // Unit test for isValidNumber is failing some valid numbers. #7
-     
-    NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
+    
+    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
     
     {
         NSError *error = nil;
@@ -50,22 +62,21 @@
         NSLog(@"- isPossibleNumber [%@]", [phoneUtil isPossibleNumber:phoneNumberZZ error:&error] ? @"YES" : @"NO");
         NSLog(@"- getRegionCodeForNumber [%@]", [phoneUtil getRegionCodeForNumber:phoneNumberZZ]);
     }
-     
-    */
     
-    NBAsYouTypeFormatter *formatter = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+    NSLog(@"- - - - - GB / +923406171134");
     
-    NSLog(@"%@ (%@)", [formatter inputDigit:@"2"], formatter.isSuccessfulFormatting ? @"Y":@"N");
-    NSLog(@"%@ (%@)", [formatter inputDigit:@"1"], formatter.isSuccessfulFormatting ? @"Y":@"N");
-    NSLog(@"%@ (%@)", [formatter inputDigit:@"2"], formatter.isSuccessfulFormatting ? @"Y":@"N");
-    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
-    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
-    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
-    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
-    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
-    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
-    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
-    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    // I can't validate pakistani numbers #58
+    {
+        NSError *error = nil;
+        NBPhoneNumber *phoneNumberUS = [phoneUtil parse:@"+923406171134" defaultRegion:@"GB" error:&error];
+        if (error) {
+            NSLog(@"err [%@]", [error localizedDescription]);
+        }
+        NSLog(@"- isValidNumber [%@]", [phoneUtil isValidNumber:phoneNumberUS] ? @"YES" : @"NO");
+        NSLog(@"- isPossibleNumber [%@]", [phoneUtil isPossibleNumber:phoneNumberUS error:&error] ? @"YES" : @"NO");
+        NSLog(@"- getRegionCodeForNumber [%@]", [phoneUtil getRegionCodeForNumber:phoneNumberUS]);
+    }
+    
     
     return YES;
 }
