@@ -11,15 +11,7 @@
 @class NBAsYouTypeFormatter;
 
 
-@protocol NBAsYouTypeFormatterDelegate <NSObject>
-@optional
-- (void)formatter:(NBAsYouTypeFormatter *)formatter didFormatted:(BOOL)withResult;
-@end
-
-
 @interface NBAsYouTypeFormatter : NSObject
-
-@property (nonatomic, unsafe_unretained) id <NBAsYouTypeFormatterDelegate> delegate;
 
 - (id)initWithRegionCode:(NSString *)regionCode;
 - (id)initWithRegionCodeForTest:(NSString *)regionCode;
@@ -38,5 +30,7 @@
 - (NSInteger)getRememberedPosition;
 
 - (void)clear;
+
+@property (nonatomic, assign, readonly) BOOL isSuccessfulFormatting;
 
 @end

@@ -54,27 +54,22 @@
     */
     
     NBAsYouTypeFormatter *formatter = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
-    [formatter setDelegate:self];
     
-    NSLog(@"%@", [formatter inputDigit:@"2"]);
-    NSLog(@"%@", [formatter inputDigit:@"1"]);
-    NSLog(@"%@", [formatter inputDigit:@"2"]);
-    NSLog(@"%@", [formatter inputDigit:@"5"]);
-    NSLog(@"%@", [formatter inputDigit:@"5"]);
-    NSLog(@"%@", [formatter inputDigit:@"5"]);
-    NSLog(@"%@", [formatter inputDigit:@"5"]);
-    NSLog(@"%@", [formatter inputDigit:@"5"]);
-    NSLog(@"%@", [formatter inputDigit:@"5"]);
-    NSLog(@"%@", [formatter inputDigit:@"5"]);
-    NSLog(@"%@", [formatter inputDigit:@"5"]);
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"2"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"1"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"2"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
     
     return YES;
 }
 
-- (void)formatter:(NBAsYouTypeFormatter *)formatter didFormatted:(BOOL)withResult
-{
-    NSLog(@"didFormatted : %@", withResult ? @"YES":@"NO");
-}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
