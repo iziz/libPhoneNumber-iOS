@@ -2840,8 +2840,13 @@ static NSDictionary *DIGIT_MAPPINGS;
     }
     
     unsigned int numberLength = (unsigned int)fullNumber.length;
+    unsigned int maxCountryCode = MAX_LENGTH_COUNTRY_CODE_;
     
-    for (unsigned int i = 1; i <= MAX_LENGTH_COUNTRY_CODE_ && i <= numberLength; ++i) {
+    if ([fullNumber hasPrefix:@"+"]) {
+        maxCountryCode = MAX_LENGTH_COUNTRY_CODE_ + 1;
+    }
+    
+    for (unsigned int i = 1; i <= maxCountryCode && i <= numberLength; ++i) {
         NSString *subNumber = [fullNumber substringWithRange:NSMakeRange(0, i)];
         NSNumber *potentialCountryCode = [NSNumber numberWithInteger:[subNumber integerValue]];
         

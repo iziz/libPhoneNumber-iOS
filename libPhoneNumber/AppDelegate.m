@@ -77,6 +77,16 @@
         NSLog(@"- getRegionCodeForNumber [%@]", [phoneUtil getRegionCodeForNumber:phoneNumberUS]);
     }
     
+    // finnish phone number don't get recognised #59
+    {
+        NSString *nationalNumber = @"";
+        NSNumber *countryCode = [phoneUtil extractCountryCode:@"+358401493292" nationalNumber:&nationalNumber];
+        NSLog(@"- %@ %@", countryCode, nationalNumber);
+        
+        NBPhoneNumber *phonePN = [phoneUtil parse:@"+358401493292" defaultRegion:@"FIN" error:nil];
+        NSLog(@"- %@", [phoneUtil format:phonePN numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:nil]);
+    }
+    
     
     return YES;
 }
