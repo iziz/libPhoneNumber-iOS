@@ -13,7 +13,7 @@
 		187A61931A25E008000D8BB6 /* PhoneNumberMetaDataForTesting.json in Resources */ = {isa = PBXBuildFile; fileRef = 187A618B1A25DF04000D8BB6 /* PhoneNumberMetaDataForTesting.json */; };
 		29F3A15D17B98AE1005D8E07 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F3A15C17B98AE1005D8E07 /* CoreTelephony.framework */; };
 		29F3A15E17B98B3C005D8E07 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F3A15C17B98AE1005D8E07 /* CoreTelephony.framework */; };
-		5C50C1AE1AC23FA80049E062 /* libPhoneNumber-iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C50C1AD1AC23FA80049E062 /* libPhoneNumber-iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5C50C1AE1AC23FA80049E062 /* libPhoneNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C50C1AD1AC23FA80049E062 /* libPhoneNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5C50C1C21AC23FC20049E062 /* NBMetadataCore.h in Headers */ = {isa = PBXBuildFile; fileRef = FD12C26C1A87546400B53856 /* NBMetadataCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5C50C1C31AC23FC20049E062 /* NBMetadataCore.m in Sources */ = {isa = PBXBuildFile; fileRef = FD12C26D1A87546400B53856 /* NBMetadataCore.m */; };
 		5C50C1C41AC23FC20049E062 /* NBMetadataCoreTest.h in Headers */ = {isa = PBXBuildFile; fileRef = FDF1ED951A8774DC00F6123A /* NBMetadataCoreTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -99,7 +99,7 @@
 		4D43EF831740825100C24FF3 /* libPhoneNumber-iOS.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "libPhoneNumber-iOS.podspec"; sourceTree = SOURCE_ROOT; };
 		5C50C1A91AC23FA80049E062 /* libPhoneNumber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libPhoneNumber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C50C1AC1AC23FA80049E062 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5C50C1AD1AC23FA80049E062 /* libPhoneNumber-iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "libPhoneNumber-iOS.h"; sourceTree = "<group>"; };
+		5C50C1AD1AC23FA80049E062 /* libPhoneNumber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libPhoneNumber.h; sourceTree = "<group>"; };
 		FD12C2681A87401B00B53856 /* NBMetadataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBMetadataHelper.h; sourceTree = "<group>"; };
 		FD12C2691A87401B00B53856 /* NBMetadataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBMetadataHelper.m; sourceTree = "<group>"; };
 		FD12C26C1A87546400B53856 /* NBMetadataCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBMetadataCore.h; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 		5C50C1AA1AC23FA80049E062 /* libPhoneNumber-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				5C50C1AD1AC23FA80049E062 /* libPhoneNumber-iOS.h */,
+				5C50C1AD1AC23FA80049E062 /* libPhoneNumber.h */,
 				5C50C1AB1AC23FA80049E062 /* Supporting Files */,
 			);
 			path = "libPhoneNumber-iOS";
@@ -360,7 +360,7 @@
 				5C50C1CB1AC23FC60049E062 /* NBPhoneNumber.h in Headers */,
 				5C50C1D41AC23FC60049E062 /* NBPhoneNumberUtil.h in Headers */,
 				5C50C1C41AC23FC20049E062 /* NBMetadataCoreTest.h in Headers */,
-				5C50C1AE1AC23FA80049E062 /* libPhoneNumber-iOS.h in Headers */,
+				5C50C1AE1AC23FA80049E062 /* libPhoneNumber.h in Headers */,
 				5C50C1C61AC23FC20049E062 /* NBMetadataCoreMapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -845,6 +845,7 @@
 				5C50C1BD1AC23FA80049E062 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FD7A0616167715A0004BBEB6 /* Build configuration list for PBXProject "libPhoneNumber" */ = {
 			isa = XCConfigurationList;
