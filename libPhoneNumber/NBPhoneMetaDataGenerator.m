@@ -9,6 +9,7 @@
 
 #import "NSArray+NBAdditions.h"
 
+#define kNBSRCDirectoryName @"src"
 
 #define INDENT_TAB @"    "
 #define STR_VAL(val) [self stringForSourceCode:val]
@@ -32,22 +33,26 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 }
 
 
+
+
+
+
 - (void)generateMetadataClasses
 {
     NSDictionary *realMetadata = [self generateMetaData];
     NSDictionary *testMetadata = [self generateMetaDataWithTest];
     
     @try {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"src"];
-        
-        NSError* error = nil;
-        
-        if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath]) {
-            if( [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]) {
-            } else {
-                NSLog(@"[%@] ERROR: attempting to write create MyFolder directory", [self class]);
+        NSURL *dataPathURL= [NSURL fileURLWithPath: [self getSRCDirectoryPath]];
+        NSError *error = nil;
+        BOOL success = [dataPathURL setResourceValue: @YES forKey: NSURLIsExcludedFromBackupKey error: &error];
+        if(!success){
+            NSLog(@"Error excluding %@ from backup %@", [dataPathURL lastPathComponent], error);
+        }
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[dataPathURL path]]) {
+            BOOL sucess = [[NSFileManager defaultManager] createDirectoryAtURL:dataPathURL withIntermediateDirectories:NO attributes:nil error:&error];
+            if(!sucess) {
+                 NSLog(@"[%@] ERROR: attempting to write create MyFolder directory", [self class]);
             }
         }
         
@@ -64,15 +69,14 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 - (void)createClassWithDictionary:(NSDictionary*)data name:(NSString*)name isTestData:(BOOL)isTest
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"src"];
+    NSString *dataPath = [self getSRCDirectoryPath];
     
     NSString *codeStringHeader = [self generateSourceCodeWith:data name:name type:0 isTestData:isTest];
     NSString *codeStringSource = [self generateSourceCodeWith:data name:name type:1 isTestData:isTest];
     NSString *headerFilePath = [NSString stringWithFormat:@"%@/%@.h", dataPath, name];
     NSString *sourceFilePath = [NSString stringWithFormat:@"%@/%@.m", dataPath, name];
     NSData *dataToWrite = [codeStringHeader dataUsingEncoding:NSUTF8StringEncoding];
+    
     BOOL successCreate = [[NSFileManager defaultManager] createFileAtPath:headerFilePath contents:dataToWrite attributes:nil];
     dataToWrite = [codeStringSource dataUsingEncoding:NSUTF8StringEncoding];
     successCreate = successCreate && [[NSFileManager defaultManager] createFileAtPath:sourceFilePath contents:dataToWrite attributes:nil];
@@ -82,6 +86,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     NSString *headerMapFilePath = [NSString stringWithFormat:@"%@/%@Mapper.h", dataPath, name];
     NSString *sourceMapFilePath = [NSString stringWithFormat:@"%@/%@Mapper.m", dataPath, name];
     NSData *mapToWrite = [codeMapStringHeader dataUsingEncoding:NSUTF8StringEncoding];
+    
     BOOL successMapCreate = [[NSFileManager defaultManager] createFileAtPath:headerMapFilePath contents:mapToWrite attributes:nil];
     mapToWrite = [codeMapStringSource dataUsingEncoding:NSUTF8StringEncoding];
     successMapCreate = successMapCreate && [[NSFileManager defaultManager] createFileAtPath:sourceMapFilePath contents:mapToWrite attributes:nil];
@@ -89,9 +94,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     NSLog(@"Create [%@] file to...\n%@", successCreate && successMapCreate?@"success":@"fail", dataPath);
 }
 
-
-- (NSDictionary*)mappingObject:(NSDictionary*)parsedJSONData
-{
+- (NSDictionary *)mappingObject:(NSDictionary *)parsedJSONData {
     NSMutableDictionary *resMedata = [[NSMutableDictionary alloc] init];
     NSDictionary *countryCodeToRegionCodeMap = [parsedJSONData objectForKey:@"countryCodeToRegionCodeMap"];
     NSDictionary *countryToMetadata = [parsedJSONData objectForKey:@"countryToMetadata"];
@@ -127,6 +130,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     return resTab;
 }
 
+
+- (NSString *)getSRCDirectoryPath {
+    NSString *documentsDirectory = [self documentsDirectory];
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"src"];
+    return dataPath;
+}
 
 - (NSString *)documentsDirectory
 {
