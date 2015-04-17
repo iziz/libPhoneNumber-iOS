@@ -9,6 +9,7 @@
 
 #import "NSArray+NBAdditions.h"
 
+#define kNBSRCDirectoryName @"src"
 
 #define INDENT_TAB @"    "
 #define STR_VAL(val) [self stringForSourceCode:val]
@@ -38,12 +39,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     NSDictionary *testMetadata = [self generateMetaDataWithTest];
     
     @try {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"src"];
         
+        NSString *dataPath = [self getSRCDirectoryPath];
         NSError* error = nil;
-        
         if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath]) {
             if( [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]) {
             } else {
@@ -64,9 +62,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 - (void)createClassWithDictionary:(NSDictionary*)data name:(NSString*)name isTestData:(BOOL)isTest
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"src"];
+    NSString *dataPath = [self getSRCDirectoryPath];
     
     NSString *codeStringHeader = [self generateSourceCodeWith:data name:name type:0 isTestData:isTest];
     NSString *codeStringSource = [self generateSourceCodeWith:data name:name type:1 isTestData:isTest];
@@ -127,6 +123,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     return resTab;
 }
 
+
+- (NSString *)getSRCDirectoryPath {
+    NSString *documentsDirectory = [self documentsDirectory];
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"src"];
+    return dataPath;
+}
 
 - (NSString *)documentsDirectory
 {
