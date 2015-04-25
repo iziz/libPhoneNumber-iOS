@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "libPhoneNumber"
+  s.name         = "libPhoneNumber-iOS"
   s.version      = "0.8.4"
   s.summary      = "iOS library for parsing, formatting, storing and validating international phone numbers from libphonenumber library."
   s.description  = <<-DESC
@@ -14,6 +14,6 @@ DESC
   s.ios.deployment_target = "4.3"
   s.osx.deployment_target = "10.9"
   s.requires_arc = true
-  s.source_files = 'libPhoneNumber/NBPhoneNumberDefines.h', 'libPhoneNumber/NBPhoneNumber.{h,m}', 'libPhoneNumber/NBNumberFormat.{h,m}', 'libPhoneNumber/NBPhoneNumberDesc.{h,m}', 'libPhoneNumber/NBPhoneMetaData.{h,m}', 'libPhoneNumber/NBPhoneNumberUtil.{h,m}', 'libPhoneNumber/NBMetadataHelper.{h,m}', 'libPhoneNumber/NBAsYouTypeFormatter.{h,m}', 'libPhoneNumber/NBMetadataCore.{h,m}', 'libPhoneNumber/NBMetadataCoreTest.{h,m}', 'libPhoneNumber/NBMetadataCoreMapper.{h,m}', 'libPhoneNumber/NBMetadataCoreTestMapper.{h,m}', 'libPhoneNumber/NSArray+NBAdditions.{h,m}', 'libPhoneNumber-iOS/libPhoneNumber.h'
+  s.source_files = 'libPhoneNumber/NBPhoneNumberDefines.h', 'libPhoneNumber/NBPhoneNumber.{h,m}', 'libPhoneNumber/NBNumberFormat.{h,m}', 'libPhoneNumber/NBPhoneNumberDesc.{h,m}', 'libPhoneNumber/NBPhoneMetaData.{h,m}', 'libPhoneNumber/NBPhoneNumberUtil.{h,m}', 'libPhoneNumber/NBMetadataHelper.{h,m}', 'libPhoneNumber/NBAsYouTypeFormatter.{h,m}', 'libPhoneNumber/NBMetadataCore.{h,m}', 'libPhoneNumber/NBMetadataCoreTest.{h,m}', 'libPhoneNumber/NBMetadataCoreMapper.{h,m}', 'libPhoneNumber/NBMetadataCoreTestMapper.{h,m}', 'libPhoneNumber/NSArray+NBAdditions.{h,m}'
   s.resources = "libPhoneNumber/NBPhoneNumberMetadata.plist"
 end
