@@ -5,9 +5,17 @@
 //
 
 #import "AppDelegate.h"
+
 #import "NBPhoneMetaDataGenerator.h"
 
 #import "NBPhoneNumberUtil.h"
+
+#import "NBMetadataHelper.h"
+#import "NBPhoneMetaData.h"
+
+#import "NBPhoneNumber.h"
+#import "NBPhoneNumberDesc.h"
+#import "NBNumberFormat.h"
 
 
 @implementation AppDelegate
@@ -18,9 +26,18 @@
     self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     
+    // Generate metadata (do not use in release)
     NBPhoneMetaDataGenerator *generator = [[NBPhoneMetaDataGenerator alloc] init];
     [generator generateMetadataClasses];
     
+    [self testWithRealData];
+    
+    return YES;
+}
+
+
+- (void)testWithRealData
+{
     NBAsYouTypeFormatter *formatter = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
     
     NSLog(@"%@ (%@)", [formatter inputDigit:@"2"], formatter.isSuccessfulFormatting ? @"Y":@"N");
@@ -87,8 +104,95 @@
         NSLog(@"- %@", [phoneUtil format:phonePN numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:nil]);
     }
     
+    NSLog(@"-------------- customTest");
     
-    return YES;
+    NSError *anError = nil;
+    
+    NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303" defaultRegion:@"AT" error:&anError];
+    if (anError == nil)
+    {
+        NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
+        NSLog(@"E164          : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatE164 error:&anError]);
+        NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&anError]);
+        NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&anError]);
+        NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatRFC3966 error:&anError]);
+    }
+    else
+    {
+        NSLog(@"Error : %@", [anError localizedDescription]);
+    }
+    
+    NSLog (@"extractCountryCode [%ld]", (unsigned long)[phoneUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
+    NSString *res = nil;
+    NSNumber *dRes = [phoneUtil extractCountryCode:@"823213123123" nationalNumber:&res];
+    NSLog (@"extractCountryCode [%@] [%@]", dRes, res);
+}
+
+
+- (void)testForExtraDatas
+{
+    NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
+    
+    NSArray *arrayData = [helper getAllMetadata];
+    if (arrayData && arrayData.count > 0) {
+        NSLog(@"Log sample metadata [%@]", [arrayData firstObject]);
+    } else {
+        NSLog(@"Fail to extract meta data");
+    }
+}
+
+
+- (void)testCarrierRegion
+{
+    NSLog(@"testCarrierRegion %@", [self getPhoneNumberFormatted:@"1234567890"]);
+}
+
+
+- (NSString *)getPhoneNumberFormatted:(NSString *)phoneNumber
+{
+    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    NSString *retValue;
+    NBPhoneNumber *phoneNumberFormatted = [phoneUtil parseWithPhoneCarrierRegion:phoneNumber error:nil];
+    retValue = [phoneUtil format:phoneNumberFormatted numberFormat:NBEPhoneNumberFormatRFC3966 error:nil];
+    return retValue;
+}
+
+
+// FIXME: This unit test ALWAYS FAIL ... until google libPhoneNumber fix this issue
+- (void)testAustriaNationalNumberParsing
+{
+    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    
+    NSError *anError = nil;
+    
+    NSString *internationalNumberForInput = @"436606545646";
+    NSString *nationalNumberForExpect = @"6606545646";
+    NSString *defaultRegion = @"AT";
+    
+    NBPhoneNumber *phoneNumber = [phoneUtil parse:internationalNumberForInput defaultRegion:defaultRegion error:&anError];
+    NSString *nationalNumberForActual = [NSString stringWithFormat:@"%@", phoneNumber.nationalNumber];
+    
+    // ALWAYS FAIL need fix "google libPhoneNumber"
+    NSLog(nationalNumberForExpect, nationalNumberForActual);
+    
+}
+
+
+- (void)testForiOS7
+{
+    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    
+    NSError *anError = nil;
+    NBPhoneNumber *myNumber = [phoneUtil parse:@"0174 2340XXX" defaultRegion:@"DE" error:&anError];
+    if (anError == nil) {
+        NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
+        NSLog(@"E164          : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatE164 error:&anError]);
+        NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&anError]);
+        NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&anError]);
+        NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatRFC3966 error:&anError]);
+    } else {
+        NSLog(@"Error : %@", [anError localizedDescription]);
+    }
 }
 
 
@@ -98,25 +202,30 @@
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
+
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
+
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
+
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
+
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 
 @end

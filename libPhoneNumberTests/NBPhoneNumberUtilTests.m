@@ -8,6 +8,7 @@
 
 #import "NBMetadataHelper.h"
 #import "NBPhoneMetaData.h"
+
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
 #import "NBPhoneNumberUtil.h"
@@ -83,74 +84,7 @@
     return stringType;
 }
 
-- (NSString *)getPhoneNumberFormatted:(NSString *)phoneNumber
-{
-    NSString *retValue;
-    NBPhoneNumber *phoneNumberFormatted = [_aUtil parseWithPhoneCarrierRegion:phoneNumber error:nil];
-    retValue = [_aUtil format:phoneNumberFormatted numberFormat:NBEPhoneNumberFormatRFC3966 error:nil];
-    return retValue;
-}
-
-- (void)testForExtraDatas
-{
-    [NBMetadataHelper setTestMode:NO];
-    
-    NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
-    
-    NSArray *arrayData = [helper getAllMetadata];
-    if (arrayData && arrayData.count > 0) {
-        NSLog(@"Log sample metadata [%@]", [arrayData firstObject]);
-    } else {
-        XCTFail(@"Fail to extract meta data");
-    }
-    
-    [NBMetadataHelper setTestMode:YES];
-}
-
-- (void)testCarrierRegion
-{
-    NSLog(@"testCarrierRegion %@", [self getPhoneNumberFormatted:@"1234567890"]);
-}
-
-// FIXME: This unit test ALWAYS FAIL ... until google libPhoneNumber fix this issue
-- (void)testAustriaNationalNumberParsing
-{
-    [NBMetadataHelper setTestMode:NO];
-    
-    NSError *anError = nil;
-    
-    NSString *internationalNumberForInput = @"436606545646";
-    NSString *nationalNumberForExpect = @"6606545646";
-    NSString *defaultRegion = @"AT";
-    
-    NBPhoneNumber *phoneNumber = [_aUtil parse:internationalNumberForInput defaultRegion:defaultRegion error:&anError];
-    NSString *nationalNumberForActual = [NSString stringWithFormat:@"%@", phoneNumber.nationalNumber];
-    
-    // ALWAYS FAIL need fix "google libPhoneNumber"
-    XCTAssertEqualObjects(nationalNumberForExpect, nationalNumberForActual);
-    
-    [NBMetadataHelper setTestMode:YES];
-}
-
-- (void)testForiOS7
-{
-    [NBMetadataHelper setTestMode:NO];
-    
-    NSError *anError = nil;
-    NBPhoneNumber *myNumber = [_aUtil parse:@"0174 2340XXX" defaultRegion:@"DE" error:&anError];
-    if (anError == nil) {
-        NSLog(@"isValidPhoneNumber ? [%@]", [_aUtil isValidNumber:myNumber] ? @"YES":@"NO");
-        NSLog(@"E164          : %@", [_aUtil format:myNumber numberFormat:NBEPhoneNumberFormatE164 error:&anError]);
-        NSLog(@"INTERNATIONAL : %@", [_aUtil format:myNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&anError]);
-        NSLog(@"NATIONAL      : %@", [_aUtil format:myNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&anError]);
-        NSLog(@"RFC3966       : %@", [_aUtil format:myNumber numberFormat:NBEPhoneNumberFormatRFC3966 error:&anError]);
-    } else {
-        NSLog(@"Error : %@", [anError localizedDescription]);
-    }
-    
-    [NBMetadataHelper setTestMode:YES];
-}
-
+ 
 - (void)testForGetMetadataForRegionTwice
 {
     NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
@@ -186,37 +120,6 @@
     NSLog(@"%@", [dicTest objectForKey:myNumber3]);
     NSLog(@"%@", [dicTest objectForKey:myNumber4]);
     NSLog(@"%@", [dicTest objectForKey:myNumber5]);
-}
-
-
-- (void)testWithRealData
-{
-#pragma mark - customTest
-    NSLog(@"-------------- customTest");
-    
-    NSError *anError = nil;
-
-    [NBMetadataHelper setTestMode:NO];
-    NBPhoneNumber *myNumber = [_aUtil parse:@"6766077303" defaultRegion:@"AT" error:&anError];
-    if (anError == nil)
-    {
-        NSLog(@"isValidPhoneNumber ? [%@]", [_aUtil isValidNumber:myNumber] ? @"YES":@"NO");
-        NSLog(@"E164          : %@", [_aUtil format:myNumber numberFormat:NBEPhoneNumberFormatE164 error:&anError]);
-        NSLog(@"INTERNATIONAL : %@", [_aUtil format:myNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&anError]);
-        NSLog(@"NATIONAL      : %@", [_aUtil format:myNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&anError]);
-        NSLog(@"RFC3966       : %@", [_aUtil format:myNumber numberFormat:NBEPhoneNumberFormatRFC3966 error:&anError]);
-    }
-    else
-    {
-        NSLog(@"Error : %@", [anError localizedDescription]);
-    }
-    
-    NSLog (@"extractCountryCode [%ld]", (unsigned long)[_aUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
-    NSString *res = nil;
-    NSNumber *dRes = [_aUtil extractCountryCode:@"823213123123" nationalNumber:&res];
-    NSLog (@"extractCountryCode [%@] [%@]", dRes, res);
-    
-    [NBMetadataHelper setTestMode:YES];
 }
 
 

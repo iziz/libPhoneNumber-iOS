@@ -7,14 +7,18 @@
 //
 
 #import "NBMetadataHelper.h"
-
 #import "NBPhoneMetaData.h"
 
-#import "NBMetadataCoreTest.h"
-#import "NBMetadataCore.h"
 
-#import "NBMetadataCoreMapper.h"
+#if TESTING==1
+#define NB_CLASS_PREFIX @"NBPhoneMetadataTest"
+#import "NBMetadataCoreTest.h"
 #import "NBMetadataCoreTestMapper.h"
+#else
+#define NB_CLASS_PREFIX @"NBPhoneMetadata"
+#import "NBMetadataCore.h"
+#import "NBMetadataCoreMapper.h"
+#endif
 
 
 @interface NBMetadataHelper ()
@@ -36,12 +40,6 @@
  */
 
 static NSMutableDictionary *kMapCCode2CN = nil;
-static BOOL isTestMode = NO;
-
-+ (void)setTestMode:(BOOL)isMode
-{
-    isTestMode = isMode;
-}
 
 /**
  * initialization meta-meta variables
@@ -135,11 +133,11 @@ static BOOL isTestMode = NO;
     
     id res = nil;
     
-    if (isTestMode) {
+#if TESTING==1
         res = [NBMetadataCoreTestMapper ISOCodeFromCallingNumber:[countryCodeNumber stringValue]];
-    } else {
+#else
         res = [NBMetadataCoreMapper ISOCodeFromCallingNumber:[countryCodeNumber stringValue]];
-    }
+#endif
     
     if (res && [res isKindOfClass:[NSArray class]] && [((NSArray*)res) count] > 0) {
         return res;
@@ -215,8 +213,7 @@ static BOOL isTestMode = NO;
         return _cachedMetaData;
     }
     
-    NSString *classPrefix = isTestMode ? @"NBPhoneMetadataTest" : @"NBPhoneMetadata";
-    NSString *className = [NSString stringWithFormat:@"%@%@", classPrefix, regionCode];
+    NSString *className = [NSString stringWithFormat:@"%@%@", NB_CLASS_PREFIX, regionCode];
     
     Class metaClass = NSClassFromString(className);
     

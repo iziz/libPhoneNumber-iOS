@@ -14,7 +14,6 @@
 
 @interface NBMetadataHelper : NSObject
 
-+ (void)setTestMode:(BOOL)isMode;
 + (BOOL)hasValue:(NSString *)string;
 
 - (NSArray *)getAllMetadata;
