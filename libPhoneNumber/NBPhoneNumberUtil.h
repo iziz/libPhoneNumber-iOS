@@ -45,6 +45,8 @@
 - (NSString*)getNddPrefixForRegion:(NSString*)regionCode stripNonDigits:(BOOL)stripNonDigits;
 - (NSString*)getNationalSignificantNumber:(NBPhoneNumber*)phoneNumber;
 
+//todo: - (NSArray *)getSupportedRegions;
+
 - (NBEPhoneNumberType)getNumberType:(NBPhoneNumber*)phoneNumber;
 
 - (NSNumber*)getCountryCodeForRegion:(NSString*)regionCode;
