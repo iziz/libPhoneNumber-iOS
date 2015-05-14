@@ -991,11 +991,11 @@
     // We start to attempt to format only when as least MIN_LEADING_DIGITS_LENGTH
     // digits of national number (excluding national prefix) have been entered.
     if (nationalNumber.length >= self.MIN_LEADING_DIGITS_LENGTH_) {
-        [self getAvailableFormats_:[nationalNumber substringWithRange:NSMakeRange(0, self.MIN_LEADING_DIGITS_LENGTH_)]];
-        if ([self maybeCreateNewTemplate_]) {
-            return [self inputAccruedNationalNumber_];
-        } else {
-            return self.accruedInput_;
+        [self getAvailableFormats_:nationalNumber];
+        // See if the accrued digits can be formatted properly already.
+        NSString *formattedNumber = [self attemptToFormatAccruedDigits_];
+        if (formattedNumber.length > 0) {
+            return formattedNumber;
         }
         return [self maybeCreateNewTemplate_] ? [self inputAccruedNationalNumber_] : self.accruedInput_;
     } else {
