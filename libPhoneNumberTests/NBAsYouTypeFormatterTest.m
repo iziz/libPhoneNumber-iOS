@@ -1235,6 +1235,29 @@
         [f inputString:@"16502532222"];
         XCTAssertEqualObjects(@"1 650 253 2222", [f description]);
     }
+    
+    // testAYTFNumberPatternsBecomingInvalidShouldNotResultInDigitLoss()
+    {
+        /** @type {i18n.phonenumbers.AsYouTypeFormatter} */
+        NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCodeForTest:@"CN"];
+        
+        XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
+        XCTAssertEqualObjects(@"+8", [f inputDigit:@"8"]);
+        XCTAssertEqualObjects(@"+86 ", [f inputDigit:@"6"]);
+        XCTAssertEqualObjects(@"+86 9", [f inputDigit:@"9"]);
+        XCTAssertEqualObjects(@"+86 98", [f inputDigit:@"8"]);
+        XCTAssertEqualObjects(@"+86 988", [f inputDigit:@"8"]);
+        XCTAssertEqualObjects(@"+86 988 1", [f inputDigit:@"1"]);
+        // Now the number pattern is no longer valid because there are multiple leading digit patterns;
+        // when we try again to extract a country code we should ensure we use the last leading digit
+        // pattern, rather than the first one such that it *thinks* it's found a valid formatting rule
+        // again.
+        // https://code.google.com/p/libphonenumber/issues/detail?id=437
+        XCTAssertEqualObjects(@"+8698812", [f inputDigit:@"2"]);
+        XCTAssertEqualObjects(@"+86988123", [f inputDigit:@"3"]);
+        XCTAssertEqualObjects(@"+869881234", [f inputDigit:@"4"]);
+        XCTAssertEqualObjects(@"+8698812345", [f inputDigit:@"5"]);
+    }
 }
 
 @end

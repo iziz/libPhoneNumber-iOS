@@ -394,7 +394,7 @@
  * @param {string} leadingThreeDigits first three digits of entered number.
  * @private
  */
-- (void)getAvailableFormats_:(NSString*)leadingThreeDigits
+- (void)getAvailableFormats_:(NSString*)leadingDigits
 {
     /** @type {Array.<i18n.phonenumbers.NumberFormat>} */
     BOOL isIntlNumberFormats = (self.isCompleteNumber_ && self.currentMetaData_.intlNumberFormats.count > 0);
@@ -419,7 +419,7 @@
         }
     }
     
-    [self narrowDownPossibleFormats_:leadingThreeDigits];
+    [self narrowDownPossibleFormats_:leadingDigits];
 };
 
 
@@ -453,19 +453,21 @@
     {
         /** @type {i18n.phonenumbers.NumberFormat} */
         NBNumberFormat *format = [self.possibleFormats_ safeObjectAtIndex:i];
-        if (format.leadingDigitsPatterns.count > indexOfLeadingDigitsPattern)
-        {
-            /** @type {string} */
-            NSString *leadingDigitsPattern = [format.leadingDigitsPatterns safeObjectAtIndex:indexOfLeadingDigitsPattern];
-            
-            if ([self.phoneUtil_ stringPositionByRegex:leadingDigits regex:leadingDigitsPattern] == 0)
-            {
-                [possibleFormats addObject:format];
-            }
-        } else {
-            // else the particular format has no more specific leadingDigitsPattern,
-            // and it should be retained.
-            [possibleFormats addObject:[self.possibleFormats_ safeObjectAtIndex:i]];
+        
+        if (format.leadingDigitsPatterns.count == 0) {
+            // Keep everything that isn't restricted by leading digits.
+            [possibleFormats addObject:format];
+            continue;
+        }
+        
+        /** @type {number} */
+        NSInteger lastLeadingDigitsPattern = MIN(indexOfLeadingDigitsPattern, format.leadingDigitsPatterns.count - 1);
+        
+        /** @type {string} */
+        NSString *leadingDigitsPattern = [format.leadingDigitsPatterns safeObjectAtIndex:lastLeadingDigitsPattern];
+
+        if ([self.phoneUtil_ stringPositionByRegex:leadingDigits regex:leadingDigitsPattern] == 0) {
+            [possibleFormats addObject:format];
         }
     }
     self.possibleFormats_ = possibleFormats;
@@ -770,7 +772,7 @@
             }
             
             if (self.possibleFormats_.count > 0) {
-                // The formatting pattern is already chosen.
+                // The formatting patterns are already chosen.
                 /** @type {string} */
                 NSString *tempNationalNumber = [self inputDigitHelper_:nextChar];
                 // See if the accrued digits can be formatted properly already. If not,
