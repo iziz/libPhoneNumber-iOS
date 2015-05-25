@@ -103,48 +103,12 @@ static NSDictionary *DIGIT_MAPPINGS;
 
 #pragma mark - Deprecated methods
 
-+ (NBPhoneNumberUtil *)sharedInstance __attribute__((deprecated))
++ (NBPhoneNumberUtil *)sharedInstance
 {
     static NBPhoneNumberUtil *sharedOnceInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{ sharedOnceInstance = [[self alloc] init]; });
     return sharedOnceInstance;
-}
-
-
-+ (NBPhoneNumberUtil *)sharedInstanceWithBundle:(NSBundle *)bundle __attribute__((deprecated))
-{
-    static NBPhoneNumberUtil *sharedOnceInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ sharedOnceInstance = [[self alloc] init]; });
-    return sharedOnceInstance;
-}
-
-
-+ (NBPhoneNumberUtil *)sharedInstanceForTest __attribute__((deprecated))
-{
-    static NBPhoneNumberUtil *sharedOnceInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ sharedOnceInstance = [[self alloc] init]; });
-    return sharedOnceInstance;
-}
-
-
-+ (NBPhoneNumberUtil *)sharedInstanceForTestWithBundle:(NSBundle *)bundle __attribute__((deprecated))
-{
-    static NBPhoneNumberUtil *sharedOnceInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ sharedOnceInstance = [[self alloc] init]; });
-    return sharedOnceInstance;
-}
-
-
-- (instancetype)initWithBundle:(NSBundle *)bundle metaData:(NSString *)metaData __attribute__((deprecated))
-{
-    self = [self init];
-    if (self) {
-    }
-    return self;
 }
 
 
