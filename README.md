@@ -73,13 +73,21 @@ See sample test code from
 2014-07-06 12:39:37.245 libPhoneNumberTest[1581:60b] extractCountryCode [82] [3213123123]
 ```
 
-### with Swift (Manually added or using Cocoapods)
+### with Swift (Manually added or using CocoaPods)
 ```
-(in Bridging-Header)
+- in Bridging-Header
+
+(Manually added)
 #import "NBPhoneNumberUtil.h"
 #import "NBPhoneNumber.h"
-(add more if you want...)
 
+(CocoaPods)
+#import "libPhoneNumber-iOS/NBPhoneNumberUtil.h"
+#import "libPhoneNumber-iOS/NBPhoneNumber.h"
+(add more if you want...)
+```
+
+```
 (in swift class file)
 override func viewDidLoad() {
     super.viewDidLoad()
