@@ -73,7 +73,7 @@ See sample test code from
 2014-07-06 12:39:37.245 libPhoneNumberTest[1581:60b] extractCountryCode [82] [3213123123]
 ```
 
-### with Swift (Manually added or using CocoaPods)
+#### with Swift
 ##### - in Bridging-Header
 ```
 (Manually added)
