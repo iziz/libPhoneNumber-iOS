@@ -73,6 +73,25 @@ See sample test code from
 2014-07-06 12:39:37.245 libPhoneNumberTest[1581:60b] extractCountryCode [82] [3213123123]
 ```
 
+### with Swift (Manually added or using Cocoapods)
+```
+(in Bridging-Header)
+#import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumber.h"
+(add more if you want...)
+
+(in swift class file)
+override func viewDidLoad() {
+    super.viewDidLoad()
+    let phoneUtil = NBPhoneNumberUtil()
+    
+    var errorPointer:NSError?
+    var number:NBPhoneNumber = phoneUtil.parse("01041241282", defaultRegion:"KR", error:&errorPointer)
+    
+    NSLog("%@", number)
+}
+```
+
 ### Usage - **NBAsYouTypeFormatter**
 ```obj-c
     NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
