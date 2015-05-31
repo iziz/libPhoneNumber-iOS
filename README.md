@@ -75,19 +75,20 @@ See sample test code from
 
 #### with Swift
 ##### - in Bridging-Header
-```
-(Manually added)
+```swift
+// Manually added
 #import "NBPhoneNumberUtil.h"
 #import "NBPhoneNumber.h"
 
-(CocoaPods)
+// CocoaPods
 #import "libPhoneNumber-iOS/NBPhoneNumberUtil.h"
 #import "libPhoneNumber-iOS/NBPhoneNumber.h"
-(add more if you want...)
+
+// add more if you want...
 ```
 
 ##### - in swift class file
-```
+```swift
 override func viewDidLoad() {
     super.viewDidLoad()
     let phoneUtil = NBPhoneNumberUtil()
