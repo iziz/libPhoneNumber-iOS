@@ -15,7 +15,7 @@
 ### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
 ```
 source 'https://github.com/CocoaPods/Specs.git'
-pod 'libPhoneNumber-iOS', '~> 0.7'
+pod 'libPhoneNumber-iOS', '~> 0.8'
 ```
 
 ### Setting up manually
@@ -74,9 +74,8 @@ See sample test code from
 ```
 
 ### with Swift (Manually added or using CocoaPods)
+##### - in Bridging-Header
 ```
-- in Bridging-Header
-
 (Manually added)
 #import "NBPhoneNumberUtil.h"
 #import "NBPhoneNumber.h"
@@ -87,8 +86,8 @@ See sample test code from
 (add more if you want...)
 ```
 
+##### - in swift class file
 ```
-(in swift class file)
 override func viewDidLoad() {
     super.viewDidLoad()
     let phoneUtil = NBPhoneNumberUtil()
