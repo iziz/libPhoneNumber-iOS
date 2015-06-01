@@ -80,7 +80,7 @@ See sample test code from
 #import "NBPhoneNumberUtil.h"
 #import "NBPhoneNumber.h"
 
-// CocoaPods
+// CocoaPods (check your library path)
 #import "libPhoneNumber-iOS/NBPhoneNumberUtil.h"
 #import "libPhoneNumber-iOS/NBPhoneNumber.h"
 
