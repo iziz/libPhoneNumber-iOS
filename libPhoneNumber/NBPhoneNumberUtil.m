@@ -34,6 +34,10 @@
 @property (nonatomic, strong, readwrite) NSMutableDictionary *i18nPhoneNumberDesc;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *i18nPhoneMetadata;
 
+@property (nonatomic, strong) NSRegularExpression *PLUS_CHARS_PATTERN;
+@property (nonatomic, strong) NSRegularExpression *CAPTURING_DIGIT_PATTERN;
+@property (nonatomic, strong) NSRegularExpression *VALID_ALPHA_PHONE_PATTERN;
+
 #if TARGET_OS_IPHONE
 @property (nonatomic, strong) CTTelephonyNetworkInfo *telephonyNetworkInfo;
 #endif
@@ -93,10 +97,6 @@ static NSDictionary *ALPHA_MAPPINGS;
 static NSDictionary *ALL_NORMALIZATION_MAPPINGS;
 static NSDictionary *DIALLABLE_CHAR_MAPPINGS;
 static NSDictionary *ALL_PLUS_NUMBER_GROUPING_SYMBOLS;
-
-static NSRegularExpression *PLUS_CHARS_PATTERN;
-static NSRegularExpression *CAPTURING_DIGIT_PATTERN;
-static NSRegularExpression *VALID_ALPHA_PHONE_PATTERN;
 
 static NSDictionary *DIGIT_MAPPINGS;
 
@@ -393,16 +393,16 @@ static NSDictionary *DIGIT_MAPPINGS;
     
     NSError *error = nil;
     
-    if (!PLUS_CHARS_PATTERN) {
-        PLUS_CHARS_PATTERN = [self regularExpressionWithPattern:[NSString stringWithFormat:@"[%@]+", NB_PLUS_CHARS] options:0 error:&error];
+    if (!_PLUS_CHARS_PATTERN) {
+        _PLUS_CHARS_PATTERN = [self regularExpressionWithPattern:[NSString stringWithFormat:@"[%@]+", NB_PLUS_CHARS] options:0 error:&error];
     }
     
     if (!LEADING_PLUS_CHARS_PATTERN) {
         LEADING_PLUS_CHARS_PATTERN = [NSString stringWithFormat:@"^[%@]+", NB_PLUS_CHARS];
     }
     
-    if (!CAPTURING_DIGIT_PATTERN) {
-        CAPTURING_DIGIT_PATTERN = [self regularExpressionWithPattern:[NSString stringWithFormat:@"([%@])", NB_VALID_DIGITS_STRING] options:0 error:&error];
+    if (!_CAPTURING_DIGIT_PATTERN) {
+        _CAPTURING_DIGIT_PATTERN = [self regularExpressionWithPattern:[NSString stringWithFormat:@"([%@])", NB_VALID_DIGITS_STRING] options:0 error:&error];
     }
     
     if (!VALID_START_CHAR_PATTERN) {
@@ -413,8 +413,8 @@ static NSDictionary *DIGIT_MAPPINGS;
         SECOND_NUMBER_START_PATTERN = @"[\\\\\\/] *x";
     }
     
-    if (!VALID_ALPHA_PHONE_PATTERN) {
-        VALID_ALPHA_PHONE_PATTERN = [self regularExpressionWithPattern:VALID_ALPHA_PHONE_PATTERN_STRING options:0 error:&error];
+    if (!_VALID_ALPHA_PHONE_PATTERN) {
+        _VALID_ALPHA_PHONE_PATTERN = [self regularExpressionWithPattern:VALID_ALPHA_PHONE_PATTERN_STRING options:0 error:&error];
     }
     
     if (!UNWANTED_END_CHAR_PATTERN) {
@@ -3025,8 +3025,7 @@ getSupportedGlobalNetworkCallingCodes = function() {
         unsigned int matchEnd = (unsigned int)matchedString.length;
         NSString *remainString = [numberStr substringFromIndex:matchEnd];
         
-        NSRegularExpression *currentPattern = CAPTURING_DIGIT_PATTERN;
-        NSArray *matchedGroups = [currentPattern matchesInString:remainString options:0 range:NSMakeRange(0, remainString.length)];
+        NSArray *matchedGroups = [_CAPTURING_DIGIT_PATTERN matchesInString:remainString options:0 range:NSMakeRange(0, remainString.length)];
         
         if (matchedGroups && [matchedGroups count] > 0 && [matchedGroups objectAtIndex:0] != nil) {
             NSString *digitMatched = [remainString substringWithRange:((NSTextCheckingResult*)[matchedGroups objectAtIndex:0]).range];
