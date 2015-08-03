@@ -1,10 +1,9 @@
 language: objective-c
 
 before_install:
-  - sudo easy_install cpp-coveralls
+  - gem install cocoapods xcpretty obcd slather -N
 
 script:
-  - ./script/run-test.sh 
+  - xctool -project libPhoneNumber.xcodeproj -scheme libPhoneNumber -sdk iphonesimulator clean build test ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c 
 
-after_success:
-  - ./script/coveralls.sh
+after_success: slather
