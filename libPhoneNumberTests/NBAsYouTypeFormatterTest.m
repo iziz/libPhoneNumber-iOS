@@ -5,9 +5,13 @@
 //  Created by ishtar on 13. 3. 5..
 //
 
-#import "NBAsYouTypeFormatterTest.h"
-
+#import <XCTest/XCTest.h>
+#import "NBAsYouTypeFormatter.h"
 #import "NBMetadataHelper.h"
+
+
+@interface NBAsYouTypeFormatterTest : XCTestCase
+@end
 
 
 @implementation NBAsYouTypeFormatterTest
