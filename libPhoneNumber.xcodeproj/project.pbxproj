@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		187A618E1A25DF04000D8BB6 /* PhoneNumberMetaData.json in Resources */ = {isa = PBXBuildFile; fileRef = 187A618A1A25DF04000D8BB6 /* PhoneNumberMetaData.json */; };
 		187A618F1A25DF04000D8BB6 /* PhoneNumberMetaDataForTesting.json in Resources */ = {isa = PBXBuildFile; fileRef = 187A618B1A25DF04000D8BB6 /* PhoneNumberMetaDataForTesting.json */; };
-		187A61921A25E005000D8BB6 /* PhoneNumberMetaData.json in Resources */ = {isa = PBXBuildFile; fileRef = 187A618A1A25DF04000D8BB6 /* PhoneNumberMetaData.json */; };
-		187A61931A25E008000D8BB6 /* PhoneNumberMetaDataForTesting.json in Resources */ = {isa = PBXBuildFile; fileRef = 187A618B1A25DF04000D8BB6 /* PhoneNumberMetaDataForTesting.json */; };
 		29F3A15D17B98AE1005D8E07 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F3A15C17B98AE1005D8E07 /* CoreTelephony.framework */; };
 		29F3A15E17B98B3C005D8E07 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F3A15C17B98AE1005D8E07 /* CoreTelephony.framework */; };
 		8F04BE90176F062500076CB4 /* NBAsYouTypeFormatterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FD57B66C16E5B71F000772AF /* NBAsYouTypeFormatterTest.m */; };
@@ -375,8 +373,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD7A0649167715A1004BBEB6 /* InfoPlist.strings in Resources */,
-				187A61921A25E005000D8BB6 /* PhoneNumberMetaData.json in Resources */,
-				187A61931A25E008000D8BB6 /* PhoneNumberMetaDataForTesting.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
