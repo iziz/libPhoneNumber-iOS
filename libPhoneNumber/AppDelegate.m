@@ -31,7 +31,7 @@
     [generator generateMetadataClasses];
     
     [self testWithRealData];
-    
+    [self testWithGCD];
     return YES;
 }
 
@@ -129,6 +129,76 @@
 }
 
 
+- (NSString *)stringWithRandomNumber
+{
+    NSString *numbers = @"0123456789";
+    NSMutableString *randomString = [NSMutableString stringWithCapacity:11];
+    
+    for (int i=0; i<12; i++) {
+        [randomString appendFormat: @"%C", [numbers characterAtIndex: arc4random() % [numbers length]]];
+    }
+    
+    return randomString;
+}
+
+
+- (NSString *)randomRegion
+{
+    NBMetadataHelper *aHelper = [[NBMetadataHelper alloc] init];
+    NSDictionary *metadata = [[aHelper getAllMetadata] objectAtIndex:(arc4random() % [aHelper getAllMetadata].count)];
+    if (metadata) {
+        NSString *region = [metadata objectForKey:@"code"];
+        if (region) {
+            return region;
+        }
+    }
+    
+    return nil;
+}
+
+
+- (void)testForMultithread
+{
+    NBPhoneNumberUtil *aUtil = [[NBPhoneNumberUtil alloc] init];
+    NSString *testRegion = [self randomRegion];
+    
+    if (!testRegion) {
+        return;
+    }
+    
+    NSLog(@"- START [%@]", testRegion);
+    
+    dispatch_async(dispatch_get_current_queue(), ^{
+        NSError *error = nil;
+        
+        for (int i=0; i<10000; i++) {
+            NBPhoneNumber *phoneNumber = [aUtil parse:[self stringWithRandomNumber] defaultRegion:testRegion error:&error];
+            if (error && ![error.domain isEqualToString:@"INVALID_COUNTRY_CODE"]) {
+                NSLog(@"error [%@]", [error localizedDescription]);
+            }
+            
+            if (!error) {
+                error = nil;
+                [aUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&error];
+            }
+            error = nil;
+        }
+        
+        NSLog(@"OK [%@]", testRegion);
+    });
+}
+
+
+- (void)testWithGCD
+{
+    for (int i = 0; i<100; i++) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [self testForMultithread];
+        });
+    }
+}
+
+
 - (void)testForExtraDatas
 {
     NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
@@ -140,7 +210,6 @@
         NSLog(@"Fail to extract meta data");
     }
 }
-
 
 - (void)testCarrierRegion
 {
