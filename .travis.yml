@@ -1,12 +1,10 @@
 language: objective-c
 
-before_install:
- - brew update
- - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
- - gem install slather -N
+before_install: rvm use $RVM_RUBY_VERSION
+
+install: bundle install --without=documentation --path ../travis_bundle_dir
 
 script:
  - xctool -project libPhoneNumber.xcodeproj -scheme libPhoneNumber -sdk iphonesimulator clean build test ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES  
 
-after_success:
- - slather
+after_success: slather
