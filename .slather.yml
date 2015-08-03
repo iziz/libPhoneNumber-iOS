@@ -1,4 +1,3 @@
 ci_service: travis_ci
 coverage_service: coveralls
-xcodeproj: libPhoneNumber/libPhoneNumber.xcodeproj
-source_directory: libPhoneNumber
+xcodeproj: libPhoneNumber.xcodeproj
