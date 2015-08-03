@@ -2832,18 +2832,24 @@ static NSDictionary *DIGIT_MAPPINGS;
 }
 
 
--(NSArray*) getSupportedRegions{
-    NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
-    return [[helper CCode2CNMap] allKeys];
-}
-
-//todo:
-
 /**
  * Convenience method to get a list of what regions the library has metadata
  * for.
  * @return {!Array.<string>} region codes supported by the library.
  */
+
+- (NSArray *)getSupportedRegions
+{
+    NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
+    NSArray *allKeys = [[helper CCode2CNMap] allKeys];
+    NSPredicate *predicateIsNaN = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [self isNaN:evaluatedObject];
+    }];
+    
+    NSArray *supportedRegions = [allKeys filteredArrayUsingPredicate:predicateIsNaN];
+    return supportedRegions;
+}
+
 /*
  i18n.phonenumbers.PhoneNumberUtil.prototype.getSupportedRegions = function() {
  return goog.array.filter(

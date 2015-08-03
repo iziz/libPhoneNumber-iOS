@@ -32,7 +32,16 @@
     
     [self testWithRealData];
     [self testWithGCD];
+    [self testForGetSupportedRegions];
+    
     return YES;
+}
+
+
+- (void)testForGetSupportedRegions
+{
+    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    NSLog(@"%@", [phoneUtil getSupportedRegions]);
 }
 
 
