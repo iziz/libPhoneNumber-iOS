@@ -86,6 +86,12 @@ static NSMutableDictionary *kMapCCode2CN = nil;
     });
 }
 
+- (NSDictionary *)CCode2CNMap{
+    if (!kMapCCode2CN){
+        [self initializeHelper];
+    }
+    return kMapCCode2CN;
+}
 
 - (void)clearHelper
 {

@@ -2830,6 +2830,12 @@ static NSDictionary *DIGIT_MAPPINGS;
     return @0;
 }
 
+
+-(NSArray*) getSupportedRegions{
+    NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
+    return [[helper CCode2CNMap] allKeys];
+}
+
 //todo:
 
  /**
