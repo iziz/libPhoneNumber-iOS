@@ -609,7 +609,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "libPhoneNumber/libPhoneNumber-Prefix.pch";
+				GCC_PREFIX_HEADER = "libPhoneNumberTests/libPhoneNumberTest-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"TESTING=1",
@@ -631,7 +631,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "libPhoneNumber/libPhoneNumber-Prefix.pch";
+				GCC_PREFIX_HEADER = "libPhoneNumberTests/libPhoneNumberTest-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"TESTING=1",
