@@ -1,4 +1,10 @@
 language: objective-c
-xcode_project: libPhoneNumber.xcodeproj # path to your xcodeproj folder
-xcode_scheme: libPhoneNumber
-script: xcodebuild -project libPhoneNumber.xcodeproj -target libPhoneNumberTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=N
+before_install:
+  - sudo easy_install cpp-coveralls
+  - brew uninstall xctool
+  - brew update
+  - brew install xctool --HEAD  
+script:
+  - xctool test ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+after_success:
+  - ./script/coveralls.sh

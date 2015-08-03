@@ -598,7 +598,6 @@
 		FD7A0653167715A1004BBEB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/libPhoneNumber.app/libPhoneNumber";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"/**",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
@@ -610,15 +609,14 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "TESTING=1";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "libPhoneNumberTests/libPhoneNumberTests-Info.plist";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Debug;
 		};
 		FD7A0654167715A1004BBEB6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/libPhoneNumber.app/libPhoneNumber";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"/**",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
@@ -630,8 +628,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "TESTING=1";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "libPhoneNumberTests/libPhoneNumberTests-Info.plist";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Release;
 		};
