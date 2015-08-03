@@ -11,6 +11,7 @@
 
 #define LIB_PHONE_NUMBER_TEST 1
 
-#import "libPhoneNumber-Prefix.pch"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 #endif
