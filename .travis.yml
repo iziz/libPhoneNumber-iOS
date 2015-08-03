@@ -2,7 +2,7 @@ language: objective-c
 
 before_install:
 - rvm use $RVM_RUBY_VERSION
-- bundle install --without=documentation --path ../travis_bundle_dir
+- gem install slather -N 
 
 script:
  - xctool -project libPhoneNumber.xcodeproj -scheme libPhoneNumber -sdk iphonesimulator clean build test ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES  
