@@ -16,6 +16,8 @@
 
 + (BOOL)hasValue:(NSString *)string;
 
+- (NSDictionary *)CCode2CNMap;
+
 - (NSArray *)getAllMetadata;
 
 - (NBPhoneMetaData *)getMetadataForNonGeographicalRegion:(NSNumber *)countryCallingCode;
