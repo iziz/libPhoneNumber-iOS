@@ -44,7 +44,7 @@ github "iziz/libPhoneNumber-iOS"
     - Add "CoreTelephony.framework"
 
 See sample test code from
-> [libPhoneNumber-iOS/libPhoneNumberTests/libPhoneNumberTests.m] (https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberTests/NBPhoneNumberUtilTests.m)
+> [libPhoneNumber-iOS/libPhoneNumberTests/ ... Test.m] (https://github.com/iziz/libPhoneNumber-iOS/tree/master/libPhoneNumberTests)
 
 ## Usage - **NBPhoneNumberUtil**
 ```obj-c
