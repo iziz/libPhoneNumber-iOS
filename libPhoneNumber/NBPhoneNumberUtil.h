@@ -32,7 +32,7 @@
 
 - (NSString*)extractPossibleNumber:(NSString*)phoneNumber;
 - (NSNumber*)extractCountryCode:(NSString*)fullNumber nationalNumber:(NSString**)nationalNumber;
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE && !TARGET_OS_WATCH
 - (NSString *)countryCodeByCarrier;
 #endif
 
