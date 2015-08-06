@@ -11,8 +11,10 @@
 
 > ARC only, or add the **"-fobjc-arc"** flag for non-ARC
 
-### Update Log
+## Update Log
 [https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
+
+## Install 
 
 ### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
 ```
@@ -20,11 +22,11 @@ source 'https://github.com/CocoaPods/Specs.git'
 pod 'libPhoneNumber-iOS', '~> 0.8'
 ```
 
-### Using Carthage
+### Using [Carthage](https://github.com/Carthage/Carthage)
 
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
+ Carthage is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
 
-You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
+ You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
 
 ```bash
 $ brew update
@@ -44,7 +46,7 @@ github "iziz/libPhoneNumber-iOS"
 See sample test code from
 > [libPhoneNumber-iOS/libPhoneNumberTests/libPhoneNumberTests.m] (https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberTests/NBPhoneNumberUtilTests.m)
 
-### Usage - **NBPhoneNumberUtil**
+## Usage - **NBPhoneNumberUtil**
 ```obj-c
  NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
  NSError *anError = nil;
@@ -119,7 +121,7 @@ override func viewDidLoad() {
 }
 ```
 
-### Usage - **NBAsYouTypeFormatter**
+## Usage - **NBAsYouTypeFormatter**
 ```obj-c
     NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
     NSLog(@"%@", [f inputDigit:@"6"]); // "6"
