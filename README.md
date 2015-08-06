@@ -16,13 +16,13 @@
 
 ## Install 
 
-### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
+#### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
 ```
 source 'https://github.com/CocoaPods/Specs.git'
 pod 'libPhoneNumber-iOS', '~> 0.8'
 ```
 
-### Using [Carthage](https://github.com/Carthage/Carthage)
+#### Using [Carthage](https://github.com/Carthage/Carthage)
 
  Carthage is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
 
@@ -39,8 +39,8 @@ To integrate libPhoneNumber into your Xcode project using Carthage, specify it i
 github "iziz/libPhoneNumber-iOS"
 ```
 
-### Setting up manually
-##### Add source files to your projects from libPhoneNumber
+#### Setting up manually
+ Add source files to your projects from libPhoneNumber
     - Add "CoreTelephony.framework"
 
 See sample test code from
