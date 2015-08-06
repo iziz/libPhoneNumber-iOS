@@ -14,7 +14,7 @@
 #import "NBMetadataHelper.h"
 #import <math.h>
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE && !TARGET_OS_WATCH
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 #endif
@@ -38,7 +38,7 @@
 @property (nonatomic, strong) NSRegularExpression *CAPTURING_DIGIT_PATTERN;
 @property (nonatomic, strong) NSRegularExpression *VALID_ALPHA_PHONE_PATTERN;
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE && !TARGET_OS_WATCH
 @property (nonatomic, strong) CTTelephonyNetworkInfo *telephonyNetworkInfo;
 #endif
 
@@ -3285,7 +3285,7 @@ static NSDictionary *DIGIT_MAPPINGS;
     numberToParse = [helper normalizeNonBreakingSpace:numberToParse];
     
     NSString *defaultRegion = nil;
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE && !TARGET_OS_WATCH
     defaultRegion = [self countryCodeByCarrier];
 #else
     defaultRegion = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
@@ -3299,7 +3299,7 @@ static NSDictionary *DIGIT_MAPPINGS;
     return [self parse:numberToParse defaultRegion:defaultRegion error:error];
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE && !TARGET_OS_WATCH
 
 - (NSString *)countryCodeByCarrier
 {
