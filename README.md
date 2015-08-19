@@ -102,8 +102,8 @@ See sample test code from
 #import "NBPhoneNumber.h"
 
 // CocoaPods (check your library path)
-#import "libPhoneNumber-iOS/NBPhoneNumberUtil.h"
-#import "libPhoneNumber-iOS/NBPhoneNumber.h"
+#import "libPhoneNumber_iOS/NBPhoneNumberUtil.h"
+#import "libPhoneNumber_iOS/NBPhoneNumber.h"
 
 // add more if you want...
 ```
