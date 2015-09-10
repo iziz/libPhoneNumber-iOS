@@ -115,9 +115,12 @@ override func viewDidLoad() {
     let phoneUtil = NBPhoneNumberUtil()
 
     var errorPointer:NSError?
-    var number:NBPhoneNumber = phoneUtil.parse("01041241282", defaultRegion:"KR", error:&errorPointer)
-
-    NSLog("%@", number)
+    var number:NBPhoneNumber? = phoneUtil.parse("01041241282", defaultRegion:"KR", error:&errorPointer)
+    if errorPointer == nil && number != nil {
+       println("number is: \(number)")
+    } else {
+       println("number error: \(errorPointer?.localizedDescription)")
+    }
 }
 ```
 
