@@ -124,6 +124,24 @@ override func viewDidLoad() {
 }
 ```
 
+```swift
+override func viewDidLoad() {
+    super.viewDidLoad()
+
+    let phoneUtil = NBPhoneNumberUtil()
+
+    do {
+        let phoneNumber: NBPhoneNumber = try phoneUtil.parse("01065431234", defaultRegion: "KR")
+        let formattedString: String = try phoneUtil.format(phoneNumber, numberFormat: NBEPhoneNumberFormatE164)
+
+        NSLog("[%@]", formattedString)
+    }
+    catch let error as NSError {
+        print(error.localizedDescription)
+    }
+}
+```
+
 ## Usage - **NBAsYouTypeFormatter**
 ```obj-c
     NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
