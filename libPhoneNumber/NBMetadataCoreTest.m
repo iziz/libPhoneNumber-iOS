@@ -588,15 +588,15 @@
 }
 @end
 
-@implementation NBPhoneMetadataTestYT
+@implementation NBPhoneMetadataTestSE
 - (id)init
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[268]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2696[0-4]\\d{4}" withPossibleNumberPattern:@"\\d{9}" withExample:@"269601234"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"639\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"639123456"];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:@"801234567"];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
         self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
@@ -606,15 +606,15 @@
         self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
         self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
         self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.codeID = @"YT";
-        self.countryCode = [NSNumber numberWithInteger:262];
+        self.codeID = @"SE";
+        self.countryCode = [NSNumber numberWithInteger:46];
         self.internationalPrefix = @"00";
         self.preferredInternationalPrefix = nil;
-        self.nationalPrefix = @"0";
+        self.nationalPrefix = nil;
         self.preferredExtnPrefix = nil;
-        self.nationalPrefixForParsing = @"0";
+        self.nationalPrefixForParsing = nil;
         self.nationalPrefixTransformRule = nil;
-        self.sameMobileAndFixedLinePattern = NO;
+        self.sameMobileAndFixedLinePattern = YES;
 
         NSMutableArray *numberFormats_FormatArray = [[NSMutableArray alloc] init];
         self.numberFormats = numberFormats_FormatArray;
@@ -622,7 +622,7 @@
         NSMutableArray *intlNumberFormats_FormatArray = [[NSMutableArray alloc] init];
         self.intlNumberFormats = intlNumberFormats_FormatArray;
         self.mainCountryForCode = NO;
-        self.leadingDigits = @"269|639";
+        self.leadingDigits = nil;
         self.leadingZeroPossible = NO;
     }
     return self;
@@ -755,6 +755,47 @@
         self.mainCountryForCode = NO;
         self.leadingDigits = nil;
         self.leadingZeroPossible = YES;
+    }
+    return self;
+}
+@end
+
+@implementation NBPhoneMetadataTestYT
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[268]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2696[0-4]\\d{4}" withPossibleNumberPattern:@"\\d{9}" withExample:@"269601234"];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"639\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"639123456"];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:@"801234567"];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+        self.codeID = @"YT";
+        self.countryCode = [NSNumber numberWithInteger:262];
+        self.internationalPrefix = @"00";
+        self.preferredInternationalPrefix = nil;
+        self.nationalPrefix = @"0";
+        self.preferredExtnPrefix = nil;
+        self.nationalPrefixForParsing = @"0";
+        self.nationalPrefixTransformRule = nil;
+        self.sameMobileAndFixedLinePattern = NO;
+
+        NSMutableArray *numberFormats_FormatArray = [[NSMutableArray alloc] init];
+        self.numberFormats = numberFormats_FormatArray;
+
+        NSMutableArray *intlNumberFormats_FormatArray = [[NSMutableArray alloc] init];
+        self.intlNumberFormats = intlNumberFormats_FormatArray;
+        self.mainCountryForCode = NO;
+        self.leadingDigits = @"269|639";
+        self.leadingZeroPossible = NO;
     }
     return self;
 }

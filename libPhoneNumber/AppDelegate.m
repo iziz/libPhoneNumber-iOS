@@ -26,6 +26,8 @@
     self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     
+    [self.window setRootViewController:[[UIViewController alloc] init]];
+    
     // Generate metadata (do not use in release)
     NBPhoneMetaDataGenerator *generator = [[NBPhoneMetaDataGenerator alloc] init];
     [generator generateMetadataClasses];

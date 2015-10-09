@@ -90,6 +90,10 @@ static NSMutableDictionary *kMapCCode2CN;
         [countryCode979Array addObject:@"001"];
         [kMapCCode2CN setObject:countryCode979Array forKey:@"979"];
 
+        NSMutableArray *countryCode46Array = [[NSMutableArray alloc] init];
+        [countryCode46Array addObject:@"SE"];
+        [kMapCCode2CN setObject:countryCode46Array forKey:@"46"];
+
         NSMutableArray *countryCode39Array = [[NSMutableArray alloc] init];
         [countryCode39Array addObject:@"IT"];
         [kMapCCode2CN setObject:countryCode39Array forKey:@"39"];
