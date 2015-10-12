@@ -41,6 +41,7 @@
 		34ACBBC01B71255D0064B3BD /* NBMetadataCoreMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FDBCFA0A1A87AD8C00297F21 /* NBMetadataCoreMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34ACBBC11B7125670064B3BD /* NBMetadataCoreTestMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FDBCFA0E1A87ADA300297F21 /* NBMetadataCoreTestMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34ACBBC21B71256C0064B3BD /* NBMetadataCoreTestMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBCFA0F1A87ADA300297F21 /* NBMetadataCoreTestMapper.m */; };
+		738BED431BCC73200048B813 /* NSArray+NBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FD8B84331934C35F00C350EB /* NSArray+NBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F04BE90176F062500076CB4 /* NBAsYouTypeFormatterTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = FD57B66C16E5B71F000772AF /* NBAsYouTypeFormatterTest1.m */; };
 		8FB1926F18E2B8CB000520E7 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDAD44B418E11B300041825C /* XCTest.framework */; };
 		AF0C04111B739A0700F4B5DD /* NBPhoneMetaDataGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = FD7A066D167736BD004BBEB6 /* NBPhoneMetaDataGenerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -369,6 +370,7 @@
 				34ACBBBB1B7124EF0064B3BD /* NBPhoneNumberUtil.h in Headers */,
 				34ACBBBE1B7125520064B3BD /* NBMetadataCore.h in Headers */,
 				34ACBBB91B7124DB0064B3BD /* NBPhoneNumberDesc.h in Headers */,
+				738BED431BCC73200048B813 /* NSArray+NBAdditions.h in Headers */,
 				34ACBBC11B7125670064B3BD /* NBMetadataCoreTestMapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
