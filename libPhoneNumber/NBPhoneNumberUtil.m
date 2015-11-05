@@ -1552,7 +1552,7 @@ static NSDictionary *DIGIT_MAPPINGS;
     
     NSString *formattedNumber = @"";
     
-    switch ([number.countryCodeSource intValue])
+    switch ([number.countryCodeSource integerValue])
     {
         case NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN:
             formattedNumber = [self format:number numberFormat:NBEPhoneNumberFormatINTERNATIONAL];
@@ -2945,7 +2945,7 @@ static NSDictionary *DIGIT_MAPPINGS;
     NBECountryCodeSource countryCodeSource = [self maybeStripInternationalPrefixAndNormalize:&fullNumber
                                                                            possibleIddPrefix:possibleCountryIddPrefix];
     if (keepRawInput) {
-        (*phoneNumber).countryCodeSource = [NSNumber numberWithInt:countryCodeSource];
+        (*phoneNumber).countryCodeSource = [NSNumber numberWithInteger:countryCodeSource];
     }
     
     if (countryCodeSource != NBECountryCodeSourceFROM_DEFAULT_COUNTRY) {
@@ -3000,7 +3000,7 @@ static NSDictionary *DIGIT_MAPPINGS;
                 [self testNumberLengthAgainstPattern:possibleNumberPattern number:fullNumber] == NBEValidationResultTOO_LONG) {
                 (*nationalNumber) = [(*nationalNumber) stringByAppendingString:potentialNationalNumberStr];
                 if (keepRawInput) {
-                    (*phoneNumber).countryCodeSource = [NSNumber numberWithInt:NBECountryCodeSourceFROM_NUMBER_WITHOUT_PLUS_SIGN];
+                    (*phoneNumber).countryCodeSource = [NSNumber numberWithInteger:NBECountryCodeSourceFROM_NUMBER_WITHOUT_PLUS_SIGN];
                 }
                 (*phoneNumber).countryCode = defaultCountryCode;
                 return defaultCountryCode;

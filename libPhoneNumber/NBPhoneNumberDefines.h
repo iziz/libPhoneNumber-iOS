@@ -12,15 +12,15 @@
 
 #pragma mark - Enum -
 
-typedef enum {
+typedef NS_ENUM(NSInteger, NBEPhoneNumberFormat) {
     NBEPhoneNumberFormatE164 = 0,
     NBEPhoneNumberFormatINTERNATIONAL = 1,
     NBEPhoneNumberFormatNATIONAL = 2,
     NBEPhoneNumberFormatRFC3966 = 3
-} NBEPhoneNumberFormat;
+};
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, NBEPhoneNumberType) {
     NBEPhoneNumberTypeFIXED_LINE = 0,
     NBEPhoneNumberTypeMOBILE = 1,
     // In some regions (e.g. the USA), it is impossible to distinguish between
@@ -49,33 +49,33 @@ typedef enum {
     // A phone number is of type UNKNOWN when it does not fit any of the known
     // patterns for a specific region.
     NBEPhoneNumberTypeUNKNOWN = -1
-} NBEPhoneNumberType;
+};
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, NBEMatchType) {
     NBEMatchTypeNOT_A_NUMBER = 0,
     NBEMatchTypeNO_MATCH = 1,
     NBEMatchTypeSHORT_NSN_MATCH = 2,
     NBEMatchTypeNSN_MATCH = 3,
     NBEMatchTypeEXACT_MATCH = 4
-} NBEMatchType;
+};
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, NBEValidationResult) {
     NBEValidationResultUNKNOWN = 0,
     NBEValidationResultIS_POSSIBLE = 1,
     NBEValidationResultINVALID_COUNTRY_CODE = 2,
     NBEValidationResultTOO_SHORT = 3,
     NBEValidationResultTOO_LONG = 4
-} NBEValidationResult;
+};
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, NBECountryCodeSource) {
     NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN = 1,
     NBECountryCodeSourceFROM_NUMBER_WITH_IDD = 5,
     NBECountryCodeSourceFROM_NUMBER_WITHOUT_PLUS_SIGN = 10,
     NBECountryCodeSourceFROM_DEFAULT_COUNTRY = 20
-} NBECountryCodeSource;
+};
 
 static NSString *NB_NON_BREAKING_SPACE = @"\u00a0";
 static NSString *NB_PLUS_CHARS = @"+＋";

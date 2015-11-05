@@ -229,13 +229,13 @@
             NSError *anError = nil;
             XCTAssertEqualObjects(countryCallingCode, [_aUtil maybeExtractCountryCode:phoneNumber metadata:metadata
                                                                        nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&anError]);
-            XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITH_IDD, [number.countryCodeSource intValue]);
+            XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITH_IDD, [number.countryCodeSource integerValue]);
             // Should strip and normalize national significant number.
             XCTAssertEqualObjects(strippedNumber, numberToFill);
             if (anError)
                 XCTFail(@"Should not have thrown an exception: %@", anError.description);
         }
-        XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITH_IDD, [number.countryCodeSource intValue], @"Did not figure out CountryCodeSource correctly");
+        XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITH_IDD, [number.countryCodeSource integerValue], @"Did not figure out CountryCodeSource correctly");
         // Should strip and normalize national significant number.
         XCTAssertEqualObjects(strippedNumber, numberToFill, @"Did not strip off the country calling code correctly.");
         
@@ -245,7 +245,7 @@
         numberToFill = @"";
         XCTAssertEqualObjects(countryCallingCode, [_aUtil maybeExtractCountryCode:phoneNumber metadata:metadata
                                                                    nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:nil]);
-        XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN, [number.countryCodeSource intValue], @"Did not figure out CountryCodeSource correctly");
+        XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN, [number.countryCodeSource integerValue], @"Did not figure out CountryCodeSource correctly");
         
         number = [[NBPhoneNumber alloc] init];
         phoneNumber = @"+80012345678";
@@ -253,14 +253,14 @@
         numberToFill = @"";
         XCTAssertEqualObjects(countryCallingCode, [_aUtil maybeExtractCountryCode:phoneNumber metadata:metadata
                                                                    nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:nil]);
-        XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN, [number.countryCodeSource intValue], @"Did not figure out CountryCodeSource correctly");
+        XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN, [number.countryCodeSource integerValue], @"Did not figure out CountryCodeSource correctly");
         
         number = [[NBPhoneNumber alloc] init];
         phoneNumber = @"2345-6789";
         numberToFill = @"";
         XCTAssertEqual(@0, [_aUtil maybeExtractCountryCode:phoneNumber metadata:metadata
                                             nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:nil]);
-        XCTAssertEqual(NBECountryCodeSourceFROM_DEFAULT_COUNTRY, [number.countryCodeSource intValue], @"Did not figure out CountryCodeSource correctly");
+        XCTAssertEqual(NBECountryCodeSourceFROM_DEFAULT_COUNTRY, [number.countryCodeSource integerValue], @"Did not figure out CountryCodeSource correctly");
         
         
         number = [[NBPhoneNumber alloc] init];
@@ -285,7 +285,7 @@
             XCTAssertEqualObjects(countryCallingCode, [_aUtil maybeExtractCountryCode:phoneNumber metadata:metadata
                                                                        nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&anError],
                                   @"Should have extracted the country calling code of the region passed in");
-            XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITHOUT_PLUS_SIGN, [number.countryCodeSource intValue], @"Did not figure out CountryCodeSource correctly");
+            XCTAssertEqual(NBECountryCodeSourceFROM_NUMBER_WITHOUT_PLUS_SIGN, [number.countryCodeSource integerValue], @"Did not figure out CountryCodeSource correctly");
         }
         
         number = [[NBPhoneNumber alloc] init];
@@ -315,7 +315,7 @@
             NSError *anError = nil;
             XCTAssertEqual(@0, [_aUtil maybeExtractCountryCode:phoneNumber metadata:metadata
                                                 nationalNumber:&numberToFill keepRawInput:YES phoneNumber:&number error:&anError]);
-            XCTAssertEqual(NBECountryCodeSourceFROM_DEFAULT_COUNTRY, [number.countryCodeSource intValue]);
+            XCTAssertEqual(NBECountryCodeSourceFROM_DEFAULT_COUNTRY, [number.countryCodeSource integerValue]);
         }
     }
 
@@ -886,7 +886,7 @@
         
         id nzNumberWithRawInput = [NZ_NUMBER copy];
         [nzNumberWithRawInput setRawInput:@"+64 3 331 6005"];
-        [nzNumberWithRawInput setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN]];
+        [nzNumberWithRawInput setCountryCodeSource:[NSNumber numberWithInteger:NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN]];
         [nzNumberWithRawInput setPreferredDomesticCarrierCode:@""];
         XCTAssertTrue([nzNumberWithRawInput isEqual:[_aUtil parseAndKeepRawInput:@"+64 3 331 6005" defaultRegion:@"ZZ" error:&anError]]);
         // nil is also allowed for the region code in these cases.
@@ -986,7 +986,7 @@
         NSLog(@"-------------- testParseAndKeepRaw");
         NBPhoneNumber *alphaNumericNumber = [ALPHA_NUMERIC_NUMBER copy];
         [alphaNumericNumber setRawInput:@"800 six-flags"];
-        [alphaNumericNumber setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_DEFAULT_COUNTRY]];
+        [alphaNumericNumber setCountryCodeSource:[NSNumber numberWithInteger:NBECountryCodeSourceFROM_DEFAULT_COUNTRY]];
         [alphaNumericNumber setPreferredDomesticCarrierCode:@""];
         XCTAssertTrue([alphaNumericNumber isEqual:[_aUtil parseAndKeepRawInput:@"800 six-flags" defaultRegion:@"US" error:&anError]]);
         
@@ -994,18 +994,18 @@
         [shorterAlphaNumber setCountryCode:@1];
         [shorterAlphaNumber setNationalNumber:@8007493524];
         [shorterAlphaNumber setRawInput:@"1800 six-flag"];
-        [shorterAlphaNumber setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_NUMBER_WITHOUT_PLUS_SIGN]];
+        [shorterAlphaNumber setCountryCodeSource:[NSNumber numberWithInteger:NBECountryCodeSourceFROM_NUMBER_WITHOUT_PLUS_SIGN]];
         [shorterAlphaNumber setPreferredDomesticCarrierCode:@""];
         XCTAssertTrue([shorterAlphaNumber isEqual:[_aUtil parseAndKeepRawInput:@"1800 six-flag" defaultRegion:@"US" error:&anError]]);
         
         [shorterAlphaNumber setRawInput:@"+1800 six-flag"];
-        [shorterAlphaNumber setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN]];
+        [shorterAlphaNumber setCountryCodeSource:[NSNumber numberWithInteger:NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN]];
         XCTAssertTrue([shorterAlphaNumber isEqual:[_aUtil parseAndKeepRawInput:@"+1800 six-flag" defaultRegion:@"NZ" error:&anError]]);
         
         [alphaNumericNumber setCountryCode:@1];
         [alphaNumericNumber setNationalNumber:@8007493524];
         [alphaNumericNumber setRawInput:@"001800 six-flag"];
-        [alphaNumericNumber setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_NUMBER_WITH_IDD]];
+        [alphaNumericNumber setCountryCodeSource:[NSNumber numberWithInteger:NBECountryCodeSourceFROM_NUMBER_WITH_IDD]];
         XCTAssertTrue([alphaNumericNumber isEqual:[_aUtil parseAndKeepRawInput:@"001800 six-flag" defaultRegion:@"NZ" error:&anError]]);
         
         // Invalid region code supplied.
@@ -1023,7 +1023,7 @@
         [koreanNumber setCountryCode:@82];
         [koreanNumber setNationalNumber:@22123456];
         [koreanNumber setRawInput:@"08122123456"];
-        [koreanNumber setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_DEFAULT_COUNTRY]];
+        [koreanNumber setCountryCodeSource:[NSNumber numberWithInteger:NBECountryCodeSourceFROM_DEFAULT_COUNTRY]];
         [koreanNumber setPreferredDomesticCarrierCode:@"81"];
         XCTAssertTrue([koreanNumber isEqual:[_aUtil parseAndKeepRawInput:@"08122123456" defaultRegion:@"KR" error:&anError]]);
     }
@@ -1101,12 +1101,12 @@
         NBPhoneNumber *brNumberTwo = [[NBPhoneNumber alloc] init];
         [brNumberOne setCountryCode:@55];
         [brNumberOne setNationalNumber:@3121286979];
-        [brNumberOne setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN]];
+        [brNumberOne setCountryCodeSource:[NSNumber numberWithInteger:NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN]];
         [brNumberOne setPreferredDomesticCarrierCode:@"12"];
         [brNumberOne setRawInput:@"012 3121286979"];
         [brNumberTwo setCountryCode:@55];
         [brNumberTwo setNationalNumber:@3121286979];
-        [brNumberTwo setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_DEFAULT_COUNTRY]];
+        [brNumberTwo setCountryCodeSource:[NSNumber numberWithInteger:NBECountryCodeSourceFROM_DEFAULT_COUNTRY]];
         [brNumberTwo setPreferredDomesticCarrierCode:@"14"];
         [brNumberTwo setRawInput:@"143121286979"];
         XCTAssertEqual(NBEMatchTypeEXACT_MATCH, [_aUtil isNumberMatch:brNumberOne second:brNumberTwo]);
