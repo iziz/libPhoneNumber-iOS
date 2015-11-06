@@ -425,7 +425,6 @@
 				FD7A0638167715A1004BBEB6 /* Sources */,
 				FD7A0639167715A1004BBEB6 /* Frameworks */,
 				FD7A063A167715A1004BBEB6 /* Resources */,
-				FD7A063B167715A1004BBEB6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -505,22 +504,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		FD7A063B167715A1004BBEB6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		34ACBB801B7122AC0064B3BD /* Sources */ = {
@@ -726,7 +709,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -752,7 +734,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
@@ -787,7 +768,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = NO;
-				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "libPhoneNumber/libPhoneNumber-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -823,7 +803,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = NO;
-				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "libPhoneNumber/libPhoneNumber-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -836,19 +815,12 @@
 		FD7A0653167715A1004BBEB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"/**",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libPhoneNumberTests/libPhoneNumberTest-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"TESTING=1",
 				);
-				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "libPhoneNumberTests/libPhoneNumberTests-Info.plist";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.ohtalk.${PRODUCT_NAME:rfc1034identifier}";
@@ -859,19 +831,12 @@
 		FD7A0654167715A1004BBEB6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"/**",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libPhoneNumberTests/libPhoneNumberTest-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"TESTING=1",
 				);
-				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "libPhoneNumberTests/libPhoneNumberTests-Info.plist";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.ohtalk.${PRODUCT_NAME:rfc1034identifier}";
