@@ -37,7 +37,7 @@
         return NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN;
     }
     
-    return [self.countryCodeSource intValue];
+    return [self.countryCodeSource integerValue];
 }
 
 
@@ -113,7 +113,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@" - countryCode[%@], nationalNumber[%@], extension[%@], italianLeadingZero[%@], rawInput[%@] countryCodeSource[%d] preferredDomesticCarrierCode[%@]", self.countryCode, self.nationalNumber, self.extension, self.italianLeadingZero?@"Y":@"N", self.rawInput, [self.countryCodeSource intValue], self.preferredDomesticCarrierCode];
+    return [NSString stringWithFormat:@" - countryCode[%@], nationalNumber[%@], extension[%@], italianLeadingZero[%@], rawInput[%@] countryCodeSource[%@] preferredDomesticCarrierCode[%@]", self.countryCode, self.nationalNumber, self.extension, self.italianLeadingZero?@"Y":@"N", self.rawInput, self.countryCodeSource, self.preferredDomesticCarrierCode];
 }
 
 @end
