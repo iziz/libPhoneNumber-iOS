@@ -38,7 +38,7 @@
     //testInvalidRegion()
     {
         /** @type {i18n.phonenumbers.AsYouTypeFormatter} */
-        NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCodeForTest:@"ZZ"];
+        NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCodeForTest:NB_UNKNOWN_REGION];
         XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
         XCTAssertEqualObjects(@"+4", [f inputDigit:@"4"]);
         XCTAssertEqualObjects(@"+48 ", [f inputDigit:@"8"]);
@@ -62,7 +62,7 @@
     //testInvalidPlusSign()
     {
         /** @type {i18n.phonenumbers.AsYouTypeFormatter} */
-        NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCodeForTest:@"ZZ"];
+        NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCodeForTest:NB_UNKNOWN_REGION];
         XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
         XCTAssertEqualObjects(@"+4", [f inputDigit:@"4"]);
         XCTAssertEqualObjects(@"+48 ", [f inputDigit:@"8"]);
@@ -96,7 +96,7 @@
         // The bug occurred last time for countries which have two formatting rules
         // with exactly the same leading digits pattern but differ in length.
         /** @type {i18n.phonenumbers.AsYouTypeFormatter} */
-        NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCodeForTest:@"ZZ"];
+        NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCodeForTest:NB_UNKNOWN_REGION];
         XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
         XCTAssertEqualObjects(@"+8", [f inputDigit:@"8"]);
         XCTAssertEqualObjects(@"+81 ", [f inputDigit:@"1"]);

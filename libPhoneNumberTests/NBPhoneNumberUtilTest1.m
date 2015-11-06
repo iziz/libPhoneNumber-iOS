@@ -1231,17 +1231,17 @@
         XCTAssertTrue([_aUtil isValidNumberForRegion:reNumber regionCode:@"RE"]);
         XCTAssertTrue([_aUtil isValidNumberForRegion:INTERNATIONAL_TOLL_FREE regionCode:@"001"]);
         XCTAssertFalse([_aUtil isValidNumberForRegion:INTERNATIONAL_TOLL_FREE regionCode:@"US"]);
-        XCTAssertFalse([_aUtil isValidNumberForRegion:INTERNATIONAL_TOLL_FREE regionCode:@"ZZ"]);
+        XCTAssertFalse([_aUtil isValidNumberForRegion:INTERNATIONAL_TOLL_FREE regionCode:NB_UNKNOWN_REGION]);
         
         NBPhoneNumber *invalidNumber = [[NBPhoneNumber alloc] init];
         // Invalid country calling codes.
         [invalidNumber setCountryCode:@3923];
         [invalidNumber setNationalNumber:@2366];
-        XCTAssertFalse([_aUtil isValidNumberForRegion:invalidNumber regionCode:@"ZZ"]);
+        XCTAssertFalse([_aUtil isValidNumberForRegion:invalidNumber regionCode:NB_UNKNOWN_REGION]);
         XCTAssertFalse([_aUtil isValidNumberForRegion:invalidNumber regionCode:@"001"]);
         [invalidNumber setCountryCode:0];
         XCTAssertFalse([_aUtil isValidNumberForRegion:invalidNumber regionCode:@"001"]);
-        XCTAssertFalse([_aUtil isValidNumberForRegion:invalidNumber regionCode:@"ZZ"]);
+        XCTAssertFalse([_aUtil isValidNumberForRegion:invalidNumber regionCode:NB_UNKNOWN_REGION]);
     }
 
     
@@ -1320,7 +1320,7 @@
         XCTAssertEqualObjects(@1, [_aUtil getCountryCodeForRegion:@"US"]);
         XCTAssertEqualObjects(@64, [_aUtil getCountryCodeForRegion:@"NZ"]);
         XCTAssertEqualObjects(@0, [_aUtil getCountryCodeForRegion:nil]);
-        XCTAssertEqualObjects(@0, [_aUtil getCountryCodeForRegion:@"ZZ"]);
+        XCTAssertEqualObjects(@0, [_aUtil getCountryCodeForRegion:NB_UNKNOWN_REGION]);
         XCTAssertEqualObjects(@0, [_aUtil getCountryCodeForRegion:@"001"]);
         // CS is already deprecated so the library doesn't support it.
         XCTAssertEqualObjects(@0, [_aUtil getCountryCodeForRegion:@"CS"]);
@@ -1342,7 +1342,7 @@
 
         // Test cases with invalid regions.
         XCTAssertNil([_aUtil getNddPrefixForRegion:nil stripNonDigits:NO]);
-        XCTAssertNil([_aUtil getNddPrefixForRegion:@"ZZ" stripNonDigits:NO]);
+        XCTAssertNil([_aUtil getNddPrefixForRegion:NB_UNKNOWN_REGION stripNonDigits:NO]);
         XCTAssertNil([_aUtil getNddPrefixForRegion:@"001" stripNonDigits:NO]);
 
         // CS is already deprecated so the library doesn't support it.
@@ -1355,7 +1355,7 @@
         XCTAssertTrue([_aUtil isNANPACountry:@"US"]);
         XCTAssertTrue([_aUtil isNANPACountry:@"BS"]);
         XCTAssertFalse([_aUtil isNANPACountry:@"DE"]);
-        XCTAssertFalse([_aUtil isNANPACountry:@"ZZ"]);
+        XCTAssertFalse([_aUtil isNANPACountry:NB_UNKNOWN_REGION]);
         XCTAssertFalse([_aUtil isNANPACountry:@"001"]);
         XCTAssertFalse([_aUtil isNANPACountry:nil]);
     }

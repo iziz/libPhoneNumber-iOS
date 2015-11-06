@@ -726,7 +726,7 @@
         {
             NSError *anError = nil;
             NSString *someNumber = @"123 456 7890";
-            [_aUtil parse:someNumber defaultRegion:@"ZZ" error:&anError];
+            [_aUtil parse:someNumber defaultRegion:NB_UNKNOWN_REGION error:&anError];
             if (anError == nil)
                 XCTFail(@"Unknown region code not allowed: should fail.");
             else
@@ -805,7 +805,7 @@
             NSError *anError = nil;
             NSString *emptyNumber = @"";
             // Invalid region.
-            [_aUtil parse:emptyNumber defaultRegion:@"ZZ" error:&anError];
+            [_aUtil parse:emptyNumber defaultRegion:NB_UNKNOWN_REGION error:&anError];
             if (anError == nil)
                 XCTFail(@"Empty string - should fail.");
             else
@@ -816,7 +816,7 @@
         {
             NSError *anError = nil;
             // Invalid region.
-            [_aUtil parse:nil defaultRegion:@"ZZ" error:&anError];
+            [_aUtil parse:nil defaultRegion:NB_UNKNOWN_REGION error:&anError];
             if (anError == nil)
                 XCTFail(@"nil string - should fail.");
             else
@@ -837,7 +837,7 @@
         {
             NSError *anError = nil;
             NSString *domainRfcPhoneContext = @"tel:555-1234;phone-context=www.google.com";
-            [_aUtil parse:domainRfcPhoneContext defaultRegion:@"ZZ" error:&anError];
+            [_aUtil parse:domainRfcPhoneContext defaultRegion:NB_UNKNOWN_REGION error:&anError];
             if (anError == nil)
                 XCTFail(@"Unknown region code not allowed: should fail.");
             else
@@ -851,7 +851,7 @@
             // This should not succeed in being parsed.
             
             NSString *invalidRfcPhoneContext = @"tel:555-1234;phone-context=1-331";
-            [_aUtil parse:invalidRfcPhoneContext defaultRegion:@"ZZ" error:&anError];
+            [_aUtil parse:invalidRfcPhoneContext defaultRegion:NB_UNKNOWN_REGION error:&anError];
             if (anError == nil)
                 XCTFail(@"Unknown region code not allowed: should fail.");
             else
@@ -867,19 +867,19 @@
         NSError *anError;
         // @"ZZ is allowed only if the number starts with a '+' - then the
         // country calling code can be calculated.
-        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"+64 3 331 6005" defaultRegion:@"ZZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"+64 3 331 6005" defaultRegion:NB_UNKNOWN_REGION error:&anError]]);
         // Test with full-width plus.
-        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"\uFF0B64 3 331 6005" defaultRegion:@"ZZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"\uFF0B64 3 331 6005" defaultRegion:NB_UNKNOWN_REGION error:&anError]]);
         // Test with normal plus but leading characters that need to be stripped.
-        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"Tel: +64 3 331 6005" defaultRegion:@"ZZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"Tel: +64 3 331 6005" defaultRegion:NB_UNKNOWN_REGION error:&anError]]);
         XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"+64 3 331 6005" defaultRegion:nil error:&anError]]);
         XCTAssertTrue([INTERNATIONAL_TOLL_FREE isEqual:[_aUtil parse:@"+800 1234 5678" defaultRegion:nil error:&anError]]);
         XCTAssertTrue([UNIVERSAL_PREMIUM_RATE isEqual:[_aUtil parse:@"+979 123 456 789" defaultRegion:nil error:&anError]]);
         
         // Test parsing RFC3966 format with a phone context.
-        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"tel:03-331-6005;phone-context=+64" defaultRegion:@"ZZ" error:&anError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"  tel:03-331-6005;phone-context=+64" defaultRegion:@"ZZ" error:&anError]]);
-        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"tel:03-331-6005;isub=12345;phone-context=+64" defaultRegion:@"ZZ" error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"tel:03-331-6005;phone-context=+64" defaultRegion:NB_UNKNOWN_REGION error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"  tel:03-331-6005;phone-context=+64" defaultRegion:NB_UNKNOWN_REGION error:&anError]]);
+        XCTAssertTrue([NZ_NUMBER isEqual:[_aUtil parse:@"tel:03-331-6005;isub=12345;phone-context=+64" defaultRegion:NB_UNKNOWN_REGION error:&anError]]);
         
         // It is important that we set the carrier code to an empty string, since we
         // used ParseAndKeepRawInput and no carrier code was found.
@@ -888,7 +888,7 @@
         [nzNumberWithRawInput setRawInput:@"+64 3 331 6005"];
         [nzNumberWithRawInput setCountryCodeSource:[NSNumber numberWithInt:NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN]];
         [nzNumberWithRawInput setPreferredDomesticCarrierCode:@""];
-        XCTAssertTrue([nzNumberWithRawInput isEqual:[_aUtil parseAndKeepRawInput:@"+64 3 331 6005" defaultRegion:@"ZZ" error:&anError]]);
+        XCTAssertTrue([nzNumberWithRawInput isEqual:[_aUtil parseAndKeepRawInput:@"+64 3 331 6005" defaultRegion:NB_UNKNOWN_REGION error:&anError]]);
         // nil is also allowed for the region code in these cases.
         XCTAssertTrue([nzNumberWithRawInput isEqual:[_aUtil parseAndKeepRawInput:@"+64 3 331 6005" defaultRegion:nil error:&anError]]);
     }
@@ -936,7 +936,7 @@
         XCTAssertTrue([ukNumber isEqual:[_aUtil parse:@"+44 2034567890 x 456  " defaultRegion:@"GB" error:&anError]]);
         XCTAssertTrue([ukNumber isEqual:[_aUtil parse:@"+44 2034567890  X 456" defaultRegion:@"GB" error:&anError]]);
         XCTAssertTrue([ukNumber isEqual:[_aUtil parse:@"+44-2034567890;ext=456" defaultRegion:@"GB" error:&anError]]);
-        XCTAssertTrue([ukNumber isEqual:[_aUtil parse:@"tel:2034567890;ext=456;phone-context=+44" defaultRegion:@"ZZ" error:&anError]]);
+        XCTAssertTrue([ukNumber isEqual:[_aUtil parse:@"tel:2034567890;ext=456;phone-context=+44" defaultRegion:NB_UNKNOWN_REGION error:&anError]]);
         // Full-width extension, @"extn' only.
         XCTAssertTrue([ukNumber isEqual:[_aUtil parse:@"+442034567890\uFF45\uFF58\uFF54\uFF4E456" defaultRegion:@"GB" error:&anError]]);
         // 'xtn' only.

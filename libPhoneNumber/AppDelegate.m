@@ -82,7 +82,7 @@
     
     {
         NSError *error = nil;
-        NBPhoneNumber *phoneNumberZZ = [phoneUtil parse:@"+84 74 883313" defaultRegion:@"ZZ" error:&error];
+        NBPhoneNumber *phoneNumberZZ = [phoneUtil parse:@"+84 74 883313" defaultRegion:NB_UNKNOWN_REGION error:&error];
         if (error) {
             NSLog(@"err [%@]", [error localizedDescription]);
         }
