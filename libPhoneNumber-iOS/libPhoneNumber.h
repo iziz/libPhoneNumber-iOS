@@ -17,29 +17,23 @@ FOUNDATION_EXPORT const unsigned char libPhoneNumber_iOSVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <libPhoneNumber_iOS/PublicHeader.h>
 
 
-#import "NBPhoneMetaDataGenerator.h"
+#import "NBPhoneNumberDefines.h"
 
+// Features
 #import "NBPhoneNumberUtil.h"
+#import "NBAsYouTypeFormatter.h"
 
-#import "NBMetadataHelper.h"
-#import "NBPhoneMetaData.h"
+// Metadata
 #import "NBMetadataCore.h"
-#import "NBMetadataCoreTest.h"
 #import "NBMetadataCoreMapper.h"
-#import "NBMetadataCoreTestMapper.h"
+#import "NBMetadataHelper.h"
 
+// Model
+#import "NBPhoneMetaData.h"
+#import "NBNumberFormat.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
-#import "NBNumberFormat.h"
-#import "NBAsYouTypeFormatter.h"
 
-#import "NBMetadataCore.h"
-#import "NBMetadataCoreTest.h"
-#import "NBMetadataCoreMapper.h"
-#import "NBMetadataCoreTestMapper.h"
-
-#import "NBAsYouTypeFormatter.h"
+// Etc
 #import "NSArray+NBAdditions.h"
-
-#import "NBPhoneNumberDefines.h"
 

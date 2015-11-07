@@ -1,13 +1,14 @@
 //
-//  AppDelegate.m
+//  SampleAppDelegate.m
 //  libPhoneNumber
 //
 //
 
-#import "AppDelegate.h"
+#import "SampleAppDelegate.h"
 
 #import "NBPhoneMetaDataGenerator.h"
 
+#import "NBAsYouTypeFormatter.h"
 #import "NBPhoneNumberUtil.h"
 
 #import "NBMetadataHelper.h"
@@ -18,7 +19,7 @@
 #import "NBNumberFormat.h"
 
 
-@implementation AppDelegate
+@implementation SampleAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
