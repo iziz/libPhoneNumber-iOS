@@ -8,6 +8,7 @@
 
  - NBPhoneNumberUtil
  - NBAsYouTypeFormatter
+ - NBTextFiled.swift (framework only)
 
 > ARC only, or add the **"-fobjc-arc"** flag for non-ARC
 
@@ -38,6 +39,8 @@ To integrate libPhoneNumber into your Xcode project using Carthage, specify it i
 ```ogdl
 github "iziz/libPhoneNumber-iOS"
 ```
+
+And set the Embedded Content Contains Swift "Yes"
 
 #### Setting up manually
  Add source files to your projects from libPhoneNumber
@@ -95,12 +98,12 @@ See sample test code from
 ```
 
 #### with Swift
-##### as Framework
+##### Case (1) with Framework
 ```
 @import libPhoneNumber
 ```
 
-##### - in Bridging-Header
+##### Case (2) with Bridging-Header
 ```swift
 // Manually added
 #import "NBPhoneNumberUtil.h"
