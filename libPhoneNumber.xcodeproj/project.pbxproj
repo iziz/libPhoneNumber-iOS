@@ -13,7 +13,6 @@
 		29F3A15E17B98B3C005D8E07 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F3A15C17B98AE1005D8E07 /* CoreTelephony.framework */; };
 		34ACBB8A1B7122AC0064B3BD /* libPhoneNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 34ACBB891B7122AC0064B3BD /* libPhoneNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34ACBBA51B7122E80064B3BD /* NBMetadataCore.m in Sources */ = {isa = PBXBuildFile; fileRef = FD12C26D1A87546400B53856 /* NBMetadataCore.m */; };
-		34ACBBA61B7122EB0064B3BD /* NBMetadataCoreTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF1ED961A8774DC00F6123A /* NBMetadataCoreTest.m */; };
 		34ACBBA71B7122EE0064B3BD /* NBMetadataCoreMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBCFA0B1A87AD8C00297F21 /* NBMetadataCoreMapper.m */; };
 		34ACBBAA1B7122F80064B3BD /* NBPhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8B842D1934C35F00C350EB /* NBPhoneNumber.m */; };
 		34ACBBAB1B7122FD0064B3BD /* NBNumberFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8B84291934C35F00C350EB /* NBNumberFormat.m */; };
@@ -45,7 +44,6 @@
 		FD6AE8FE1BEE72B600263DE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6AE8FC1BEE72B600263DE1 /* Main.storyboard */; };
 		FD6AE9001BEE72B600263DE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD6AE8FF1BEE72B600263DE1 /* Assets.xcassets */; };
 		FD6AE9031BEE72B600263DE1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6AE9011BEE72B600263DE1 /* LaunchScreen.storyboard */; };
-		FD6AE90B1BEE754C00263DE1 /* NBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6AE90A1BEE754C00263DE1 /* NBTextField.swift */; };
 		FD7A0621167715A0004BBEB6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7A0620167715A0004BBEB6 /* UIKit.framework */; };
 		FD7A0623167715A0004BBEB6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7A0622167715A0004BBEB6 /* Foundation.framework */; };
 		FD7A0625167715A0004BBEB6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7A0624167715A0004BBEB6 /* CoreGraphics.framework */; };
@@ -569,8 +567,6 @@
 				34ACBBA51B7122E80064B3BD /* NBMetadataCore.m in Sources */,
 				34ACBBA71B7122EE0064B3BD /* NBMetadataCoreMapper.m in Sources */,
 				34ACBBAC1B7122FF0064B3BD /* NBPhoneNumberDesc.m in Sources */,
-				FD6AE90B1BEE754C00263DE1 /* NBTextField.swift in Sources */,
-				34ACBBA61B7122EB0064B3BD /* NBMetadataCoreTest.m in Sources */,
 				34ACBBAA1B7122F80064B3BD /* NBPhoneNumber.m in Sources */,
 				34ACBBAE1B7123090064B3BD /* NBPhoneNumberUtil.m in Sources */,
 				34ACBBAB1B7122FD0064B3BD /* NBNumberFormat.m in Sources */,
