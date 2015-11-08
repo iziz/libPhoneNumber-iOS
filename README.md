@@ -8,7 +8,7 @@
 
  - NBPhoneNumberUtil
  - NBAsYouTypeFormatter
- - NBTextFiled.swift (framework only)
+ - NBTextFiled.swift (Swift 2)
 
 > ARC only, or add the **"-fobjc-arc"** flag for non-ARC
 
