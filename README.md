@@ -109,22 +109,7 @@ See sample test code from
 ```
 
 ##### - in swift class file
-```swift
-override func viewDidLoad() {
-    super.viewDidLoad()
-    let phoneUtil = NBPhoneNumberUtil()
-
-    var errorPointer:NSError?
-    var number:NBPhoneNumber? = phoneUtil.parse("01041241282", defaultRegion:"KR", error:&errorPointer)
-    if errorPointer == nil && number != nil {
-       println("number is: \(number)")
-    } else {
-       println("number error: \(errorPointer?.localizedDescription)")
-    }
-}
-```
-
-###### 2.0
+###### 2.x
 ```swift
 override func viewDidLoad() {
     super.viewDidLoad()
@@ -139,6 +124,22 @@ override func viewDidLoad() {
     }
     catch let error as NSError {
         print(error.localizedDescription)
+    }
+}
+```
+
+###### 1.x
+```swift
+override func viewDidLoad() {
+    super.viewDidLoad()
+    let phoneUtil = NBPhoneNumberUtil()
+
+    var errorPointer:NSError?
+    var number:NBPhoneNumber? = phoneUtil.parse("01041241282", defaultRegion:"KR", error:&errorPointer)
+    if errorPointer == nil && number != nil {
+       println("number is: \(number)")
+    } else {
+       println("number error: \(errorPointer?.localizedDescription)")
     }
 }
 ```
