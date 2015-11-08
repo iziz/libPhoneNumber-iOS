@@ -5,7 +5,6 @@
 //
 
 #import "NBNumberFormat.h"
-#import "NSArray+NBAdditions.h"
 
 
 @implementation NBNumberFormat

@@ -12,7 +12,24 @@
 #import "NBPhoneNumberUtil.h"
 #import "NBPhoneMetaData.h"
 #import "NBNumberFormat.h"
-#import "NSArray+NBAdditions.h"
+
+
+@interface NSArray (NBAdditions)
+- (id)safeObjectAtIndex:(NSUInteger)index;
+@end
+
+@implementation NSArray (NBAdditions)
+- (id)safeObjectAtIndex:(NSUInteger)index {
+    @synchronized(self) {
+        if (index >= [self count]) return nil;
+        id res = [self objectAtIndex:index];
+        if (res == nil || (NSNull*)res == [NSNull null]) {
+            return nil;
+        }
+        return res;
+    }
+}
+@end
 
 
 @interface NBAsYouTypeFormatter ()

@@ -33,7 +33,3 @@ FOUNDATION_EXPORT const unsigned char libPhoneNumber_iOSVersionString[];
 #import "NBNumberFormat.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
-
-// Etc
-#import "NSArray+NBAdditions.h"
-
