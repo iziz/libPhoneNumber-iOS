@@ -40,7 +40,7 @@ To integrate libPhoneNumber into your Xcode project using Carthage, specify it i
 github "iziz/libPhoneNumber-iOS"
 ```
 
-And set the Embedded Content Contains Swift "Yes"
+And set the **Embedded Content Contains Swift** to "Yes" in your build settings.
 
 #### Setting up manually
  Add source files to your projects from libPhoneNumber
