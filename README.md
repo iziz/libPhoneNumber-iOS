@@ -95,6 +95,11 @@ See sample test code from
 ```
 
 #### with Swift
+##### as Framework
+```
+@import libPhoneNumber
+```
+
 ##### - in Bridging-Header
 ```swift
 // Manually added
