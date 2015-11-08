@@ -5,18 +5,9 @@
 //
 
 #import "SampleAppDelegate.h"
-
 #import "NBPhoneMetaDataGenerator.h"
 
-#import "NBAsYouTypeFormatter.h"
-#import "NBPhoneNumberUtil.h"
-
-#import "NBMetadataHelper.h"
-#import "NBPhoneMetaData.h"
-
-#import "NBPhoneNumber.h"
-#import "NBPhoneNumberDesc.h"
-#import "NBNumberFormat.h"
+@import libPhoneNumber;
 
 
 @implementation SampleAppDelegate
@@ -34,7 +25,7 @@
     [generator generateMetadataClasses];
     
     [self testWithRealData];
-    [self testWithGCD];
+    //[self testWithGCD];
     [self testForGetSupportedRegions];
     
     return YES;
@@ -63,6 +54,24 @@
     NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
     NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
     NSLog(@"%@ (%@)", [formatter inputDigit:@"5"], formatter.isSuccessfulFormatting ? @"Y":@"N");
+    
+    NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+    NSLog(@"%@", [f inputDigit:@"6"]); // "6"
+    NSLog(@"%@", [f inputDigit:@"5"]); // "65"
+    NSLog(@"%@", [f inputDigit:@"0"]); // "650"
+    NSLog(@"%@", [f inputDigit:@"2"]); // "650 2"
+    NSLog(@"%@", [f inputDigit:@"5"]); // "650 25"
+    NSLog(@"%@", [f inputDigit:@"3"]); // "650 253"
+    
+    // Note this is how a US local number (without area code) should be formatted.
+    NSLog(@"%@", [f inputDigit:@"2"]); // "650 2532"
+    NSLog(@"%@", [f inputDigit:@"2"]); // "650 253 22"
+    NSLog(@"%@", [f inputDigit:@"2"]); // "650 253 222"
+    NSLog(@"%@", [f inputDigit:@"2"]); // "650 253 2222"
+    // Can remove last digit
+    NSLog(@"%@", [f removeLastDigit]); // "650 253 222"
+    
+    NSLog(@"%@", [f inputString:@"16502532222"]); // 1 650 253 2222
     
     // Unit test for isValidNumber is failing some valid numbers. #7
     
@@ -180,7 +189,7 @@
     
     NSLog(@"- START [%@]", testRegion);
     
-    dispatch_async(dispatch_get_current_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         NSError *error = nil;
         
         for (int i=0; i<10000; i++) {

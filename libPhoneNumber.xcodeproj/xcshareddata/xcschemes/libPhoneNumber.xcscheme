@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FD7A061B167715A0004BBEB6"
-               BuildableName = "libPhoneNumber.app"
-               BlueprintName = "libPhoneNumber"
+               BuildableName = "libPhoneNumberSampleObjectiveC.app"
+               BlueprintName = "libPhoneNumberSampleObjectiveC"
                ReferencedContainer = "container:libPhoneNumber.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,8 +43,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FD7A061B167715A0004BBEB6"
-            BuildableName = "libPhoneNumber.app"
-            BlueprintName = "libPhoneNumber"
+            BuildableName = "libPhoneNumberSampleObjectiveC.app"
+            BlueprintName = "libPhoneNumberSampleObjectiveC"
             ReferencedContainer = "container:libPhoneNumber.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -66,8 +66,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FD7A061B167715A0004BBEB6"
-            BuildableName = "libPhoneNumber.app"
-            BlueprintName = "libPhoneNumber"
+            BuildableName = "libPhoneNumberSampleObjectiveC.app"
+            BlueprintName = "libPhoneNumberSampleObjectiveC"
             ReferencedContainer = "container:libPhoneNumber.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -85,8 +85,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FD7A061B167715A0004BBEB6"
-            BuildableName = "libPhoneNumber.app"
-            BlueprintName = "libPhoneNumber"
+            BuildableName = "libPhoneNumberSampleObjectiveC.app"
+            BlueprintName = "libPhoneNumberSampleObjectiveC"
             ReferencedContainer = "container:libPhoneNumber.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
