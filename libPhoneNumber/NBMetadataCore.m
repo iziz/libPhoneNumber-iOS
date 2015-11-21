@@ -5982,7 +5982,7 @@
     if (self) {
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-689]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
         self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-5]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:@"212345678"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9(?:0[1-8]|1[0-24-9]|4[0489])\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"912123456"];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9(?:0[1-8]|1[0-24-9]|4[0489]|5[0])\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"912123456"];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"800123456"];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9(?:[78]\\d{7}|00\\d{6})" withPossibleNumberPattern:@"\\d{9}" withExample:@"900123456"];
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8[5-9]\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:@"850123456"];
