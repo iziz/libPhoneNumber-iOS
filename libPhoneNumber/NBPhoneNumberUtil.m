@@ -7,6 +7,7 @@
 //
 
 #import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumberDefines.h"
 #import "NBPhoneNumber.h"
 #import "NBNumberFormat.h"
 #import "NBPhoneNumberDesc.h"

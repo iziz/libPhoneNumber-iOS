@@ -6,6 +6,7 @@
 //
 
 #import "NBAsYouTypeFormatter.h"
+#import "NBPhoneNumberDefines.h"
 
 #import "NBMetadataHelper.h"
 
