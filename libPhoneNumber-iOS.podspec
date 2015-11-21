@@ -15,5 +15,5 @@ DESC
   s.osx.deployment_target = "10.9"
   s.watchos.deployment_target = "2.0"
   s.requires_arc = true
-  s.source_files = 'libPhoneNumber/NBPhoneNumberDefines.h', 'libPhoneNumber/NBPhoneNumber.{h,m}', 'libPhoneNumber/NBNumberFormat.{h,m}', 'libPhoneNumber/NBPhoneNumberDesc.{h,m}', 'libPhoneNumber/NBPhoneMetaData.{h,m}', 'libPhoneNumber/NBPhoneNumberUtil.{h,m}', 'libPhoneNumber/NBMetadataHelper.{h,m}', 'libPhoneNumber/NBAsYouTypeFormatter.{h,m}', 'libPhoneNumber/NBMetadataCore.{h,m}', 'libPhoneNumber/NBMetadataCoreTest.{h,m}', 'libPhoneNumber/NBMetadataCoreMapper.{h,m}', 'libPhoneNumber/NBMetadataCoreTestMapper.{h,m}'
+s.source_files = 'libPhoneNumber/NBPhoneNumberDefines.{h,m}', 'libPhoneNumber/NBPhoneNumber.{h,m}', 'libPhoneNumber/NBNumberFormat.{h,m}', 'libPhoneNumber/NBPhoneNumberDesc.{h,m}', 'libPhoneNumber/NBPhoneMetaData.{h,m}', 'libPhoneNumber/NBPhoneNumberUtil.{h,m}', 'libPhoneNumber/NBMetadataHelper.{h,m}', 'libPhoneNumber/NBAsYouTypeFormatter.{h,m}', 'libPhoneNumber/NBMetadataCore.{h,m}', 'libPhoneNumber/NBMetadataCoreTest.{h,m}', 'libPhoneNumber/NBMetadataCoreMapper.{h,m}', 'libPhoneNumber/NBMetadataCoreTestMapper.{h,m}'
 end
