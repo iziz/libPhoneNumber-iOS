@@ -129,7 +129,7 @@ override func viewDidLoad() {
 
     do {
         let phoneNumber: NBPhoneNumber = try phoneUtil.parse("01065431234", defaultRegion: "KR")
-        let formattedString: String = try phoneUtil.format(phoneNumber, numberFormat: NBEPhoneNumberFormatE164)
+        let formattedString: String = try phoneUtil.format(phoneNumber, numberFormat: .E164)
 
         NSLog("[%@]", formattedString)
     }
