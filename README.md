@@ -99,7 +99,8 @@ See sample test code from
 
 #### with Swift
 ##### Case (1) with Framework
-```import libPhoneNumber
+```
+import libPhoneNumber
 ```
 
 ##### Case (2) with Bridging-Header
