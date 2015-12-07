@@ -5883,7 +5883,7 @@
         self.countryCode = [NSNumber numberWithInteger:380];
         self.internationalPrefix = @"00";
         self.preferredInternationalPrefix = @"0~0";
-        self.nationalPrefix = @"0";
+        self.nationalPrefix = nil;
         self.preferredExtnPrefix = nil;
         self.nationalPrefixForParsing = @"0";
         self.nationalPrefixTransformRule = nil;
