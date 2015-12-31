@@ -66,6 +66,7 @@
 
 - (NBEValidationResult)isPossibleNumberWithReason:(NBPhoneNumber*)number error:(NSError**)error;
 
+- (BOOL)isPossibleNumber:(NBPhoneNumber*)number;
 - (BOOL)isPossibleNumber:(NBPhoneNumber*)number error:(NSError**)error;
 - (BOOL)isPossibleNumberString:(NSString*)number regionDialingFrom:(NSString*)regionDialingFrom error:(NSError**)error;
 
