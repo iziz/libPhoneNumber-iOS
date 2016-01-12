@@ -39,7 +39,7 @@
 		A81D6A2A1BECC44500F68F34 /* NBPhoneNumberDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = A81D6A281BECC43A00F68F34 /* NBPhoneNumberDefines.m */; };
 		A81D6A2B1BECC44600F68F34 /* NBPhoneNumberDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = A81D6A281BECC43A00F68F34 /* NBPhoneNumberDefines.m */; };
 		FD12C26B1A87401B00B53856 /* NBMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FD12C2691A87401B00B53856 /* NBMetadataHelper.m */; };
-		FD2E71BA1BEFAF10006434AA /* NBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6AE90A1BEE754C00263DE1 /* NBTextField.swift */; };
+		FD51DE171C44CDC500ED4623 /* NBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6AE90A1BEE754C00263DE1 /* NBTextField.swift */; };
 		FD6AE8F91BEE72B600263DE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6AE8F81BEE72B600263DE1 /* AppDelegate.swift */; };
 		FD6AE8FB1BEE72B600263DE1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6AE8FA1BEE72B600263DE1 /* ViewController.swift */; };
 		FD6AE8FE1BEE72B600263DE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6AE8FC1BEE72B600263DE1 /* Main.storyboard */; };
@@ -123,7 +123,7 @@
 		FD6AE8FF1BEE72B600263DE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FD6AE9021BEE72B600263DE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FD6AE9041BEE72B600263DE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FD6AE90A1BEE754C00263DE1 /* NBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBTextField.swift; sourceTree = "<group>"; };
+		FD6AE90A1BEE754C00263DE1 /* NBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NBTextField.swift; path = "libPhoneNumber-iOS/NBTextField.swift"; sourceTree = SOURCE_ROOT; };
 		FD7A061C167715A0004BBEB6 /* libPhoneNumberSampleObjectiveC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libPhoneNumberSampleObjectiveC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD7A0620167715A0004BBEB6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FD7A0622167715A0004BBEB6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -216,7 +216,6 @@
 			isa = PBXGroup;
 			children = (
 				34ACBB891B7122AC0064B3BD /* libPhoneNumber.h */,
-				FD6AE90A1BEE754C00263DE1 /* NBTextField.swift */,
 				34ACBB881B7122AC0064B3BD /* Info.plist */,
 			);
 			name = "libPhoneNumber (Framework)";
@@ -360,6 +359,7 @@
 				FD8B84321934C35F00C350EB /* NBPhoneNumberUtil.m */,
 				FD8B84261934C35F00C350EB /* NBAsYouTypeFormatter.h */,
 				FD8B84271934C35F00C350EB /* NBAsYouTypeFormatter.m */,
+				FD6AE90A1BEE754C00263DE1 /* NBTextField.swift */,
 			);
 			name = "libPhoneNumber (Library)";
 			sourceTree = "<group>";
@@ -564,7 +564,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD2E71BA1BEFAF10006434AA /* NBTextField.swift in Sources */,
 				34ACBBAF1B71230B0064B3BD /* NBMetadataHelper.m in Sources */,
 				34ACBBA51B7122E80064B3BD /* NBMetadataCore.m in Sources */,
 				34ACBBA71B7122EE0064B3BD /* NBMetadataCoreMapper.m in Sources */,
@@ -584,6 +583,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD51DE171C44CDC500ED4623 /* NBTextField.swift in Sources */,
 				FD6AE8FB1BEE72B600263DE1 /* ViewController.swift in Sources */,
 				FD6AE8F91BEE72B600263DE1 /* AppDelegate.swift in Sources */,
 			);

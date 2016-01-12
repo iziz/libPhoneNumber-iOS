@@ -6,7 +6,7 @@
 //  Copyright © 2015년 ohtalk.me. All rights reserved.
 //
 
-import UIKit
+import libPhoneNumber
 
 
 public class NBTextField: UITextField
