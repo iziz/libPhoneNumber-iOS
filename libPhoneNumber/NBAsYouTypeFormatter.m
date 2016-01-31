@@ -380,7 +380,7 @@
         /** @type {string} */
         NSString *pattern = numberFormat.pattern;
         
-        if ([self.currentFormattingPattern_ isEqualToString:pattern]) {
+        if (!pattern.length || [self.currentFormattingPattern_ isEqualToString:pattern]) {
             return NO;
         }
         
@@ -448,6 +448,9 @@
  */
 - (BOOL)isFormatEligible_:(NSString*)format
 {
+    if ( !format.length ) {
+        return NO;        
+    }
     NSTextCheckingResult *matchResult =
         [self.ELIGIBLE_FORMAT_PATTERN_ firstMatchInString:format options:0 range:NSMakeRange(0, [format length])];
     return (matchResult != nil);
