@@ -22,3 +22,5 @@ DerivedData
 # CocoaPods
 Pods
 ObjectiveC.gcda
+
+*.gcno
