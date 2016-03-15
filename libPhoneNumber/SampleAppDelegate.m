@@ -147,6 +147,21 @@
     NSString *res = nil;
     NSNumber *dRes = [phoneUtil extractCountryCode:@"823213123123" nationalNumber:&res];
     NSLog (@"extractCountryCode [%@] [%@]", dRes, res);
+    
+    NBAsYouTypeFormatter *fr = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"FR"];
+    NSLog(@"%@", [fr inputDigit:@"6"]);
+    NSLog(@"%@", [fr inputDigit:@"7"]);
+    NSLog(@"%@", [fr inputDigit:@"8"]);
+    NSLog(@"%@", [fr inputDigit:@"9"]);
+    NSLog(@"%@", [fr inputDigit:@"0"]);
+    NSLog(@"%@", [fr inputDigit:@"1"]);
+    
+    // Note this is how a US local number (without area code) should be formatted.
+    NSLog(@"%@", [fr inputDigit:@"2"]);
+    NSLog(@"%@", [fr inputDigit:@"3"]);
+    NSLog(@"%@", [fr inputDigit:@"4"]);
+    
+    NSLog(@"%@", [fr inputString:@"0678901234"]); // 6 78 90 12 34  // it Should be like this
 }
 
 

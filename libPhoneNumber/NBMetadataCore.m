@@ -199,7 +199,7 @@
     if (self) {
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{7,12}|[2-9]\\d{9,10}" withPossibleNumberPattern:@"\\d{6,13}" withExample:nil];
         self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:11|2[02]|33|4[04]|79)[2-7]\\d{7}|80[2-467]\\d{7}|(?:1(?:2[0-249]|3[0-25]|4[145]|[59][14]|6[014]|7[1257]|8[01346])|2(?:1[257]|3[013]|4[01]|5[0137]|6[0158]|78|8[1568]|9[14])|3(?:26|4[1-3]|5[34]|6[01489]|7[02-46]|8[159])|4(?:1[36]|2[1-47]|3[15]|5[12]|6[0-26-9]|7[0-24-9]|8[013-57]|9[014-7])|5(?:1[025]|[36][25]|22|4[28]|5[12]|[78]1|9[15])|6(?:12|[2345]1|57|6[13]|7[14]|80)|7(?:12|2[14]|3[134]|4[47]|5[15]|[67]1|88)|8(?:16|2[014]|3[126]|6[136]|7[078]|8[34]|91))[2-7]\\d{6}|(?:(?:1(?:2[35-8]|3[346-9]|4[236-9]|[59][0235-9]|6[235-9]|7[34689]|8[257-9])|2(?:1[134689]|3[24-8]|4[2-8]|5[25689]|6[2-4679]|7[13-79]|8[2-479]|9[235-9])|3(?:01|1[79]|2[1-5]|4[25-8]|5[125689]|6[235-7]|7[157-9]|8[2-467])|4(?:1[14578]|2[5689]|3[2-467]|5[4-7]|6[35]|73|8[2689]|9[2389])|5(?:[16][146-9]|2[14-8]|3[1346]|4[14-69]|5[46]|7[2-4]|8[2-8]|9[246])|6(?:1[1358]|2[2457]|3[2-4]|4[235-7]|[57][2-689]|6[24-578]|8[1-6])|8(?:1[1357-9]|2[235-8]|3[03-57-9]|4[0-24-9]|5\\d|6[2457-9]|7[1-6]|8[1256]|9[2-4]))\\d|7(?:(?:1[013-9]|2[0235-9]|3[2679]|4[1-35689]|5[2-46-9]|[67][02-9]|9\\d)\\d|8(?:2[0-6]|[013-8]\\d)))[2-7]\\d{5}" withPossibleNumberPattern:@"\\d{6,10}" withExample:@"1123456789"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:7(?:0\\d{2}|2(?:[0235679]\\d|[14][017-9]|8[0-59]|9[389])|3(?:[058]\\d|1[09]|7[3679]|9[689])|4(?:0[1-9]|1[015-9]|[29][89]|39|8[389])|5(?:[034678]\\d|2[03-9]|5[017-9]|9[7-9])|6(?:0[0-47]|1[0-257-9]|2[0-4]|3[19]|5[4589]|[6-9]\\d)|7(?:0[2-9]|[1-79]\\d|8[1-9])|8[0-79]\\d)|8(?:0(?:[01589]\\d|6[67])|1(?:[02-57-9]\\d|1[0135-9])|2(?:[236-9]\\d|5[1-9])|3(?:[0357-9]\\d|4[1-9])|[45]\\d{2}|6[02457-9]\\d|7(?:07|[1-69]\\d)|8(?:[0-26-9]\\d|44|5[2-9])|9(?:[035-9]\\d|2[2-9]|4[0-8]))|9\\d{3})\\d{6}" withPossibleNumberPattern:@"\\d{10}" withExample:@"9123456789"];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:7(?:0\\d{2}|2(?:[0235679]\\d|[14][017-9]|8[0-59]|9[389])|3(?:[058]\\d|1[09]|31|48|7[3679]|9[689])|4(?:0[1-9]|1[015-9]|[29][89]|39|8[389])|5(?:[034678]\\d|2[03-9]|5[017-9]|9[7-9])|6(?:0[0-47]|1[0-257-9]|2[0-4]|3[19]|5[4589]|[6-9]\\d)|7(?:0[2-9]|[1-79]\\d|8[1-9])|8[0-79]\\d)|8(?:0(?:[01589]\\d|6[67])|1(?:[02-57-9]\\d|1[0135-9])|2(?:[236-9]\\d|5[1-9])|3(?:[0357-9]\\d|4[1-9])|[45]\\d{2}|6[02457-9]\\d|7(?:07|[1-69]\\d)|8(?:[0-26-9]\\d|44|5[2-9])|9(?:[035-9]\\d|2[2-9]|4[0-8]))|9\\d{3})\\d{6}" withPossibleNumberPattern:@"\\d{10}" withExample:@"9123456789"];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(?:600\\d{6}|80(?:0\\d{4,9}|3\\d{9}))" withPossibleNumberPattern:@"\\d{8,13}" withExample:@"1800123456"];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"186[12]\\d{9}" withPossibleNumberPattern:@"\\d{13}" withExample:@"1861123456789"];
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1860\\d{7}" withPossibleNumberPattern:@"\\d{11}" withExample:@"18603451234"];
@@ -223,8 +223,8 @@
         NSMutableArray *numberFormats_FormatArray = [[NSMutableArray alloc] init];
 
         NSMutableArray *numberFormats0_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats0_patternArray addObject:@"7(?:[0257]|3[0157-9]|4[0-389]|6[0-35-9]|8[0-79])|8(?:0[015689]|1[0-57-9]|2[2356-9]|3[0-57-9]|[45]|6[02457-9]|7[01-69]|8[0-24-9]|9[02-9])|9"];
-        [numberFormats0_patternArray addObject:@"7(?:0|2(?:[0235679]|[14][017-9]|8[0-59]|9[389])|3(?:[058]|1[09]|7[3679]|9[689])|4(?:0[1-9]|1[015-9]|[29][89]|39|8[389])|5(?:[034678]|2[03-9]|5[017-9]|9[7-9])|6(?:0[0-47]|1[0-257-9]|2[0-4]|3[19]|5[4589]|[6-9])|7(?:0[2-9]|[1-79]|8[1-9])|8[0-79])|8(?:0(?:[01589]|6[67])|1(?:[02-57-9]|1[0135-9])|2(?:[236-9]|5[1-9])|3(?:[0357-9]|4[1-9])|[45]|6[02457-9]|7(?:07|[1-69])|8(?:[0-26-9]|44|5[2-9])|9(?:[035-9]|2[2-9]|4[0-8]))|9"];
+        [numberFormats0_patternArray addObject:@"7(?:[0257]|3[013-57-9]|4[0-389]|6[0-35-9]|8[0-79])|8(?:0[015689]|1[0-57-9]|2[2356-9]|3[0-57-9]|[45]|6[02457-9]|7[01-69]|8[0-24-9]|9[02-9])|9"];
+        [numberFormats0_patternArray addObject:@"7(?:0|2(?:[0235679]|[14][017-9]|8[0-59]|9[389])|3(?:[058]|1[09]|31|48|7[3679]|9[689])|4(?:0[1-9]|1[015-9]|[29][89]|39|8[389])|5(?:[034678]|2[03-9]|5[017-9]|9[7-9])|6(?:0[0-47]|1[0-257-9]|2[0-4]|3[19]|5[4589]|[6-9])|7(?:0[2-9]|[1-79]|8[1-9])|8[0-79])|8(?:0(?:[01589]|6[67])|1(?:[02-57-9]|1[0135-9])|2(?:[236-9]|5[1-9])|3(?:[0357-9]|4[1-9])|[45]|6[02457-9]|7(?:07|[1-69])|8(?:[0-26-9]|44|5[2-9])|9(?:[035-9]|2[2-9]|4[0-8]))|9"];
         NBNumberFormat *numberFormats0 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{5})(\\d{5})" withFormat:@"$1 $2" withLeadingDigitsPatterns:numberFormats0_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats0];
 
@@ -1052,7 +1052,7 @@
     self = [super init];
     if (self) {
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5689]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"5(?:2(?:(?:[015-7]\\d|2[2-9]|3[2-57]|4[2-8]|8[235-7])\\d|9(?:0\\d|[89]0))|3(?:(?:[0-4]\\d|[57][2-9]|6[235-8]|9[3-9])\\d|8(?:0\\d|[89]0)))\\d{4}" withPossibleNumberPattern:@"\\d{9}" withExample:@"520123456"];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"5(?:2(?:(?:[015-7]\\d|2[02-9]|3[2-57]|4[2-8]|8[235-7])\\d|9(?:0\\d|[89]0))|3(?:(?:[0-4]\\d|[57][2-9]|6[235-8]|9[3-9])\\d|8(?:0\\d|[89]0)))\\d{4}" withPossibleNumberPattern:@"\\d{9}" withExample:@"520123456"];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:0[0-8]|[12-79]\\d|8[017])\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"650123456"];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:@"801234567"];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"89\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:@"891234567"];
@@ -1803,7 +1803,7 @@
     self = [super init];
     if (self) {
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[68]\\d{7,8}" withPossibleNumberPattern:@"\\d{8,9}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:1(?:17|2(?:[0189]\\d|[2-6]|7\\d?)|3(?:[01378]|2\\d)|4(?:[024]|10?|3[15]?)|69|7[014])|2(?:17|5(?:[0-36-8]|4\\d?)|69|70)|3(?:17|2(?:[0237]\\d?|[14-689])|34|6[289]|7[01]|81)|4(?:17|2(?:[012]|7?)|4(?:[06]|1\\d)|5(?:[01357]|[25]\\d?)|69|7[01])|5(?:17|2(?:[0459]|[23678]\\d?)|69|7[01])|6(?:17|2(?:5|6\\d?)|38|42|69|7[01])|7(?:17|2(?:[569]|[234]\\d?)|3(?:0\\d?|[13])|69|7[01]))\\d{4}" withPossibleNumberPattern:@"\\d{8,9}" withExample:@"61221234"];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:1(?:17|2(?:[0189]\\d|[2-6]|7\\d?)|3(?:[01378]|2\\d)|4(?:[024]|10?|3[15]?)|69|7[014])|2(?:17|5(?:[0-36-8]|4\\d?)|69|70)|3(?:17|2(?:[0237]\\d?|[14-689])|34|6[289]|7[01]|81)|4(?:17|2(?:[012]|7?)|4(?:[06]|1\\d?)|5(?:[01357]|[25]\\d?)|69|7[01])|5(?:17|2(?:[0459]|[23678]\\d?)|69|7[01])|6(?:17|2(?:5|6\\d?)|38|42|69|7[01])|7(?:17|2(?:[569]|[234]\\d?)|3(?:0\\d?|[13])|69|7[01]))\\d{4}" withPossibleNumberPattern:@"\\d{8,9}" withExample:@"61221234"];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:60|8[125])\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:@"811234567"];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8701\\d{5}" withPossibleNumberPattern:@"\\d{9}" withExample:@"870123456"];
@@ -3070,7 +3070,7 @@
     if (self) {
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[268]\\d{7}" withPossibleNumberPattern:@"\\d{8}" withExample:nil];
         self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:28[2-57-9]|8[2-57-9]\\d)\\d{5}" withPossibleNumberPattern:@"\\d{8}" withExample:@"28212345"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:[2356]\\d|8[18])\\d{5}" withPossibleNumberPattern:@"\\d{8}" withExample:@"66123456"];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:[2356]\\d|8[158])\\d{5}" withPossibleNumberPattern:@"\\d{8}" withExample:@"66123456"];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
@@ -6629,9 +6629,9 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-9]\\d{3}" withPossibleNumberPattern:@"\\d{4}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-4]\\d{3}" withPossibleNumberPattern:@"\\d{4}" withExample:@"3010"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5-9]\\d{3}" withPossibleNumberPattern:@"\\d{4}" withExample:@"5190"];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-47]\\d{3,6}" withPossibleNumberPattern:@"\\d{4,7}" withExample:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2[2-4]|[34]\\d)\\d{2,5}" withPossibleNumberPattern:@"\\d{4,7}" withExample:@"3101"];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7[2-4]\\d{2,5}" withPossibleNumberPattern:@"\\d{4,7}" withExample:@"7290"];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
@@ -7935,8 +7935,8 @@
     self = [super init];
     if (self) {
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-9]\\d{9}" withPossibleNumberPattern:@"\\d{7}(?:\\d{3})?" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0[1-35-9]|1[02-9]|2[04589]|3[149]|4[08]|5[1-46]|6[0279]|7[026]|8[13])|3(?:0[1-57-9]|1[02-9]|2[0135]|3[014679]|4[67]|5[12]|6[014]|8[56])|4(?:0[124-9]|1[02-579]|2[3-5]|3[0245]|4[0235]|58|69|7[0589]|8[04])|5(?:0[1-57-9]|1[0235-8]|20|3[0149]|4[01]|5[19]|6[1-37]|7[013-5]|8[056])|6(?:0[1-35-9]|1[024-9]|2[03689]|3[016]|4[16]|5[017]|6[0-279]|78|8[12])|7(?:0[1-46-8]|1[02-9]|2[0457]|3[1247]|4[07]|5[47]|6[02359]|7[02-59]|8[156])|8(?:0[1-68]|1[02-8]|28|3[0-25]|4[3578]|5[046-9]|6[02-5]|7[028])|9(?:0[1346-9]|1[02-9]|2[0589]|3[01678]|4[0179]|5[12469]|7[0-3589]|8[0459]))[2-9]\\d{6}" withPossibleNumberPattern:@"\\d{7}(?:\\d{3})?" withExample:@"2015555555"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0[1-35-9]|1[02-9]|2[04589]|3[149]|4[08]|5[1-46]|6[0279]|7[026]|8[13])|3(?:0[1-57-9]|1[02-9]|2[0135]|3[014679]|4[67]|5[12]|6[014]|8[56])|4(?:0[124-9]|1[02-579]|2[3-5]|3[0245]|4[0235]|58|69|7[0589]|8[04])|5(?:0[1-57-9]|1[0235-8]|20|3[0149]|4[01]|5[19]|6[1-37]|7[013-5]|8[056])|6(?:0[1-35-9]|1[024-9]|2[03689]|3[016]|4[16]|5[017]|6[0-279]|78|8[12])|7(?:0[1-46-8]|1[02-9]|2[0457]|3[1247]|4[07]|5[47]|6[02359]|7[02-59]|8[156])|8(?:0[1-68]|1[02-8]|28|3[0-25]|4[3578]|5[046-9]|6[02-5]|7[028])|9(?:0[1346-9]|1[02-9]|2[0589]|3[01678]|4[0179]|5[12469]|7[0-3589]|8[0459]))[2-9]\\d{6}" withPossibleNumberPattern:@"\\d{7}(?:\\d{3})?" withExample:@"2015555555"];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0[1-35-9]|1[02-9]|2[04589]|3[149]|4[08]|5[1-46]|6[0279]|7[026]|8[13])|3(?:0[1-57-9]|1[02-9]|2[0135]|3[014679]|4[67]|5[12]|6[014]|8[056])|4(?:0[124-9]|1[02-579]|2[3-5]|3[0245]|4[0235]|58|69|7[0589]|8[04])|5(?:0[1-57-9]|1[0235-8]|20|3[0149]|4[01]|5[19]|6[1-37]|7[013-5]|8[056])|6(?:0[1-35-9]|1[024-9]|2[03689]|3[016]|4[16]|5[017]|6[0-279]|78|8[12])|7(?:0[1-46-8]|1[02-9]|2[0457]|3[1247]|4[07]|5[47]|6[02359]|7[02-59]|8[156])|8(?:0[1-68]|1[02-8]|28|3[0-25]|4[3578]|5[046-9]|6[02-5]|7[028])|9(?:0[1346-9]|1[02-9]|2[0589]|3[01678]|4[0179]|5[12469]|7[0-3589]|8[0459]))[2-9]\\d{6}" withPossibleNumberPattern:@"\\d{7}(?:\\d{3})?" withExample:@"2015555555"];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0[1-35-9]|1[02-9]|2[04589]|3[149]|4[08]|5[1-46]|6[0279]|7[026]|8[13])|3(?:0[1-57-9]|1[02-9]|2[0135]|3[014679]|4[67]|5[12]|6[014]|8[056])|4(?:0[124-9]|1[02-579]|2[3-5]|3[0245]|4[0235]|58|69|7[0589]|8[04])|5(?:0[1-57-9]|1[0235-8]|20|3[0149]|4[01]|5[19]|6[1-37]|7[013-5]|8[056])|6(?:0[1-35-9]|1[024-9]|2[03689]|3[016]|4[16]|5[017]|6[0-279]|78|8[12])|7(?:0[1-46-8]|1[02-9]|2[0457]|3[1247]|4[07]|5[47]|6[02359]|7[02-59]|8[156])|8(?:0[1-68]|1[02-8]|28|3[0-25]|4[3578]|5[046-9]|6[02-5]|7[028])|9(?:0[1346-9]|1[02-9]|2[0589]|3[01678]|4[0179]|5[12469]|7[0-3589]|8[0459]))[2-9]\\d{6}" withPossibleNumberPattern:@"\\d{7}(?:\\d{3})?" withExample:@"2015555555"];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:@"\\d{10}" withExample:@"8002345678"];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:@"\\d{10}" withExample:@"9002345678"];
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
@@ -11143,13 +11143,13 @@
         [numberFormats_FormatArray addObject:numberFormats7];
 
         NSMutableArray *numberFormats8_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats8_patternArray addObject:@"3(?:11|7[179])|4(?:[15]1|3[12])|5(?:1|2[37]|3[12]|51|7[13-79]|9[15])|7(?:31|5[457]|6[09]|91)|8(?:[57]1|98)"];
-        NBNumberFormat *numberFormats8 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{3})(\\d{4})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats8_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:@"$CC $1"];
+        [numberFormats8_patternArray addObject:@"3(?:1[02-9]|35|49|5|7[02-68]|9[1-68])|4(?:1[02-9]|2[179]|[35][2-9]|6[4789]|7\\d|8[23])|5(?:3[03-9]|4[36]|5[02-9]|6[1-46]|7[028]|80|9[2-46-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[1579]|2[248]|3[04-9]|4[3-6]|6[2368])|8(?:1[236-8]|2[5-7]|3|5[4-9]|7[02-9]|8[3678]|9[1-7])|9(?:0[1-3689]|1[1-79]|[379]|4[13]|5[1-5])"];
+        NBNumberFormat *numberFormats8 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{3})(\\d{3})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats8_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:@"$CC $1"];
         [numberFormats_FormatArray addObject:numberFormats8];
 
         NSMutableArray *numberFormats9_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats9_patternArray addObject:@"3(?:1[02-9]|35|49|5|7[02-68]|9[1-68])|4(?:1[02-9]|2[179]|[35][2-9]|6[4789]|7\\d|8[23])|5(?:3[03-9]|4[36]|5[02-9]|6[1-46]|7[028]|80|9[2-46-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[1579]|2[248]|3[04-9]|4[3-6]|6[2368])|8(?:1[236-8]|2[5-7]|3|5[4-9]|7[02-9]|8[3678]|9[1-7])|9(?:0[1-3689]|1[1-79]|[379]|4[13]|5[1-5])"];
-        NBNumberFormat *numberFormats9 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{3})(\\d{3})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats9_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:@"$CC $1"];
+        [numberFormats9_patternArray addObject:@"3(?:11|7[179])|4(?:[15]1|3[12])|5(?:1|2[37]|3[12]|51|7[13-79]|9[15])|7(?:31|5[457]|6[09]|91)|8(?:[57]1|98)"];
+        NBNumberFormat *numberFormats9 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{3})(\\d{4})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats9_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:@"$CC $1"];
         [numberFormats_FormatArray addObject:numberFormats9];
 
         NSMutableArray *numberFormats10_patternArray = [[NSMutableArray alloc] init];
@@ -11209,13 +11209,13 @@
         [intlNumberFormats_FormatArray addObject:intlNumberFormats5];
 
         NSMutableArray *intlNumberFormats6_patternArray = [[NSMutableArray alloc] init];
-        [intlNumberFormats6_patternArray addObject:@"3(?:11|7[179])|4(?:[15]1|3[12])|5(?:1|2[37]|3[12]|51|7[13-79]|9[15])|7(?:31|5[457]|6[09]|91)|8(?:[57]1|98)"];
-        NBNumberFormat *intlNumberFormats6 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{3})(\\d{4})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:intlNumberFormats6_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:@"$CC $1"];
+        [intlNumberFormats6_patternArray addObject:@"3(?:1[02-9]|35|49|5|7[02-68]|9[1-68])|4(?:1[02-9]|2[179]|[35][2-9]|6[4789]|7\\d|8[23])|5(?:3[03-9]|4[36]|5[02-9]|6[1-46]|7[028]|80|9[2-46-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[1579]|2[248]|3[04-9]|4[3-6]|6[2368])|8(?:1[236-8]|2[5-7]|3|5[4-9]|7[02-9]|8[3678]|9[1-7])|9(?:0[1-3689]|1[1-79]|[379]|4[13]|5[1-5])"];
+        NBNumberFormat *intlNumberFormats6 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{3})(\\d{3})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:intlNumberFormats6_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:@"$CC $1"];
         [intlNumberFormats_FormatArray addObject:intlNumberFormats6];
 
         NSMutableArray *intlNumberFormats7_patternArray = [[NSMutableArray alloc] init];
-        [intlNumberFormats7_patternArray addObject:@"3(?:1[02-9]|35|49|5|7[02-68]|9[1-68])|4(?:1[02-9]|2[179]|[35][2-9]|6[4789]|7\\d|8[23])|5(?:3[03-9]|4[36]|5[02-9]|6[1-46]|7[028]|80|9[2-46-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[1579]|2[248]|3[04-9]|4[3-6]|6[2368])|8(?:1[236-8]|2[5-7]|3|5[4-9]|7[02-9]|8[3678]|9[1-7])|9(?:0[1-3689]|1[1-79]|[379]|4[13]|5[1-5])"];
-        NBNumberFormat *intlNumberFormats7 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{3})(\\d{3})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:intlNumberFormats7_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:@"$CC $1"];
+        [intlNumberFormats7_patternArray addObject:@"3(?:11|7[179])|4(?:[15]1|3[12])|5(?:1|2[37]|3[12]|51|7[13-79]|9[15])|7(?:31|5[457]|6[09]|91)|8(?:[57]1|98)"];
+        NBNumberFormat *intlNumberFormats7 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{3})(\\d{4})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:intlNumberFormats7_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:@"$CC $1"];
         [intlNumberFormats_FormatArray addObject:intlNumberFormats7];
 
         NSMutableArray *intlNumberFormats8_patternArray = [[NSMutableArray alloc] init];
@@ -11355,7 +11355,7 @@
     if (self) {
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[27]\\d{7}" withPossibleNumberPattern:@"\\d{8}" withExample:nil];
         self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:1[2-5]|7[45])\\d{5}" withPossibleNumberPattern:@"\\d{8}" withExample:@"21360003"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"77[6-8]\\d{5}" withPossibleNumberPattern:@"\\d{8}" withExample:@"77831001"];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"77(?:08|[6-8]\\d)\\d{4}" withPossibleNumberPattern:@"\\d{8}" withExample:@"77831001"];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
