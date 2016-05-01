@@ -56,7 +56,6 @@ See sample test code from
  NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303"
                               defaultRegion:@"AT" error:&anError];
  if (anError == nil) {
-     // Should check error
      NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
 
      // E164          : +436766077303
