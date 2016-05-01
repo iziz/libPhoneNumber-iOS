@@ -4,7 +4,7 @@
 //
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 #ifndef libPhoneNumber_NBPhoneNumberDefines_h
 #define libPhoneNumber_NBPhoneNumberDefines_h
