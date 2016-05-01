@@ -444,6 +444,29 @@
         // An international toll free number, which has NDC '1234'.
         XCTAssertEqual(4, [_aUtil getLengthOfNationalDestinationCode:INTERNATIONAL_TOLL_FREE]);
     }
+    
+    // testGetSupportedRegions()
+    {
+        XCTAssertTrue([_aUtil getSupportedRegions].count > 0);
+        XCTAssertTrue([[_aUtil getSupportedRegions] containsObject:@"US"]);
+        XCTAssertFalse([[_aUtil getSupportedRegions] containsObject:@"UN001"]);
+        XCTAssertFalse([[_aUtil getSupportedRegions] containsObject:@"800"]);
+    }
+    
+    // testGetSupportedGlobalNetworkCallingCodes()
+    {
+//        XCTAssertTrue(_aUtil.getSupportedGlobalNetworkCallingCodes().length > 0);
+//        XCTAssertFalse(goog.array.contains(
+//                                        _aUtil.getSupportedGlobalNetworkCallingCodes(), RegionCode.US));
+//        XCTAssertTrue(goog.array.contains(
+//                                       _aUtil.getSupportedGlobalNetworkCallingCodes(), 800));
+//        goog.array.forEach(
+//                           _aUtil.getSupportedGlobalNetworkCallingCodes(),
+//                           function(countryCallingCode) {
+//                               XCTAssertEqual(RegionCode.UN001,
+//                                            _aUtil.getRegionCodeForCountryCode(countryCallingCode));
+//                           });
+    }
         
     #pragma mark - testGetNationalSignificantNumber
     {

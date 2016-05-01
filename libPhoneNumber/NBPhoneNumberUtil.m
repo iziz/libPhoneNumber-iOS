@@ -100,6 +100,8 @@ static NSDictionary *ALL_PLUS_NUMBER_GROUPING_SYMBOLS;
 
 static NSDictionary *DIGIT_MAPPINGS;
 
+static NSArray *GEO_MOBILE_COUNTRIES;
+
 
 #pragma mark - Deprecated methods
 
@@ -379,6 +381,18 @@ static NSDictionary *DIGIT_MAPPINGS;
     {
         _lockPatternCache = [[NSLock alloc] init];
         _entireStringCacheLock = [[NSLock alloc] init];
+        
+        /**
+         * Set of country calling codes that have geographically assigned mobile
+         * numbers. This may not be complete; we add calling codes case by case, as we
+         * find geographical mobile numbers or hear from user reports.
+         *
+         * @const
+         * @type {!Array.<number>}
+         * @private
+         */
+        //                     @[ Mexico, Argentina, Brazil ]
+        GEO_MOBILE_COUNTRIES = @[ @52, @54, @55 ];
         
         [self initRegularExpressionSet];
         [self initNormalizationMappings];
@@ -940,7 +954,12 @@ static NSDictionary *DIGIT_MAPPINGS;
     NBEPhoneNumberType numberType = [self getNumberType:phoneNumber];
     // TODO: Include mobile phone numbers from countries like Indonesia, which
     // has some mobile numbers that are geographical.
-    return numberType == NBEPhoneNumberTypeFIXED_LINE || numberType == NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE;
+    
+    BOOL containGeoMobileContries =
+        [GEO_MOBILE_COUNTRIES containsObject:phoneNumber.countryCode] && numberType == NBEPhoneNumberTypeMOBILE;
+    BOOL isFixedLine = (numberType == NBEPhoneNumberTypeFIXED_LINE);
+    BOOL isFixedLineOrMobile = (numberType == NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE);
+    return isFixedLine || isFixedLineOrMobile || containGeoMobileContries;
 }
 
 
