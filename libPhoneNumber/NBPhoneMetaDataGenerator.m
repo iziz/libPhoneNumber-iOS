@@ -195,9 +195,10 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     NSString *classPrefix = isTest ? @"NBPhoneMetadataTest" : @"NBPhoneMetadata";
     
     NSMutableString *contents = [[NSMutableString alloc] init];
+    [contents appendString:@"// DO NOT EDIT (This file was auto-generated from NBPhoneMetaDataGenerator)\n\n"];
     
     NSDictionary *metadata = [data objectForKey:@"countryToMetadata"];
-    
+
     if (type == 0) {
         NSArray *allKeys = metadata.allKeys;
         
@@ -274,6 +275,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     
     NSDictionary *mapCN2CCode = [data objectForKey:@"countryCodeToRegionCodeMap"];
     NSArray *allCallingCodeKey = mapCN2CCode.allKeys;
+    
+    [contents appendString:@"// DO NOT EDIT (This file was auto-generated from NBPhoneMetaDataGenerator)\n\n"];
     
     if (type == 0) {
         [contents appendString:@"#import <Foundation/Foundation.h>\n\n"];

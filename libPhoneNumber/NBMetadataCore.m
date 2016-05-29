@@ -1,3 +1,5 @@
+// DO NOT EDIT (This file was auto-generated from NBPhoneMetaDataGenerator)
+
 #import "NBMetadataCore.h"
 #import "NBPhoneNumberDefines.h"
 #import "NBPhoneNumberDesc.h"

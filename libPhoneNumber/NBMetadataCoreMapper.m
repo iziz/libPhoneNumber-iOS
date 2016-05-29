@@ -1,3 +1,5 @@
+// DO NOT EDIT (This file was auto-generated from NBPhoneMetaDataGenerator)
+
 #import "NBMetadataCoreMapper.h"
 
 @implementation NBMetadataCoreMapper
