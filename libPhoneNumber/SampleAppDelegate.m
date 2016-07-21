@@ -129,7 +129,7 @@
     
     NSError *anError = nil;
     
-    NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303" defaultRegion:@"AT" error:&anError];
+    NBPhoneNumber *myNumber = [phoneUtil parse:@"+8617196622520," defaultRegion:nil error:&anError];
     if (anError == nil)
     {
         NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
