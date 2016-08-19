@@ -3546,15 +3546,6 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
         return nil;
     }
     
-    if (regionMetadata != nil) {
-        NSString *carrierCode = @"";
-        [self maybeStripNationalPrefixAndCarrierCode:&normalizedNationalNumber metadata:regionMetadata carrierCode:&carrierCode];
-        
-        if (keepRawInput) {
-            phoneNumber.preferredDomesticCarrierCode = [carrierCode copy];
-        }
-    }
-    
     NSString *normalizedNationalNumberStr = [normalizedNationalNumber copy];
     
     unsigned int lengthOfNationalNumber = (unsigned int)normalizedNationalNumberStr.length;
