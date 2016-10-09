@@ -9,7 +9,7 @@
 import libPhoneNumber
 
 
-public class NBTextField: UITextField
+open class NBTextField: UITextField
 {
     // MARK: Options/Variables for phone number formatting
     
@@ -18,7 +18,7 @@ public class NBTextField: UITextField
     
     var shouldCheckValidationForInputText: Bool = true
     
-    var countryCode: String = "KR" {//5 NSLocale.currentLocale().objectForKey(NSLocaleCountryCode) as! String {
+    var countryCode: String = "US" {//5 NSLocale.currentLocale().objectForKey(NSLocaleCountryCode) as! String {
         didSet {
             phoneNumberFormatter = NBAsYouTypeFormatter(regionCode: countryCode)
             numberTextDidChange()
@@ -34,7 +34,7 @@ public class NBTextField: UITextField
         phoneNumberFormatter = NBAsYouTypeFormatter(regionCode: countryCode)
     }
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -44,10 +44,10 @@ public class NBTextField: UITextField
     
     // MARK: UITextField input managing
     
-    override public func deleteBackward() {
+    override open func deleteBackward() {
         if text?.characters.last == " " {
-            if let indexNumberWithWhiteSpace = text?.endIndex.advancedBy(-1) {
-                text = text?.substringToIndex(indexNumberWithWhiteSpace)
+            if let indexNumberWithWhiteSpace = text?.characters.index((text?.endIndex)!, offsetBy: -1) {
+                text = text?.substring(to: indexNumberWithWhiteSpace)
             }
             return
         }
@@ -57,8 +57,8 @@ public class NBTextField: UITextField
     
     // MARK: Notification for "UITextFieldTextDidChangeNotification"
     
-    private func registerForNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "numberTextDidChange", name: UITextFieldTextDidChangeNotification, object: self)
+    fileprivate func registerForNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(NBTextField.numberTextDidChange), name: NSNotification.Name.UITextFieldTextDidChange, object: self)
     }
     
     func numberTextDidChange() {
@@ -76,8 +76,8 @@ public class NBTextField: UITextField
         animation.duration = 0.07
         animation.repeatCount = 2
         animation.autoreverses = true
-        animation.fromValue = NSValue(CGPoint: CGPointMake(self.center.x - offset, self.center.y))
-        animation.toValue = NSValue(CGPoint: CGPointMake(self.center.x + offset, self.center.y))
-        self.layer.addAnimation(animation, forKey: "position")
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - offset, y: self.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + offset, y: self.center.y))
+        self.layer.add(animation, forKey: "position")
     }
 }
