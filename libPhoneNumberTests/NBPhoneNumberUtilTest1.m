@@ -522,7 +522,7 @@
     {
         NSString *inputNumber = @"034-56&+#2\u00AD34";
         NSString *expectedOutput = @"03456234";
-        XCTAssertEqualObjects(expectedOutput, [_aUtil normalizePhoneNumber:inputNumber], @"Conversion did not correctly remove punctuation");
+        XCTAssertEqualObjects(expectedOutput, [_aUtil normalize:inputNumber], @"Conversion did not correctly remove punctuation");
     }
 
     
@@ -530,7 +530,7 @@
     {
         NSString *inputNumber = @"034-I-am-HUNGRY";
         NSString *expectedOutput = @"034426486479";
-        XCTAssertEqualObjects(expectedOutput, [_aUtil normalizePhoneNumber:inputNumber], @"Conversion did not correctly replace alpha characters");
+        XCTAssertEqualObjects(expectedOutput, [_aUtil normalize:inputNumber], @"Conversion did not correctly replace alpha characters");
     }
 
     
@@ -538,11 +538,11 @@
     {
         NSString *inputNumber = @"\uFF125\u0665";
         NSString *expectedOutput = @"255";
-        XCTAssertEqualObjects(expectedOutput, [_aUtil normalizePhoneNumber:inputNumber], @"Conversion did not correctly replace non-latin digits");
+        XCTAssertEqualObjects(expectedOutput, [_aUtil normalize:inputNumber], @"Conversion did not correctly replace non-latin digits");
         // Eastern-Arabic digits.
         inputNumber = @"\u06F52\u06F0";
         expectedOutput = @"520";
-        XCTAssertEqualObjects(expectedOutput, [_aUtil normalizePhoneNumber:inputNumber], @"Conversion did not correctly replace non-latin digits");
+        XCTAssertEqualObjects(expectedOutput, [_aUtil normalize:inputNumber], @"Conversion did not correctly replace non-latin digits");
     }
 
     

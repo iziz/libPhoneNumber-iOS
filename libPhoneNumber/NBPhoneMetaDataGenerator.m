@@ -29,12 +29,12 @@
 #define INDENT_TAB @"    "
 #define STR_VAL(val) [self stringForSourceCode:val]
 #define NUM_VAL(val) [self numberForSourceCode:val]
+#define DATA_VAL(val) [self dataForSourceCode:val]
 
 NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 
 @implementation NBPhoneMetaDataGenerator
-
 
 - (id)init
 {
@@ -46,10 +46,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     
     return self;
 }
-
-
-
-
 
 
 - (void)generateMetadataClasses
@@ -332,21 +328,58 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     return @"nil";
 }
 
+- (NSString *)dataForSourceCode:(id)value
+{
+    if (value && [value isKindOfClass:[NSString class]]) {
+        return [NSString stringWithFormat:@"[NSData initWithBase64EncodedString:%@]", value];
+    }
+    return @"nil";
+}
+
 
 - (NSString *)phoneNumberDescWithData:(id)value name:(NSString *)varName
 {
     NSMutableString *contents = [[NSMutableString alloc] init];
-    
-    NSString *initSentance = [self phoneNumberDescWithData:value];
+
+    NSString *hintName = [[varName stringByReplacingOccurrencesOfString:@"." withString:@""] stringByReplacingOccurrencesOfString:@"self" withString:@""];
+
+    NSString *pl_var = @"nil";
+    if ([value safeObjectAtIndex:9] && [[value safeObjectAtIndex:9] isKindOfClass:[NSArray class]]) {
+        NSArray *arrayPL = [value safeObjectAtIndex:9];
+        if (arrayPL && arrayPL.count > 0) {
+            pl_var = [NSString stringWithFormat:@"%@_descArrayPL", hintName];
+            [contents appendFormat:@"\n        NSMutableArray *%@ = [[NSMutableArray alloc] init];\n", pl_var];
+            for (id num in arrayPL) {
+                if (num && [num isKindOfClass:[NSNumber class]]) {
+                    [contents appendFormat:@"        [%@ addObject: [NSNumber numberWithInt:%@]];\n", pl_var, num];
+                }
+            }
+        }
+    }
+
+    NSString *pllo_var = @"nil";
+    if ([value safeObjectAtIndex:10] && [[value safeObjectAtIndex:10] isKindOfClass:[NSArray class]]) {
+        NSArray *arrayPLLO = [value safeObjectAtIndex:10];
+        if (arrayPLLO && arrayPLLO.count > 0) {
+            pllo_var = [NSString stringWithFormat:@"%@_descArrayPLLO", hintName];
+            [contents appendFormat:@"\n        NSMutableArray *%@ = [[NSMutableArray alloc] init];\n", pllo_var];
+            for (id num in arrayPLLO) {
+                if (num && [num isKindOfClass:[NSNumber class]]) {
+                    [contents appendFormat:@"        [%@ addObject: [NSNumber numberWithInt:%@]];\n", pl_var, num];
+                }
+            }
+        }
+    }
+
+    NSString *initSentance = [self phoneNumberDescWithData:value plVar:pl_var plloVar:pllo_var];
     [contents appendFormat:@"        %@ = %@;\n", varName, initSentance];
     return contents;
 }
 
-
-- (NSString *)phoneNumberDescWithData:(id)value
+- (NSString *)phoneNumberDescWithData:(id)value plVar:(NSString *)pl_var plloVar:(NSString *)pllo_var
 {
-    NSString *initSentance = [NSString stringWithFormat:@"[[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:%@ withPossibleNumberPattern:%@ withExample:%@]",
-                              STR_VAL([value safeObjectAtIndex:2]), STR_VAL([value safeObjectAtIndex:3]), STR_VAL([value safeObjectAtIndex:6])];
+    NSString *initSentance = [NSString stringWithFormat:@"[[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:%@ withPossibleNumberPattern:%@ withPossibleLength:%@ withPossibleLengthLocalOnly:%@ withExample:%@ withNationalNumberMatcherData:%@ withPossibleNumberMatcherData:%@]",
+                              STR_VAL([value safeObjectAtIndex:2]), STR_VAL([value safeObjectAtIndex:3]), pl_var, pllo_var, STR_VAL([value safeObjectAtIndex:6]), DATA_VAL([value safeObjectAtIndex:7]), DATA_VAL([value safeObjectAtIndex:8])];
     return initSentance;
 }
 

@@ -25,7 +25,7 @@
 // libPhoneNumber Util functions
 - (NSString*)convertAlphaCharactersInNumber:(NSString*)number;
 
-- (NSString*)normalizePhoneNumber:(NSString*)phoneNumber;
+- (NSString*)normalize:(NSString*)phoneNumber;
 - (NSString*)normalizeDigitsOnly:(NSString*)number;
 
 - (BOOL)isNumberGeographical:(NBPhoneNumber*)phoneNumber;

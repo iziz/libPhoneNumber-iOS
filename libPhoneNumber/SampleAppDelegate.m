@@ -26,7 +26,7 @@
     
     [self testWithRealData];
     //[self testWithGCD];
-    [self testForGetSupportedRegions];
+    //[self testForGetSupportedRegions];
     
     return YES;
 }
@@ -162,6 +162,13 @@
     NSLog(@"%@", [fr inputDigit:@"4"]);
     
     NSLog(@"%@", [fr inputString:@"0678901234"]); // 6 78 90 12 34  // it Should be like this
+
+    // JP Test
+    NBPhoneNumber *phoneJP = [phoneUtil parse:@"0066-33-132432" defaultRegion:@"JP" error:nil];
+    NSLog(@"- %@", [phoneUtil format:phoneJP numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:nil]);
+    NSLog(@"- isValidNumber %@", [phoneUtil isValidNumber:phoneJP] ? @"Y":@"N");
+    NSLog(@"- isPossibleNumber %@", [phoneUtil isPossibleNumber:phoneJP] ? @"Y":@"N");
+
 }
 
 

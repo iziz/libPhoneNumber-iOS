@@ -15,6 +15,7 @@
 /* 2 */ @property (nonatomic, strong, readwrite) NSNumber *nationalNumber;
 /* 3 */ @property (nonatomic, strong, readwrite) NSString *extension;
 /* 4 */ @property (nonatomic, assign, readwrite) BOOL italianLeadingZero;
+/* 8 */ @property (nonatomic, strong, readwrite) NSNumber *numberOfLeadingZeros;
 /* 5 */ @property (nonatomic, strong, readwrite) NSString *rawInput;
 /* 6 */ @property (nonatomic, strong, readwrite) NSNumber *countryCodeSource;
 /* 7 */ @property (nonatomic, strong, readwrite) NSString *preferredDomesticCarrierCode;

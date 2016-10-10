@@ -11,19 +11,52 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6}" withPossibleNumberPattern:@"\\d{6}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6}" withPossibleNumberPattern:@"\\d{6}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6}" withPossibleNumberPattern:@"\\d{6}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6}" withPossibleNumberPattern:@"\\d{6}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6}" withPossibleNumberPattern:@"\\d{6}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6}" withPossibleNumberPattern:@"\\d{6}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"AD";
         self.countryCode = [NSNumber numberWithInteger:376];
         self.internationalPrefix = @"00";
@@ -52,19 +85,58 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"BR";
         self.countryCode = [NSNumber numberWithInteger:55];
         self.internationalPrefix = nil;
@@ -93,19 +165,56 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-578]\\d{4,14}" withPossibleNumberPattern:@"\\d{5,15}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2378]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"4\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1800\\d{6}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"190[0126]\\d{6}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-578]\\d{4,14}" withPossibleNumberPattern:@"\\d{5,15}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2378]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"4\\d{8}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1800\\d{6}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"190[0126]\\d{6}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"AU";
         self.countryCode = [NSNumber numberWithInteger:61];
         self.internationalPrefix = @"001[12]";
@@ -144,19 +253,58 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"BB";
         self.countryCode = [NSNumber numberWithInteger:1];
         self.internationalPrefix = @"011";
@@ -185,19 +333,52 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"600\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"600123456"];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"600\\d{6}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"600123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"AE";
         self.countryCode = [NSNumber numberWithInteger:971];
         self.internationalPrefix = @"00";
@@ -226,19 +407,58 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8,10}" withPossibleNumberPattern:@"\\d{8,10}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"CX";
         self.countryCode = [NSNumber numberWithInteger:61];
         self.internationalPrefix = @"00";
@@ -267,19 +487,46 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(242|8(00|66|77|88)|900)\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"242(?:3(?:02|[236][1-9]|4[0-24-9]|5[0-68]|7[3-57]|9[2-5])|4(?:2[237]|51|64|77)|502|636|702)\\d{4}" withPossibleNumberPattern:@"\\d{7,10}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"242(357|359|457|557)\\d{4}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(00|66|77|88)\\d{7}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{7}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(242|8(00|66|77|88)|900)\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"242(?:3(?:02|[236][1-9]|4[0-24-9]|5[0-68]|7[3-57]|9[2-5])|4(?:2[237]|51|64|77)|502|636|702)\\d{4}" withPossibleNumberPattern:@"\\d{7,10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"242(357|359|457|557)\\d{4}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(00|66|77|88)\\d{7}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{7}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"BS";
         self.countryCode = [NSNumber numberWithInteger:1];
         self.internationalPrefix = @"011";
@@ -308,19 +555,65 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{4,14}" withPossibleNumberPattern:@"\\d{2,14}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[24-6]\\d{2}|3[03-9]\\d|[789](?:0[2-9]|[1-9]\\d))\\d{1,8}" withPossibleNumberPattern:@"\\d{2,14}" withExample:@"30123456"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(5\\d{9}|7\\d{8}|6[02]\\d{8}|63\\d{7})" withPossibleNumberPattern:@"\\d{10,11}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{7}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900([135]\\d{6}|9\\d{7})" withPossibleNumberPattern:@"\\d{10,11}" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:4]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:5]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:11]];
+
+        NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:2]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:3]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{4,14}" withPossibleNumberPattern:@"\\d{2,14}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[24-6]\\d{2}|3[03-9]\\d|[789](?:0[2-9]|[1-9]\\d))\\d{1,8}" withPossibleNumberPattern:@"\\d{2,14}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"30123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(5\\d{9}|7\\d{8}|6[02]\\d{8}|63\\d{7})" withPossibleNumberPattern:@"\\d{10,11}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{7}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900([135]\\d{6}|9\\d{7})" withPossibleNumberPattern:@"\\d{10,11}" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"DE";
         self.countryCode = [NSNumber numberWithInteger:49];
         self.internationalPrefix = @"00";
@@ -381,19 +674,59 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-7]\\d{3,9}|8\\d{8}" withPossibleNumberPattern:@"\\d{4,10}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2|[34][1-3]|5[1-5]|6[1-4])(?:1\\d{2,3}|[2-9]\\d{6,7})" withPossibleNumberPattern:@"\\d{4,10}" withExample:@"22123456"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1[0-25-9]\\d{7,8}" withPossibleNumberPattern:@"\\d{9,10}" withExample:@"1023456789"];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:@"801234567"];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"60[2-9]\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"602345678"];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"50\\d{8}" withPossibleNumberPattern:@"\\d{10}" withExample:@"5012345678"];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"70\\d{8}" withPossibleNumberPattern:@"\\d{10}" withExample:@"7012345678"];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:4]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:5]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-7]\\d{3,9}|8\\d{8}" withPossibleNumberPattern:@"\\d{4,10}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2|[34][1-3]|5[1-5]|6[1-4])(?:1\\d{2,3}|[2-9]\\d{6,7})" withPossibleNumberPattern:@"\\d{4,10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"22123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1[0-25-9]\\d{7,8}" withPossibleNumberPattern:@"\\d{9,10}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"1023456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{7}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"801234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"60[2-9]\\d{6}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"602345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"50\\d{8}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"5012345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"70\\d{8}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"7012345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"KR";
         self.countryCode = [NSNumber numberWithInteger:82];
         self.internationalPrefix = @"00(?:[124-68]|[37]\\d{2})";
@@ -494,19 +827,63 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[289]\\d{7,9}|[3-7]\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"24099\\d{3}|(?:3[2-79]|[479][2-689]|6[235-9])\\d{6}" withPossibleNumberPattern:@"\\d{7,8}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:[027]\\d{7}|9\\d{6,7}|1(?:0\\d{5,7}|[12]\\d{5,6}|[3-9]\\d{5})|4[1-9]\\d{6}|8\\d{7,8})" withPossibleNumberPattern:@"\\d{8,10}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{6,7}" withPossibleNumberPattern:@"\\d{9,10}" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{6,7}" withPossibleNumberPattern:@"\\d{9,10}" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[289]\\d{7,9}|[3-7]\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"24099\\d{3}|(?:3[2-79]|[479][2-689]|6[235-9])\\d{6}" withPossibleNumberPattern:@"\\d{7,8}" withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:[027]\\d{7}|9\\d{6,7}|1(?:0\\d{5,7}|[12]\\d{5,6}|[3-9]\\d{5})|4[1-9]\\d{6}|8\\d{7,8})" withPossibleNumberPattern:@"\\d{8,10}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{6,7}" withPossibleNumberPattern:@"\\d{9,10}" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{6,7}" withPossibleNumberPattern:@"\\d{9,10}" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"NZ";
         self.countryCode = [NSNumber numberWithInteger:64];
         self.internationalPrefix = @"00";
@@ -550,19 +927,46 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:5[01]|6[069]|7[289]|88)\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"70\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:5[01]|6[069]|7[289]|88)\\d{7}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{6}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"70\\d{7}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"PL";
         self.countryCode = [NSNumber numberWithInteger:48];
         self.internationalPrefix = @"00";
@@ -595,19 +999,52 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{9}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{9}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{9}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{9}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{9}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{9}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"SE";
         self.countryCode = [NSNumber numberWithInteger:46];
         self.internationalPrefix = @"00";
@@ -636,19 +1073,58 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"226\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"226\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"226\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"226\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"226\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"226\\d{7}" withPossibleNumberPattern:@"\\d{7,10}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"CA";
         self.countryCode = [NSNumber numberWithInteger:1];
         self.internationalPrefix = @"011";
@@ -677,19 +1153,49 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[29]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2\\d(?:[26-9]\\d|\\d[26-9])\\d{5}" withPossibleNumberPattern:@"\\d{9}" withExample:@"222123456"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9[1-3]\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:@"923123456"];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[29]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2\\d(?:[26-9]\\d|\\d[26-9])\\d{5}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"222123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9[1-3]\\d{7}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"923123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"AO";
         self.countryCode = [NSNumber numberWithInteger:244];
         self.internationalPrefix = @"00";
@@ -722,19 +1228,56 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8}" withPossibleNumberPattern:@"\\d{8}" withExample:@"12345678"];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:@"12345678"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:@"12345678"];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8}" withPossibleNumberPattern:@"\\d{8}" withExample:@"12345678"];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8}" withPossibleNumberPattern:@"\\d{8}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{8}" withPossibleNumberPattern:@"\\d{8}" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"001";
         self.countryCode = [NSNumber numberWithInteger:800];
         self.internationalPrefix = nil;
@@ -767,19 +1310,46 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[268]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2696[0-4]\\d{4}" withPossibleNumberPattern:@"\\d{9}" withExample:@"269601234"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"639\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"639123456"];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:@"801234567"];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[268]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2696[0-4]\\d{4}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"269601234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"639\\d{6}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"639123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{7}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"801234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"YT";
         self.countryCode = [NSNumber numberWithInteger:262];
         self.internationalPrefix = @"00";
@@ -808,19 +1378,52 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3\\d{6}" withPossibleNumberPattern:@"\\d{7}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3\\d{6}" withPossibleNumberPattern:@"\\d{7}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3\\d{6}" withPossibleNumberPattern:@"\\d{7}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3\\d{6}" withPossibleNumberPattern:@"\\d{7}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3\\d{6}" withPossibleNumberPattern:@"\\d{7}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3\\d{6}" withPossibleNumberPattern:@"\\d{7}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"FR";
         self.countryCode = [NSNumber numberWithInteger:33];
         self.internationalPrefix = @"00";
@@ -854,19 +1457,58 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"GG";
         self.countryCode = [NSNumber numberWithInteger:44];
         self.internationalPrefix = nil;
@@ -895,19 +1537,52 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"30\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"30\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"30\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"30\\d{7}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"30\\d{7}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"30\\d{7}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"HU";
         self.countryCode = [NSNumber numberWithInteger:36];
         self.internationalPrefix = nil;
@@ -936,19 +1611,58 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[13689]\\d{7,10}" withPossibleNumberPattern:@"\\d{8}|\\d{10,11}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[36]\\d{7}" withPossibleNumberPattern:@"\\d{8}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[89]\\d{7}" withPossibleNumberPattern:@"\\d{8}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1?800\\d{7}" withPossibleNumberPattern:@"\\d{10,11}" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1900\\d{7}" withPossibleNumberPattern:@"\\d{11}" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[13689]\\d{7,10}" withPossibleNumberPattern:@"\\d{8}|\\d{10,11}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[36]\\d{7}" withPossibleNumberPattern:@"\\d{8}" withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[89]\\d{7}" withPossibleNumberPattern:@"\\d{8}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1?800\\d{7}" withPossibleNumberPattern:@"\\d{10,11}" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1900\\d{7}" withPossibleNumberPattern:@"\\d{11}" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"SG";
         self.countryCode = [NSNumber numberWithInteger:65];
         self.internationalPrefix = @"0[0-3][0-9]";
@@ -992,19 +1706,66 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"07\\d{5}|[1-357-9]\\d{3,10}" withPossibleNumberPattern:@"\\d{4,11}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"07\\d{5}|[1-357-9]\\d{3,10}" withPossibleNumberPattern:@"\\d{4,11}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"07\\d{5}|[1-357-9]\\d{3,10}" withPossibleNumberPattern:@"\\d{4,11}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"0777[01]\\d{2}" withPossibleNumberPattern:@"\\d{7}" withExample:@"0777012"];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[23]\\d{3}" withPossibleNumberPattern:@"\\d{4}" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:4]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:5]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"07\\d{5}|[1-357-9]\\d{3,10}" withPossibleNumberPattern:@"\\d{4,11}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"07\\d{5}|[1-357-9]\\d{3,10}" withPossibleNumberPattern:@"\\d{4,11}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:4]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:5]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"07\\d{5}|[1-357-9]\\d{3,10}" withPossibleNumberPattern:@"\\d{4,11}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"0777[01]\\d{2}" withPossibleNumberPattern:@"\\d{7}" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"0777012" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:4]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[23]\\d{3}" withPossibleNumberPattern:@"\\d{4}" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"JP";
         self.countryCode = [NSNumber numberWithInteger:81];
         self.internationalPrefix = @"010";
@@ -1073,19 +1834,58 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{6,10}" withPossibleNumberPattern:@"\\d{6,10}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"CC";
         self.countryCode = [NSNumber numberWithInteger:61];
         self.internationalPrefix = nil;
@@ -1114,19 +1914,59 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{9,10}" withPossibleNumberPattern:@"\\d{7,11}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-9]\\d{9}" withPossibleNumberPattern:@"\\d{7,10}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{10}" withPossibleNumberPattern:@"\\d{11}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{7}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{7}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:11]];
+
+        NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{9,10}" withPossibleNumberPattern:@"\\d{7,11}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-9]\\d{9}" withPossibleNumberPattern:@"\\d{7,10}" withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{10}" withPossibleNumberPattern:@"\\d{11}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{7}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{7}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"MX";
         self.countryCode = [NSNumber numberWithInteger:52];
         self.internationalPrefix = @"00";
@@ -1205,19 +2045,49 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[13-689]\\d{9}|2[0-35-9]\\d{8}" withPossibleNumberPattern:@"\\d{7}(?:\\d{3})?" withExample:@"1234567890"];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[13-689]\\d{9}|2[0-35-9]\\d{8}" withPossibleNumberPattern:@"\\d{7}(?:\\d{3})?" withExample:@"1234567890"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[13-689]\\d{9}|2[0-35-9]\\d{8}" withPossibleNumberPattern:@"\\d{7}(?:\\d{3})?" withExample:@"1234567890"];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|66|77|88)\\d{7}" withPossibleNumberPattern:@"\\d{10}" withExample:@"1234567890"];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{7}" withPossibleNumberPattern:@"\\d{10}" withExample:@"1234567890"];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{7}" withPossibleNumberPattern:@"\\d{10}" withExample:@"1234567890"];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[13-689]\\d{9}|2[0-35-9]\\d{8}" withPossibleNumberPattern:@"\\d{7}(?:\\d{3})?" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:@"1234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[13-689]\\d{9}|2[0-35-9]\\d{8}" withPossibleNumberPattern:@"\\d{7}(?:\\d{3})?" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"1234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[13-689]\\d{9}|2[0-35-9]\\d{8}" withPossibleNumberPattern:@"\\d{7}(?:\\d{3})?" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"1234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|66|77|88)\\d{7}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"1234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{7}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"1234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{7}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"1234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"US";
         self.countryCode = [NSNumber numberWithInteger:1];
         self.internationalPrefix = @"011";
@@ -1258,19 +2128,62 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[0389]\\d{5,10}" withPossibleNumberPattern:@"\\d{6,11}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"0\\d{9,10}" withPossibleNumberPattern:@"\\d{10,11}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3\\d{8,9}" withPossibleNumberPattern:@"\\d{9,10}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80(?:0\\d{6}|3\\d{3})" withPossibleNumberPattern:@"\\d{6,9}" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"89(?:2\\d{3}|9\\d{6})" withPossibleNumberPattern:@"\\d{6,9}" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[0389]\\d{5,10}" withPossibleNumberPattern:@"\\d{6,11}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"0\\d{9,10}" withPossibleNumberPattern:@"\\d{10,11}" withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3\\d{8,9}" withPossibleNumberPattern:@"\\d{9,10}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80(?:0\\d{6}|3\\d{3})" withPossibleNumberPattern:@"\\d{6,9}" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"89(?:2\\d{3}|9\\d{6})" withPossibleNumberPattern:@"\\d{6,9}" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"IT";
         self.countryCode = [NSNumber numberWithInteger:39];
         self.internationalPrefix = @"00";
@@ -1319,19 +2232,65 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-3689]\\d{9,10}" withPossibleNumberPattern:@"\\d{6,11}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-3]\\d{9}" withPossibleNumberPattern:@"\\d{6,10}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9\\d{10}|[1-3]\\d{9}" withPossibleNumberPattern:@"\\d{10,11}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{8}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(0\\d|10)\\d{7}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-3689]\\d{9,10}" withPossibleNumberPattern:@"\\d{6,11}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-3]\\d{9}" withPossibleNumberPattern:@"\\d{6,10}" withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9\\d{10}|[1-3]\\d{9}" withPossibleNumberPattern:@"\\d{10,11}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{8}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(0\\d|10)\\d{7}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"AR";
         self.countryCode = [NSNumber numberWithInteger:54];
         self.internationalPrefix = @"00";
@@ -1410,19 +2369,56 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{9}" withPossibleNumberPattern:@"\\d{9}" withExample:@"123456789"];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:@"123456789"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:@"123456789"];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{9}" withPossibleNumberPattern:@"\\d{9}" withExample:@"123456789"];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{9}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{9}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"001";
         self.countryCode = [NSNumber numberWithInteger:979];
         self.internationalPrefix = nil;
@@ -1455,19 +2451,58 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{10}" withPossibleNumberPattern:@"\\d{6,10}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-6]\\d{9}" withPossibleNumberPattern:@"\\d{6,10}" withExample:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7[1-57-9]\\d{8}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{8}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9[018]\\d{8}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:4[3-5]|7[0-2])\\d{7}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"70\\d{8}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"56\\d{8}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"76\\d{8}" withPossibleNumberPattern:@"\\d{10}" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
+
+        NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{10}" withPossibleNumberPattern:@"\\d{6,10}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-6]\\d{9}" withPossibleNumberPattern:@"\\d{6,10}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7[1-57-9]\\d{8}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{8}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9[018]\\d{8}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:4[3-5]|7[0-2])\\d{7}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"70\\d{8}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"56\\d{8}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:10]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"76\\d{8}" withPossibleNumberPattern:@"\\d{10}" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"GB";
         self.countryCode = [NSNumber numberWithInteger:44];
         self.internationalPrefix = @"00";
@@ -1516,19 +2551,52 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{5}" withPossibleNumberPattern:@"\\d{6}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{5}" withPossibleNumberPattern:@"\\d{6}" withExample:@"112345"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{5}" withPossibleNumberPattern:@"\\d{6}" withExample:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{5}" withPossibleNumberPattern:@"\\d{6}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{5}" withPossibleNumberPattern:@"\\d{6}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"112345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
+        [mobile_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{5}" withPossibleNumberPattern:@"\\d{6}" withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"BY";
         self.countryCode = [NSNumber numberWithInteger:375];
         self.internationalPrefix = @"810";
@@ -1572,19 +2640,49 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-7]\\d{6,11}|8[0-357-9]\\d{6,9}|9\\d{7,10}" withPossibleNumberPattern:@"\\d{4,12}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-9]\\d{10}" withPossibleNumberPattern:@"\\d{11}" withExample:@"91234567"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(?:[38]\\d|4[57]|5[0-35-9]|7[0136-8])\\d{8}" withPossibleNumberPattern:@"\\d{11}" withExample:@"13123456789"];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-7]\\d{6,11}|8[0-357-9]\\d{6,9}|9\\d{7,10}" withPossibleNumberPattern:@"\\d{4,12}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-9]\\d{10}" withPossibleNumberPattern:@"\\d{11}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"91234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(?:[38]\\d|4[57]|5[0-35-9]|7[0136-8])\\d{8}" withPossibleNumberPattern:@"\\d{11}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"13123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"CN";
         self.countryCode = [NSNumber numberWithInteger:86];
         self.internationalPrefix = nil;
@@ -1625,19 +2723,43 @@
 {
     self = [super init];
     if (self) {
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[268]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withExample:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"262\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"262161234"];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:9[23]|47)\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"692123456"];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{7}" withPossibleNumberPattern:@"\\d{9}" withExample:@"801234567"];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:1[01]|2[0156]|84|9[0-37-9])\\d{6}" withPossibleNumberPattern:@"\\d{9}" withExample:@"810123456"];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withExample:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
-        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withExample:nil];
+
+        NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[268]\\d{8}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"262\\d{6}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"262161234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:9[23]|47)\\d{6}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"692123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{7}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"801234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:1[01]|2[0156]|84|9[0-37-9])\\d{6}" withPossibleNumberPattern:@"\\d{9}" withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"810123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
+        [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
+        [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
+        [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:@"NA" withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"RE";
         self.countryCode = [NSNumber numberWithInteger:262];
         self.internationalPrefix = @"00";

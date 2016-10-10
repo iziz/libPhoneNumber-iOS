@@ -362,15 +362,27 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 }
 
 
+/**
+ * Gets the national significant number of the a phone number. Note a national
+ * significant number doesn't contain a national prefix or any formatting.
+ *
+ * @param {i18n.phonenumbers.PhoneNumber} number the phone number for which the
+ *     national significant number is needed.
+ * @return {string} the national significant number of the PhoneNumber object
+ *     passed in.
+ */
 - (NSString *)getNationalSignificantNumber:(NBPhoneNumber *)phoneNumber
 {
+    // If leading zero(s) have been set, we prefix this now. Note this is not a
+    // national prefix.
+    NSString *nationalNumber = [phoneNumber.nationalNumber stringValue];
     if (phoneNumber.italianLeadingZero) {
-        return [NSString stringWithFormat:@"0%@", phoneNumber.nationalNumber];
+        NSString *zeroNumbers = [@"" stringByPaddingToLength:phoneNumber.numberOfLeadingZeros.integerValue withString:@"0" startingAtIndex:0];
+        return [NSString stringWithFormat:@"%@%@", zeroNumbers, nationalNumber];
     }
     
     return [phoneNumber.nationalNumber stringValue];
 }
-
 
 #pragma mark - Initializations -
 
@@ -603,17 +615,12 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * @param {string} number a string of characters representing a phone number.
  * @return {string} the normalized string version of the phone number.
  */
-- (NSString *)normalizePhoneNumber:(NSString *)number
+- (NSString *)normalize:(NSString *)number
 {
-    NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
-    number = [helper normalizeNonBreakingSpace:number];
-    
-    if ([self matchesEntirely:VALID_ALPHA_PHONE_PATTERN_STRING string:number])
-    {
+    if ([self matchesEntirely:VALID_ALPHA_PHONE_PATTERN_STRING string:number]) {
         return [self normalizeHelper:number normalizationReplacements:ALL_NORMALIZATION_MAPPINGS removeNonMatches:true];
     }
-    else
-    {
+    else {
         return [self normalizeDigitsOnly:number];
     }
     
@@ -637,7 +644,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
         return;
     }
     
-    (*number) = [self normalizePhoneNumber:(*number)];
+    (*number) = [self normalize:(*number)];
 }
 
 
@@ -2161,84 +2168,51 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 - (NBEPhoneNumberType)getNumberTypeHelper:(NSString *)nationalNumber metadata:(NBPhoneMetaData*)metadata
 {
     NBPhoneNumberDesc *generalNumberDesc = metadata.generalDesc;
-    
-    //NSLog(@"getNumberTypeHelper - UNKNOWN 1");
-    if ([NBMetadataHelper hasValue:generalNumberDesc.nationalNumberPattern] == NO ||
-        [self isNumberMatchingDesc:nationalNumber numberDesc:generalNumberDesc] == NO)
-    {
-        //NSLog(@"getNumberTypeHelper - UNKNOWN 2");
+
+    if ([self isNumberMatchingDesc:nationalNumber numberDesc:generalNumberDesc] == NO) {
         return NBEPhoneNumberTypeUNKNOWN;
     }
-    
-    //NSLog(@"getNumberTypeHelper - PREMIUM_RATE 1");
-    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.premiumRate])
-    {
-        //NSLog(@"getNumberTypeHelper - PREMIUM_RATE 2");
+
+    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.premiumRate]) {
         return NBEPhoneNumberTypePREMIUM_RATE;
     }
-    
-    //NSLog(@"getNumberTypeHelper - TOLL_FREE 1");
-    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.tollFree])
-    {
-        //NSLog(@"getNumberTypeHelper - TOLL_FREE 2");
+
+    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.tollFree]) {
         return NBEPhoneNumberTypeTOLL_FREE;
     }
-    
-    //NSLog(@"getNumberTypeHelper - SHARED_COST 1");
-    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.sharedCost])
-    {
-        //NSLog(@"getNumberTypeHelper - SHARED_COST 2");
+
+    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.sharedCost]) {
         return NBEPhoneNumberTypeSHARED_COST;
     }
-    
-    //NSLog(@"getNumberTypeHelper - VOIP 1");
-    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.voip])
-    {
-        //NSLog(@"getNumberTypeHelper - VOIP 2");
+
+    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.voip]) {
         return NBEPhoneNumberTypeVOIP;
     }
-    
-    //NSLog(@"getNumberTypeHelper - PERSONAL_NUMBER 1");
-    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.personalNumber])
-    {
-        //NSLog(@"getNumberTypeHelper - PERSONAL_NUMBER 2");
+
+    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.personalNumber]) {
         return NBEPhoneNumberTypePERSONAL_NUMBER;
     }
-    
-    //NSLog(@"getNumberTypeHelper - PAGER 1");
-    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.pager])
-    {
-        //NSLog(@"getNumberTypeHelper - PAGER 2");
+
+    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.pager]) {
         return NBEPhoneNumberTypePAGER;
     }
-    
-    //NSLog(@"getNumberTypeHelper - UAN 1");
-    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.uan])
-    {
-        //NSLog(@"getNumberTypeHelper - UAN 2");
+
+    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.uan]) {
         return NBEPhoneNumberTypeUAN;
     }
-    
-    //NSLog(@"getNumberTypeHelper - VOICEMAIL 1");
-    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.voicemail])
-    {
-        //NSLog(@"getNumberTypeHelper - VOICEMAIL 2");
+
+    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.voicemail]) {
         return NBEPhoneNumberTypeVOICEMAIL;
     }
-    
-    if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.fixedLine])
-    {
-        if (metadata.sameMobileAndFixedLinePattern)
-        {
-            //NSLog(@"getNumberTypeHelper - FIXED_LINE_OR_MOBILE");
+
+    BOOL isFixedLine = [self isNumberMatchingDesc:nationalNumber numberDesc:metadata.fixedLine];
+    if (isFixedLine) {
+        if (metadata.sameMobileAndFixedLinePattern) {
             return NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE;
         }
-        else if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.mobile])
-        {
-            //NSLog(@"getNumberTypeHelper - FIXED_LINE_OR_MOBILE");
+        else if ([self isNumberMatchingDesc:nationalNumber numberDesc:metadata.mobile]) {
             return NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE;
         }
-        //NSLog(@"getNumberTypeHelper - FIXED_LINE");
         return NBEPhoneNumberTypeFIXED_LINE;
     }
     
@@ -2258,22 +2232,15 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * @return {boolean}
  * @private
  */
-- (BOOL)isNumberMatchingDesc:(NSString *)nationalNumber numberDesc:(NBPhoneNumberDesc*)numberDesc
+- (BOOL)isNumberMatchingDesc:(NSString *)nationalNumber numberDesc:(NBPhoneNumberDesc *)numberDesc
 {
-    if (numberDesc == nil) {
+    NSNumber *actualLength = [NSNumber numberWithUnsignedInteger:nationalNumber.length];
+
+    if (numberDesc.possibleLength.count > 0 && [numberDesc.possibleLength indexOfObject:actualLength] == NSNotFound) {
         return NO;
     }
-    
-    if ([NBMetadataHelper hasValue:numberDesc.possibleNumberPattern] == NO || [numberDesc.possibleNumberPattern isEqual:@"NA"]) {
-        return [self matchesEntirely:numberDesc.nationalNumberPattern string:nationalNumber];
-    }
-    
-    if ([NBMetadataHelper hasValue:numberDesc.nationalNumberPattern] == NO || [numberDesc.nationalNumberPattern isEqual:@"NA"]) {
-        return [self matchesEntirely:numberDesc.possibleNumberPattern string:nationalNumber];
-    }
-    
-    return [self matchesEntirely:numberDesc.possibleNumberPattern string:nationalNumber] &&
-    [self matchesEntirely:numberDesc.nationalNumberPattern string:nationalNumber];
+
+    return [self matchesEntirely:numberDesc.nationalNumberPattern string:nationalNumber];
 }
 
 
@@ -3102,7 +3069,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
         (*numberStr) = [self replaceStringByRegex:(*numberStr) regex:LEADING_PLUS_CHARS_PATTERN withTemplate:@""];
         // Can now normalize the rest of the number since we've consumed the '+'
         // sign at the start.
-        (*numberStr) = [self normalizePhoneNumber:(*numberStr)];
+        (*numberStr) = [self normalize:(*numberStr)];
         return NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN;
     }
     
@@ -3391,6 +3358,33 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
 
 
 /**
+ * A helper function to set the values related to leading zeros in a
+ * PhoneNumber.
+ *
+ * @param {string} nationalNumber the number we are parsing.
+ * @param {i18n.phonenumbers.PhoneNumber} phoneNumber a phone number proto
+ *     buffer to fill in.
+ * @private
+ */
+- (void)setItalianLeadingZerosForPhoneNumber:(NSString *)nationalNumber phoneNumber:(NBPhoneNumber **)phoneNumber
+{
+    if (nationalNumber.length > 1 && [nationalNumber hasPrefix:@"0"]) {
+        (*phoneNumber).italianLeadingZero = YES;
+        NSInteger numberOfLeadingZeros = 1;
+        // Note that if the national number is all "0"s, the last "0" is not counted
+        // as a leading zero.
+        while (numberOfLeadingZeros < nationalNumber.length - 1 &&
+               [[nationalNumber substringWithRange:NSMakeRange(numberOfLeadingZeros, 1)] isEqualToString:@"0"]) {
+            numberOfLeadingZeros++;
+        }
+        if (numberOfLeadingZeros != 1) {
+            (*phoneNumber).numberOfLeadingZeros = @(numberOfLeadingZeros);
+        }
+    }
+};
+
+
+/**
  * Parses a string and returns it in proto buffer format. This method is the
  * same as the public {@link #parse} method, with the exception that it allows
  * the default region to be nil, for use by {@link #isNumberMatch}.
@@ -3563,11 +3557,9 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
         
         return nil;
     }
-    
-    if ([normalizedNationalNumberStr hasPrefix:@"0"]) {
-        phoneNumber.italianLeadingZero = YES;
-    }
-    
+
+    [self setItalianLeadingZerosForPhoneNumber:normalizedNationalNumberStr phoneNumber:&phoneNumber];
+
     phoneNumber.nationalNumber =  [NSNumber numberWithLongLong:[normalizedNationalNumberStr longLongValue]];
     return phoneNumber;
 }

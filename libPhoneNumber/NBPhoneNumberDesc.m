@@ -30,26 +30,42 @@
 {
     NSString *nnp = nil;
     NSString *pnp = nil;
+    NSArray<NSNumber *> *pl = nil;
+    NSArray<NSNumber *> *pllo = nil;
     NSString *exp = nil;
+    NSData *nnmd = nil;
+    NSData *pnmd = nil;
     
     if (data != nil && [data isKindOfClass:[NSArray class]]) {
-        /* 2 */ nnp = [data safeObjectAtIndex:2];
-        /* 3 */ pnp = [data safeObjectAtIndex:3];
-        /* 6 */ exp = [data safeObjectAtIndex:6];
+        /*  2 */ nnp = [data safeObjectAtIndex:2];
+        /*  3 */ pnp = [data safeObjectAtIndex:3];
+
+        /*  9 */ pl = [data safeObjectAtIndex:9];
+        /* 10 */ pllo = [data safeObjectAtIndex:10];
+        /*  6 */ exp = [data safeObjectAtIndex:6];
+        /*  7 */ nnmd = [data safeObjectAtIndex:7];
+        /*  8 */ pnmd = [data safeObjectAtIndex:8];
     }
     
-    return [self initWithNationalNumberPattern:nnp withPossibleNumberPattern:pnp withExample:exp];
+    return [self initWithNationalNumberPattern:nnp withPossibleNumberPattern:pnp
+                            withPossibleLength:pl withPossibleLengthLocalOnly:pllo withExample:exp
+                 withNationalNumberMatcherData:nnmd withPossibleNumberMatcherData:pnmd];
 }
 
 
-- (id)initWithNationalNumberPattern:(NSString *)nnp withPossibleNumberPattern:(NSString *)pnp withExample:(NSString *)exp
-{
+- (id)initWithNationalNumberPattern:(NSString *)nnp withPossibleNumberPattern:(NSString *)pnp
+                 withPossibleLength:(NSArray<NSNumber *> *)pl withPossibleLengthLocalOnly:(NSArray<NSNumber *> *)pllo withExample:(NSString *)exp
+      withNationalNumberMatcherData:(NSData *)nnmd withPossibleNumberMatcherData:(NSData *)pnmd {
     self = [self init];
     
     if (self) {
         self.nationalNumberPattern = nnp;
         self.possibleNumberPattern = pnp;
+        self.possibleLength = pl;
+        self.possibleLengthLocalOnly = pllo;
         self.exampleNumber = exp;
+        self.nationalNumberMatcherData = nnmd;
+        self.possibleNumberMatcherData = pnmd;
     }
     
     return self;
@@ -73,7 +89,11 @@
     if (self = [super init]) {
         self.nationalNumberPattern = [coder decodeObjectForKey:@"nationalNumberPattern"];
         self.possibleNumberPattern = [coder decodeObjectForKey:@"possibleNumberPattern"];
+        self.possibleLength = [coder decodeObjectForKey:@"possibleLength"];
+        self.possibleLengthLocalOnly = [coder decodeObjectForKey:@"possibleLengthLocalOnly"];
         self.exampleNumber = [coder decodeObjectForKey:@"exampleNumber"];
+        self.nationalNumberMatcherData = [coder decodeObjectForKey:@"nationalNumberMatcherData"];
+        self.possibleNumberMatcherData = [coder decodeObjectForKey:@"possibleNumberMatcherData"];
     }
     return self;
 }
@@ -83,14 +103,18 @@
 {
     [coder encodeObject:self.nationalNumberPattern forKey:@"nationalNumberPattern"];
     [coder encodeObject:self.possibleNumberPattern forKey:@"possibleNumberPattern"];
+    [coder encodeObject:self.possibleLength forKey:@"possibleLength"];
+    [coder encodeObject:self.possibleLengthLocalOnly forKey:@"possibleLengthLocalOnly"];
     [coder encodeObject:self.exampleNumber forKey:@"exampleNumber"];
+    [coder encodeObject:self.nationalNumberMatcherData forKey:@"nationalNumberMatcherData"];
+    [coder encodeObject:self.possibleNumberMatcherData forKey:@"possibleNumberMatcherData"];
 }
 
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"nationalNumberPattern[%@] possibleNumberPattern[%@] exampleNumber[%@]",
-            self.nationalNumberPattern, self.possibleNumberPattern, self.exampleNumber];
+    return [NSString stringWithFormat:@"nationalNumberPattern[%@] possibleNumberPattern[%@] possibleLength[%@] possibleLengthLocalOnly[%@] exampleNumber[%@]",
+            self.nationalNumberPattern, self.possibleNumberPattern, self.possibleLength, self.possibleLengthLocalOnly, self.exampleNumber];
 }
 
 
@@ -100,7 +124,11 @@
     
     phoneDescCopy.nationalNumberPattern = [self.nationalNumberPattern copy];
     phoneDescCopy.possibleNumberPattern = [self.possibleNumberPattern copy];
+    phoneDescCopy.possibleLength = [self.possibleLength copy];
+    phoneDescCopy.possibleLengthLocalOnly = [self.possibleLengthLocalOnly copy];
     phoneDescCopy.exampleNumber = [self.exampleNumber copy];
+    phoneDescCopy.nationalNumberMatcherData = [self.nationalNumberMatcherData copy];
+    phoneDescCopy.possibleNumberMatcherData = [self.possibleNumberMatcherData copy];
     
 	return phoneDescCopy;
 }
@@ -115,7 +143,11 @@
     NBPhoneNumberDesc *other = object;
     return [self.nationalNumberPattern isEqual:other.nationalNumberPattern] &&
         [self.possibleNumberPattern isEqual:other.possibleNumberPattern] &&
-        [self.exampleNumber isEqual:other.exampleNumber];
+        [self.possibleLength isEqual:other.possibleLength] &&
+        [self.possibleLengthLocalOnly isEqual:other.possibleLengthLocalOnly] &&
+        [self.exampleNumber isEqual:other.exampleNumber] &&
+        [self.nationalNumberMatcherData isEqualToData:other.nationalNumberMatcherData] &&
+        [self.possibleNumberMatcherData isEqualToData:other.possibleNumberMatcherData];
 }
 
 @end

@@ -47,8 +47,8 @@ static NSMutableDictionary *kMapCCode2CN = nil;
  */
 - (void)initializeHelper
 {
-	if (!NBPhoneMetadataAM.class) // force linkage of NBMetadataCore.m
-		return;
+//	if (!NBPhoneMetadataAM.class) // force linkage of NBMetadataCore.m
+//		return;
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
