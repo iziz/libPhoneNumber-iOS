@@ -386,6 +386,23 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 #pragma mark - Initializations -
 
++ (void)initialize {
+    [super initialize];
+    
+    /**
+     * Set of country calling codes that have geographically assigned mobile
+     * numbers. This may not be complete; we add calling codes case by case, as we
+     * find geographical mobile numbers or hear from user reports.
+     *
+     * @const
+     * @type {!Array.<number>}
+     * @private
+     */
+    //                     @[ Mexico, Argentina, Brazil ]
+    GEO_MOBILE_COUNTRIES = @[ @52, @54, @55 ];
+}
+
+
 - (id)init
 {
     self = [super init];
@@ -393,18 +410,6 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     {
         _lockPatternCache = [[NSLock alloc] init];
         _entireStringCacheLock = [[NSLock alloc] init];
-        
-        /**
-         * Set of country calling codes that have geographically assigned mobile
-         * numbers. This may not be complete; we add calling codes case by case, as we
-         * find geographical mobile numbers or hear from user reports.
-         *
-         * @const
-         * @type {!Array.<number>}
-         * @private
-         */
-        //                     @[ Mexico, Argentina, Brazil ]
-        GEO_MOBILE_COUNTRIES = @[ @52, @54, @55 ];
         
         [self initRegularExpressionSet];
         [self initNormalizationMappings];
