@@ -8,7 +8,7 @@
 
  - NBPhoneNumberUtil
  - NBAsYouTypeFormatter
- - NBTextFiled.swift (Swift 2)
+ - NBTextFiled.swift (Swift 3)
 
 > ARC only, or add the **"-fobjc-arc"** flag for non-ARC
 
@@ -135,22 +135,6 @@ override func viewDidLoad() {
     }
     catch let error as NSError {
         print(error.localizedDescription)
-    }
-}
-```
-
-###### 1.x
-```swift
-override func viewDidLoad() {
-    super.viewDidLoad()
-    let phoneUtil = NBPhoneNumberUtil()
-
-    var errorPointer:NSError?
-    var number:NBPhoneNumber? = phoneUtil.parse("01041241282", defaultRegion:"KR", error:&errorPointer)
-    if errorPointer == nil && number != nil {
-       println("number is: \(number)")
-    } else {
-       println("number error: \(errorPointer?.localizedDescription)")
     }
 }
 ```
