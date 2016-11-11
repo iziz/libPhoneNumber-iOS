@@ -470,7 +470,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 {
     if (!DIGIT_MAPPINGS) {
         DIGIT_MAPPINGS = [NSDictionary dictionaryWithObjectsAndKeys:
-                          @"0", @"0", @"1", @"1", @"2", @"2", @"3", @"3", @"4", @"4", @"5", @"5", @"6", @"6", @"7", @"7", @"8", @"8", @"9", @"9",
+                          @"0", @"0", @"1", @"1", @"2", @"2", @"3", @"3", @"4", @"4", @"5", @"5", @"6", @"6", @"7", @"7", @"8", @"8", @"9", @"9", @"*", @"\*",
                           // Fullwidth digit 0 to 9
                           @"0", @"\uFF10", @"1", @"\uFF11", @"2", @"\uFF12", @"3", @"\uFF13", @"4", @"\uFF14", @"5", @"\uFF15", @"6", @"\uFF16", @"7", @"\uFF17", @"8", @"\uFF18", @"9", @"\uFF19",
                           // Arabic-indic digit 0 to 9
