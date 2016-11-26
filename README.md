@@ -99,7 +99,7 @@ See sample test code from
 #### with Swift
 ##### Case (1) with Framework
 ```
-import libPhoneNumber
+import libPhoneNumberiOS
 ```
 
 ##### Case (2) with Bridging-Header
@@ -116,7 +116,7 @@ import libPhoneNumber
 ```
 
 ##### Case (3) with CocoaPods
-import libPhoneNumber_iOS
+import libPhoneNumberiOS
 
 
 ##### - in swift class file
