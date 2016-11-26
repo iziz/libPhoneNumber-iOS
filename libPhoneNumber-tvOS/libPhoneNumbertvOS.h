@@ -1,6 +1,6 @@
 //
-//  libPhoneNumber-tvOS.h
-//  libPhoneNumber-tvOS
+//  libPhoneNumbertvOS.h
+//  libPhoneNumbertvOS
 //
 //  Created by Jeff Kelley on 11/16/16.
 //  Copyright © 2016 ohtalk.me. All rights reserved.

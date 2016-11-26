@@ -285,13 +285,10 @@
         XCTAssertEqualObjects(@"(\\d{3})(\\d{3})(\\d{4})", ((NBNumberFormat*)metadata.numberFormats[1]).pattern);
         XCTAssertEqualObjects(@"$1 $2 $3", ((NBNumberFormat*)metadata.numberFormats[1]).format);
         XCTAssertEqualObjects(@"[13-689]\\d{9}|2[0-35-9]\\d{8}", metadata.generalDesc.nationalNumberPattern);
-        XCTAssertEqualObjects(@"\\d{7}(?:\\d{3})?", metadata.generalDesc.possibleNumberPattern);
-        XCTAssertTrue([metadata.generalDesc isEqual:metadata.fixedLine]);
-        XCTAssertEqualObjects(@"\\d{10}", metadata.tollFree.possibleNumberPattern);
+        XCTAssertEqualObjects(@"[13-689]\\d{9}|2[0-35-9]\\d{8}", metadata.fixedLine.nationalNumberPattern);
         XCTAssertEqualObjects(@"900\\d{7}", metadata.premiumRate.nationalNumberPattern);
         // No shared-cost data is available, so it should be initialised to 'NA'.
         XCTAssertEqualObjects(@"NA", metadata.sharedCost.nationalNumberPattern);
-        XCTAssertEqualObjects(@"NA", metadata.sharedCost.possibleNumberPattern);
     }
                                            
     #pragma mark - testGetInstanceLoadDEMetadata
@@ -306,10 +303,8 @@
         XCTAssertEqualObjects(@"900", ((NBNumberFormat*)metadata.numberFormats[5]).leadingDigitsPatterns[0]);
         XCTAssertEqualObjects(@"(\\d{3})(\\d{3,4})(\\d{4})", ((NBNumberFormat*)metadata.numberFormats[5]).pattern);
         XCTAssertEqualObjects(@"$1 $2 $3", ((NBNumberFormat*)metadata.numberFormats[5]).format);
-        XCTAssertEqualObjects(@"(?:[24-6]\\d{2}|3[03-9]\\d|[789](?:[1-9]\\d|0[2-9]))\\d{1,8}", metadata.fixedLine.nationalNumberPattern);
-        XCTAssertEqualObjects(@"\\d{2,14}", metadata.fixedLine.possibleNumberPattern);
+        XCTAssertEqualObjects(@"(?:[24-6]\\d{2}|3[03-9]\\d|[789](?:0[2-9]|[1-9]\\d))\\d{1,8}", metadata.fixedLine.nationalNumberPattern);
         XCTAssertEqualObjects(@"30123456", metadata.fixedLine.exampleNumber);
-        XCTAssertEqualObjects(@"\\d{10}", metadata.tollFree.possibleNumberPattern);
         XCTAssertEqualObjects(@"900([135]\\d{6}|9\\d{7})", metadata.premiumRate.nationalNumberPattern);
     }
 
@@ -337,7 +332,8 @@
         XCTAssertEqualObjects(@800, metadata.countryCode);
         XCTAssertEqualObjects(@"$1 $2", ((NBNumberFormat*)metadata.numberFormats[0]).format);
         XCTAssertEqualObjects(@"(\\d{4})(\\d{4})", ((NBNumberFormat*)metadata.numberFormats[0]).pattern);
-        XCTAssertEqualObjects(@"12345678", metadata.generalDesc.exampleNumber);
+        XCTAssertEqual(0, metadata.generalDesc.possibleLengthLocalOnly.count);
+        XCTAssertEqual(1, metadata.generalDesc.possibleLength.count);
         XCTAssertEqualObjects(@"12345678", metadata.tollFree.exampleNumber);
     }
                                                                 
@@ -1427,21 +1423,6 @@
         [number setNationalNumber:@1234567890];
         XCTAssertEqual(NBEValidationResultIS_POSSIBLE, [_aUtil isPossibleNumberWithReason:number]);
         XCTAssertEqual(NBEValidationResultTOO_LONG, [_aUtil isPossibleNumberWithReason:INTERNATIONAL_TOLL_FREE_TOO_LONG]);
-        
-        // Try with number that we don't have metadata for.
-        
-        NBPhoneNumber *adNumber = [[NBPhoneNumber alloc] init];
-        [adNumber setCountryCode:@376];
-        [adNumber setNationalNumber:@12345];
-        XCTAssertEqual(NBEValidationResultIS_POSSIBLE, [_aUtil isPossibleNumberWithReason:adNumber]);
-        
-        [adNumber setCountryCode:@376];
-        [adNumber setNationalNumber:@1];
-        XCTAssertEqual(NBEValidationResultTOO_SHORT, [_aUtil isPossibleNumberWithReason:adNumber]);
-        
-        [adNumber setCountryCode:@376];
-        [adNumber setNationalNumber:@12345678901234567];
-        XCTAssertEqual(NBEValidationResultTOO_LONG, [_aUtil isPossibleNumberWithReason:adNumber]);
     }
 
 

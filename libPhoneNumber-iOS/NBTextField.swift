@@ -6,14 +6,14 @@
 //  Copyright © 2015년 ohtalk.me. All rights reserved.
 //
 
-import libPhoneNumber
+import libPhoneNumberiOS
 
 
 open class NBTextField: UITextField
 {
     // MARK: Options/Variables for phone number formatting
     
-    var phoneNumberUtility: NBPhoneNumberUtil = NBPhoneNumberUtil()
+    let phoneNumberUtility: NBPhoneNumberUtil = NBPhoneNumberUtil()
     var phoneNumberFormatter: NBAsYouTypeFormatter?
     
     var shouldCheckValidationForInputText: Bool = true
@@ -62,7 +62,7 @@ open class NBTextField: UITextField
     }
     
     func numberTextDidChange() {
-        let numbersOnly = phoneNumberUtility.normalizePhoneNumber(text)
+        let numbersOnly = phoneNumberUtility.normalize(text)
         text = phoneNumberFormatter!.inputStringAndRememberPosition(numbersOnly)
         
         if phoneNumberFormatter!.isSuccessfulFormatting == false && shouldCheckValidationForInputText {

@@ -12,16 +12,19 @@
 @interface NBPhoneMetadataTestAU : NBPhoneMetaData
 @end
 
-@interface NBPhoneMetadataTestBB : NBPhoneMetaData
+@interface NBPhoneMetadataTestAM : NBPhoneMetaData
 @end
 
 @interface NBPhoneMetadataTestAE : NBPhoneMetaData
 @end
 
-@interface NBPhoneMetadataTestCX : NBPhoneMetaData
+@interface NBPhoneMetadataTestBB : NBPhoneMetaData
 @end
 
 @interface NBPhoneMetadataTestBS : NBPhoneMetaData
+@end
+
+@interface NBPhoneMetadataTestCX : NBPhoneMetaData
 @end
 
 @interface NBPhoneMetadataTestDE : NBPhoneMetaData
@@ -36,9 +39,6 @@
 @interface NBPhoneMetadataTestPL : NBPhoneMetaData
 @end
 
-@interface NBPhoneMetadataTestSE : NBPhoneMetaData
-@end
-
 @interface NBPhoneMetadataTestCA : NBPhoneMetaData
 @end
 
@@ -48,7 +48,7 @@
 @interface NBPhoneMetadataTest800 : NBPhoneMetaData
 @end
 
-@interface NBPhoneMetadataTestYT : NBPhoneMetaData
+@interface NBPhoneMetadataTestSE : NBPhoneMetaData
 @end
 
 @interface NBPhoneMetadataTestFR : NBPhoneMetaData
@@ -58,6 +58,9 @@
 @end
 
 @interface NBPhoneMetadataTestHU : NBPhoneMetaData
+@end
+
+@interface NBPhoneMetadataTestYT : NBPhoneMetaData
 @end
 
 @interface NBPhoneMetadataTestSG : NBPhoneMetaData

@@ -241,7 +241,7 @@ static NSMutableDictionary *kMapCCode2CN = nil;
 
 
 /**
- * @param {number} countryCallingCode
+ * @param countryCallingCode countryCallingCode
  * @return {i18n.phonenumbers.PhoneMetadata}
  */
 - (NBPhoneMetaData *)getMetadataForNonGeographicalRegion:(NSNumber *)countryCallingCode

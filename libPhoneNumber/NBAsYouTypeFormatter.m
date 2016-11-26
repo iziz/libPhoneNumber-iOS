@@ -273,7 +273,7 @@
 /**
  * Constructs an AsYouTypeFormatter for the specific region.
  *
- * @param {string} regionCode the ISO 3166-1 two-letter region code that denotes
+ * - param regionCode regionCode the ISO 3166-1 two-letter region code that denotes
  *     the region where the phone number is being entered.
  * @constructor
  */
@@ -339,7 +339,7 @@
  * The metadata needed by this class is the same for all regions sharing the
  * same country calling code. Therefore, we return the metadata for "main"
  * region for this country calling code.
- * @param {string} regionCode an ISO 3166-1 two-letter region code.
+ * - param regionCode regionCode an ISO 3166-1 two-letter region code.
  * @return {i18n.phonenumbers.PhoneMetadata} main metadata for this region.
  * @private
  */
@@ -409,7 +409,7 @@
 
 
 /**
- * @param {string} leadingThreeDigits first three digits of entered number.
+ * - param leadingDigits leadingThreeDigits first three digits of entered number.
  * @private
  */
 - (void)getAvailableFormats_:(NSString*)leadingDigits
@@ -442,7 +442,7 @@
 
 
 /**
- * @param {string} format
+ * - param format format
  * @return {BOOL}
  * @private
  */
@@ -458,7 +458,7 @@
 
 
 /**
- * @param {string} leadingDigits
+ * - param leadingDigits leadingDigits
  * @private
  */
 - (void)narrowDownPossibleFormats_:(NSString *)leadingDigits
@@ -496,7 +496,7 @@
 
 
 /**
- * @param {i18n.phonenumbers.NumberFormat} format
+ * - param {i18n.phonenumbers.NumberFormat} format
  * @return {BOOL}
  * @private
  */
@@ -537,8 +537,8 @@
  * Gets a formatting template which can be used to efficiently format a
  * partial number where digits are added one by one.
  *
- * @param {string} numberPattern
- * @param {string} numberFormat
+ * - param {string} numberPattern
+ * - param {string} numberFormat
  * @return {string}
  * @private
  */
@@ -667,7 +667,7 @@
 /**
  * Formats a phone number on-the-fly as each digit is entered.
  *
- * @param {string} nextChar the most recently entered digit of a phone number.
+ * - param {string} nextChar the most recently entered digit of a phone number.
  *     Formatting characters are allowed, but as soon as they are encountered
  *     this method formats the number as entered and not 'as you type' anymore.
  *     Full width digits and Arabic-indic digits are allowed, and will be shown
@@ -691,7 +691,7 @@
  * adjusted if additional formatting characters are later inserted/removed in
  * front of {@code nextChar}.
  *
- * @param {string} nextChar
+ * - param {string} nextChar
  * @return {string}
  */
 - (NSString*)inputDigitAndRememberPosition:(NSString*)nextChar
@@ -705,8 +705,8 @@
 
 
 /**
- * @param {string} nextChar
- * @param {BOOL} rememberPosition
+ * - param {string} nextChar
+ * - param {BOOL} rememberPosition
  * @return {string}
  * @private
  */
@@ -879,7 +879,7 @@
 
 
 /**
- * @param {string} nextChar
+ * - param {string} nextChar
  * @return {BOOL}
  * @private
  */
@@ -943,7 +943,7 @@
  * Combines the national number with any prefix (IDD/+ and country code or
  * national prefix) that was collected. A space will be inserted between them if
  * the current formatting template indicates this to be suitable.
- * @param {string} nationalNumber The number to be appended.
+ * - param {string} nationalNumber The number to be appended.
  * @return {string} The combined number.
  * @private
  */
@@ -1209,8 +1209,8 @@
  * in non-ASCII format. This method assumes its input is either a digit or the
  * plus sign.
  *
- * @param {string} nextChar
- * @param {BOOL} rememberPosition
+ * - param {string} nextChar
+ * - param {BOOL} rememberPosition
  * @return {string}
  * @private
  */
@@ -1239,7 +1239,7 @@
 
 
 /**
- * @param {string} nextChar
+ * - param {string} nextChar
  * @return {string}
  * @private
  */

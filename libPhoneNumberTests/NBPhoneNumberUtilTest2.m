@@ -1041,7 +1041,7 @@
         XCTAssertEqualObjects(@"+37612345", [_aUtil format:adNumber numberFormat:NBEPhoneNumberFormatE164]);
         XCTAssertEqualObjects(@"12345", [_aUtil format:adNumber numberFormat:NBEPhoneNumberFormatNATIONAL]);
         XCTAssertEqual(NBEPhoneNumberTypeUNKNOWN, [_aUtil getNumberType:adNumber]);
-        XCTAssertTrue([_aUtil isValidNumber:adNumber]);
+        XCTAssertFalse([_aUtil isValidNumber:adNumber]);
         
         // Test dialing a US number from within Andorra.
         XCTAssertEqualObjects(@"00 1 650 253 0000", [_aUtil formatOutOfCountryCallingNumber:US_NUMBER regionCallingFrom:@"AD"]);

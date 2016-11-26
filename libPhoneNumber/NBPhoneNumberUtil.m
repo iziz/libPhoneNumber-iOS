@@ -366,7 +366,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Gets the national significant number of the a phone number. Note a national
  * significant number doesn't contain a national prefix or any formatting.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number for which the
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number for which the
  *     national significant number is needed.
  * @return {string} the national significant number of the PhoneNumber object
  *     passed in.
@@ -470,7 +470,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 {
     if (!DIGIT_MAPPINGS) {
         DIGIT_MAPPINGS = [NSDictionary dictionaryWithObjectsAndKeys:
-                          @"0", @"0", @"1", @"1", @"2", @"2", @"3", @"3", @"4", @"4", @"5", @"5", @"6", @"6", @"7", @"7", @"8", @"8", @"9", @"9", @"*", @"\*",
+                          @"0", @"0", @"1", @"1", @"2", @"2", @"3", @"3", @"4", @"4", @"5", @"5", @"6", @"6", @"7", @"7", @"8", @"8", @"9", @"9",
                           // Fullwidth digit 0 to 9
                           @"0", @"\uFF10", @"1", @"\uFF11", @"2", @"\uFF12", @"3", @"\uFF13", @"4", @"\uFF14", @"5", @"\uFF15", @"6", @"\uFF16", @"7", @"\uFF17", @"8", @"\uFF18", @"9", @"\uFF19",
                           // Arabic-indic digit 0 to 9
@@ -541,7 +541,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * x2303. We remove the second extension so that the first number is parsed
  * correctly.
  *
- * @param {string} number the string that might contain a phone number.
+ * - param {string} number the string that might contain a phone number.
  * @return {string} the number, stripped of any non-phone-number prefix (such as
  *     'Tel:') or an empty string if no character used to start phone numbers
  *     (such as + or any digit) is found in the number.
@@ -585,7 +585,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * that leading non-number symbols have been removed, such as by the method
  * extractPossibleNumber.
  *
- * @param {string} number string to be checked for viability as a phone number.
+ * - param {string} number string to be checked for viability as a phone number.
  * @return {boolean} NO if the number could be a phone number of some sort,
  *     otherwise NO.
  */
@@ -617,7 +617,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  *   Arabic-Indic numerals are converted to European numerals.
  *   Spurious alpha characters are stripped.
  *
- * @param {string} number a string of characters representing a phone number.
+ * - param {string} number a string of characters representing a phone number.
  * @return {string} the normalized string version of the phone number.
  */
 - (NSString *)normalize:(NSString *)number
@@ -638,7 +638,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * wrapper for normalize(String number) but does in-place normalization of the
  * StringBuffer provided.
  *
- * @param {!goog.string.StringBuffer} number a StringBuffer of characters
+ * - param {!goog.string.StringBuffer} number a StringBuffer of characters
  *     representing a phone number that will be normalized in place.
  * @private
  */
@@ -658,7 +658,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * wide-ascii and arabic-indic numerals to European numerals, and strips
  * punctuation and alpha characters.
  *
- * @param {string} number a string of characters representing a phone number.
+ * - param {string} number a string of characters representing a phone number.
  * @return {string} the normalized string version of the phone number.
  */
 - (NSString *)normalizeDigitsOnly:(NSString *)number
@@ -675,7 +675,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * keypad, but retains existing formatting. Also converts wide-ascii digits to
  * normal ascii digits, and converts Arabic-Indic numerals to European numerals.
  *
- * @param {string} number a string of characters representing a phone number.
+ * - param {string} number a string of characters representing a phone number.
  * @return {string} the normalized string version of the phone number.
  */
 - (NSString *)convertAlphaCharactersInNumber:(NSString *)number
@@ -728,7 +728,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  *  <li> some geographical numbers have no area codes.
  * </ul>
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the PhoneNumber object for
+ * - param {i18n.phonenumbers.PhoneNumber} number the PhoneNumber object for
  *     which clients want to know the length of the area code.
  * @return {number} the length of area code of the PhoneNumber object passed in.
  */
@@ -806,7 +806,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Refer to the unittests to see the difference between this function and
  * {@link #getLengthOfGeographicalAreaCode}.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the PhoneNumber object for
+ * - param {i18n.phonenumbers.PhoneNumber} number the PhoneNumber object for
  *     which clients want to know the length of the NDC.
  * @return {number} the length of NDC of the PhoneNumber object passed in.
  */
@@ -892,11 +892,11 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * all characters found in the accompanying map with the values therein, and
  * stripping all other characters if removeNonMatches is NO.
  *
- * @param {string} number a string of characters representing a phone number.
- * @param {!Object.<string, string>} normalizationReplacements a mapping of
+ * - param {string} number a string of characters representing a phone number.
+ * - param {!Object.<string, string>} normalizationReplacements a mapping of
  *     characters to what they should be replaced by in the normalized version
  *     of the phone number.
- * @param {boolean} removeNonMatches indicates whether characters that are not
+ * - param {boolean} removeNonMatches indicates whether characters that are not
  *     able to be replaced should be stripped from the number. If this is NO,
  *     they will be left unchanged in the number.
  * @return {string} the normalized string version of the phone number.
@@ -935,7 +935,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Helper function to check if the national prefix formatting rule has the first
  * group only, i.e., does not start with the national prefix.
  *
- * @param {string} nationalPrefixFormattingRule The formatting rule for the
+ * - param {string} nationalPrefixFormattingRule The formatting rule for the
  *     national prefix.
  * @return {boolean} NO if the national prefix formatting rule has the first
  *     group only.
@@ -957,7 +957,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * the number is associated to a certain region in the country where it belongs
  * to. Note that this doesn't verify if the number is actually in use.
  *
- * @param {i18n.phonenumbers.PhoneNumber} phoneNumber The phone number to test.
+ * - param {i18n.phonenumbers.PhoneNumber} phoneNumber The phone number to test.
  * @return {boolean} NO if the phone number has a geographical association.
  * @private
  */
@@ -978,7 +978,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 /**
  * Helper function to check region code is not unknown or nil.
  *
- * @param {?string} regionCode the ISO 3166-1 two-letter region code.
+ * - param {?string} regionCode the ISO 3166-1 two-letter region code.
  * @return {boolean} NO if region code is valid.
  * @private
  */
@@ -1000,7 +1000,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 /**
  * Helper function to check the country calling code is valid.
  *
- * @param {number} countryCallingCode the country calling code.
+ * - param {number} countryCallingCode the country calling code.
  * @return {boolean} NO if country calling code code is valid.
  * @private
  */
@@ -1027,9 +1027,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * country calling code, we cannot work out which formatting rules to apply so
  * we return the national significant number with no formatting applied.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number to be
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number to be
  *     formatted.
- * @param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
+ * - param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
  *     phone number should be formatted into.
  * @return {string} the formatted phone number.
  */
@@ -1109,11 +1109,11 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * extensions, so we return the national significant number with no formatting
  * applied.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone  number to be
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone  number to be
  *     formatted.
- * @param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
+ * - param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
  *     phone number should be formatted into.
- * @param {Array.<i18n.phonenumbers.NumberFormat>} userDefinedFormats formatting
+ * - param {Array.<i18n.phonenumbers.NumberFormat>} userDefinedFormats formatting
  *     rules specified by clients.
  * @return {string} the formatted phone number.
  */
@@ -1206,9 +1206,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * carrier code stored. If {@code carrierCode} contains an empty string, returns
  * the number in national format without any carrier code.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number to be
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number to be
  *     formatted.
- * @param {string} carrierCode the carrier selection code to be used.
+ * - param {string} carrierCode the carrier selection code to be used.
  * @return {string} the formatted phone number in national format for dialing
  *     using the carrier as specified in the {@code carrierCode}.
  */
@@ -1254,8 +1254,8 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 
 /**
- * @param {number} countryCallingCode
- * @param {?string} regionCode
+ * - param {number} countryCallingCode
+ * - param {?string} regionCode
  * @return {i18n.phonenumbers.PhoneMetadata}
  * @private
  */
@@ -1280,9 +1280,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * code passed in should take precedence over the number's
  * {@code preferred_domestic_carrier_code} when formatting.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number to be
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number to be
  *     formatted.
- * @param {string} fallbackCarrierCode the carrier selection code to be used, if
+ * - param {string} fallbackCarrierCode the carrier selection code to be used, if
  *     none is found in the phone number itself.
  * @return {string} the formatted phone number in national format for dialing
  *     using the number's preferred_domestic_carrier_code, or the
@@ -1320,10 +1320,10 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * (e.g. some countries block toll-free numbers from being called outside of the
  * country), the method returns an empty string.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number to be
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number to be
  *     formatted.
- * @param {string} regionCallingFrom the region where the call is being placed.
- * @param {boolean} withFormatting whether the number should be returned with
+ * - param {string} regionCallingFrom the region where the call is being placed.
+ * - param {boolean} withFormatting whether the number should be returned with
  *     formatting symbols, such as spaces and dashes.
  * @return {string} the formatted phone number.
  */
@@ -1419,9 +1419,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * international prefixes, the number in its INTERNATIONAL format will be
  * returned instead.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number to be
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number to be
  *     formatted.
- * @param {string} regionCallingFrom the region where the call is being placed.
+ * - param {string} regionCallingFrom the region where the call is being placed.
  * @return {string} the formatted phone number.
  */
 - (NSString *)formatOutOfCountryCallingNumber:(NBPhoneNumber*)number regionCallingFrom:(NSString *)regionCallingFrom error:(NSError**)error
@@ -1505,11 +1505,11 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 /**
  * A helper function that is used by format and formatByPattern.
  *
- * @param {number} countryCallingCode the country calling code.
- * @param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
+ * - param {number} countryCallingCode the country calling code.
+ * - param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
  *     phone number should be formatted into.
- * @param {string} formattedNationalNumber
- * @param {string} formattedExtension
+ * - param {string} formattedNationalNumber
+ * - param {string} formattedExtension
  * @return {string} the formatted phone number.
  * @private
  */
@@ -1544,9 +1544,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Note this method guarantees no digit will be inserted, removed or modified as
  * a result of formatting.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number that needs to
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number that needs to
  *     be formatted in its original number format.
- * @param {string} regionCallingFrom the region whose IDD needs to be prefixed
+ * - param {string} regionCallingFrom the region whose IDD needs to be prefixed
  *     if the original number has one.
  * @return {string} the formatted phone number in its original number format.
  */
@@ -1690,9 +1690,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 /**
  * Check if rawInput, which is assumed to be in the national format, has a
  * national prefix. The national prefix is assumed to be in digits-only form.
- * @param {string} rawInput
- * @param {string} nationalPrefix
- * @param {string} regionCode
+ * - param {string} rawInput
+ * - param {string} nationalPrefix
+ * - param {string} regionCode
  * @return {boolean}
  * @private
  */
@@ -1722,7 +1722,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Returns NO if a number is from a region whose national significant number
  * couldn't contain a leading zero, but has the italian_leading_zero field set
  * to NO.
- * @param {i18n.phonenumbers.PhoneNumber} number
+ * - param {i18n.phonenumbers.PhoneNumber} number
  * @return {boolean}
  * @private
  */
@@ -1733,7 +1733,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 
 /**
- * @param {i18n.phonenumbers.PhoneNumber} number
+ * - param {i18n.phonenumbers.PhoneNumber} number
  * @return {boolean}
  * @private
  */
@@ -1775,9 +1775,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * a huge problem - and will be fixed if it proves to be so.
  * </ul>
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number that needs to
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number that needs to
  *     be formatted.
- * @param {string} regionCallingFrom the region where the call is being placed.
+ * - param {string} regionCallingFrom the region where the call is being placed.
  * @return {string} the formatted phone number.
  */
 - (NSString *)formatOutOfCountryKeepingAlphaChars:(NBPhoneNumber*)number regionCallingFrom:(NSString *)regionCallingFrom error:(NSError **)error
@@ -1896,12 +1896,12 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * which format to use for those cases. If a carrierCode is specified, this will
  * be inserted into the formatted string to replace $CC.
  *
- * @param {string} number a string of characters representing a phone number.
- * @param {i18n.phonenumbers.PhoneMetadata} metadata the metadata for the
+ * - param {string} number a string of characters representing a phone number.
+ * - param {i18n.phonenumbers.PhoneMetadata} metadata the metadata for the
  *     region that we think this number is from.
- * @param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
+ * - param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
  *     phone number should be formatted into.
- * @param {string=} opt_carrierCode
+ * - param {string=} opt_carrierCode
  * @return {string} the formatted phone number.
  * @private
  */
@@ -1922,9 +1922,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 
 /**
- * @param {Array.<i18n.phonenumbers.NumberFormat>} availableFormats the
+ * - param {Array.<i18n.phonenumbers.NumberFormat>} availableFormats the
  *     available formats the phone number could be formatted into.
- * @param {string} nationalNumber a string of characters representing a phone
+ * - param {string} nationalNumber a string of characters representing a phone
  *     number.
  * @return {i18n.phonenumbers.NumberFormat}
  * @private
@@ -1949,13 +1949,13 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Note that carrierCode is optional - if nil or an empty string, no carrier
  * code replacement will take place.
  *
- * @param {string} nationalNumber a string of characters representing a phone
+ * - param {string} nationalNumber a string of characters representing a phone
  *     number.
- * @param {i18n.phonenumbers.NumberFormat} formattingPattern the formatting rule
+ * - param {i18n.phonenumbers.NumberFormat} formattingPattern the formatting rule
  *     the phone number should be formatted into.
- * @param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
+ * - param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
  *     phone number should be formatted into.
- * @param {string=} opt_carrierCode
+ * - param {string=} opt_carrierCode
  * @return {string} the formatted phone number.
  * @private
  */
@@ -1998,7 +1998,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 /**
  * Gets a valid number for the specified region.
  *
- * @param {string} regionCode the region for which an example number is needed.
+ * - param {string} regionCode the region for which an example number is needed.
  * @return {i18n.phonenumbers.PhoneNumber} a valid fixed-line number for the
  *     specified region. Returns nil when the metadata does not contain such
  *     information, or the region 001 is passed in. For 001 (representing non-
@@ -2015,8 +2015,8 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 /**
  * Gets a valid number for the specified region and number type.
  *
- * @param {string} regionCode the region for which an example number is needed.
- * @param {i18n.phonenumbers.PhoneNumberType} type the type of number that is
+ * - param {string} regionCode the region for which an example number is needed.
+ * - param {i18n.phonenumbers.PhoneNumberType} type the type of number that is
  *     needed.
  * @return {i18n.phonenumbers.PhoneNumber} a valid number for the specified
  *     region and type. Returns nil when the metadata does not contain such
@@ -2048,14 +2048,14 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Gets a valid number for the specified country calling code for a
  * non-geographical entity.
  *
- * @param {number} countryCallingCode the country calling code for a
+ * - param {number} countryCallingCode the country calling code for a
  *     non-geographical entity.
  * @return {i18n.phonenumbers.PhoneNumber} a valid number for the
  *     non-geographical entity. Returns nil when the metadata does not contain
  *     such information, or the country calling code passed in does not belong
  *     to a non-geographical entity.
  */
-- (NBPhoneNumber*)getExampleNumberForNonGeoEntity:(NSNumber *)countryCallingCode error:(NSError *__autoreleasing *)error
+- (NBPhoneNumber *)getExampleNumberForNonGeoEntity:(NSNumber *)countryCallingCode error:(NSError *__autoreleasing *)error
 {
     NBPhoneNumber *res = nil;
     
@@ -2063,10 +2063,32 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     NBPhoneMetaData *metadata = [helper getMetadataForNonGeographicalRegion:countryCallingCode];
     
     if (metadata != nil) {
-        NBPhoneNumberDesc *desc = metadata.generalDesc;
-        if ([NBMetadataHelper hasValue:desc.exampleNumber]) {
-            NSString *callCode = [NSString stringWithFormat:@"+%@%@", countryCallingCode, desc.exampleNumber];
-            return [self parse:callCode defaultRegion:NB_UNKNOWN_REGION error:error];
+        NSString *fetchedExampleNumber = nil;
+        if ([NBMetadataHelper hasValue:metadata.mobile.exampleNumber]) {
+            fetchedExampleNumber = metadata.mobile.exampleNumber;
+        }
+        else if ([NBMetadataHelper hasValue:metadata.tollFree.exampleNumber]) {
+            fetchedExampleNumber = metadata.tollFree.exampleNumber;
+        }
+        else if ([NBMetadataHelper hasValue:metadata.sharedCost.exampleNumber]) {
+            fetchedExampleNumber = metadata.sharedCost.exampleNumber;
+        }
+        else if ([NBMetadataHelper hasValue:metadata.voip.exampleNumber]) {
+            fetchedExampleNumber = metadata.voip.exampleNumber;
+        }
+        else if ([NBMetadataHelper hasValue:metadata.voicemail.exampleNumber]) {
+            fetchedExampleNumber = metadata.voicemail.exampleNumber;
+        }
+        else if ([NBMetadataHelper hasValue:metadata.uan.exampleNumber]) {
+            fetchedExampleNumber = metadata.uan.exampleNumber;
+        }
+        else if ([NBMetadataHelper hasValue:metadata.premiumRate.exampleNumber]) {
+            fetchedExampleNumber = metadata.premiumRate.exampleNumber;
+        }
+
+        if (fetchedExampleNumber != nil) {
+            NSString *callCode = [NSString stringWithFormat:@"+%@%@", countryCallingCode, fetchedExampleNumber];
+            res = [self parse:callCode defaultRegion:NB_UNKNOWN_REGION error:error];
         }
     }
     
@@ -2078,11 +2100,11 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Gets the formatted extension of a phone number, if the phone number had an
  * extension specified. If not, it returns an empty string.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the PhoneNumber that might have
+ * - param {i18n.phonenumbers.PhoneNumber} number the PhoneNumber that might have
  *     an extension.
- * @param {i18n.phonenumbers.PhoneMetadata} metadata the metadata for the
+ * - param {i18n.phonenumbers.PhoneMetadata} metadata the metadata for the
  *     region that we think this number is from.
- * @param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
+ * - param {i18n.phonenumbers.PhoneNumberFormat} numberFormat the format the
  *     phone number should be formatted into.
  * @return {string} the formatted extension if any.
  * @private
@@ -2106,8 +2128,8 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 
 /**
- * @param {i18n.phonenumbers.PhoneMetadata} metadata
- * @param {i18n.phonenumbers.PhoneNumberType} type
+ * - param {i18n.phonenumbers.PhoneMetadata} metadata
+ * - param {i18n.phonenumbers.PhoneNumberType} type
  * @return {i18n.phonenumbers.PhoneNumberDesc}
  * @private
  */
@@ -2146,7 +2168,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 /**
  * Gets the type of a phone number.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number that we want
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number that we want
  *     to know the type.
  * @return {i18n.phonenumbers.PhoneNumberType} the type of the phone number.
  */
@@ -2165,8 +2187,8 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 
 /**
- * @param {string} nationalNumber
- * @param {i18n.phonenumbers.PhoneMetadata} metadata
+ * - param {string} nationalNumber
+ * - param {i18n.phonenumbers.PhoneMetadata} metadata
  * @return {i18n.phonenumbers.PhoneNumberType}
  * @private
  */
@@ -2232,8 +2254,8 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 
 /**
- * @param {string} nationalNumber
- * @param {i18n.phonenumbers.PhoneNumberDesc} numberDesc
+ * - param {string} nationalNumber
+ * - param {i18n.phonenumbers.PhoneNumberDesc} numberDesc
  * @return {boolean}
  * @private
  */
@@ -2254,7 +2276,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * verify the number is actually in use, which is impossible to tell by just
  * looking at a number itself.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number that we want
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number that we want
  *     to validate.
  * @return {boolean} a boolean that indicates whether the number is of a valid
  *     pattern.
@@ -2279,9 +2301,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * as the Isle of Man as invalid for the region "GB" (United Kingdom), since it
  * has its own region code, "IM", which may be undesirable.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number that we want
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number that we want
  *     to validate.
- * @param {?string} regionCode the region that we want to validate the phone
+ * - param {?string} regionCode the region that we want to validate the phone
  *     number for.
  * @return {boolean} a boolean that indicates whether the number is of a valid
  *     pattern.
@@ -2319,7 +2341,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Returns the region where a phone number is from. This could be used for
  * geocoding at the region level.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone number whose origin
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone number whose origin
  *     we want to know.
  * @return {?string} the region where the phone number is from, or nil
  *     if no region matches this calling code.
@@ -2345,8 +2367,8 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 
 /**
- * @param {i18n.phonenumbers.PhoneNumber} number
- * @param {Array.<string>} regionCodes
+ * - param {i18n.phonenumbers.PhoneNumber} number
+ * - param {Array.<string>} regionCodes
  * @return {?string}
  * @private
  
@@ -2381,7 +2403,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * multiple regions, the one designated in the metadata as the 'main' region for
  * this calling code will be returned.
  *
- * @param {number} countryCallingCode the country calling code.
+ * - param {number} countryCallingCode the country calling code.
  * @return {string}
  */
 - (NSString *)getRegionCodeForCountryCode:(NSNumber *)countryCallingCode
@@ -2398,7 +2420,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * returned. Also, in the case of no region code being found, an empty list is
  * returned.
  *
- * @param {number} countryCallingCode the country calling code.
+ * - param {number} countryCallingCode the country calling code.
  * @return {Array.<string>}
  */
 - (NSArray*)getRegionCodesForCountryCode:(NSNumber *)countryCallingCode
@@ -2413,7 +2435,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Returns the country calling code for a specific region. For example, this
  * would be 1 for the United States, and 64 for New Zealand.
  *
- * @param {?string} regionCode the region that we want to get the country
+ * - param {?string} regionCode the region that we want to get the country
  *     calling code for.
  * @return {number} the country calling code for the region denoted by
  *     regionCode.
@@ -2439,7 +2461,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * would be 1 for the United States, and 64 for New Zealand. Assumes the region
  * is already valid.
  *
- * @param {?string} regionCode the region that we want to get the country
+ * - param {?string} regionCode the region that we want to get the country
  *     calling code for.
  * @return {number} the country calling code for the region denoted by
  *     regionCode.
@@ -2477,9 +2499,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * numbers. Use the library's formatting functions to prefix the national prefix
  * when required.
  *
- * @param {?string} regionCode the region that we want to get the dialling
+ * - param {?string} regionCode the region that we want to get the dialling
  *     prefix for.
- * @param {boolean} stripNonDigits NO to strip non-digits from the national
+ * - param {boolean} stripNonDigits NO to strip non-digits from the national
  *     dialling prefix.
  * @return {?string} the dialling prefix for the region denoted by
  *     regionCode.
@@ -2511,7 +2533,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Checks if this is a region under the North American Numbering Plan
  * Administration (NANPA).
  *
- * @param {?string} regionCode the ISO 3166-1 two-letter region code.
+ * - param {?string} regionCode the ISO 3166-1 two-letter region code.
  * @return {boolean} NO if regionCode is one of the regions under NANPA.
  */
 - (BOOL)isNANPACountry:(NSString *)regionCode
@@ -2536,7 +2558,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * such a region is Italy. Returns NO if no metadata for the country is
  * found.
  *
- * @param {number} countryCallingCode the country calling code.
+ * - param {number} countryCallingCode the country calling code.
  * @return {boolean}
  */
 - (BOOL)isLeadingZeroPossible:(NSNumber *)countryCallingCode
@@ -2556,7 +2578,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * methods such as {@link #isPossibleNumberWithReason} and
  * {@link #isValidNumber} should be used.
  *
- * @param {string} number the number that needs to be checked.
+ * - param {string} number the number that needs to be checked.
  * @return {boolean} NO if the number is a valid vanity number.
  */
 - (BOOL)isAlphaNumber:(NSString *)number
@@ -2581,7 +2603,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Convenience wrapper around {@link #isPossibleNumberWithReason}. Instead of
  * returning the reason for failure, this method returns a boolean value.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the number that needs to be
+ * - param {i18n.phonenumbers.PhoneNumber} number the number that needs to be
  *     checked.
  * @return {boolean} NO if the number is possible.
  */
@@ -2614,22 +2636,42 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * in between these possible lengths is entered, such as of length 8, this will
  * return TOO_LONG.
  *
- * @param {string} numberPattern
- * @param {string} number
- * @return {ValidationResult}
+ * - param {string} number
+ * - param {i18n.phonenumbers.PhoneNumberDesc} phoneNumberDesc
+ * - return {i18n.phonenumbers.PhoneNumberUtil.ValidationResult}
  * @private
  */
-- (NBEValidationResult)testNumberLengthAgainstPattern:(NSString *)numberPattern number:(NSString *)number
+- (NBEValidationResult)testNumberLength:(NSString *)number desc:(NBPhoneNumberDesc *)phoneNumberDesc
 {
-    if ([self matchesEntirely:numberPattern string:number]) {
+    NSArray *possibleLengths = phoneNumberDesc.possibleLength;
+    NSArray *localLengths = phoneNumberDesc.possibleLengthLocalOnly;
+
+    NSUInteger actualLength = number.length;
+
+    if ([localLengths containsObject:@(actualLength)]) {
         return NBEValidationResultIS_POSSIBLE;
     }
-    
-    if ([self stringPositionByRegex:number regex:numberPattern] == 0) {
-        return NBEValidationResultTOO_LONG;
-    } else {
+
+    // There should always be "possibleLengths" set for every element. This will
+    // be a build-time check once ShortNumberMetadata.xml is migrated to contain
+    // this information as well.
+    NSNumber *minimumLength = possibleLengths[0];
+    if (minimumLength.unsignedIntegerValue == actualLength) {
+        return NBEValidationResultIS_POSSIBLE;
+    } else if (minimumLength.unsignedIntegerValue > actualLength) {
         return NBEValidationResultTOO_SHORT;
+    } else if (possibleLengths.count - 1 < possibleLengths.count) {
+        if (((NSNumber *)possibleLengths[possibleLengths.count - 1]).integerValue < actualLength) {
+            return NBEValidationResultTOO_LONG;
+        }
     }
+    // Note that actually the number is not too long if possible_lengths does not
+    // contain the length: we know it is less than the highest possible number
+    // length, and higher than the lowest possible number length. However, we
+    // don't currently have an enum to express this, so we return TOO_LONG in the
+    // short-term.
+    // We skip the first element since we've already checked it.
+    return [possibleLengths containsObject:@(actualLength)] ? NBEValidationResultIS_POSSIBLE : NBEValidationResultTOO_LONG;
 }
 
 
@@ -2653,7 +2695,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * subscriber-number-only version.
  * </ol>
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the number that needs to be
+ * - param {i18n.phonenumbers.PhoneNumber} number the number that needs to be
  *     checked.
  * @return {ValidationResult} a
  *     ValidationResult object which indicates whether the number is possible.
@@ -2691,23 +2733,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     NSString *regionCode = [self getRegionCodeForCountryCode:countryCode];
     // Metadata cannot be nil because the country calling code is valid.
     NBPhoneMetaData *metadata = [self getMetadataForRegionOrCallingCode:countryCode regionCode:regionCode];
-    NBPhoneNumberDesc *generalNumDesc = metadata.generalDesc;
-    
-    // Handling case of numbers with no metadata.
-    if ([NBMetadataHelper hasValue:generalNumDesc.nationalNumberPattern] == NO) {
-        unsigned int numberLength = (unsigned int)nationalNumber.length;
-        
-        if (numberLength < MIN_LENGTH_FOR_NSN_) {
-            return NBEValidationResultTOO_SHORT;
-        } else if (numberLength > MAX_LENGTH_FOR_NSN_) {
-            return NBEValidationResultTOO_LONG;
-        } else {
-            return NBEValidationResultIS_POSSIBLE;
-        }
-    }
-    
-    NSString *possibleNumberPattern = generalNumDesc.possibleNumberPattern;
-    return [self testNumberLengthAgainstPattern:possibleNumberPattern number:nationalNumber];
+    return [self testNumberLength:nationalNumber desc:metadata.generalDesc];
 }
 
 
@@ -2720,9 +2746,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * <p>This method first parses the number, then invokes
  * {@link #isPossibleNumber} with the resultant PhoneNumber object.
  *
- * @param {string} number the number that needs to be checked, in the form of a
+ * - param {string} number the number that needs to be checked, in the form of a
  *     string.
- * @param {string} regionDialingFrom the region that we are expecting the number
+ * - param {string} regionDialingFrom the region that we are expecting the number
  *     to be dialed from.
  *     Note this is different from the region where the number belongs.
  *     For example, the number +1 650 253 0000 is a number that belongs to US.
@@ -2748,7 +2774,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * valid, and resets the PhoneNumber object passed in to that valid version. If
  * no valid number could be extracted, the PhoneNumber object passed in will not
  * be modified.
- * @param {i18n.phonenumbers.PhoneNumber} number a PhoneNumber object which
+ * - param {i18n.phonenumbers.PhoneNumber} number a PhoneNumber object which
  *     contains a number that is too long to be valid.
  * @return {boolean} NO if a valid phone number can be successfully extracted.
  */
@@ -2781,8 +2807,8 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * IDD has already been removed. Returns 0 if fullNumber doesn't start with a
  * valid country calling code, and leaves nationalNumber unmodified.
  *
- * @param {!goog.string.StringBuffer} fullNumber
- * @param {!goog.string.StringBuffer} nationalNumber
+ * - param {!goog.string.StringBuffer} fullNumber
+ * - param {!goog.string.StringBuffer} nationalNumber
  * @return {number}
  */
 - (NSNumber *)extractCountryCode:(NSString *)fullNumber nationalNumber:(NSString **)nationalNumber
@@ -2895,17 +2921,17 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * the country calling code supplied after this does not match that of any known
  * region.
  *
- * @param {string} number non-normalized telephone number that we wish to
+ * - param {string} number non-normalized telephone number that we wish to
  *     extract a country calling code from - may begin with '+'.
- * @param {i18n.phonenumbers.PhoneMetadata} defaultRegionMetadata metadata
+ * - param {i18n.phonenumbers.PhoneMetadata} defaultRegionMetadata metadata
  *     about the region this number may be from.
- * @param {!goog.string.StringBuffer} nationalNumber a string buffer to store
+ * - param {!goog.string.StringBuffer} nationalNumber a string buffer to store
  *     the national significant number in, in the case that a country calling
  *     code was extracted. The number is appended to any existing contents. If
  *     no country calling code was extracted, this will be left unchanged.
- * @param {boolean} keepRawInput NO if the country_code_source and
+ * - param {boolean} keepRawInput NO if the country_code_source and
  *     preferred_carrier_code fields of phoneNumber should be populated.
- * @param {i18n.phonenumbers.PhoneNumber} phoneNumber the PhoneNumber object
+ * - param {i18n.phonenumbers.PhoneNumber} phoneNumber the PhoneNumber object
  *     where the country_code and country_code_source need to be populated.
  *     Note the country_code is always populated, whereas country_code_source is
  *     only populated when keepCountryCodeSource is NO.
@@ -2982,13 +3008,12 @@ static NSArray *GEO_MOBILE_COUNTRIES;
             [self maybeStripNationalPrefixAndCarrierCode:&potentialNationalNumber metadata:defaultRegionMetadata carrierCode:nil];
             
             NSString *potentialNationalNumberStr = [potentialNationalNumber copy];
-            NSString *possibleNumberPattern = generalDesc.possibleNumberPattern;
             // If the number was not valid before but is valid now, or if it was too
             // long before, we consider the number with the country calling code
             // stripped to be a better result and keep that instead.
             if ((![self matchesEntirely:validNumberPattern string:fullNumber] &&
                  [self matchesEntirely:validNumberPattern string:potentialNationalNumberStr]) ||
-                [self testNumberLengthAgainstPattern:possibleNumberPattern number:fullNumber] == NBEValidationResultTOO_LONG) {
+                [self testNumberLength:fullNumber desc:generalDesc] == NBEValidationResultTOO_LONG) {
                 (*nationalNumber) = [(*nationalNumber) stringByAppendingString:potentialNationalNumberStr];
                 if (keepRawInput) {
                     (*phoneNumber).countryCodeSource = [NSNumber numberWithInteger:NBECountryCodeSourceFROM_NUMBER_WITHOUT_PLUS_SIGN];
@@ -3008,9 +3033,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Strips the IDD from the start of the number if present. Helper function used
  * by maybeStripInternationalPrefixAndNormalize.
  *
- * @param {!RegExp} iddPattern the regular expression for the international
+ * - param {!RegExp} iddPattern the regular expression for the international
  *     prefix.
- * @param {!goog.string.StringBuffer} number the phone number that we wish to
+ * - param {!goog.string.StringBuffer} number the phone number that we wish to
  *     strip any international dialing prefix from.
  * @return {boolean} NO if an international prefix was present.
  * @private
@@ -3054,9 +3079,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * provided, normalizes the resulting number, and indicates if an international
  * prefix was present.
  *
- * @param {!goog.string.StringBuffer} number the non-normalized telephone number
+ * - param {!goog.string.StringBuffer} number the non-normalized telephone number
  *     that we wish to strip any international dialing prefix from.
- * @param {string} possibleIddPrefix the international direct dialing prefix
+ * - param {string} possibleIddPrefix the international direct dialing prefix
  *     from the region we think this number may be dialed in.
  * @return {CountryCodeSource} the corresponding
  *     CountryCodeSource if an international dialing prefix could be removed
@@ -3089,11 +3114,11 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 /**
  * Strips any national prefix (such as 0, 1) present in the number provided.
  *
- * @param {!goog.string.StringBuffer} number the normalized telephone number
+ * - param {!goog.string.StringBuffer} number the normalized telephone number
  *     that we wish to strip any national dialing prefix from.
- * @param {i18n.phonenumbers.PhoneMetadata} metadata the metadata for the
+ * - param {i18n.phonenumbers.PhoneMetadata} metadata the metadata for the
  *     region that we think this number is from.
- * @param {goog.string.StringBuffer} carrierCode a place to insert the carrier
+ * - param {goog.string.StringBuffer} carrierCode a place to insert the carrier
  *     code if one is extracted.
  * @return {boolean} NO if a national prefix or carrier code (or both) could
  *     be extracted.
@@ -3168,7 +3193,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * connected, usually indicated with extn, ext, x or similar) from the end of
  * the number, and returns it.
  *
- * @param {!goog.string.StringBuffer} number the non-normalized telephone number
+ * - param {!goog.string.StringBuffer} number the non-normalized telephone number
  *     that we wish to strip the extension from.
  * @return {string} the phone extension.
  */
@@ -3212,8 +3237,8 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * Checks to see that the region code used is valid, or if it is not valid, that
  * the number to parse starts with a + symbol so that we can attempt to infer
  * the region from the number.
- * @param {string} numberToParse number that we are attempting to parse.
- * @param {?string} defaultRegion region that we are expecting the number to be
+ * - param {string} numberToParse number that we are attempting to parse.
+ * - param {?string} defaultRegion region that we are expecting the number to be
  *     from.
  * @return {boolean} NO if it cannot use the region provided and the region
  *     cannot be inferred.
@@ -3234,10 +3259,10 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  * valid number for a particular region is not performed. This can be done
  * separately with {@link #isValidNumber}.
  *
- * @param {?string} numberToParse number that we are attempting to parse. This
+ * - param {?string} numberToParse number that we are attempting to parse. This
  *     can contain formatting such as +, ( and -, as well as a phone number
  *     extension. It can also be provided in RFC3966 format.
- * @param {?string} defaultRegion region that we are expecting the number to be
+ * - param {?string} defaultRegion region that we are expecting the number to be
  *     from. This is only used if the number being parsed is not written in
  *     international format. The country_code for the number in this case would
  *     be stored as that of the default region supplied. If the number is
@@ -3335,10 +3360,10 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
  * from {@link #parse} in that it always populates the raw_input field of the
  * protocol buffer with numberToParse as well as the country_code_source field.
  *
- * @param {string} numberToParse number that we are attempting to parse. This
+ * - param {string} numberToParse number that we are attempting to parse. This
  *     can contain formatting such as +, ( and -, as well as a phone number
  *     extension.
- * @param {?string} defaultRegion region that we are expecting the number to be
+ * - param {?string} defaultRegion region that we are expecting the number to be
  *     from. This is only used if the number being parsed is not written in
  *     international format. The country calling code for the number in this
  *     case would be stored as that of the default region supplied.
@@ -3366,8 +3391,8 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
  * A helper function to set the values related to leading zeros in a
  * PhoneNumber.
  *
- * @param {string} nationalNumber the number we are parsing.
- * @param {i18n.phonenumbers.PhoneNumber} phoneNumber a phone number proto
+ * - param {string} nationalNumber the number we are parsing.
+ * - param {i18n.phonenumbers.PhoneNumber} phoneNumber a phone number proto
  *     buffer to fill in.
  * @private
  */
@@ -3394,16 +3419,16 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
  * same as the public {@link #parse} method, with the exception that it allows
  * the default region to be nil, for use by {@link #isNumberMatch}.
  *
- * @param {?string} numberToParse number that we are attempting to parse. This
+ * - param {?string} numberToParse number that we are attempting to parse. This
  *     can contain formatting such as +, ( and -, as well as a phone number
  *     extension.
- * @param {?string} defaultRegion region that we are expecting the number to be
+ * - param {?string} defaultRegion region that we are expecting the number to be
  *     from. This is only used if the number being parsed is not written in
  *     international format. The country calling code for the number in this
  *     case would be stored as that of the default region supplied.
- * @param {boolean} keepRawInput whether to populate the raw_input field of the
+ * - param {boolean} keepRawInput whether to populate the raw_input field of the
  *     phoneNumber with numberToParse.
- * @param {boolean} checkRegion should be set to NO if it is permitted for
+ * - param {boolean} checkRegion should be set to NO if it is permitted for
  *     the default coregion to be nil or unknown ('ZZ').
  * @return {i18n.phonenumbers.PhoneNumber} a phone number proto buffer filled
  *     with the parsed number.
@@ -3575,10 +3600,10 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
  * nationalNumber if it is written in RFC3966; otherwise extract a possible
  * number out of it and write to nationalNumber.
  *
- * @param {?string} numberToParse number that we are attempting to parse. This
+ * - param {?string} numberToParse number that we are attempting to parse. This
  *     can contain formatting such as +, ( and -, as well as a phone number
  *     extension.
- * @param {!goog.string.StringBuffer} nationalNumber a string buffer for storing
+ * - param {!goog.string.StringBuffer} nationalNumber a string buffer for storing
  *     the national significant number.
  * @private
  */
@@ -3655,10 +3680,10 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
  * the numbers +1 345 657 1234 and 657 1234 are a SHORT_NSN_MATCH. The numbers
  * +1 345 657 1234 and 345 657 are a NO_MATCH.
  *
- * @param {i18n.phonenumbers.PhoneNumber|string} firstNumberIn first number to
+ * - param {i18n.phonenumbers.PhoneNumber|string} firstNumberIn first number to
  *     compare. If it is a string it can contain formatting, and can have
  *     country calling code specified with + at the start.
- * @param {i18n.phonenumbers.PhoneNumber|string} secondNumberIn second number to
+ * - param {i18n.phonenumbers.PhoneNumber|string} secondNumberIn second number to
  *     compare. If it is a string it can contain formatting, and can have
  *     country calling code specified with + at the start.
  * @return {MatchType} NOT_A_NUMBER, NO_MATCH,
@@ -3810,9 +3835,9 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
  * Returns NO when one national number is the suffix of the other or both are
  * the same.
  *
- * @param {i18n.phonenumbers.PhoneNumber} firstNumber the first PhoneNumber
+ * - param {i18n.phonenumbers.PhoneNumber} firstNumber the first PhoneNumber
  *     object.
- * @param {i18n.phonenumbers.PhoneNumber} secondNumber the second PhoneNumber
+ * - param {i18n.phonenumbers.PhoneNumber} secondNumber the second PhoneNumber
  *     object.
  * @return {boolean} NO if one PhoneNumber is the suffix of the other one.
  * @private
@@ -3835,7 +3860,7 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
  * TODO: Make this method public when we have enough metadata to make it
  * worthwhile. Currently visible for testing purposes only.
  *
- * @param {i18n.phonenumbers.PhoneNumber} number the phone-number for which we
+ * - param {i18n.phonenumbers.PhoneNumber} number the phone-number for which we
  *     want to know whether it is diallable from outside the region.
  * @return {boolean} NO if the number can only be dialled from within the
  *     country.
@@ -3873,8 +3898,8 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
  * Check whether the entire input sequence can be matched against the regular
  * expression.
  *
- * @param {!RegExp|string} regex the regular expression to match against.
- * @param {string} str the string to test.
+ * - param {!RegExp|string} regex the regular expression to match against.
+ * - param {string} str the string to test.
  * @return {boolean} NO if str can be matched entirely against regex.
  * @private
  */

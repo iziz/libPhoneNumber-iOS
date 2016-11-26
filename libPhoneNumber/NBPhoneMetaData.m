@@ -22,6 +22,7 @@
 
         _leadingZeroPossible = NO;
         _mainCountryForCode = NO;
+        _sameMobileAndFixedLinePattern = NO;
     }
     
     return self;

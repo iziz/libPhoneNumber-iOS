@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import libPhoneNumber
+import libPhoneNumberiOS
 
 
 class ViewController: UIViewController {

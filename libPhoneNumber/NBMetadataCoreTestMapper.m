@@ -40,6 +40,10 @@ static NSMutableDictionary *kMapCCode2CN;
         [countryCode64Array addObject:@"NZ"];
         [kMapCCode2CN setObject:countryCode64Array forKey:@"64"];
 
+        NSMutableArray *countryCode374Array = [[NSMutableArray alloc] init];
+        [countryCode374Array addObject:@"AM"];
+        [kMapCCode2CN setObject:countryCode374Array forKey:@"374"];
+
         NSMutableArray *countryCode800Array = [[NSMutableArray alloc] init];
         [countryCode800Array addObject:@"001"];
         [kMapCCode2CN setObject:countryCode800Array forKey:@"800"];

@@ -365,7 +365,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
             [contents appendFormat:@"\n        NSMutableArray *%@ = [[NSMutableArray alloc] init];\n", pllo_var];
             for (id num in arrayPLLO) {
                 if (num && [num isKindOfClass:[NSNumber class]]) {
-                    [contents appendFormat:@"        [%@ addObject: [NSNumber numberWithInt:%@]];\n", pl_var, num];
+                    [contents appendFormat:@"        [%@ addObject: [NSNumber numberWithInt:%@]];\n", pllo_var, num];
                 }
             }
         }
