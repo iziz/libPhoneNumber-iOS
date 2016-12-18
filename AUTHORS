@@ -33,3 +33,6 @@ Cliff Ingham (inghamn@bloomington.in.gov, http://bloomington.in.gov/)
 
 rhoiberg
   - Allow NBPhoneNumberUtil to be created using a specified bundle.
+
+Google Inc.
+  - Add some digits mapping.
