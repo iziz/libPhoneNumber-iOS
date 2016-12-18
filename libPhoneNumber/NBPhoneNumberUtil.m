@@ -562,10 +562,10 @@ static NSArray *GEO_MOBILE_COUNTRIES;
         possibleNumber = [self replaceStringByRegex:possibleNumber regex:UNWANTED_END_CHAR_PATTERN withTemplate:@""];
         
         // Check for extra numbers at the end.
-        int secondNumberStart = [self stringPositionByRegex:number regex:SECOND_NUMBER_START_PATTERN];
+        int secondNumberStart = [self stringPositionByRegex:possibleNumber regex:SECOND_NUMBER_START_PATTERN];
         if (secondNumberStart > 0)
         {
-            possibleNumber = [possibleNumber substringWithRange:NSMakeRange(0, secondNumberStart - 1)];
+            possibleNumber = [possibleNumber substringWithRange:NSMakeRange(0, secondNumberStart)];
         }
     }
     else
