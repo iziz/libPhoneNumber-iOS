@@ -11,7 +11,6 @@
 		1485C5281E06F4890092F541 /* NBAsYouTypeFormatterTest2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1485C5241E06F4890092F541 /* NBAsYouTypeFormatterTest2.m */; };
 		1485C5291E06F4890092F541 /* NBPhoneNumberUtilTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 1485C5251E06F4890092F541 /* NBPhoneNumberUtilTest1.m */; };
 		1485C52A1E06F4890092F541 /* NBPhoneNumberUtilTest2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1485C5261E06F4890092F541 /* NBPhoneNumberUtilTest2.m */; };
-		1485C52C1E06F4930092F541 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1485C52B1E06F4930092F541 /* Info.plist */; };
 		14B7A2AB1DE9BF160051AED7 /* NBMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FD12C2691A87401B00B53856 /* NBMetadataHelper.m */; };
 		14B7A2AC1DE9BF160051AED7 /* NBMetadataCore.m in Sources */ = {isa = PBXBuildFile; fileRef = FD12C26D1A87546400B53856 /* NBMetadataCore.m */; };
 		14B7A2AD1DE9BF160051AED7 /* NBMetadataCoreTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF1ED961A8774DC00F6123A /* NBMetadataCoreTest.m */; };
@@ -719,7 +718,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1485C52C1E06F4930092F541 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
