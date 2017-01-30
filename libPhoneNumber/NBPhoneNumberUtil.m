@@ -674,6 +674,23 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 }
 
 
+/**
+  * Normalizes a string of characters representing a phone number. This strips
+  * all characters which are not diallable on a mobile phone keypad (including
+  * all non-ASCII digits).
+  *
+  * - param {string} number a string of characters representing a phone number.
+  * @return {string} the normalized string version of the phone number.
+  */
+- (NSString*)normalizeDiallableCharsOnly:(NSString*)number
+{
+  NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
+  number = [helper normalizeNonBreakingSpace:number];
+
+  return [self stringByReplacingOccurrencesString:number withMap:self.DIALLABLE_CHAR_MAPPINGS removeNonMatches:YES];
+}
+
+
 /**
  * Converts all alpha characters in a number to their respective digits on a
  * keypad, but retains existing formatting. Also converts wide-ascii digits to
