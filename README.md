@@ -15,6 +15,17 @@
 ## Update Log
 [https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
 
+
+## Issue
+You can check phone number validation using below link.
+https://rawgit.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/demo-compiled.html
+
+Please report, if the above results are different from this iOS library.
+Otherwise, please create issue to following link below to request additional telephone numbers formatting rule.
+https://github.com/googlei18n/libphonenumber/issues
+
+Metadata in this library was generated from that. so, you should change it first. :)
+
 ## Install 
 
 #### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
