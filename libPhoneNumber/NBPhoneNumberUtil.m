@@ -491,7 +491,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     if (!DIALLABLE_CHAR_MAPPINGS) {
         DIALLABLE_CHAR_MAPPINGS = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"0", @"0", @"1", @"1", @"2", @"2", @"3", @"3", @"4", @"4", @"5", @"5", @"6", @"6", @"7", @"7", @"8", @"8", @"9", @"9",
-                                   @"+", @"+", @"*", @"*", nil];
+                                   @"+", @"+", @"*", @"*", @"#", @"#", nil];
     }
     
     if (!ALPHA_MAPPINGS) {
@@ -671,6 +671,23 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     number = [helper normalizeNonBreakingSpace:number];
     
     return [self stringByReplacingOccurrencesString:number withMap:self.DIGIT_MAPPINGS removeNonMatches:YES];
+}
+
+
+/**
+  * Normalizes a string of characters representing a phone number. This strips
+  * all characters which are not diallable on a mobile phone keypad (including
+  * all non-ASCII digits).
+  *
+  * - param {string} number a string of characters representing a phone number.
+  * @return {string} the normalized string version of the phone number.
+  */
+- (NSString*)normalizeDiallableCharsOnly:(NSString*)number
+{
+  NBMetadataHelper *helper = [[NBMetadataHelper alloc] init];
+  number = [helper normalizeNonBreakingSpace:number];
+
+  return [self stringByReplacingOccurrencesString:number withMap:DIALLABLE_CHAR_MAPPINGS removeNonMatches:YES];
 }
 
 

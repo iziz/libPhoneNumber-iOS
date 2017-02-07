@@ -550,6 +550,14 @@
     }
 
     
+    #pragma mark - testNormalizeStripNonDiallableCharacters
+    {
+        NSString *inputNumber = @"03*4-56&+1a#234";
+        NSString *expectedOutput = @"03*456+1#234";
+        XCTAssertEqualObjects(expectedOutput, [_aUtil normalizeDiallableCharsOnly:inputNumber], @"Conversion did not correctly remove non-diallable characters");
+    }
+
+    
     #pragma mark - testFormatUSNumber
     {
         XCTAssertEqualObjects(@"650 253 0000", [_aUtil format:US_NUMBER numberFormat:NBEPhoneNumberFormatNATIONAL]);

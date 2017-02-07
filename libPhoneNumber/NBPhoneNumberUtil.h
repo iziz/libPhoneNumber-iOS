@@ -27,6 +27,7 @@
 
 - (NSString*)normalize:(NSString*)phoneNumber;
 - (NSString*)normalizeDigitsOnly:(NSString*)number;
+- (NSString*)normalizeDiallableCharsOnly:(NSString*)number;
 
 - (BOOL)isNumberGeographical:(NBPhoneNumber*)phoneNumber;
 
