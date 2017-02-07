@@ -136,7 +136,7 @@
         self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"BR";
         self.countryCode = [NSNumber numberWithInteger:55];
-        self.internationalPrefix = nil;
+        self.internationalPrefix = @"00";
         self.preferredInternationalPrefix = nil;
         self.nationalPrefix = nil;
         self.preferredExtnPrefix = nil;
@@ -257,7 +257,7 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:@"10123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"10123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"10123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
@@ -1499,7 +1499,7 @@
         self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"GG";
         self.countryCode = [NSNumber numberWithInteger:44];
-        self.internationalPrefix = nil;
+        self.internationalPrefix = @"00";
         self.preferredInternationalPrefix = nil;
         self.nationalPrefix = nil;
         self.preferredExtnPrefix = nil;
@@ -1573,7 +1573,7 @@
         self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"HU";
         self.countryCode = [NSNumber numberWithInteger:36];
-        self.internationalPrefix = nil;
+        self.internationalPrefix = @"00";
         self.preferredInternationalPrefix = nil;
         self.nationalPrefix = @"06";
         self.preferredExtnPrefix = nil;
@@ -1934,7 +1934,7 @@
         self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"CC";
         self.countryCode = [NSNumber numberWithInteger:61];
-        self.internationalPrefix = nil;
+        self.internationalPrefix = @"00";
         self.preferredInternationalPrefix = nil;
         self.nationalPrefix = nil;
         self.preferredExtnPrefix = nil;
@@ -2721,7 +2721,7 @@
         self.noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:noInternationalDialling_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.codeID = @"CN";
         self.countryCode = [NSNumber numberWithInteger:86];
-        self.internationalPrefix = nil;
+        self.internationalPrefix = @"00";
         self.preferredInternationalPrefix = nil;
         self.nationalPrefix = @"0";
         self.preferredExtnPrefix = nil;

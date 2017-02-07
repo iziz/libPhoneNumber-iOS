@@ -144,8 +144,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 - (NSString *)getSRCDirectoryPath {
     NSString *documentsDirectory = [self documentsDirectory];
-    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"src"];
-    return dataPath;
+    //NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"src"];
+    return documentsDirectory;
 }
 
 - (NSString *)documentsDirectory
