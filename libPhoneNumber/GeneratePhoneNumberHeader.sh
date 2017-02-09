@@ -31,6 +31,14 @@ cat > "PhoneNumberMetaData.h" <<'EOF'
 
 #include <zlib.h>
 
+// z_const is not defined in some versions of zlib, so define it here
+// in case it has not been defined.
+#if defined(ZLIB_CONST) && !defined(z_const)
+#  define z_const const
+#else
+#  define z_const
+#endif
+
 #if TESTING==1
 
 z_const Bytef kPhoneNumberMetaData[] = {
