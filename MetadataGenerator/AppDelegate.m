@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "NBPhoneMetaDataGenerator.h"
 @import libPhoneNumberiOS;
 
 
@@ -24,10 +23,6 @@
     [self.window makeKeyAndVisible];
 
     [self.window setRootViewController:[[UIViewController alloc] init]];
-
-    // Generate metadata (do not use in release)
-    NBPhoneMetaDataGenerator *generator = [[NBPhoneMetaDataGenerator alloc] init];
-    [generator generateMetadataClasses];
 
     [self testWithRealData];
     //[self testWithGCD];
@@ -147,7 +142,7 @@
         NSLog(@"Error : %@", [anError localizedDescription]);
     }
 
-    NSLog (@"extractCountryCode [%ld]", (unsigned long)[phoneUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
+    NSLog (@"extractCountryCode [%@]", [phoneUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
     NSString *res = nil;
     NSNumber *dRes = [phoneUtil extractCountryCode:@"823213123123" nationalNumber:&res];
     NSLog (@"extractCountryCode [%@] [%@]", dRes, res);

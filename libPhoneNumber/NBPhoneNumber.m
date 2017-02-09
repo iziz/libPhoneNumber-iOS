@@ -15,8 +15,6 @@
     self = [super init];
     
     if (self) {
-        self.countryCodeSource = nil;
-        self.italianLeadingZero = NO;
         self.nationalNumber = @-1;
         self.countryCode = @-1;
         self.numberOfLeadingZeros = @(1);
