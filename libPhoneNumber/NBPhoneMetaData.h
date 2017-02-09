@@ -34,10 +34,11 @@
 /* 15 */ @property (nonatomic, strong) NSString *nationalPrefixForParsing;
 /* 16 */ @property (nonatomic, strong) NSString *nationalPrefixTransformRule;
 /* 18 */ @property (nonatomic, assign) BOOL sameMobileAndFixedLinePattern;
-/* 19 */ @property (nonatomic, strong) NSMutableArray *numberFormats;
-/* 20 */ @property (nonatomic, strong) NSMutableArray *intlNumberFormats;
+/* 19 */ @property (nonatomic, strong) NSArray<NBNumberFormat *> *numberFormats;
+/* 20 */ @property (nonatomic, strong) NSArray<NBNumberFormat *> *intlNumberFormats;
 /* 22 */ @property (nonatomic, assign) BOOL mainCountryForCode;
 /* 23 */ @property (nonatomic, strong) NSString *leadingDigits;
 /* 26 */ @property (nonatomic, assign) BOOL leadingZeroPossible;
 
+- (id)initWithEntry:(NSArray *)entry;
 @end
