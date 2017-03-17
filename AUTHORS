@@ -9,7 +9,7 @@ Cliff Rowley (cliffrowley@gmail.com)
 
 Aaron Wojnowski (aaronwojnowski@gmail.com)
   - Remove extra r from the countryCodeFromRegionCode method name.
-  
+
 stonyw
   - Handle char @ when normalize any strings, eg email
 
@@ -36,3 +36,4 @@ rhoiberg
 
 Google Inc.
   - Add some digits mapping.
+  - Reduce Library Size by compiling data directly into binary instead of generating a class per region.
