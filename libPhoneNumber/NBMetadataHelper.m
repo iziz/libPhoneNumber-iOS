@@ -8,7 +8,7 @@
 
 #import "NBMetadataHelper.h"
 #import "NBPhoneMetaData.h"
-#import "PhoneNumberMetaData.h"
+#import "NBGeneratedPhoneNumberMetaData.h"
 
 
 @interface NBMetadataHelper ()
