@@ -18,6 +18,7 @@ FOUNDATION_EXPORT const unsigned char libPhoneNumbermacOSVersionString[];
 
 
 #import "NBPhoneNumberDefines.h"
+#import "NBGeneratedPhoneNumberMetaData.h"
 
 // Features
 #import "NBPhoneNumberUtil.h"
