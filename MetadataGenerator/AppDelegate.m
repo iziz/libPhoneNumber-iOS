@@ -87,6 +87,17 @@
         NSLog(@"- getRegionCodeForNumber [%@]", [phoneUtil getRegionCodeForNumber:phoneNumberUS]);
     }
 
+  {
+    NSError *error = nil;
+    NBPhoneNumber *phoneNumberUS = [phoneUtil parse:@"14155552671" defaultRegion:@"US" error:&error];
+    if (error) {
+      NSLog(@"err [%@]", [error localizedDescription]);
+    }
+    NSLog(@"- isValidNumber [%@]", [phoneUtil isValidNumber:phoneNumberUS] ? @"YES" : @"NO");
+    NSLog(@"- isPossibleNumber [%@]", [phoneUtil isPossibleNumber:phoneNumberUS error:&error] ? @"YES" : @"NO");
+    NSLog(@"- getRegionCodeForNumber [%@]", [phoneUtil getRegionCodeForNumber:phoneNumberUS]);
+  }
+
     NSLog(@"- - - - -");
 
     {
