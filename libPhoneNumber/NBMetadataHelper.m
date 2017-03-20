@@ -8,7 +8,6 @@
 
 #import "NBMetadataHelper.h"
 #import "NBPhoneMetaData.h"
-#import "zlib.h"
 #import "NBGeneratedPhoneNumberMetaData.h"
 
 
