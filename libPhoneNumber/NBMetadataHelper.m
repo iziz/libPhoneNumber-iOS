@@ -129,31 +129,6 @@
 }
 
 
-+ (NSString *)stringByTrimming:(NSString *)aString
-{
-    if (aString == nil || aString.length <= 0) return aString;
-
-    aString = [self normalizeNonBreakingSpace:aString];
-
-    NSString *aRes = @"";
-    NSArray *newlines = [aString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-
-    for (NSString *line in newlines) {
-        NSString *performedString = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
-        if (performedString.length > 0) {
-            aRes = [aRes stringByAppendingString:performedString];
-        }
-    }
-
-    if (newlines.count <= 0) {
-        return aString;
-    }
-
-    return aRes;
-}
-
-
 + (NSString *)normalizeNonBreakingSpace:(NSString *)aString
 {
     return [aString stringByReplacingOccurrencesOfString:NB_NON_BREAKING_SPACE withString:@" "];
