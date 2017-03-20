@@ -29,7 +29,7 @@ cat > "NBGeneratedPhoneNumberMetaData.h" <<'EOF'
  * Off of PhoneNumberMetaDataForTesting.json and PhoneNumberMetaData.json
  */
 
-#include <zlib.h>
+#include "zlib.h"
 
 // z_const is not defined in some versions of zlib, so define it here
 // in case it has not been defined.
