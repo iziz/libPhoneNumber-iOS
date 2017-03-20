@@ -7,6 +7,7 @@
 #import "NBPhoneMetaData.h"
 #import "NBPhoneNumberDesc.h"
 #import "NBNumberFormat.h"
+#import "NSArray+NBAdditions.h"
 
 
 @implementation NBPhoneMetaData
@@ -15,7 +16,7 @@
 - (id)init
 {
     self = [super init];
-    
+
     if (self) {
         _numberFormats = [[NSMutableArray alloc] init];
         _intlNumberFormats = [[NSMutableArray alloc] init];
@@ -23,11 +24,55 @@
         _leadingZeroPossible = NO;
         _mainCountryForCode = NO;
         _sameMobileAndFixedLinePattern = NO;
+        _internationalPrefix = @"NA";
     }
-    
+
     return self;
 }
 
+- (id)initWithEntry:(NSArray *)entry {
+		self = [super init];
+		if (self && entry != nil) {
+				_generalDesc = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:1]];
+				_fixedLine = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:2]];
+				_mobile = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:3]];
+				_tollFree = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:4]];
+				_premiumRate = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:5]];
+				_sharedCost = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:6]];
+				_personalNumber = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:7]];
+				_voip = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:8]];
+				_pager = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:21]];
+				_uan = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:25]];
+				_emergency = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:27]];
+				_voicemail = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:28]];
+				_noInternationalDialling = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:24]];
+				_codeID = [entry nb_safeStringAtIndex:9];
+				_countryCode = [entry nb_safeNumberAtIndex:10];
+				_internationalPrefix  = [entry nb_safeStringAtIndex:11];
+				_preferredInternationalPrefix = [entry nb_safeStringAtIndex:17];
+				_nationalPrefix = [entry nb_safeStringAtIndex:12];
+				_preferredExtnPrefix = [entry nb_safeStringAtIndex:13];
+				_nationalPrefixForParsing = [entry nb_safeStringAtIndex:15];
+				_nationalPrefixTransformRule = [entry nb_safeStringAtIndex:16];
+				_sameMobileAndFixedLinePattern = [[entry nb_safeNumberAtIndex:18] boolValue];
+				_numberFormats= [self numberFormatsFromEntry:[entry nb_safeArrayAtIndex:19]];
+				_intlNumberFormats = [self numberFormatsFromEntry:[entry nb_safeArrayAtIndex:20]];
+				_mainCountryForCode = [[entry nb_safeNumberAtIndex:22] boolValue];
+				_leadingDigits = [entry nb_safeStringAtIndex:23];
+				_leadingZeroPossible = [[entry nb_safeNumberAtIndex:26] boolValue];
+		}
+
+		return self;
+}
+
+- (NSArray<NBNumberFormat *> *)numberFormatsFromEntry:(NSArray *)entry {
+		NSMutableArray *formats = [NSMutableArray arrayWithCapacity:entry.count];
+		for (NSArray *format in entry) {
+				NBNumberFormat *numberFormat = [[NBNumberFormat alloc] initWithEntry:format];
+				[formats addObject:numberFormat];
+		}
+		return formats;
+}
 
 - (NSString *)description
 {

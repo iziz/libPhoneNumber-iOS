@@ -1928,7 +1928,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  */
 - (NSString *)formatNsn:(NSString *)phoneNumber metadata:(NBPhoneMetaData*)metadata phoneNumberFormat:(NBEPhoneNumberFormat)numberFormat carrierCode:(NSString *)opt_carrierCode
 {
-    NSMutableArray *intlNumberFormats = metadata.intlNumberFormats;
+    NSArray *intlNumberFormats = metadata.intlNumberFormats;
     // When the intlNumberFormats exists, we use that to format national number
     // for the INTERNATIONAL format instead of using the numberDesc.numberFormats.
     NSArray *availableFormats = ([intlNumberFormats count] <= 0 || numberFormat == NBEPhoneNumberFormatNATIONAL) ? metadata.numberFormats : intlNumberFormats;
