@@ -16,17 +16,17 @@
 
 + (BOOL)hasValue:(NSString *)string;
 
-- (NSDictionary *)CCode2CNMap;
++ (NSDictionary *)CCode2CNMap;
 
 - (NSArray *)getAllMetadata;
 
 - (NBPhoneMetaData *)getMetadataForNonGeographicalRegion:(NSNumber *)countryCallingCode;
 - (NBPhoneMetaData *)getMetadataForRegion:(NSString *)regionCode;
 
-- (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber;
-- (NSString *)countryCodeFromRegionCode:(NSString *)regionCode;
++ (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber;
++ (NSString *)countryCodeFromRegionCode:(NSString *)regionCode;
 
-- (NSString *)stringByTrimming:(NSString *)aString;
-- (NSString *)normalizeNonBreakingSpace:(NSString *)aString;
++ (NSString *)stringByTrimming:(NSString *)aString;
++ (NSString *)normalizeNonBreakingSpace:(NSString *)aString;
 
 @end
