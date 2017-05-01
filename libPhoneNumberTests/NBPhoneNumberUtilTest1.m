@@ -483,7 +483,7 @@
         XCTAssertTrue([DE_NUMBER isEqual:[_aUtil getExampleNumber:@"DE" error:nil]]);
 
         XCTAssertTrue([DE_NUMBER isEqual:[_aUtil getExampleNumberForType:@"DE" type:NBEPhoneNumberTypeFIXED_LINE error:nil]]);
-        XCTAssertNil([_aUtil getExampleNumberForType:@"DE" type:NBEPhoneNumberTypeMOBILE error:nil]);
+        XCTAssertNil([_aUtil getExampleNumberForType:@"DE" type:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE error:nil]);
         // For the US, the example number is placed under general description, and
         // hence should be used for both fixed line and mobile, so neither of these
         // should return nil.
