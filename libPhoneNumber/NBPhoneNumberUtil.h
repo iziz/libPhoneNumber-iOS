@@ -99,6 +99,5 @@
 - (BOOL)formattingRuleHasFirstGroupOnly:(NSString*)nationalPrefixFormattingRule;
 
 @property (nonatomic, strong, readonly) NSDictionary *DIGIT_MAPPINGS;
-@property (nonatomic, strong, readonly) NSBundle *libPhoneBundle;
 
 @end

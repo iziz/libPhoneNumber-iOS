@@ -278,7 +278,7 @@
 		* @private
 		* @type {i18n.phonenumbers.PhoneNumberUtil}
 		*/
-        self.phoneUtil_ = [[NBPhoneNumberUtil alloc] init];
+        self.phoneUtil_ = [NBPhoneNumberUtil sharedInstance];
         self.defaultCountry_ = regionCode;
         self.currentMetaData_ = [self getMetadataForRegion_:self.defaultCountry_];
         /**
@@ -304,7 +304,7 @@
 	self = [self init];
     
     if (self) {
-        self.phoneUtil_ = [[NBPhoneNumberUtil alloc] init];
+        self.phoneUtil_ = [NBPhoneNumberUtil sharedInstance];
         
         self.defaultCountry_ = regionCode;
         self.currentMetaData_ = [self getMetadataForRegion_:self.defaultCountry_];

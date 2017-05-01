@@ -56,7 +56,7 @@
 - (void)setUp
 {
     [super setUp];
-    _aUtil = [[NBPhoneNumberUtil alloc] init];
+    _aUtil = [NBPhoneNumberUtil sharedInstance];
 }
 
 - (void)tearDown

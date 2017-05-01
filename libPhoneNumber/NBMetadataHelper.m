@@ -28,7 +28,7 @@
  - Country Code   (CC) : ISO country codes (2 chars)
  Ref. site (countrycode.org)
  */
-- (NSDictionary *)phoneNumberDataMap {
++ (NSDictionary *)phoneNumberDataMap {
     static NSDictionary *phoneNumberDataDictionary;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -61,7 +61,7 @@
     return phoneNumberDataDictionary;
 }
 
-- (NSDictionary *)CCode2CNMap {
++ (NSDictionary *)CCode2CNMap {
     static NSMutableDictionary *mapCCode2CN;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -77,7 +77,7 @@
     return mapCCode2CN;
 }
 
-- (NSDictionary *)CN2CCodeMap {
++(NSDictionary *)CN2CCodeMap {
     return [self phoneNumberDataMap][@"countryCodeToRegionCodeMap"];
 }
 
@@ -112,7 +112,7 @@
 }
 
 
-- (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber
++ (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber
 {
     NSArray *res = [self CN2CCodeMap][[countryCodeNumber stringValue]];
     if ([res isKindOfClass:[NSArray class]] && [res count] > 0) {
@@ -123,38 +123,13 @@
 }
 
 
-- (NSString *)countryCodeFromRegionCode:(NSString* )regionCode
++ (NSString *)countryCodeFromRegionCode:(NSString* )regionCode
 {
     return [self CCode2CNMap][regionCode];
 }
 
 
-- (NSString *)stringByTrimming:(NSString *)aString
-{
-    if (aString == nil || aString.length <= 0) return aString;
-
-    aString = [self normalizeNonBreakingSpace:aString];
-
-    NSString *aRes = @"";
-    NSArray *newlines = [aString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-
-    for (NSString *line in newlines) {
-        NSString *performedString = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
-        if (performedString.length > 0) {
-            aRes = [aRes stringByAppendingString:performedString];
-        }
-    }
-
-    if (newlines.count <= 0) {
-        return aString;
-    }
-
-    return aRes;
-}
-
-
-- (NSString *)normalizeNonBreakingSpace:(NSString *)aString
++ (NSString *)normalizeNonBreakingSpace:(NSString *)aString
 {
     return [aString stringByReplacingOccurrencesOfString:NB_NON_BREAKING_SPACE withString:@" "];
 }
@@ -169,7 +144,7 @@
  */
 - (NBPhoneMetaData *)getMetadataForRegion:(NSString *)regionCode
 {
-    if ([NBMetadataHelper hasValue:regionCode] == NO) {
+    if ([[self class] hasValue:regionCode] == NO) {
         return nil;
     }
 
@@ -179,7 +154,7 @@
         return _cachedMetaData;
     }
 
-    NSDictionary *dict = [self phoneNumberDataMap][@"countryToMetadata"];
+    NSDictionary *dict = [[self class] phoneNumberDataMap][@"countryToMetadata"];
     NSArray *entry = dict[regionCode];
     if (entry) {
         NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] initWithEntry:entry];
