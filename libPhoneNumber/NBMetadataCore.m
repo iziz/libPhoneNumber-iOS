@@ -18,7 +18,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[135789]\\d{6,9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1624\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"1624456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1624\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1624456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7(?:4576|[59]24\\d)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7924123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"808162\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8081624567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:872299|90[0167]624)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9016247890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
@@ -70,48 +73,41 @@
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:11]];
-        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:12]];
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-7]\\d{5,8}|[89]\\d{6,11}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-7]\\d{5,8}|[89]\\d{6,8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{7}|(?:2[0-3]|3[1-5]|4[02-47-9]|5[1-3])\\d{6,7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{7}|(?:2[0-3]|3[1-5]|4[02-47-9]|5[1-3])\\d{6,7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        [mobile_descArrayPL addObject: [NSNumber numberWithInt:11]];
-        [mobile_descArrayPL addObject: [NSNumber numberWithInt:12]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9(?:[1-9]\\d{6,10}|01\\d{6,9})" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"912345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9(?:01\\d|[1259]\\d{2}|7(?:[0679]\\d|51)|8\\d{1,2})\\d{5}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"921234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80[01]\\d{4,7}" withPossibleNumberPattern:nil withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"8001234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80[01]\\d{4,6}" withPossibleNumberPattern:nil withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"800123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
         [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:6]];
         [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:[01459]\\d{4,7})" withPossibleNumberPattern:nil withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"611234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:[01]\\d{0,2}|[459]\\d{2})\\d{4}" withPossibleNumberPattern:nil withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"611234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
         [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
-        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:6]];
-        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7[45]\\d{4,7}" withPossibleNumberPattern:nil withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"741234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7[45]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"74123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
         [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -124,7 +120,7 @@
         NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
         [uan_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [uan_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[76]2\\d{6,7}" withPossibleNumberPattern:nil withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"62123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:62\\d?|72)\\d{6}" withPossibleNumberPattern:nil withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"62123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
@@ -152,54 +148,34 @@
         [numberFormats_FormatArray addObject:numberFormats0];
 
         NSMutableArray *numberFormats1_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats1_patternArray addObject:@"6[09]"];
-        NBNumberFormat *numberFormats1 = [[NBNumberFormat alloc] initWithPattern:@"(6[09])(\\d{4})(\\d{3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats1_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats1_patternArray addObject:@"[2-5]"];
+        NBNumberFormat *numberFormats1 = [[NBNumberFormat alloc] initWithPattern:@"([2-5]\\d)(\\d{3})(\\d{3,4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats1_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats1];
 
         NSMutableArray *numberFormats2_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats2_patternArray addObject:@"[67]2"];
-        NBNumberFormat *numberFormats2 = [[NBNumberFormat alloc] initWithPattern:@"([67]2)(\\d{3})(\\d{3,4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats2_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats2_patternArray addObject:@"9"];
+        NBNumberFormat *numberFormats2 = [[NBNumberFormat alloc] initWithPattern:@"(9\\d)(\\d{3})(\\d{3,4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats2_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats2];
 
         NSMutableArray *numberFormats3_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats3_patternArray addObject:@"[2-5]"];
-        NBNumberFormat *numberFormats3 = [[NBNumberFormat alloc] initWithPattern:@"([2-5]\\d)(\\d{3})(\\d{3,4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats3_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats3_patternArray addObject:@"6[01]"];
+        NBNumberFormat *numberFormats3 = [[NBNumberFormat alloc] initWithPattern:@"(6[01])(\\d{2})(\\d{2,3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats3_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats3];
 
         NSMutableArray *numberFormats4_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats4_patternArray addObject:@"9"];
-        NBNumberFormat *numberFormats4 = [[NBNumberFormat alloc] initWithPattern:@"(9\\d)(\\d{3})(\\d{3,4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats4_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats4_patternArray addObject:@"[67]"];
+        NBNumberFormat *numberFormats4 = [[NBNumberFormat alloc] initWithPattern:@"([67]\\d)(\\d{3})(\\d{3,4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats4_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats4];
 
         NSMutableArray *numberFormats5_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats5_patternArray addObject:@"9"];
-        NBNumberFormat *numberFormats5 = [[NBNumberFormat alloc] initWithPattern:@"(9\\d)(\\d{4})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats5_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats5_patternArray addObject:@"8"];
+        NBNumberFormat *numberFormats5 = [[NBNumberFormat alloc] initWithPattern:@"(80[01])(\\d{2})(\\d{2,3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats5_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats5];
 
         NSMutableArray *numberFormats6_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats6_patternArray addObject:@"9"];
-        NBNumberFormat *numberFormats6 = [[NBNumberFormat alloc] initWithPattern:@"(9\\d)(\\d{3,4})(\\d{3})(\\d{3})" withFormat:@"$1 $2 $3 $4" withLeadingDigitsPatterns:numberFormats6_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats6_patternArray addObject:@"8"];
+        NBNumberFormat *numberFormats6 = [[NBNumberFormat alloc] initWithPattern:@"(80[01])(\\d{3})(\\d{3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats6_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats6];
-
-        NSMutableArray *numberFormats7_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats7_patternArray addObject:@"6[0145]|7"];
-        NBNumberFormat *numberFormats7 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{2})(\\d{2})(\\d{2,3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats7_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
-        [numberFormats_FormatArray addObject:numberFormats7];
-
-        NSMutableArray *numberFormats8_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats8_patternArray addObject:@"6[0145]|7"];
-        NBNumberFormat *numberFormats8 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{2})(\\d{3,4})(\\d{3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats8_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
-        [numberFormats_FormatArray addObject:numberFormats8];
-
-        NSMutableArray *numberFormats9_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats9_patternArray addObject:@"8"];
-        NBNumberFormat *numberFormats9 = [[NBNumberFormat alloc] initWithPattern:@"(80[01])(\\d{2})(\\d{2,3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats9_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
-        [numberFormats_FormatArray addObject:numberFormats9];
-
-        NSMutableArray *numberFormats10_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats10_patternArray addObject:@"8"];
-        NBNumberFormat *numberFormats10 = [[NBNumberFormat alloc] initWithPattern:@"(80[01])(\\d{3,4})(\\d{3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats10_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
-        [numberFormats_FormatArray addObject:numberFormats10];
         self.numberFormats = numberFormats_FormatArray;
 
         NSMutableArray *intlNumberFormats_FormatArray = [[NSMutableArray alloc] init];
@@ -321,11 +297,16 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:11|2[02]|33|4[04]|79)[2-7]\\d{7}|80[2-467]\\d{7}|(?:1(?:2[0-249]|3[0-25]|4[145]|[59][14]|6[014]|7[1257]|8[01346])|2(?:1[257]|3[013]|4[01]|5[0137]|6[0158]|78|8[1568]|9[14])|3(?:26|4[1-3]|5[34]|6[01489]|7[02-46]|8[159])|4(?:1[36]|2[1-47]|3[15]|5[12]|6[0-26-9]|7[0-24-9]|8[013-57]|9[014-7])|5(?:1[025]|[36][25]|22|4[28]|5[12]|[78]1|9[15])|6(?:12|[2345]1|57|6[13]|7[14]|80)|7(?:12|2[14]|3[134]|4[47]|5[15]|[67]1|88)|8(?:16|2[014]|3[126]|6[136]|7[078]|8[34]|91))[2-7]\\d{6}|(?:(?:1(?:2[35-8]|3[346-9]|4[236-9]|[59][0235-9]|6[235-9]|7[34689]|8[257-9])|2(?:1[134689]|3[24-8]|4[2-8]|5[25689]|6[2-4679]|7[13-79]|8[2-479]|9[235-9])|3(?:01|1[79]|2[1-5]|4[25-8]|5[125689]|6[235-7]|7[157-9]|8[2-467])|4(?:1[14578]|2[5689]|3[2-467]|5[4-7]|6[35]|73|8[2689]|9[2389])|5(?:[16][146-9]|2[14-8]|3[1346]|4[14-69]|5[46]|7[2-4]|8[2-8]|9[246])|6(?:1[1358]|2[2457]|3[2-4]|4[235-7]|[57][2-689]|6[24-578]|8[1-6])|8(?:1[1357-9]|2[235-8]|3[03-57-9]|4[0-24-9]|5\\d|6[2457-9]|7[1-6]|8[1256]|9[2-4]))\\d|7(?:(?:1[013-9]|2[0235-9]|3[2679]|4[1-35689]|5[2-46-9]|[67][02-9]|9\\d)\\d|8(?:2[0-6]|[013-8]\\d)))[2-7]\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"1123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:11|2[02]|33|4[04]|79)[2-7]\\d{7}|80[2-467]\\d{7}|(?:1(?:2[0-249]|3[0-25]|4[145]|[59][14]|6[014]|7[1257]|8[01346])|2(?:1[257]|3[013]|4[01]|5[0137]|6[0158]|78|8[1568]|9[14])|3(?:26|4[1-3]|5[34]|6[01489]|7[02-46]|8[159])|4(?:1[36]|2[1-47]|3[15]|5[12]|6[0-26-9]|7[0-24-9]|8[013-57]|9[014-7])|5(?:1[025]|[36][25]|22|4[28]|5[12]|[78]1|9[15])|6(?:12|[2345]1|57|6[13]|7[14]|80)|7(?:12|2[14]|3[134]|4[47]|5[15]|[67]1|88)|8(?:16|2[014]|3[126]|6[136]|7[078]|8[34]|91))[2-7]\\d{6}|(?:(?:1(?:2[35-8]|3[346-9]|4[236-9]|[59][0235-9]|6[235-9]|7[34689]|8[257-9])|2(?:1[134689]|3[24-8]|4[2-8]|5[25689]|6[2-4679]|7[13-79]|8[2-479]|9[235-9])|3(?:01|1[79]|2[1-5]|4[25-8]|5[125689]|6[235-7]|7[157-9]|8[2-467])|4(?:1[14578]|2[5689]|3[2-467]|5[4-7]|6[35]|73|8[2689]|9[2389])|5(?:[16][146-9]|2[14-8]|3[1346]|4[14-69]|5[46]|7[2-4]|8[2-8]|9[246])|6(?:1[1358]|2[2457]|3[2-4]|4[235-7]|[57][2-689]|6[24-578]|8[1-6])|8(?:1[1357-9]|2[235-8]|3[03-57-9]|4[0-24-9]|5\\d|6[2457-9]|7[1-6]|8[1256]|9[2-4]))\\d|7(?:(?:1[013-9]|2[0235-9]|3[2679]|4[1-35689]|5[2-46-9]|[67][02-9]|9\\d)\\d|8(?:2[0-6]|[013-8]\\d)))[2-7]\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:600[1-3]\\d|7(?:0\\d{3}|19[0-5]\\d|2(?:[0235679]\\d{2}|[14][017-9]\\d|8(?:[0-59]\\d|[678][089]))|3(?:[05-8]\\d{2}|1(?:[089]\\d|7[5-8])|2(?:[0-49][089]|[5-8]\\d)|3[017-9]\\d|4(?:[07-9]\\d|11)|9(?:[016-9]\\d|[2-5][089]))|4(?:0\\d{2}|1(?:[015-9]\\d|[23][089]|4[089])|2(?:0[089]|[1-7][089]|[89]\\d)|3(?:[0-8][089]|9\\d)|4(?:[089]\\d|11|7[02-8])|[56]\\d[089]|7(?:[089]\\d|11|7[02-8])|8(?:[0-24-7][089]|[389]\\d)|9(?:[0-6][089]|7[089]|[89]\\d))|5(?:[0346-8]\\d{2}|1(?:[089]\\d|11|7[02-9])|2(?:[04-9]\\d|[123][089])|5[017-9]\\d|9(?:[0-6][089]|[7-9]\\d))|6(?:0(?:[0-47]\\d|[5689][089])|(?:1[0-257-9]|3[19]|[6-9]\\d)\\d|2(?:[0-4]\\d|50)|4(?:6[89]|[789][089])|5(?:[0-367][089]|[4589]\\d))|7(?:0(?:0[02-9]|[16][089]|[289]\\d|[37][89])|[1-9]\\d{2})|8(?:[0-79]\\d{2}|8(?:[089]\\d|11|7[02-9]))|9(?:0(?:0[01]|[3-8]\\d|90)|7(?:[2-8]\\d|9[07-9])|8\\d{2}|9(?:[03-9]\\d|11|2[234])))|8(?:0(?:[01589]\\d{2}|6[67]\\d|7(?:[2-8]\\d|9[056]))|1(?:[02-57-9]\\d{2}|1(?:[0135-9]\\d|22|44)|6[089]\\d)|2(?:0[08]\\d|[14](?:[089]\\d|7[02-8])|[235-9]\\d{2})|3(?:[0357-9]\\d{2}|1(?:[089]\\d|7[02-6])|2(?:[09]\\d|77|8[0-689])|4[1-9]\\d|6(?:[089]\\d|7[02-7]))|[45]\\d{3}|6(?:[02457-9]\\d{2}|1(?:[089]\\d|7[02-8])|3(?:[089]\\d|7[02358])|6(?:[08]\\d|7[02-8]|9[01]))|7(?:0[07-9]\\d|[1-69]\\d{2}|[78](?:[089]\\d|7[02-8]))|8(?:[0-25-9]\\d{2}|3(?:[089]\\d|7[02-8])|4(?:[0489]\\d|7[2-68]))|9(?:[02-9]\\d{2}|1(?:[0289]\\d|7[2-6])))|9\\d{4})\\d{5}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"9987654321" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:600[1-3]\\d|7(?:0\\d{3}|19[0-5]\\d|2(?:[0235679]\\d{2}|[14][017-9]\\d|8(?:[0-59]\\d|[678][089]))|3(?:[05-8]\\d{2}|1(?:[089]\\d|7[5-8])|2(?:[0-49][089]|[5-8]\\d)|3[017-9]\\d|4(?:[07-9]\\d|11)|9(?:[016-9]\\d|[2-5][089]))|4(?:0\\d{2}|1(?:[015-9]\\d|[23][089]|4[089])|2(?:0[089]|[1-7][089]|[89]\\d)|3(?:[0-8][089]|9\\d)|4(?:[089]\\d|11|7[02-8])|[56]\\d[089]|7(?:[089]\\d|11|7[02-8])|8(?:[0-24-7][089]|[389]\\d)|9(?:[0-6][089]|7[089]|[89]\\d))|5(?:[0346-8]\\d{2}|1(?:[07-9]\\d|11)|2(?:[04-9]\\d|[123][089])|5[017-9]\\d|9(?:[0-6][089]|[7-9]\\d))|6(?:0(?:[0-47]\\d|[5689][089])|(?:1[0-257-9]|[6-9]\\d)\\d|2(?:[0-4]\\d|[5-9][089])|3(?:[02-8][089]|[19]\\d)|4\\d[089]|5(?:[0-367][089]|[4589]\\d))|7(?:0(?:0[02-9]|[13-6][089]|[289]\\d|7[89])|[1-9]\\d{2})|8(?:[0-79]\\d{2}|8(?:[089]\\d|11|7[02-9]))|9(?:[089]\\d{2}|313|7(?:[02-8]\\d|9[07-9])))|8(?:0(?:[01589]\\d{2}|6[67]\\d|7(?:[02-8]\\d|9[05-9]))|1(?:[02-57-9]\\d{2}|1(?:[0-35-9]\\d|4[0-46-9])|6(?:[089]\\d|7[02-8]))|2(?:0(?:[089]\\d|7[02])|[14](?:[089]\\d|7[02-8])|[235-9]\\d{2})|3(?:[0357-9]\\d{2}|1(?:[089]\\d|7[02-6])|2(?:[09]\\d|77|8[0-689])|4(?:0[1-7]|[1-9]\\d)|6(?:[089]\\d|7[02-7]))|[45]\\d{3}|6(?:[02457-9]\\d{2}|1(?:[089]\\d|7[02-8])|3(?:[089]\\d|7[02-68])|6(?:[08]\\d|7[02-8]|9[01]))|7(?:0[07-9]\\d|[1-69]\\d{2}|[78](?:[089]\\d|7[02-8]))|8(?:[0-25-9]\\d{2}|3(?:[089]\\d|7[02-8])|4(?:[0489]\\d|7[02-68]))|9(?:[02-9]\\d{2}|1(?:[0289]\\d|7[2-6])))|9\\d{4})\\d{5}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"8123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"00800\\d{7}|1(?:600\\d{6}|80(?:0\\d{4,9}|3\\d{9}))" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"1800123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
@@ -370,9 +351,9 @@
         NSMutableArray *numberFormats_FormatArray = [[NSMutableArray alloc] init];
 
         NSMutableArray *numberFormats0_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats0_patternArray addObject:@"600|7(?:[02-8]|19|9[07-9])|8(?:0[015-9]|[1-9])|9"];
-        [numberFormats0_patternArray addObject:@"600|7(?:[078]|19[0-5]|2(?:[02356-9]|[14][017-9]|9[389])|3(?:[025-9]|1[07-9]|[34][017-9])|4(?:[0-35689]|[47][017-9])|5(?:[02346-9]|1[017-9]|5[017-9])|6(?:[05-9]|1[0-257-9]|2[0-5]|3[19]|4[6-9])|9(?:[089]|7[2-9]))|8(?:0(?:[01589]|6[67]|7[2-9])|1(?:[02-57-9]|1[0135-9]|6[089])|2(?:0[08]|[14][07-9]|[235-9])|3(?:[0357-9]|[126][07-9]|4[1-9])|[45]|6(?:[02457-9]|[136][07-9])|7(?:[078][07-9]|[1-69])|8(?:[0-25-9]|3[07-9]|4[047-9])|9(?:[02-9]|1[027-9]))|9"];
-        [numberFormats0_patternArray addObject:@"600|7(?:0|19[0-5]|2(?:[0235679]|[14][017-9]|8(?:[0-569]|[78][089])|9[389])|3(?:[05-8]|1(?:[089]|7[5-9])|2(?:[5-8]|[0-49][089])|3[017-9]|4(?:[07-9]|11)|9(?:[01689]|[2345][089]|40|7[0189]))|4(?:[056]|1(?:[0135-9]|[23][089]|2[089]|4[089])|2(?:0[089]|[1-7][089]|[89])|3(?:[0-8][089]|9)|4(?:[089]|11|7[02-8])|7(?:[089]|11|7[02-8])|8(?:[0-24-7][089]|[389])|9(?:[0-7][089]|[89]))|5(?:[0346-9]|1(?:[0189]|7[02-9])|2(?:[03-9]|[12][089])|5[017-9])|6(?:[06-9]|1[0-257-9]|2[0-5]|3[19]|4(?:6[89]|[7-9][089])|5(?:[0-367][089]|[4589]))|7(?:0(?:[02-9]|1[089])|[1-9])|8(?:[0-79]|8(?:0[0189]|11|8[013-9]|9))|9(?:[08]|7(?:[2-8]|9[07-9])|9(?:[03-9]|11|2[234])))|8(?:0(?:[01589]|6[67]|7(?:[2-8]|9[056]))|1(?:[02-57-9]|1(?:[0135-9]|22|44)|6[089])|2(?:0[08]|[14](?:[089]|7[02-8])|[235-9])|3(?:[0357-9]|1(?:[089]|7[02-6])|2(?:[09]|77|8[0-689])|4[1-9]|6(?:[089]|7[02-7]))|[45]|6(?:[02457-9]|1(?:[089]|7[02-8])|3(?:[089]|7[02358])|6(?:[08]|7[02-8]|9[01]))|7(?:0[07-9]|[1-69]|7(?:[089]|7[02-8])|8(?:[089]|7[02-8]))|8(?:[0-25-9]|3(?:[089]|7[02-8])|4(?:[0489]|7[02-68]))|9(?:[02-9]|1(?:[0289]|7[2-6])))|9"];
+        [numberFormats0_patternArray addObject:@"600|7(?:[02-8]|19|9[037-9])|8(?:0[015-9]|[1-9])|9"];
+        [numberFormats0_patternArray addObject:@"600|7(?:[078]|19[0-5]|2(?:[02356-9]|[14][017-9]|9[389])|3(?:[025-9]|1[07-9]|[34][017-9])|4(?:[0-35689]|[47][017-9])|5(?:[02346-9]|1[017-9]|5[017-9])|6(?:[02-9]|1[0-257-9])|9(?:[089]|31|7[02-9]))|8(?:0(?:[01589]|6[67]|7[02-9])|1(?:[0-57-9]|6[07-9])|2(?:0[07-9]|[14][07-9]|[235-9])|3(?:[03-57-9]|[126][07-9])|[45]|6(?:[02457-9]|[136][07-9])|7(?:[078][07-9]|[1-69])|8(?:[0-25-9]|3[07-9]|4[047-9])|9(?:[02-9]|1[027-9]))|9"];
+        [numberFormats0_patternArray addObject:@"600|7(?:0|19[0-5]|2(?:[0235679]|[14][017-9]|8(?:[0-569]|[78][089])|9[389])|3(?:[05-8]|1(?:[089]|7[5-9])|2(?:[5-8]|[0-49][089])|3[017-9]|4(?:[07-9]|11)|9(?:[01689]|[2345][089]|40|7[0189]))|4(?:[056]|1(?:[0135-9]|[23][089]|2[089]|4[089])|2(?:0[089]|[1-7][089]|[89])|3(?:[0-8][089]|9)|4(?:[089]|11|7[02-8])|7(?:[089]|11|7[02-8])|8(?:[0-24-7][089]|[389])|9(?:[0-7][089]|[89]))|5(?:[0346-9]|1[017-9]|2(?:[03-9]|[12][089])|5[017-9])|6(?:[0346-9]|1[0-257-9]|2(?:[0-4]\\d|[5-9][089])|5(?:[0-367][089]|[4589]))|7(?:0(?:[02-9]|1[089])|[1-9])|8(?:[0-79]|8(?:0[0189]|11|8[013-9]|9))|9(?:[089]|313|7(?:[02-8]|9[07-9])))|8(?:0(?:[01589]|6[67]|7(?:[02-8]|9[05-9]))|1(?:[02-57-9]|1(?:[0-35-9]|4[0-46-9])|6(?:[089]|7[02-8]))|2(?:0(?:[089]|7[02])|[14](?:[089]|7[02-8])|[235-9])|3(?:[0357-9]|1(?:[089]|7[02-6])|2(?:[09]|77|8[0-689])|4(?:0[1-7]|[1-9])|6(?:[089]|7[02-7]))|[45]|6(?:[02457-9]|1(?:[089]|7[02-8])|3(?:[089]|7[02-68])|6(?:[08]|7[02-8]|9[01]))|7(?:0[07-9]|[1-69]|7(?:[089]|7[02-8])|8(?:[089]|7[02-8]))|8(?:[0-25-9]|3(?:[089]|7[02-8])|4(?:[0489]|7[02-68]))|9(?:[02-9]|1(?:[0289]|7[2-6])))|9"];
         NBNumberFormat *numberFormats0 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{5})(\\d{5})" withFormat:@"$1 $2" withLeadingDigitsPatterns:numberFormats0_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats0];
 
@@ -382,7 +363,7 @@
         [numberFormats_FormatArray addObject:numberFormats1];
 
         NSMutableArray *numberFormats2_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats2_patternArray addObject:@"1(?:2[0-249]|3[0-25]|4[145]|[569][14]|7[1257]|8[1346]|[68][1-9])|2(?:1[257]|3[013]|4[01]|5[0137]|6[0158]|78|8[1568]|9[14])|3(?:26|4[1-3]|5[34]|6[01489]|7[02-46]|8[159])|4(?:1[36]|2[1-47]|3[15]|5[12]|6[0-26-9]|7[0-24-9]|8[013-57]|9[014-7])|5(?:1[025]|[36][25]|22|4[28]|5[12]|[78]1|9[15])|6(?:12|[2345]1|57|6[13]|7[14]|80)|7(?:12|2[14]|3[134]|4[47]|5[15]|[67]1|88)|8(?:16|2[014]|3[126]|6[136]|7[078]|8[34]|91)"];
+        [numberFormats2_patternArray addObject:@"1(?:2[0-249]|3[0-25]|4[145]|[59][14]|7[1257]|[68][1-9])|2(?:1[257]|3[013]|4[01]|5[0137]|6[0158]|78|8[1568]|9[14])|3(?:26|4[1-3]|5[34]|6[01489]|7[02-46]|8[159])|4(?:1[36]|2[1-47]|3[15]|5[12]|6[0-26-9]|7[0-24-9]|8[013-57]|9[014-7])|5(?:1[025]|[36][25]|22|4[28]|5[12]|[78]1|9[15])|6(?:12|[2-4]1|5[17]|6[13]|7[14]|80)|7(?:12|2[14]|3[134]|4[47]|5[15]|[67]1|88)|8(?:16|2[014]|3[126]|6[136]|7[078]|8[34]|91)"];
         NBNumberFormat *numberFormats2 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{3})(\\d{3})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats2_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats2];
 
@@ -458,11 +439,11 @@
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"20\\d{6,7}|4(?:[0136]\\d{7}|[245]\\d{5,7})|5(?:[08]\\d{7}|[1-79]\\d{5,7})|6(?:[01457-9]\\d{5,7}|[26]\\d{7})" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"202012345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"20\\d{6,7}|4(?:0\\d{6,7}|[136]\\d{7}|[245]\\d{5,7})|5(?:[08]\\d{7}|[1-79]\\d{5,7})|6(?:[01457-9]\\d{5,7}|2\\d{7}|6\\d{6,7})" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"202012345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7(?:[0-369]\\d|4[0-2]|5[0-6]|7[0-7]|8[0-25-9])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"712123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7(?:[0-3679]\\d|4[0-479]|5[0-6]|8[0-25-9])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"712123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -557,7 +538,10 @@
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2[13]|3(?:0\\d|[14])|[5-7][14]|41|8[1468])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"21212862" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2[13]|3(?:0\\d|[14])|[5-7][14]|41|8[1468])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"21212862" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -721,8 +705,8 @@
         NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-489]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:[248]\\d|5[1-5]|94)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"22453300" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3[1-9]\\d|4\\d{2}|9(?:8[0-35]|9[5-9]))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"34101234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:2\\d|5[1-5]|81|9[149])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"22453300" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[34]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"34101234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"80012345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
@@ -736,7 +720,7 @@
         NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
         [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
         self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"98[89]\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"98901234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:9(?:[67][0-4]|8[0-3589]|9\\d))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"98901234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
         [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -952,7 +936,11 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3(?:1(?:[256]\\d|3[1-9]|47)|2(?:22|3[0-479]|6[0-7])|4(?:22|5[6-9]|6\\d)|5(?:22|3[4-7]|59|6\\d)|6(?:22|5[35-7]|6\\d)|7(?:22|3[468]|4[1-9]|59|[67]\\d)|9(?:22|4[1-8]|6\\d))|6(?:09|12|2[2-4])\\d)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"312123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3(?:1(?:[256]\\d|3[1-9]|47)|2(?:22|3[0-479]|6[0-7])|4(?:22|5[6-9]|6\\d)|5(?:22|3[4-7]|59|6\\d)|6(?:22|5[35-7]|6\\d)|7(?:22|3[468]|4[1-9]|59|[67]\\d)|9(?:22|4[1-8]|6\\d))|6(?:09|12|2[2-4])\\d)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"312123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -1045,7 +1033,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1\\d|2[2-9]|3[2-7]|4[24-9]|5[2-79]|6[23689]|7[2-9]|8[2-57-9]|9[2-69])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1\\d|2[2-9]|3[2-7]|4[24-9]|5[2-79]|6[23689]|7[2-9]|8[2-57-9]|9[2-69])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -1132,9 +1123,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5789]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"758(?:4(?:30|5[0-9]|6[2-9]|8[0-2])|57[0-2]|638)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7584305678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"758(?:28[4-7]|384|4(?:6[01]|8[4-9])|5(?:1[89]|20|84)|7(?:1[2-9]|2[0-8]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7582845678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"758(?:4(?:30|5[0-9]|6[2-9]|8[0-2])|57[0-2]|638)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"7584305678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"758(?:28[4-7]|384|4(?:6[01]|8[4-9])|5(?:1[89]|20|84)|7(?:1[2-9]|2[0-8]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"7582845678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -1204,7 +1201,11 @@
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{7}|(?:2[13-5]|3[02367]|4[023]|5[03]|6[026])\\d{6,7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{7}|(?:2[13-5]|3[02367]|4[023]|5[03]|6[026])\\d{6,7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -1303,7 +1304,11 @@
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2[3-6]|3[2-6]|4[2-4]|[5-7][2-5])(?:[237-9]|4[56]|5\\d|6\\d?)\\d{5}|23(?:4[234]|8\\d{2})\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"23756789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2[3-6]|3[2-6]|4[2-4]|[5-7][2-5])(?:[237-9]|4[56]|5\\d|6\\d?)\\d{5}|23(?:4[234]|8\\d{2})\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"23756789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -1391,9 +1396,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"876(?:5(?:0[12]|1[0-468]|2[35]|63)|6(?:0[1-3579]|1[027-9]|[23]\\d|40|5[06]|6[2-589]|7[05]|8[04]|9[4-9])|7(?:0[2-689]|[1-6]\\d|8[056]|9[45])|9(?:0[1-8]|1[02378]|[2-8]\\d|9[2-468]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8765123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"876(?:2(?:[16-9]\\d|58)|[348]\\d{2}|5(?:0[3-9]|2[0-246-9]|6[0-24-9]|[3-578]\\d)|7(?:0[07]|7\\d|8[1-47-9]|9[0-36-9])|9(?:[01]9|9[0579]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8762101234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"876(?:5(?:0[12]|1[0-468]|2[35]|63)|6(?:0[1-3579]|1[027-9]|[23]\\d|40|5[06]|6[2-589]|7[05]|8[04]|9[4-9])|7(?:0[2-689]|[1-6]\\d|8[056]|9[45])|9(?:0[1-8]|1[02378]|[2-8]\\d|9[2-468]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"8765123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"876(?:2(?:[16-9]\\d|58)|[348]\\d{2}|5(?:0[3-9]|2[0-246-9]|6[0-24-9]|[3-578]\\d)|7(?:0[07]|7\\d|8[1-47-9]|9[0-36-9])|9(?:[01]9|9[0579]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"8762101234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -1637,8 +1648,8 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:4(?:1[0-24-6]|2[0-7]|[37][0-8]|4[0-245]|5[0-68]|6\\d|8[0-36-8])|5(?:05|[156]\\d|2[02578]|3[013-79]|4[03-7]|7[0-2578]|8[0-35-9]|9[013-689])|87[23])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"4101234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"38[589]\\d{6}|(?:6(?:1[1-8]|2[056]|3[089]|4[0167]|5[0159]|[67][0-69]|9\\d)|7(?:5[057]|6[0-2]|[78]\\d)|8(?:2[0-59]|3[0-4]|[469]\\d|5[1-9]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6111234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:4(?:1[0-24-69]|2[0-7]|[37][0-8]|4[0-245]|5[0-68]|6\\d|8[0-36-8])|5(?:05|[156]\\d|2[02578]|3[0-79]|4[03-7]|7[0-2578]|8[0-35-9]|9[013-689])|87[23])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"4101234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"38[589]\\d{6}|(?:6(?:1[1-8]|2[0-6]|3[027-9]|4[014679]|5[0159]|[67][0-69]|9\\d)|7(?:5[057]|[6-8]\\d)|8(?:2[0-59]|3[0-4]|[469]\\d|5[1-9]|88))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6111234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:7]];
@@ -1671,7 +1682,7 @@
 
         NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
         [voicemail_descArrayPL addObject: [NSNumber numberWithInt:7]];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:6(?:2[1-478]|49|8\\d)|8(?:7[0189]|80)|95[48])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"6211234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:6(?:2[78]|49|8\\d)|8(?:7[0189]|80)|95[48])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:voicemail_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"6271234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
         [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -1815,7 +1826,7 @@
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7(?:55|7[025-9]|8[015-9]|9[0-25-9])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"790123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7(?:55|7[025-9]|8[0-25-9]|9[0-25-9])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"790123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -2669,9 +2680,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"869(?:2(?:29|36)|302|4(?:6[015-9]|70))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8692361234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"869(?:5(?:5[6-8]|6[5-7])|66\\d|76[02-7])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8697652917" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"869(?:2(?:29|36)|302|4(?:6[015-9]|70))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"8692361234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"869(?:5(?:5[6-8]|6[5-7])|66\\d|76[02-7])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"8697652917" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -2730,24 +2747,17 @@
 
         NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
 
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-9]\\d{7,8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
-        NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
-        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:20[2-8]|3(?:0[2-7]|[12][35-7]|3[4-7])|4(?:0[2367]|1[267])|5(?:0[467]|1[267]|2[367]))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"30234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:00\\d|3[24]\\d|61\\d|7(?:[0-8]\\d|9(?:[3-9]|[0-2]\\d))|[89]\\d{2})\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"67622901" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-
-        NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
-        [tollFree_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80\\d{6}" withPossibleNumberPattern:nil withPossibleLength:tollFree_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"80080002" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-
-        NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
-        [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:9(?:4[1568]|5[178]))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:premiumRate_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"94515151" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:20[2-8]|3(?:0[2-7]|[12][235-7]|3[24-7])|4(?:0[2-467]|1[267])|5(?:0[2467]|1[267]|2[2367]))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"30234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:00\\d|3[024]\\d|6[0-25]\\d|[7-9]\\d{2})\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"67622901" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80[0-258]\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"80080002" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:9(?:4[1568]|5[178]))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"94515151" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
         [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -2756,18 +2766,12 @@
         NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
         [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
         self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-
-        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
-        [voip_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"78[1-9]\\d{5}" withPossibleNumberPattern:nil withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"78108780" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"78[1-49]\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"78108780" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
         [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
         self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-
-        NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
-        [uan_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"77\\d{6}" withPossibleNumberPattern:nil withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"77273012" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"77[1-9]\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"77273012" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
@@ -2791,15 +2795,8 @@
 
         NSMutableArray *numberFormats0_patternArray = [[NSMutableArray alloc] init];
         [numberFormats0_patternArray addObject:@"[2-57-9]|6[036-9]"];
-        [numberFormats0_patternArray addObject:@"[2-57-9]|6(?:[03689]|7(?:[0-8]|9[3-9]))"];
         NBNumberFormat *numberFormats0 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{2})(\\d{3})(\\d{3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats0_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats0];
-
-        NSMutableArray *numberFormats1_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats1_patternArray addObject:@"679"];
-        [numberFormats1_patternArray addObject:@"679[0-2]"];
-        NBNumberFormat *numberFormats1 = [[NBNumberFormat alloc] initWithPattern:@"(67)(9)(\\d{3})(\\d{3})" withFormat:@"$1 $2 $3 $4" withLeadingDigitsPatterns:numberFormats1_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
-        [numberFormats_FormatArray addObject:numberFormats1];
         self.numberFormats = numberFormats_FormatArray;
 
         NSMutableArray *intlNumberFormats_FormatArray = [[NSMutableArray alloc] init];
@@ -2987,7 +2984,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[189]1|2[13-7]|3[1-8]|4[157]|5[12457]|6[35-7])[2-57]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"112345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[189]1|2[13-7]|3[1-8]|4[157]|5[12457]|6[35-7])[2-57]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"112345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7[0125-8]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"712345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
@@ -3192,7 +3192,11 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2\\d{7}|85\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"21234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2\\d{7}|85\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"21234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -3284,7 +3288,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[23]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"20(?:2\\d{2}|4[47]\\d|5[3467]\\d|6[279]\\d|7(?:2[29]|[35]\\d)|8[268]\\d|9[245]\\d)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"202123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"20(?:2\\d{2}|4[47]\\d|5[3467]\\d|6[279]\\d|7(?:2[29]|[35]\\d)|8[268]\\d|9[245]\\d)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"202123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3[2-49]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"321234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
@@ -3611,7 +3618,11 @@
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2|3[1-3]|[46][1-4]|5[1-5])(?:1\\d{2,3}|[1-9]\\d{6,7})" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"22123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:3]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2|3[1-3]|[46][1-4]|5[1-5])(?:1\\d{2,3}|[1-9]\\d{6,7})" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"22123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -3892,8 +3903,14 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[13]\\d{5}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:06|17|28|39)|3[012]\\d)\\d{3}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"106609" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3[58]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"381234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:06|17|28|39)|3[012]\\d)\\d{3}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"106609" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3[58]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"381234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -3977,7 +3994,11 @@
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-578]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:[23]\\d|5[124578]|6[01])|3(?:1[3-6]|[23][2-6]|4[2356])|4(?:[23][2-6]|4[3-6]|5[256]|6[25-8]|7[24-6]|8[4-6]))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"22212345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:[23]\\d|5[124578]|6[01])|3(?:1[3-6]|[23][2-6]|4[2356])|4(?:[23][2-6]|4[3-6]|5[256]|6[25-8]|7[24-6]|8[4-6]))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"22212345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7(?:[0-25-8]\\d{2}|32\\d|421)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"72345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"80012345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"5[02-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"50012345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
@@ -4068,7 +4089,11 @@
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[12]\\d{6,7}|9(?:0[3-9]|[1-9]\\d)\\d{5}|(?:3\\d|4[023568]|5[02368]|6[02-469]|7[4-69]|8[2-9])\\d{6}|(?:4[47]|5[14579]|6[1578]|7[0-357])\\d{5,6}|(?:78|41)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[12]\\d{6,7}|9(?:0[3-9]|[1-9]\\d)\\d{5}|(?:3\\d|4[023568]|5[02368]|6[02-469]|7[4-69]|8[2-9])\\d{6}|(?:4[47]|5[14579]|6[1578]|7[0-357])\\d{5,6}|(?:78|41)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -4274,7 +4299,10 @@
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(?:2\\d{1,2}|[3-5]\\d|6\\d?|[89][0-6]\\d)\\d{4}|2(?:2(?:000\\d{3}|\\d{4})|3\\d{4}|4(?:0\\d{5}|\\d{4})|5(?:1\\d{3,6}|[02-9]\\d{3,5})|[6-9]\\d{4})|4(?:2[245-8]|3(?:[2-46]|56?)|[46][2-6]|5[3-5])\\d{4}|5(?:2(?:2(?:\\d{1,2})?|[3-8])|3[2-68]|4(?:21?|[4-8])|5[23]|6[2-4]|7[2-8]|8[24-7]|9[2-7])\\d{4}|6(?:0[23]|1(?:2(?:0|4\\d)?|[356])|2[2-6]|3[24-6]|4(?:2(?:4\\d)?|[3-6])|5[2-4]|6[2-8]|7(?:[2367]|4\\d|5\\d?|8[145]\\d)|8[245]|9(?:20?|4))\\d{4}|7(?:[04][24-8]|1(?:20?|[3-7])|22|3[2-4]|5[2-7])\\d{4}|8(?:1(?:2\\d{1,2}|[3-689]\\d)|2(?:2\\d|3(?:\\d|20)|[4-8]\\d)|3[24]\\d|4[24-7]\\d|5[245]\\d|6[23]\\d)\\d{3}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"1234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(?:2\\d{1,2}|[3-5]\\d|6\\d?|[89][0-6]\\d)\\d{4}|2(?:2(?:000\\d{3}|\\d{4})|3\\d{4}|4(?:0\\d{5}|\\d{4})|5(?:1\\d{3,6}|[02-9]\\d{3,5})|[6-9]\\d{4})|4(?:2[245-8]|3(?:[2-46]|56?)|[46][2-6]|5[3-5])\\d{4}|5(?:2(?:2(?:\\d{1,2})?|[3-8])|3[2-68]|4(?:21?|[4-8])|5[23]|6[2-4]|7[2-8]|8[24-7]|9[2-7])\\d{4}|6(?:0[23]|1(?:2(?:0|4\\d)?|[356])|2[2-6]|3[24-6]|4(?:2(?:4\\d)?|[3-6])|5[2-4]|6[2-8]|7(?:[2367]|4\\d|5\\d?|8[145]\\d)|8[245]|9(?:20?|4))\\d{4}|7(?:[04][24-8]|1(?:20?|[3-7])|22|3[2-4]|5[2-7])\\d{4}|8(?:1(?:2\\d{1,2}|[3-689]\\d)|2(?:2\\d|3(?:\\d|20)|[4-8]\\d)|3[24]\\d|4[24-7]\\d|5[245]\\d|6[23]\\d)\\d{3}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:7]];
@@ -4654,7 +4682,11 @@
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[12]\\d{7,9}|[57-9]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[12](?:1\\d|2(?:[1-3]\\d?|7\\d)|3[2-8]\\d{1,2}|4[2-68]\\d{1,2}|5[1-4689]\\d{1,2})\\d{5}|5[0568]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"50123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[12](?:1\\d|2(?:[1-3]\\d?|7\\d)|3[2-8]\\d{1,2}|4[2-68]\\d{1,2}|5[1-4689]\\d{1,2})\\d{5}|5[0568]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"50123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -5066,9 +5098,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[3589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"345(?:2(?:22|44)|444|6(?:23|38|40)|7(?:4[35-79]|6[6-9]|77)|8(?:00|1[45]|25|[48]8)|9(?:14|4[035-9]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"3452221234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"345(?:32[1-9]|5(?:1[67]|2[5-7]|4[6-8]|76)|9(?:1[67]|2[2-9]|3[689]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"3453231234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"345(?:2(?:22|44)|444|6(?:23|38|40)|7(?:4[35-79]|6[6-9]|77)|8(?:00|1[45]|25|[48]8)|9(?:14|4[035-9]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"3452221234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"345(?:32[1-9]|5(?:1[67]|2[5-7]|4[6-8]|76)|9(?:1[67]|2[2-9]|3[689]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"3453231234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}|345976\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -5128,9 +5166,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5689]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"670(?:2(?:3[3-7]|56|8[5-8])|32[1238]|4(?:33|8[348])|5(?:32|55|88)|6(?:64|70|82)|78[589]|8[3-9]8|989)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6702345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"670(?:2(?:3[3-7]|56|8[5-8])|32[1238]|4(?:33|8[348])|5(?:32|55|88)|6(?:64|70|82)|78[589]|8[3-9]8|989)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6702345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"670(?:2(?:3[3-7]|56|8[5-8])|32[1238]|4(?:33|8[348])|5(?:32|55|88)|6(?:64|70|82)|78[3589]|8[3-9]8|989)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"6702345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"670(?:2(?:3[3-7]|56|8[5-8])|32[1238]|4(?:33|8[348])|5(?:32|55|88)|6(?:64|70|82)|78[3589]|8[3-9]8|989)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"6702345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -5201,7 +5245,7 @@
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6[2679][18]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"628123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6[25-79][18]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"628123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -5800,7 +5844,11 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1\\d|4[1-4]|5[1-46]|6[1-7]|7[2-46]|8[2-4])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"11234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1\\d|4[1-4]|5[1-46]|6[1-7]|7[2-46]|8[2-4])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"11234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -5897,9 +5945,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5689]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"664491\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6644912345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"66449[2-6]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6644923456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"664491\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"6644912345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"66449[2-6]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"6644923456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -6280,7 +6334,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[25679]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2[1345]|5[1347]|6[123479]|71)\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"212345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2[1345]|5[1347]|6[123479]|71)\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"212345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9[1-6]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"912345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
@@ -6363,7 +6420,11 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1[0-6]\\d|2[13-79][2-6]|3[135-8][2-6]|4[146-9][2-6]|5[135-7][2-6]|6[13-9][2-6]|7[15-9][2-6]|8[1-46-9][2-6]|9[1-79][2-6])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"14567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1[0-6]\\d|2[13-79][2-6]|3[135-8][2-6]|4[146-9][2-6]|5[135-7][2-6]|6[13-9][2-6]|7[15-9][2-6]|8[1-46-9][2-6]|9[1-79][2-6])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"14567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -6638,11 +6699,15 @@
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2\\d{5}(?:\\d{2})?|(?:3[2-68]|4[2-9]|5[2-6]|6[2-58]|7[24578]|8[2-8])\\d{7}|88(?:22\\d{6}|42\\d{4})" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"21234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2\\d{5}(?:\\d{2})?|(?:3[2-68]|4[2-9]|5[2-6]|6[2-58]|7[24578]|8[2-8])\\d{7}|88(?:22\\d{6}|42\\d{4})" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"21234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:81[37]|9(?:0[5-9]|1[024-9]|2[0-35-9]|3[02-9]|4[236-9]|5[056]|7[34-79]|89|9[4-9]))\\d{7}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"9051234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:81[37]|9(?:0[5-9]|1[024-9]|2[0-35-9]|3[02-9]|4[235-9]|5[056]|6[5-7]|7[34-79]|89|9[4-9]))\\d{7}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"9051234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:11]];
@@ -7108,11 +7173,15 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:33|55|81)\\d{8}|(?:2(?:0[01]|2[2-9]|3[1-35-8]|4[13-9]|7[1-689]|8[1-578]|9[467])|3(?:1[1-79]|[2458][1-9]|7[1-8]|9[1-5])|4(?:1[1-57-9]|[24-6][1-9]|[37][1-8]|8[1-35-9]|9[2-689])|5(?:88|9[1-79])|6(?:1[2-68]|[234][1-9]|5[1-3689]|6[12457-9]|7[1-7]|8[67]|9[4-8])|7(?:[13467][1-9]|2[1-8]|5[13-9]|8[1-69]|9[17])|8(?:2[13-689]|3[1-6]|4[124-6]|6[1246-9]|7[1-378]|9[12479])|9(?:1[346-9]|2[1-4]|3[2-46-8]|5[1348]|[69][1-9]|7[12]|8[1-8]))\\d{7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"2221234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:33|55|81)\\d{8}|(?:2(?:0[01]|2[2-9]|3[1-35-8]|4[13-9]|7[1-689]|8[1-578]|9[467])|3(?:1[1-79]|[2458][1-9]|7[1-8]|9[1-5])|4(?:1[1-57-9]|[24-6][1-9]|[37][1-8]|8[1-35-9]|9[2-689])|5(?:88|9[1-79])|6(?:1[2-68]|[234][1-9]|5[1-3689]|6[12457-9]|7[1-7]|8[67]|9[4-8])|7(?:[13467][1-9]|2[1-8]|5[13-9]|8[1-69]|9[17])|8(?:2[13-689]|3[1-6]|4[124-6]|6[1246-9]|7[1-378]|9[12479])|9(?:1[346-9]|2[1-4]|3[2-46-8]|5[1348]|[69][1-9]|7[12]|8[1-8]))\\d{7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2221234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:11]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(?:(?:33|55|81)\\d{8}|(?:2(?:2[2-9]|3[1-35-8]|4[13-9]|7[1-689]|8[1-578]|9[467])|3(?:1[1-79]|[2458][1-9]|7[1-8]|9[1-5])|4(?:1[1-57-9]|[24-6][1-9]|[37][1-8]|8[1-35-9]|9[2-689])|5(?:88|9[1-79])|6(?:1[2-68]|[2-4][1-9]|5[1-3689]|6[12457-9]|7[1-7]|8[67]|9[4-8])|7(?:[13467][1-9]|2[1-8]|5[13-9]|8[1-69]|9[17])|8(?:2[13-689]|3[1-6]|4[124-6]|6[1246-9]|7[1-378]|9[12479])|9(?:1[346-9]|2[1-4]|3[2-46-8]|5[1348]|[69][1-9]|7[12]|8[1-8]))\\d{7})" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"12221234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(?:(?:33|55|81)\\d{8}|(?:2(?:2[1-9]|3[1-35-8]|4[13-9]|7[1-689]|8[1-578]|9[467])|3(?:1[1-79]|[2458][1-9]|7[1-8]|9[1-5])|4(?:1[1-57-9]|[24-6][1-9]|[37][1-8]|8[1-35-9]|9[2-689])|5(?:88|9[1-79])|6(?:1[2-68]|[2-4][1-9]|5[1-3689]|6[12457-9]|7[1-7]|8[67]|9[4-8])|7(?:[13467][1-9]|2[1-8]|5[13-9]|8[1-69]|9[17])|8(?:2[13-689]|3[1-6]|4[124-6]|6[1246-9]|7[1-378]|9[12479])|9(?:1[346-9]|2[1-4]|3[2-46-8]|5[1348]|[69][1-9]|7[12]|8[1-8]))\\d{7})" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"12221234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -7234,7 +7303,12 @@
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:21|42)[2-9]\\d{7}|(?:2[25]|4[0146-9]|5[1-35-7]|6[1-8]|7[14]|8[16]|91)[2-9]\\d{6}|(?:2(?:3[2358]|4[2-4]|9[2-8])|45[3479]|54[2-467]|60[468]|72[236]|8(?:2[2-689]|3[23578]|4[3478]|5[2356])|9(?:2[2-8]|3[27-9]|4[2-6]|6[3569]|9[25-8]))[2-9]\\d{5,6}|58[126]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"2123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:21|42)[2-9]\\d{7}|(?:2[25]|4[0146-9]|5[1-35-7]|6[1-8]|7[14]|8[16]|91)[2-9]\\d{6}|(?:2(?:3[2358]|4[2-4]|9[2-8])|45[3479]|54[2-467]|60[468]|72[236]|8(?:2[2-689]|3[23578]|4[3478]|5[2356])|9(?:2[2-8]|3[27-9]|4[2-6]|6[3569]|9[25-8]))[2-9]\\d{5,6}|58[126]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -7365,7 +7439,11 @@
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3[2-9]\\d|[4-9][2-9])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"323456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3[2-9]\\d|[4-9][2-9])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"323456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -7882,7 +7960,10 @@
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"11\\d{7}|1?(?:2[24-8]|3[35-8]|4[3-68]|6[2-5]|7[235-7])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"112345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"11\\d{7}|1?(?:2[24-8]|3[35-8]|4[3-68]|6[2-5]|7[235-7])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"112345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -8076,7 +8157,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3[2-79]|[49][2-9]|6[235-9]|7[2-57-9])\\d{6}|24099\\d{3}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"32345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3[2-79]|[49][2-9]|6[235-9]|7[2-57-9])\\d{6}|24099\\d{3}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"32345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -8337,9 +8421,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5789]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:787|939)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7872345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:787|939)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7872345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:787|939)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"7872345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:787|939)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"7872345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -8610,7 +8700,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:22[234789]|42[45]|82[01458]|92[369])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"22234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:22[234789]|42[45]|82[01458]|92[369])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"22234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -8937,16 +9030,25 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5689]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"649(?:712|9(?:4\\d|50))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6497121234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"649(?:2(?:3[129]|4[1-7])|3(?:3[1-389]|4[1-8])|4[34][1-3])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6492311234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"649(?:712|9(?:4\\d|50))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"6497121234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"649(?:2(?:3[129]|4[1-7])|3(?:3[1-389]|4[1-8])|4[34][1-3])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"6492311234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
         [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"5(?:00|22|33|44|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"5002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"64971[01]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6497101234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPLLO = [[NSMutableArray alloc] init];
+        [voip_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"64971[01]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:voip_descArrayPLLO withExample:@"6497101234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
         [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -9152,7 +9254,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1\\d|[25][2-8]|3[24-8]|4[24-8]|7[3-8])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"11234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1\\d|[25][2-8]|3[24-8]|4[24-8]|7[3-8])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"11234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -9400,7 +9505,12 @@
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[3-9]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3[1-8]|4[13-8]|5[1-7]|6[12459])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"311234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3[1-8]|4[13-8]|5[1-7]|6[12459])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"311234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:39|50|6[36-8]|7[13]|9[1-9])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"391234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"800123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"900123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
@@ -9500,8 +9610,8 @@
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"801\\d{6}" withPossibleNumberPattern:nil withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"801123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
-        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"802\\d{6}" withPossibleNumberPattern:nil withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"802123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
         [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -9577,7 +9687,7 @@
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[2-68]\\d{5,8}|9\\d{6,8})" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:1(?:6\\d{3,4}|7\\d{3})|[2-9]\\d{7})|[3-5][1-8](?:16\\d{2,3}|\\d{7})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"221234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:1(?:6\\d{3,4}|7\\d{3})|[2-9]\\d{7})|[3-5][1-8](?:1(?:6\\d{2,3}|7\\d{3})|\\d{7})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"221234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -9639,7 +9749,7 @@
 
         NSMutableArray *numberFormats1_patternArray = [[NSMutableArray alloc] init];
         [numberFormats1_patternArray addObject:@"[3-5]"];
-        NBNumberFormat *numberFormats1 = [[NBNumberFormat alloc] initWithPattern:@"([3-5]\\d)(16)(\\d{2,3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats1_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        NBNumberFormat *numberFormats1 = [[NBNumberFormat alloc] initWithPattern:@"([3-5]\\d)(1[67])(\\d{2,3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats1_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats1];
 
         NSMutableArray *numberFormats2_patternArray = [[NSMutableArray alloc] init];
@@ -9693,7 +9803,11 @@
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[26]1|3[289]|4[124678]|7[123]|8[1236])\\d{5,7}|(?:2(?:2[4568]|7[15]|9[1-5])|3(?:18|3[167]|4[2357]|51)|4(?:18|2[45]|3[12]|5[13]|64|71|9[1-47])|5(?:[1-4]\\d|5[0234])|6(?:3[1-3]|44|7[1-4678])|7(?:17|4[0-4]|6[1-578]|75|8[0-8])|858)\\d{5,6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"212345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[26]1|3[289]|4[124678]|7[123]|8[1236])\\d{5,7}|(?:2(?:2[4568]|7[15]|9[1-5])|3(?:18|3[167]|4[2357]|51)|4(?:18|2[45]|3[12]|5[13]|64|71|9[1-47])|5(?:[1-4]\\d|5[0234])|6(?:3[1-3]|44|7[1-4678])|7(?:17|4[0-4]|6[1-578]|75|8[0-8])|858)\\d{5,6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"212345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -9878,7 +9992,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-9]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[235]2[2-4][2-9]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"22221234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[235]2[2-4][2-9]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"22221234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2[15]|3[03-5]|4[04]|5[05]|66|7[6-9]|88|99)\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"25123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
@@ -9963,7 +10080,7 @@
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:14|6[1-5]|[89]\\d)\\d{7}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"812345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:14|6[1-6]|[89]\\d)\\d{7}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"812345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -10055,7 +10172,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"0549(?:8[0157-9]|9\\d)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"0549886377" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"0549(?:8[0157-9]|9\\d)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"0549886377" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -10245,7 +10365,11 @@
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:11]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:12]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:[02-9][2-9]|1[1-9])\\d|2(?:[0-24-7][2-9]\\d|[389](?:0[2-9]|[2-9]\\d))|3(?:[0-8][2-9]\\d|9(?:[2-9]\\d|0[2-9])))\\d{3,8}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"10234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:[02-9][2-9]|1[1-9])\\d|2(?:[0-24-7][2-9]\\d|[389](?:0[2-9]|[2-9]\\d))|3(?:[0-8][2-9]\\d|9(?:[2-9]\\d|0[2-9])))\\d{3,8}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"10234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -10347,7 +10471,12 @@
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[3-57-9]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3(?:1[3-5]|2[245]|3[12]|4[24-7]|5[25]|72)|4(?:46|74|87))\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"372123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:3]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3(?:1[3-5]|2[245]|3[12]|4[24-7]|5[25]|72)|4(?:46|74|87))\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"372123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:41[18]|(?:5[05]|77|88|9[0-35-9])\\d)\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"917123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
@@ -10723,7 +10852,12 @@
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"20(?:[0147]\\d{2}|2(?:40|[5-9]\\d)|3(?:0[0-4]|[23]\\d)|5[0-4]\\d|6[035-9]\\d|8[0-2]\\d)\\d{4}|[34]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"312345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"20(?:[0147]\\d{2}|2(?:40|[5-9]\\d)|3(?:0[0-4]|[23]\\d)|5[0-4]\\d|6[035-9]\\d|8[0-2]\\d)\\d{4}|[34]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"312345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7(?:(?:0[0-7]|[15789]\\d|30|4[0-4])\\d|2(?:[03]\\d|60))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"712345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800[123]\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"800123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"90[123]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"901123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
@@ -10984,9 +11118,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5789]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"784(?:266|3(?:6[6-9]|7\\d|8[0-24-6])|4(?:38|5[0-36-8]|8[0-8])|5(?:55|7[0-2]|93)|638|784)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7842661234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"784(?:4(?:3[0-4]|5[45]|89|9[0-58])|5(?:2[6-9]|3[0-4]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7844301234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"784(?:266|3(?:6[6-9]|7\\d|8[0-24-6])|4(?:38|5[0-36-8]|8[0-8])|5(?:55|7[0-2]|93)|638|784)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"7842661234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"784(?:4(?:3[0-4]|5[45]|89|9[0-58])|5(?:2[6-9]|3[0-4]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"7844301234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -11232,7 +11372,10 @@
         NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
         [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
         self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"5(?:6\\d{4}|90[0-4]\\d{3})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"561234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
+        [voip_descArrayPL addObject: [NSNumber numberWithInt:6]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"56\\d{4}" withPossibleNumberPattern:nil withPossibleLength:voip_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"561234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
         [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -11273,7 +11416,7 @@
         [numberFormats_FormatArray addObject:numberFormats1];
 
         NSMutableArray *numberFormats2_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats2_patternArray addObject:@"59|[6-8]"];
+        [numberFormats2_patternArray addObject:@"[6-8]"];
         NBNumberFormat *numberFormats2 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{3})(\\d{4})" withFormat:@"$1-$2" withLeadingDigitsPatterns:numberFormats2_patternArray withNationalPrefixFormattingRule:nil whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats2];
         self.numberFormats = numberFormats_FormatArray;
@@ -11456,7 +11599,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[24589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:12|3[457-9]|[58][1-9]|[467]\\d|9[1-6])|50[01])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2121234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:12|3[457-9]|[58][1-9]|[467]\\d|9[1-6])|50[01])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2121234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"4(?:1[24-8]|2[46])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"4121234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8001234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9001234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
@@ -11771,9 +11917,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"284(?:(?:229|4(?:22|9[45])|774|8(?:52|6[459]))\\d{4}|496[0-5]\\d{3})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2842291234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"284(?:(?:3(?:0[0-3]|4[0-7]|68|9[34])|4(?:4[0-6]|68|99)|54[0-57])\\d{4}|496[6-9]\\d{3})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2843001234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"284(?:(?:229|4(?:22|9[45])|774|8(?:52|6[459]))\\d{4}|496[0-5]\\d{3})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2842291234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"284(?:(?:3(?:0[0-3]|4[0-7]|68|9[34])|4(?:4[0-6]|68|99)|54[0-57])\\d{4}|496[6-9]\\d{3})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"2843001234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -12027,9 +12179,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[3589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"340(?:2(?:01|2[0678]|44|77)|3(?:32|44)|4(?:22|7[34])|5(?:1[34]|55)|6(?:26|4[23]|77|9[023])|7(?:1[2-589]|27|7\\d)|884|998)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"3406421234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"340(?:2(?:01|2[0678]|44|77)|3(?:32|44)|4(?:22|7[34])|5(?:1[34]|55)|6(?:26|4[23]|77|9[023])|7(?:1[2-589]|27|7\\d)|884|998)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"3406421234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"340(?:2(?:01|2[0678]|44|77)|3(?:32|44)|4(?:22|7[34])|5(?:1[34]|55)|6(?:26|4[23]|77|9[023])|7(?:1[2-589]|27|7\\d)|884|998)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"3406421234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"340(?:2(?:01|2[0678]|44|77)|3(?:32|44)|4(?:22|7[34])|5(?:1[34]|55)|6(?:26|4[23]|77|9[023])|7(?:1[2-589]|27|7\\d)|884|998)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"3406421234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -12092,9 +12250,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5789]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7215(?:4[2-8]|8[239]|9[056])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7215425678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7215(?:1[02]|2\\d|5[034679]|8[014-8])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7215205678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7215(?:4[2-8]|8[239]|9[056])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"7215425678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7215(?:1[02]|2\\d|5[034679]|8[014-8])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"7215205678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -12229,9 +12393,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"868(?:2(?:01|[23]\\d)|6(?:0[79]|1[02-8]|2[1-9]|[3-69]\\d|7[0-79])|82[124])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8682211234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"868(?:2(?:6[6-9]|[789]\\d)|3(?:0[1-9]|1[02-9]|[2-9]\\d)|4[6-9]\\d|6(?:20|78|8\\d)|7(?:0[1-9]|1[02-9]|[2-9]\\d))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8682911234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"868(?:2(?:01|[23]\\d)|6(?:0[79]|1[02-8]|2[1-9]|[3-69]\\d|7[0-79])|82[124])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"8682211234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"868(?:2(?:6[6-9]|[789]\\d)|3(?:0[1-9]|1[02-9]|[2-9]\\d)|4[6-9]\\d|6(?:20|78|8\\d)|7(?:0[1-9]|1[02-9]|[2-9]\\d))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"8682911234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -12251,7 +12421,10 @@
         [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
         self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:uan_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"868619\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8686191234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voicemail_descArrayPLLO = [[NSMutableArray alloc] init];
+        [voicemail_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.voicemail = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"868619\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:voicemail_descArrayPLLO withExample:@"8686191234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *noInternationalDialling_descArrayPL = [[NSMutableArray alloc] init];
         [noInternationalDialling_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -12293,7 +12466,11 @@
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-59]\\d{7,8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:1\\d?|4\\d|[2356])|2(?:1\\d?|[235])|3(?:[13]\\d|4)|4[13]|5[1-3])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"112345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:1\\d?|4\\d|[2356])|2(?:1\\d?|[235])|3(?:[13]\\d|4)|4[13]|5[1-3])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"112345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -12641,12 +12818,12 @@
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:[025-79]|1[0189]|[348][01])|3(?:[0136-9]|[25][01])|4\\d|5(?:[01][01]|[2-9])|6(?:[0-46-8]|5[01])|7(?:[02-79]|[18][01]))\\d{7}|8(?:[1-57]\\d|[689][0-79])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"2101234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0(?:\\d|[3-9]\\d)|1[0-689]\\d|2(?:\\d|[0-25-9]\\d)|[5-7]\\d|3\\d{2}|[48][01]\\d|9(?:\\d|[0-4679]\\d))|3(?:[0136-9]|[25][01])\\d|4\\d{2}|5(?:[01][01]|[2-9])\\d|6(?:[0-46-8]|5[01])\\d|7(?:[02-79]|[18][01])\\d)\\d{6}|8(?:[2-5]\\d|6[236]|7[13])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"2101234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:9\\d|1(?:2\\d|6[2-9]|8[68]|99))\\d{7}|8[689]8\\d{6}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"912345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:9\\d|1(?:2\\d|6[2-9]|8[68]|99))\\d{7}|8(?:6[89]|8\\d|9[89])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"912345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -12708,7 +12885,7 @@
         [numberFormats_FormatArray addObject:numberFormats0];
 
         NSMutableArray *numberFormats1_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats1_patternArray addObject:@"4|8(?:[1-57]|[689][0-79])"];
+        [numberFormats1_patternArray addObject:@"4|8(?:[2-5]|6[236]|7[13])"];
         NBNumberFormat *numberFormats1 = [[NBNumberFormat alloc] initWithPattern:@"([48])(\\d{4})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats1_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats1];
 
@@ -12728,12 +12905,12 @@
         [numberFormats_FormatArray addObject:numberFormats4];
 
         NSMutableArray *numberFormats5_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats5_patternArray addObject:@"2[1348]|3[25]|5[01]|65|7[18]"];
+        [numberFormats5_patternArray addObject:@"2[0-489]|3[25]|5[01]|65|7[18]"];
         NBNumberFormat *numberFormats5 = [[NBNumberFormat alloc] initWithPattern:@"([235-7]\\d{2})(\\d{4})(\\d{3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats5_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats5];
 
         NSMutableArray *numberFormats6_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats6_patternArray addObject:@"8[689]8|9"];
+        [numberFormats6_patternArray addObject:@"8(?:8|9[89])|9"];
         NBNumberFormat *numberFormats6 = [[NBNumberFormat alloc] initWithPattern:@"([89]\\d)(\\d{3})(\\d{2})(\\d{2})" withFormat:@"$1 $2 $3 $4" withLeadingDigitsPatterns:numberFormats6_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats6];
 
@@ -12743,9 +12920,14 @@
         [numberFormats_FormatArray addObject:numberFormats7];
 
         NSMutableArray *numberFormats8_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats8_patternArray addObject:@"1[89]0"];
-        NBNumberFormat *numberFormats8 = [[NBNumberFormat alloc] initWithPattern:@"(1[89]00)(\\d{4,6})" withFormat:@"$1 $2" withLeadingDigitsPatterns:numberFormats8_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats8_patternArray addObject:@"86[89]"];
+        NBNumberFormat *numberFormats8 = [[NBNumberFormat alloc] initWithPattern:@"(86[89])(\\d{3})(\\d{3})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats8_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats8];
+
+        NSMutableArray *numberFormats9_patternArray = [[NSMutableArray alloc] init];
+        [numberFormats9_patternArray addObject:@"1[89]0"];
+        NBNumberFormat *numberFormats9 = [[NBNumberFormat alloc] initWithPattern:@"(1[89]00)(\\d{4,6})" withFormat:@"$1 $2" withLeadingDigitsPatterns:numberFormats9_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:YES withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats_FormatArray addObject:numberFormats9];
         self.numberFormats = numberFormats_FormatArray;
 
         NSMutableArray *intlNumberFormats_FormatArray = [[NSMutableArray alloc] init];
@@ -12770,9 +12952,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-9]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0[1-35-9]|1[02-9]|2[04589]|3[149]|4[08]|5[1-46]|6[0279]|7[026]|8[13])|3(?:0[1-57-9]|1[02-9]|2[0135]|3[014679]|4[67]|5[12]|6[014]|8[056])|4(?:0[124-9]|1[02-579]|2[3-5]|3[0245]|4[0235]|58|6[39]|7[0589]|8[04])|5(?:0[1-57-9]|1[0235-8]|20|3[0149]|4[01]|5[19]|6[1-37]|7[013-5]|8[056])|6(?:0[1-35-9]|1[024-9]|2[03689]|3[016]|4[16]|5[017]|6[0-279]|78|8[012])|7(?:0[1-46-8]|1[02-9]|2[0457]|3[1247]|4[037]|5[47]|6[02359]|7[02-59]|8[156])|8(?:0[1-68]|1[02-8]|28|3[0-25]|4[3578]|5[046-9]|6[02-5]|7[028])|9(?:0[1346-9]|1[02-9]|2[0589]|3[014678]|4[0179]|5[12469]|7[0-3589]|8[0459]))[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2015550123" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0[1-35-9]|1[02-9]|2[04589]|3[149]|4[08]|5[1-46]|6[0279]|7[026]|8[13])|3(?:0[1-57-9]|1[02-9]|2[0135]|3[014679]|4[67]|5[12]|6[014]|8[056])|4(?:0[124-9]|1[02-579]|2[3-5]|3[0245]|4[0235]|58|6[39]|7[0589]|8[04])|5(?:0[1-57-9]|1[0235-8]|20|3[0149]|4[01]|5[19]|6[1-37]|7[013-5]|8[056])|6(?:0[1-35-9]|1[024-9]|2[03689]|3[016]|4[16]|5[017]|6[0-279]|78|8[012])|7(?:0[1-46-8]|1[02-9]|2[0457]|3[1247]|4[037]|5[47]|6[02359]|7[02-59]|8[156])|8(?:0[1-68]|1[02-8]|28|3[0-25]|4[3578]|5[046-9]|6[02-5]|7[028])|9(?:0[1346-9]|1[02-9]|2[0589]|3[014678]|4[0179]|5[12469]|7[0-3589]|8[0459]))[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2015550123" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0[1-35-9]|1[02-9]|2[04589]|3[149]|4[08]|5[1-46]|6[0279]|7[026]|8[13])|3(?:0[1-57-9]|1[02-9]|2[0135]|3[014679]|4[67]|5[12]|6[014]|8[056])|4(?:0[124-9]|1[02-579]|2[3-5]|3[0245]|4[0235]|58|6[39]|7[0589]|8[04])|5(?:0[1-57-9]|1[0235-8]|20|3[0149]|4[01]|5[19]|6[1-37]|7[013-5]|8[056])|6(?:0[1-35-9]|1[024-9]|2[03689]|3[016]|4[16]|5[017]|6[0-279]|78|8[012])|7(?:0[1-46-8]|1[02-9]|2[0457]|3[1247]|4[037]|5[47]|6[02359]|7[02-59]|8[156])|8(?:0[1-68]|1[02-8]|28|3[0-25]|4[3578]|5[046-9]|6[02-5]|7[028])|9(?:0[1346-9]|1[02-9]|2[0589]|3[014678]|4[0179]|5[12469]|7[0-3589]|8[0459]))[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2015550123" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0[1-35-9]|1[02-9]|2[04589]|3[149]|4[08]|5[1-46]|6[0279]|7[026]|8[13])|3(?:0[1-57-9]|1[02-9]|2[0135]|3[014679]|4[67]|5[12]|6[014]|8[056])|4(?:0[124-9]|1[02-579]|2[3-5]|3[0245]|4[0235]|58|6[39]|7[0589]|8[04])|5(?:0[1-57-9]|1[0235-8]|20|3[0149]|4[01]|5[19]|6[1-37]|7[013-5]|8[056])|6(?:0[1-35-9]|1[024-9]|2[03689]|3[016]|4[16]|5[017]|6[0-279]|78|8[012])|7(?:0[1-46-8]|1[02-9]|2[0457]|3[1247]|4[037]|5[47]|6[02359]|7[02-59]|8[156])|8(?:0[1-68]|1[02-8]|28|3[0-25]|4[3578]|5[046-9]|6[02-5]|7[028])|9(?:0[1346-9]|1[02-9]|2[0589]|3[014678]|4[0179]|5[12469]|7[0-3589]|8[0459]))[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"2015550123" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -13021,7 +13209,10 @@
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:7\\d|[2-68])|2[2-68]|3[2358]|4[2-58]|5[2-6]|6[3-58]|7[24-68])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"1234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:7\\d|[2-68])|2[2-68]|3[2358]|4[2-58]|5[2-6]|6[3-58]|7[24-68])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -13207,7 +13398,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2\\d{7}|4[2-7]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"21231234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2\\d{7}|4[2-7]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"21231234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -13379,7 +13573,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[679]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:6(?:1(?:22|3[124]|4[1-4]|5[123578]|64)|2(?:22|3[0-57-9]|41)|5(?:22|3[3-7]|5[024-8])|6\\d{2}|7(?:[23]\\d|7[69])|9(?:22|4[1-8]|6[135]))|7(?:0(?:5[4-9]|6[0146]|7[12456]|9[135-8])|1[12]\\d|2(?:22|3[1345789]|4[123579]|5[14])|3(?:2\\d|3[1578]|4[1-35-7]|5[1-57]|61)|4(?:2\\d|3[1-579]|7[1-79])|5(?:22|5[1-9]|6[1457])|6(?:22|3[12457]|4[13-8])|9(?:22|5[1-9])))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"662345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:6(?:1(?:22|3[124]|4[1-4]|5[123578]|64)|2(?:22|3[0-57-9]|41)|5(?:22|3[3-7]|5[024-8])|6\\d{2}|7(?:[23]\\d|7[69])|9(?:22|4[1-8]|6[135]))|7(?:0(?:5[4-9]|6[0146]|7[12456]|9[135-8])|1[12]\\d|2(?:22|3[1345789]|4[123579]|5[14])|3(?:2\\d|3[1578]|4[1-35-7]|5[1-57]|61)|4(?:2\\d|3[1-579]|7[1-79])|5(?:22|5[1-9]|6[1457])|6(?:22|3[12457]|4[13-8])|9(?:22|5[1-9])))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"662345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:1(?:2(?:98|2[01])|35[0-4]|50\\d|61[23]|7(?:[01][017]|4\\d|55|9[5-9]))|2(?:11\\d|2(?:[12]1|9[01379])|5(?:[126]\\d|3[0-4])|7\\d{2})|5(?:19[01]|2(?:27|9[26])|30\\d|59\\d|7\\d{2})|6(?:2(?:1[5-9]|2[0367]|38|41|52|60)|3[79]\\d|4(?:56|83)|7(?:[07]\\d|1[017]|3[07]|4[047]|5[057]|67|8[0178]|9[79])|9[0-3]\\d)|7(?:2(?:24|3[237]|4[5-9]|7[15-8])|5(?:7[12]|8[0589])|7(?:0\\d|[39][07])|9(?:0\\d|7[079]))|9(?:2(?:1[1267]|5\\d|3[01]|7[0-4])|5[67]\\d|6(?:2[0-26]|8\\d)|7\\d{2}))\\d{4}|7(?:0\\d{3}|1(?:13[01]|6(?:0[47]|1[67]|66)|71[3-69]|98\\d)|2(?:2(?:2[79]|95)|3(?:2[5-9]|6[0-6])|57\\d|7(?:0\\d|1[17]|2[27]|3[37]|44|5[057]|66|88))|3(?:2(?:1[0-6]|21|3[469]|7[159])|33\\d|5(?:0[0-4]|5[579]|9\\d)|7(?:[0-3579]\\d|4[0467]|6[67]|8[078])|9[4-6]\\d)|4(?:2(?:29|5[0257]|6[0-7]|7[1-57])|5(?:1[0-4]|8\\d|9[5-9])|7(?:0\\d|1[024589]|2[0127]|3[0137]|[46][07]|5[01]|7[5-9]|9[079])|9(?:7[015-9]|[89]\\d))|5(?:112|2(?:0\\d|2[29]|[49]4)|3[1568]\\d|52[6-9]|7(?:0[01578]|1[017]|[23]7|4[047]|[5-7]\\d|8[78]|9[079]))|6(?:2(?:2[1245]|4[2-4])|39\\d|41[179]|5(?:[349]\\d|5[0-2])|7(?:0[017]|[13]\\d|22|44|55|67|88))|9(?:22[128]|3(?:2[0-4]|7\\d)|57[05629]|7(?:2[05-9]|3[37]|4\\d|60|7[2579]|87|9[07])))\\d{4}|9[0-57-9]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"912345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
@@ -13958,7 +14155,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-4679][2-8]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"22345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-4679][2-8]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"22345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -14056,7 +14256,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[35]\\d|49)\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"30123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[35]\\d|49)\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"30123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:03|44|71|[1-356])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"61123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
@@ -14145,8 +14348,11 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-7]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[25][0-8]|[34][0-4]|6[0-5])[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7(?:[014-9]\\d{7}|2[89]\\d{6})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"701234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[25][0-8]|[34][0-4]|6[0-5])[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7(?:[014-9]\\d|2[89]|30)\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"701234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -14224,21 +14430,36 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246(?:2(?:2[78]|7[0-4])|4(?:1[024-6]|2\\d|3[2-9])|5(?:20|[34]\\d|54|7[1-3])|6(?:2\\d|38)|7(?:37|57)|9(?:1[89]|63))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2464123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246(?:2(?:[356]\\d|4[0-57-9]|8[0-79])|45\\d|8(?:[2-5]\\d|83))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2462501234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{7}|246976\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246(?:2(?:2[78]|7[0-4])|4(?:1[024-6]|2\\d|3[2-9])|5(?:20|[34]\\d|54|7[1-3])|6(?:2\\d|38)|7(?:37|57)|9(?:1[89]|63))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2464123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246(?:2(?:[356]\\d|4[0-57-9]|8[0-79])|45\\d|8(?:[2-5]\\d|83))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"2462501234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *premiumRate_descArrayPLLO = [[NSMutableArray alloc] init];
+        [premiumRate_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900\\d{7}|246976\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:premiumRate_descArrayPLLO withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
         [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"5(?:00|22|33|44|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"5002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"24631\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2463101234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPLLO = [[NSMutableArray alloc] init];
+        [voip_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"24631\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:voip_descArrayPLLO withExample:@"2463101234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
         [pager_descArrayPL addObject: [NSNumber numberWithInt:-1]];
         self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246(?:292|367|4(?:1[7-9]|3[01]|44|67)|736)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2464301234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *uan_descArrayPLLO = [[NSMutableArray alloc] init];
+        [uan_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.uan = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"246(?:292|367|4(?:1[7-9]|3[01]|44|67)|736)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:uan_descArrayPLLO withExample:@"2464301234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.emergency = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:nil withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *voicemail_descArrayPL = [[NSMutableArray alloc] init];
@@ -14283,17 +14504,29 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"268(?:4(?:6[0-38]|84)|56[0-2])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2684601234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"268(?:464|7(?:2\\d|3[246]|64|7[0-689]|8[02-68]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2684641234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"268(?:4(?:6[0-38]|84)|56[0-2])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2684601234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"268(?:464|7(?:2\\d|3[246]|64|7[0-689]|8[02-68]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"2684641234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
         [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:-1]];
         self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"NA" withPossibleNumberPattern:nil withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"5(?:00|22|33|44|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"5002345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"26848[01]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2684801234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"26840[69]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2684061234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *voip_descArrayPLLO = [[NSMutableArray alloc] init];
+        [voip_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.voip = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"26848[01]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:voip_descArrayPLLO withExample:@"2684801234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *pager_descArrayPLLO = [[NSMutableArray alloc] init];
+        [pager_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"26840[69]\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:pager_descArrayPLLO withExample:@"2684061234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
         [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -14446,9 +14679,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2644(?:6[12]|9[78])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2644612345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"264(?:235|476|5(?:3[6-9]|8[1-4])|7(?:29|72))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2642351234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2644(?:6[12]|9[78])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2644612345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"264(?:235|476|5(?:3[6-9]|8[1-4])|7(?:29|72))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"2642351234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -14610,12 +14849,18 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:04|[23]6|[48]9|50)|3(?:06|43|65)|4(?:03|1[68]|3[178]|50)|5(?:06|1[49]|48|79|8[17])|6(?:0[04]|13|22|39|47)|7(?:0[59]|78|8[02])|8(?:[06]7|19|25|73)|90[25])[2-9]\\d{6}|310\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"2042345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:04|[23]6|[48]9|50)|3(?:06|43|65)|4(?:03|1[68]|3[178]|50)|5(?:06|1[49]|48|79|8[17])|6(?:0[04]|13|22|39|47)|7(?:0[59]|78|8[02])|8(?:[06]7|19|25|73)|90[25])[2-9]\\d{6}|310\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2042345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:04|[23]6|[48]9|50)|3(?:06|43|65)|4(?:03|1[68]|3[178]|50)|5(?:06|1[49]|48|79|8[17])|6(?:0[04]|13|22|39|47)|7(?:0[59]|78|8[02])|8(?:[06]7|19|25|73)|90[25])[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"2042345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}|310\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:04|[23]6|[48]9|50)|3(?:06|43|65)|4(?:03|1[68]|3[178]|50)|5(?:06|1[49]|48|79|8[17])|6(?:0[04]|13|22|39|47)|7(?:0[59]|78|8[02])|8(?:[06]7|19|25|73)|90[25])[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"2042345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}|310\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *premiumRate_descArrayPL = [[NSMutableArray alloc] init];
         [premiumRate_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -14681,8 +14926,8 @@
         NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[25-7]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:0(?:49|5[23]|9[016-9])|4(?:4[569]|5[4-6]|7[0179])|5(?:[34]\\d|50))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"20491234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:55[0-5]|6(?:[0-689]\\d|7[0-5]))\\d{5}|7\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"70123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:0(?:49|5[23]|6[56]|9[016-9])|4(?:4[569]|5[4-6]|6[56]|7[0179])|5(?:[34]\\d|50|6[56]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"20491234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:5(?:[15]\\d|6[0-4])|[67]\\d{2})\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"70123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -14768,7 +15013,11 @@
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:6]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2\\d{5,7}|(?:[36]\\d|5[1-9]|8[1-6]|9[1-7])\\d{5,6}|(?:4(?:[124-7]\\d|3[1-6])|7(?:0[1-9]|[1-9]\\d))\\d{4,5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"2123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:4]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2\\d{5,7}|(?:[36]\\d|5[1-9]|8[1-6]|9[1-7])\\d{5,6}|(?:4(?:[124-7]\\d|3[1-6])|7(?:0[1-9]|[1-9]\\d))\\d{4,5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -14892,7 +15141,11 @@
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:3]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:4]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:[012457-9]\\d{3,8}|6(?:[14]\\d{7}|\\d{4}))|[13-79]\\d{4,9}|8[06]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0(?:4\\d|5\\d{2})|2[278]\\d|48\\d|7(?:[1-7]\\d|[089]\\d{2})|8(?:[2-57-9]|[146]\\d{2})|98)|3(?:08|17|3[78]|7(?:[19]|[56]\\d)|8[37]|98)|5[15][78]|6(?:28\\d{2}|[36]7|75\\d|[69]8|8(?:7\\d|8)))\\d{3}|(?:2(?:1[39]|2[0157]|6[14]|7[35]|84)|329)\\d{7}|(?:1(?:3\\d{2}|9\\d|[4-8])|2(?:0\\d{2}|[569]\\d)|3(?:[26]|[013459]\\d)|5(?:0|5\\d{2}|[689]\\d)|6(?:[39]|[01246]\\d|[78]\\d{2}))\\d{3}|(?:29\\d|39|54)\\d{6}|(?:(?:25|54)83|2582\\d)\\d{3}|(?:4\\d{6,7}|9[2-9]\\d{4,5})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"1312345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:3]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:4]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0(?:4\\d|5\\d{2})|2[278]\\d|48\\d|7(?:[1-7]\\d|[089]\\d{2})|8(?:[2-57-9]|[146]\\d{2})|98)|3(?:08|17|3[78]|7(?:[19]|[56]\\d)|8[37]|98)|5[15][78]|6(?:28\\d{2}|[36]7|75\\d|[69]8|8(?:7\\d|8)))\\d{3}|(?:2(?:1[39]|2[0157]|6[14]|7[35]|84)|329)\\d{7}|(?:1(?:3\\d{2}|9\\d|[4-8])|2(?:0\\d{2}|[569]\\d)|3(?:[26]|[013459]\\d)|5(?:0|5\\d{2}|[689]\\d)|6(?:[39]|[01246]\\d|[78]\\d{2}))\\d{3}|(?:29\\d|39|54)\\d{6}|(?:(?:25|54)83|2582\\d)\\d{3}|(?:4\\d{6,7}|9[2-9]\\d{4,5})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1312345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -15026,11 +15279,16 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:[168][1-9]|[247]\\d|9[1-7])|3(?:1[1-3]|[2-6]\\d|[79][1-8]|8[1-9])|4\\d{2}|5(?:1[1-4]|[2-578]\\d|6[1-5]|9[1-7])|8(?:[19][1-5]|[2-6]\\d|[78][1-7]))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"22345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:1(?:0[2-9]|[1-9]\\d)|[247]\\d{2}|[35][2-9]\\d|[68](?:0[2-9]|[1-9]\\d)|9(?:[089][2-9]|[1-7]\\d))|3(?:1(?:[04-9][2-9]|[1-3]\\d)|[2-6]\\d{2}|[79](?:[09][2-9]|[1-8]\\d)|8(?:0[2-9]|[1-9]\\d))|4\\d{3}|5(?:1(?:[05-9][2-9]|[1-4]\\d)|[2-578]\\d{2}|6(?:[06-9][2-9]|[1-5]\\d)|9(?:[089][2-9]|[1-7]\\d))|8(?:[19](?:[06-9][2-9]|[1-5]\\d)|[2-6]\\d{2}|[78](?:[089][2-9]|[1-7]\\d)))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"22345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6[6-9]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"661234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6(?:[2-5][2-9]|[6-9]\\d)\\d{6}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"661234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:7]];
@@ -15087,7 +15345,7 @@
 
         NSMutableArray *numberFormats1_patternArray = [[NSMutableArray alloc] init];
         [numberFormats1_patternArray addObject:@"6"];
-        NBNumberFormat *numberFormats1 = [[NBNumberFormat alloc] initWithPattern:@"(6[6-9])(\\d{3})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats1_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        NBNumberFormat *numberFormats1 = [[NBNumberFormat alloc] initWithPattern:@"(6\\d)(\\d{3})(\\d{4})" withFormat:@"$1 $2 $3" withLeadingDigitsPatterns:numberFormats1_patternArray withNationalPrefixFormattingRule:@"0$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats1];
 
         NSMutableArray *numberFormats2_patternArray = [[NSMutableArray alloc] init];
@@ -15129,7 +15387,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"89162\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"891621234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"89162\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"891621234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -15275,7 +15536,11 @@
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1[0-2]\\d|2(?:2[2-46]|3[1-8]|4[2-69]|5[2-7]|6[1-9]|8[1-7])|3[12]2|47\\d)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"10123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1[0-2]\\d|2(?:2[2-46]|3[1-8]|4[2-69]|5[2-7]|6[1-9]|8[1-7])|3[12]2|47\\d)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"10123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:4[1349]|55|77|9[1-9])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"77123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"80012345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"90[016]\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"90012345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
@@ -16073,9 +16338,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[4589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"441(?:2(?:02|23|61|[3479]\\d)|[46]\\d{2}|5(?:4\\d|60|89)|824)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"4412345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"441(?:[37]\\d|5[0-39])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"4413701234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"441(?:2(?:02|23|61|[3479]\\d)|[46]\\d{2}|5(?:4\\d|60|89)|824)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"4412345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"441(?:[37]\\d|5[0-39])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"4413701234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -16144,8 +16415,18 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"11\\d{8}|(?:2(?:2(?:[013]\\d|2[13-79]|4[1-6]|5[2457]|6[124-8]|7[1-4]|8[13-6]|9[1267])|3(?:1[467]|2[03-6]|3[13-8]|[49][2-6]|5[2-8]|[067]\\d)|4(?:7[3-8]|9\\d)|6(?:[01346]\\d|2[24-6]|5[15-8])|80\\d|9(?:[0124789]\\d|3[1-6]|5[234]|6[2-46]))|3(?:3(?:2[79]|6\\d|8[2578])|4(?:[78]\\d|0[0124-9]|[1-35]\\d|4[24-7]|6[02-9]|9[123678])|5(?:[138]\\d|2[1245]|4[1-9]|6[2-4]|7[1-6])|6[24]\\d|7(?:[0469]\\d|1[1568]|2[013-9]|3[145]|5[14-8]|7[2-57]|8[0-24-9])|8(?:[013578]\\d|2[15-7]|4[13-6]|6[1-357-9]|9[124]))|670\\d)\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"1123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"675\\d{7}|9(?:11[2-9]\\d{7}|(?:2(?:2[013]|3[067]|49|6[01346]|80|9[147-9])|3(?:36|4[12358]|5[138]|6[24]|7[069]|8[013578]))[2-9]\\d{6}|\\d{4}[2-9]\\d{5})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"91123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"11\\d{8}|(?:2(?:2(?:[013]\\d|2[13-79]|4[1-6]|5[2457]|6[124-8]|7[1-4]|8[13-6]|9[1267])|3(?:1[467]|2[03-6]|3[13-8]|[49][2-6]|5[2-8]|[067]\\d)|4(?:7[3-8]|9\\d)|6(?:[01346]\\d|2[24-6]|5[15-8])|80\\d|9(?:[0124789]\\d|3[1-6]|5[234]|6[2-46]))|3(?:3(?:2[79]|6\\d|8[2578])|4(?:[78]\\d|0[0124-9]|[1-35]\\d|4[24-7]|6[02-9]|9[123678])|5(?:[138]\\d|2[1245]|4[1-9]|6[2-4]|7[1-6])|6[24]\\d|7(?:[0469]\\d|1[1568]|2[013-9]|3[145]|5[14-8]|7[2-57]|8[0-24-9])|8(?:[013578]\\d|2[15-7]|4[13-6]|6[1-357-9]|9[124]))|670\\d)\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"675\\d{7}|9(?:11[2-9]\\d{7}|(?:2(?:2[013]|3[067]|49|6[01346]|80|9[147-9])|3(?:36|4[12358]|5[138]|6[24]|7[069]|8[013578]))[2-9]\\d{6}|\\d{4}[2-9]\\d{5})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"91123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -16316,7 +16597,7 @@
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[02-8]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:0[023]|1[02357]|[23][045]|4[03-5])|3(?:0[06]|1[069]|[2-4][07]|5[09]|6[08]))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"21234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:0[1-9]|4\\d|5[14-9]|6[015-79]|7[57-9]|8[7-9])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"01234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:0[1-9]|4\\d|5[14-9]|6[015-79]|[78][4-9])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"01234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -16478,7 +16759,7 @@
 
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:3]];
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-35-9]\\d{3,14}|4(?:[0-8]\\d{4,12}|9(?:[0-37]\\d|4(?:[1-35-8]|4\\d?)|5\\d{1,2}|6[1-8]\\d?)\\d{2,8})" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-35-9]\\d{3,14}|4(?:[0-8]\\d{3,12}|9(?:[0-37]\\d|4(?:[1-35-8]|4\\d?)|5\\d{1,2}|6[1-8]\\d?)\\d{2,8})" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:5]];
@@ -16492,7 +16773,11 @@
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:13]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:14]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:15]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[246]\\d{5,13}|3(?:0\\d{3,13}|2\\d{9}|[3-9]\\d{4,13})|5(?:0[2-8]|[1256]\\d|[38][0-8]|4\\d{0,2}|[79][0-7])\\d{3,11}|7(?:0[2-8]|[1-9]\\d)\\d{3,10}|8(?:0[2-9]|[1-9]\\d)\\d{3,10}|9(?:0[6-9]\\d{3,10}|1\\d{4,12}|[2-9]\\d{4,11})" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"30123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:3]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:4]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2\\d{5,13}|3(?:0\\d{3,13}|2\\d{9}|[3-9]\\d{4,13})|4(?:0\\d{3,12}|\\d{5,13})|5(?:0[2-8]|[1256]\\d|[38][0-8]|4\\d{0,2}|[79][0-7])\\d{3,11}|6(?:\\d{5,13}|9\\d{3,12})|7(?:0[2-8]|[1-9]\\d)\\d{3,10}|8(?:0[2-9]|[1-8]\\d|9\\d?)\\d{3,10}|9(?:0[6-9]\\d{3,10}|1\\d{4,12}|[2-9]\\d{4,11})" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"30123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -16694,9 +16979,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5689]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6846(?:22|33|44|55|77|88|9[19])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6846221234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"684(?:2(?:5[2468]|72)|7(?:3[13]|70))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6847331234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"6846(?:22|33|44|55|77|88|9[19])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"6846221234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"684(?:2(?:5[2468]|72)|7(?:3[13]|70))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"6847331234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -16759,7 +17050,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[23467]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:2\\d{2}|5(?:11|[258]\\d|9[67])|6(?:12|2\\d|9[34])|8(?:2[34]|39|62))|3(?:3\\d{2}|4(?:6\\d|8[24])|8(?:25|42|5[257]|86|9[25])|9(?:2\\d|3[234]|4[248]|5[24]|6[2-6]|7\\d))|4(?:4\\d{2}|6(?:11|[24689]\\d|72)))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"22123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:2\\d{2}|5(?:11|[258]\\d|9[67])|6(?:12|2\\d|9[34])|8(?:2[34]|39|62))|3(?:3\\d{2}|4(?:6\\d|8[24])|8(?:25|42|5[257]|86|9[25])|9(?:2\\d|3[234]|4[248]|5[24]|6[2-6]|7\\d))|4(?:4\\d{2}|6(?:11|[24689]\\d|72)))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"22123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[67]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"71234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
@@ -16852,7 +17146,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:3]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{3,12}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{3,12}|(?:2(?:1[467]|2[13-8]|5[2357]|6[1-46-8]|7[1-8]|8[124-7]|9[1458])|3(?:1[1-8]|3[23568]|4[5-7]|5[1378]|6[1-38]|8[3-68])|4(?:2[1-8]|35|63|7[1368]|8[2457])|5(?:12|2[1-8]|3[357]|4[147]|5[12578]|6[37])|6(?:13|2[1-47]|4[1-35-8]|5[468]|62)|7(?:2[1-8]|3[25]|4[13478]|5[68]|6[16-8]|7[1-6]|9[45]))\\d{3,10}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"1234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:3]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{3,12}|(?:2(?:1[467]|2[13-8]|5[2357]|6[1-46-8]|7[1-8]|8[124-7]|9[1458])|3(?:1[1-8]|3[23568]|4[5-7]|5[1378]|6[1-38]|8[3-68])|4(?:2[1-8]|35|63|7[1368]|8[2457])|5(?:12|2[1-8]|3[357]|4[147]|5[12578]|6[37])|6(?:13|2[1-47]|4[1-35-8]|5[468]|62)|7(?:2[1-8]|3[25]|4[13478]|5[68]|6[16-8]|7[1-6]|9[45]))\\d{3,10}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:7]];
@@ -17075,7 +17372,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[237]\\d{8}|8(?:[6-8]\\d{3}|9(?:[02-9]\\d{2}|1(?:[0-57-9]\\d|6[0135-9])))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"212345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[237]\\d{8}|8(?:[6-8]\\d{3}|9(?:[02-9]\\d{2}|1(?:[0-57-9]\\d|6[0135-9])))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"212345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -17216,11 +17516,18 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:1962\\d{4}|2\\d{7}|32[0-2467]\\d{5})|(?:3[2-5]|[47][1-35]|5[1-3578]|6[13-57])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"221234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:1962\\d{4}|2\\d{7}|32[0-2467]\\d{5})|(?:3[2-5]|[47][1-35]|5[1-3578]|6[13-57]|9[3-9])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"221234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9[3-9]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"961234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:1962\\d{4}|2\\d{7}|32[0-2467]\\d{5})|(?:3[2-5]|[47][1-35]|5[1-3578]|6[13-57]|9[3-9])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"961234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -17269,7 +17576,7 @@
         self.preferredExtnPrefix = nil;
         self.nationalPrefixForParsing = @"0|(1(?:1[0-69]|2[0-57]|5[13-58]|69|7[0167]|8[018]))";
         self.nationalPrefixTransformRule = nil;
-        self.sameMobileAndFixedLinePattern = NO;
+        self.sameMobileAndFixedLinePattern = YES;
 
         NSMutableArray *numberFormats_FormatArray = [[NSMutableArray alloc] init];
 
@@ -17387,7 +17694,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-7][2-7]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"22123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-7][2-7]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"22123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -17492,8 +17802,8 @@
         NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[347]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:318[023]|416[023]|7(?:1[578]|50)\\d)\\d{3}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7151234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:318[14-68]|416[15-9]|7(?:0[01]|7[07]|[89]\\d)\\d)\\d{3}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"3181234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:318[023]|41(?:6[023]|70)|7(?:1[578]|50)\\d)\\d{3}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7151234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:31(?:8[14-8]|9[14578])|416[145-9]|7(?:0[01]|7[07]|8\\d|9[056])\\d)\\d{3}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"3181234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -17662,12 +17972,18 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[14689][1-9]|2[12478]|3[1-578]|5[13-5]|7[13-579])[2-5]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"1123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[14689][1-9]|2[12478]|3[1-578]|5[13-5]|7[13-579])[2-5]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1123456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:11]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1[1-9](?:7|9\\d)\\d{7}|(?:2[12478]|3[1-578]|[4689][1-9]|5[13-5]|7[13-579])(?:[6-8]|9\\d?)\\d{7}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"11961234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1[1-9](?:7|9\\d)\\d{7}|(?:2[12478]|3[1-578]|[4689][1-9]|5[13-5]|7[13-579])(?:[6-8]|9\\d?)\\d{7}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"11961234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -17870,7 +18186,11 @@
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-7]\\d{6,11}|8[0-357-9]\\d{6,9}|9\\d{7,10}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"21(?:100\\d{2}|95\\d{3,4}|\\d{8,10})|(?:10|2[02-57-9]|3(?:11|7[179])|4(?:[15]1|3[1-35])|5(?:1\\d|2[37]|3[12]|51|7[13-79]|9[15])|7(?:31|5[457]|6[09]|91)|8(?:[57]1|98))(?:100\\d{2}|95\\d{3,4}|\\d{8})|(?:3(?:1[02-9]|35|49|5\\d|7[02-68]|9[1-68])|4(?:1[02-9]|2[179]|3[3-9]|5[2-9]|6[4789]|7\\d|8[23])|5(?:3[03-9]|4[36]|5[02-9]|6[1-46]|7[028]|80|9[2-46-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[17]\\d|2[248]|3[04-9]|4[3-6]|5[0-4689]|6[2368]|9[02-9])|8(?:078|1[236-8]|2[5-7]|3\\d|5[1-9]|7[02-9]|8[3678]|9[1-7])|9(?:0[1-3689]|1[1-79]|[379]\\d|4[13]|5[1-5]))(?:100\\d{2}|95\\d{3,4}|\\d{7})|80(?:29|6[03578]|7[018]|81)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"1012345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"21(?:100\\d{2}|95\\d{3,4}|\\d{8,10})|(?:10|2[02-57-9]|3(?:11|7[179])|4(?:[15]1|3[1-35])|5(?:1\\d|2[37]|3[12]|51|7[13-79]|9[15])|7(?:31|5[457]|6[09]|91)|8(?:[57]1|98))(?:100\\d{2}|95\\d{3,4}|\\d{8})|(?:3(?:1[02-9]|35|49|5\\d|7[02-68]|9[1-68])|4(?:1[02-9]|2[179]|3[3-9]|5[2-9]|6[4789]|7\\d|8[23])|5(?:3[03-9]|4[36]|5[02-9]|6[1-46]|7[028]|80|9[2-46-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[17]\\d|2[248]|3[04-9]|4[3-6]|5[0-4689]|6[2368]|9[02-9])|8(?:078|1[236-8]|2[5-7]|3\\d|5[1-9]|7[02-9]|8[3678]|9[1-7])|9(?:0[1-3689]|1[1-79]|[379]\\d|4[13]|5[1-5]))(?:100\\d{2}|95\\d{3,4}|\\d{7})|80(?:29|6[03578]|7[018]|81)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1012345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:11]];
@@ -17891,7 +18211,11 @@
         [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:9]];
         [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:10]];
         [sharedCost_descArrayPL addObject: [NSNumber numberWithInt:11]];
-        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"400\\d{7}|950\\d{7,8}|(?:10|2[0-57-9]|3(?:[157]\\d|35|49|9[1-68])|4(?:[17]\\d|2[179]|[35][1-9]|6[4789]|8[23])|5(?:[1357]\\d|2[37]|4[36]|6[1-46]|80|9[1-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[1579]\\d|2[248]|3[014-9]|4[3-6]|6[023689])|8(?:1[236-8]|2[5-7]|[37]\\d|5[14-9]|8[3678]|9[1-8])|9(?:0[1-3689]|1[1-79]|[379]\\d|4[13]|5[1-5]))96\\d{3,4}" withPossibleNumberPattern:nil withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"4001234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *sharedCost_descArrayPLLO = [[NSMutableArray alloc] init];
+        [sharedCost_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [sharedCost_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.sharedCost = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"400\\d{7}|950\\d{7,8}|(?:10|2[0-57-9]|3(?:[157]\\d|35|49|9[1-68])|4(?:[17]\\d|2[179]|[35][1-9]|6[4789]|8[23])|5(?:[1357]\\d|2[37]|4[36]|6[1-46]|80|9[1-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[1579]\\d|2[248]|3[014-9]|4[3-6]|6[023689])|8(?:1[236-8]|2[5-7]|[37]\\d|5[14-9]|8[3678]|9[1-8])|9(?:0[1-3689]|1[1-79]|[379]\\d|4[13]|5[1-5]))96\\d{3,4}" withPossibleNumberPattern:nil withPossibleLength:sharedCost_descArrayPL withPossibleLengthLocalOnly:sharedCost_descArrayPLLO withExample:@"4001234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
         [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -18213,9 +18537,18 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"242(?:3(?:02|[236][1-9]|4[0-24-9]|5[0-68]|7[3467]|8[0-4]|9[2-467])|461|502|6(?:0[1-3]|12|7[67]|8[78]|9[89])|7(?:02|88))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2423456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"242(?:3(?:5[79]|[79]5)|4(?:[2-4][1-9]|5[1-8]|6[2-8]|7\\d|81)|5(?:2[45]|3[35]|44|5[1-9]|65|77)|6[34]6|727)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2423591234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"242300\\d{4}|8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"242(?:3(?:02|[236][1-9]|4[0-24-9]|5[0-68]|7[3467]|8[0-4]|9[2-467])|461|502|6(?:0[1-3]|12|7[67]|8[78]|9[89])|7(?:02|88))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2423456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"242(?:3(?:5[79]|[79]5)|4(?:[2-4][1-9]|5[1-8]|6[2-8]|7\\d|81)|5(?:2[45]|3[35]|44|5[1-9]|65|77)|6[34]6|7(?:27|38)|8(?:0[1-9]|1[02-9]|2\\d|99))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"2423591234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *tollFree_descArrayPLLO = [[NSMutableArray alloc] init];
+        [tollFree_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"242300\\d{4}|8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:tollFree_descArrayPLLO withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -18467,7 +18800,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[124-8][2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[124-8][2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"12345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -18582,7 +18918,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2[3-6]|[34][5-7]|5[236]|6[2-46]|7[246]|8[2-4])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"2345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2[3-6]|[34][5-7]|5[236]|6[2-46]|7[246]|8[2-4])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -18746,7 +19085,10 @@
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:5]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:3[23]\\d|5(?:[23]|9\\d))|2[2-4]\\d{2}|3\\d{2}|4(?:0[2-5]|[578][23]|64)\\d|5(?:0[2-7]|[57][23])\\d|6[24-689]3\\d|8(?:2[2-57]|4[26]|6[237]|8[2-4])\\d|9(?:2[27]|3[24]|52|6[2356]|7[2-4])\\d)\\d{5}|1[69]\\d{3}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:3[23]\\d|5(?:[23]|9\\d))|2[2-4]\\d{2}|3\\d{2}|4(?:0[2-5]|[578][23]|64)\\d|5(?:0[2-7]|[57][23])\\d|6[24-689]3\\d|8(?:2[2-57]|4[26]|6[237]|8[2-4])\\d|9(?:2[27]|3[24]|52|6[2356]|7[2-4])\\d)\\d{5}|1[69]\\d{3}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"234567890" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -18838,7 +19180,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-9]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1[28]\\d{3}|2(?:02|1[24]|2[2-4]|33|[45]2|6[23])\\d{2}|365(?:[0-46-9]\\d|5[0-35-9]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"123123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1[28]\\d{3}|2(?:02|1[24]|2[2-4]|33|[45]2|6[23])\\d{2}|365(?:[0-46-9]\\d|5[0-35-9]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"123123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:36554|(?:4[04]|5[015]|60|7[07])\\d{3})\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"401234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"88\\d{7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"881234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900200\\d{3}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"900200123" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
@@ -18983,9 +19328,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[57-9]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"767(?:2(?:55|66)|4(?:2[01]|4[0-25-9])|50[0-4]|70[1-3])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7674201234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"767(?:2(?:[234689]5|7[5-7])|31[5-7]|61[2-7])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7672251234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"767(?:2(?:55|66)|4(?:2[01]|4[0-25-9])|50[0-4]|70[1-3])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"7674201234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"767(?:2(?:[234689]5|7[5-7])|31[5-7]|61[2-7])\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"7672251234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -19137,7 +19488,7 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:4[0-48]|6[0-24]|9[0578])|3(?:1[0235-9]|55|[69]\\d|7[01])|4(?:6[03]|7[1267]|9[0-5])|5(?:3[0389]|4[0489]|7[1-47]|88|9[0-49])|6(?:2[1-35]|5[149]|8[067]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"2401234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:4[0-48]|6[0-24]|9[0578])|3(?:1[0-35-9]|55|[69]\\d|7[01])|4(?:6[03]|7[1267]|9[0-5])|5(?:3[0389]|4[0489]|7[1-47]|88|9[0-49])|6(?:2[1-35]|5[149]|8[067]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"2401234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -19314,9 +19665,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:[04]9[2-9]\\d{6}|29(?:2(?:[0-59]\\d|6[04-9]|7[0-27]|8[0237-9])|3(?:[0-35-9]\\d|4[7-9])|[45]\\d{2}|6(?:[0-27-9]\\d|[3-5][1-9]|6[0135-8])|7(?:0[013-9]|[1-37]\\d|4[1-35689]|5[1-4689]|6[1-57-9]|8[1-79]|9[1-8])|8(?:0[146-9]|1[0-48]|[248]\\d|3[1-79]|5[01589]|6[013-68]|7[124-8]|9[0-8])|9(?:[0-24]\\d|3[02-46-9]|5[0-79]|60|7[0169]|8[57-9]|9[02-9]))\\d{4})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8092345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8[024]9[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8092345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:[04]9[2-9]\\d{6}|29(?:2(?:[0-59]\\d|6[04-9]|7[0-27]|8[0237-9])|3(?:[0-35-9]\\d|4[7-9])|[45]\\d{2}|6(?:[0-27-9]\\d|[3-5][1-9]|6[0135-8])|7(?:0[013-9]|[1-37]\\d|4[1-35689]|5[1-4689]|6[1-57-9]|8[1-79]|9[1-8])|8(?:0[146-9]|1[0-48]|[248]\\d|3[1-79]|5[01589]|6[013-68]|7[124-8]|9[0-8])|9(?:[0-24]\\d|3[02-46-9]|5[0-79]|60|7[0169]|8[57-9]|9[02-9]))\\d{4})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"8092345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8[024]9[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"8092345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -19387,7 +19744,12 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:5(?:1[1-5]|[24]\\d|6[2-4]|9[1-7])|6(?:[235]\\d|4[1-7])|7\\d{2})|2(?:1(?:[246]\\d|3[0-35-9]|5[1-9])|2(?:[235]\\d|4[0-8])|3(?:[26]\\d|3[02-79]|4[024-7]|5[03-7])))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"152450911" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:1(?:5(?:1[1-5]|[24]\\d|6[2-4]|9[1-7])|6(?:[235]\\d|4[1-7])|7\\d{2})|2(?:1(?:[246]\\d|3[0-35-9]|5[1-9])|2(?:[235]\\d|4[0-8])|3(?:[26]\\d|3[02-79]|4[024-7]|5[03-7])))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"152450911" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -19505,7 +19867,14 @@
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:0[01378]|3[0189]|4[017]|8[0-46-9]|9[012])\\d{7}|1(?:(?:1(?:3[0-48]|[46][0-4]|5[0126-9]|7[0-49]|8[01349])|21[0-7]|31[0-8]|[459]1\\d|61[0-46-9]))\\d{6}|1(?:2(?:0[024-9]|2[3-9]|3[3-79]|4[1-689]|[58][02-9]|6[0-4789]|7[013-9]|9\\d)|3(?:0\\d|[25][02-9]|3[02-579]|[468][0-46-9]|7[1235679]|9[24578])|4(?:0[03-9]|[28][02-5789]|[37]\\d|4[02-69]|5[0-8]|[69][0-79])|5(?:0[1235-9]|2[024-9]|3[015689]|4[02-9]|5[03-9]|6\\d|7[0-35-9]|8[0-468]|9[0-5789])|6(?:0[034689]|2[0-35689]|[38][013-9]|4[1-467]|5[0-69]|6[13-9]|7[0-8]|9[0124578])|7(?:0[0246-9]|2\\d|3[023678]|4[03-9]|5[0-46-9]|6[013-9]|7[0-35-9]|8[024-9]|9[02-9])|8(?:0[35-9]|2[1-5789]|3[02-578]|4[0-578]|5[124-9]|6[2-69]|7\\d|8[02-9]|9[02569])|9(?:0[02-589]|2[02-689]|3[1-5789]|4[2-9]|5[0-579]|6[234789]|7[0124578]|8\\d|9[2-57]))\\d{6}|1(?:2(?:0(?:46[1-4]|87[2-9])|545[1-79]|76(?:2\\d|3[1-8]|6[1-6])|9(?:7(?:2[0-4]|3[2-5])|8(?:2[2-8]|7[0-4789]|8[345])))|3(?:638[2-5]|647[23]|8(?:47[04-9]|64[015789]))|4(?:044[1-7]|20(?:2[23]|8\\d)|6(?:0(?:30|5[2-57]|6[1-8]|7[2-8])|140)|8(?:052|87[123]))|5(?:24(?:3[2-79]|6\\d)|276\\d|6(?:26[06-9]|686))|6(?:06(?:4\\d|7[4-79])|295[567]|35[34]\\d|47(?:24|61)|59(?:5[08]|6[67]|74)|955[0-4])|7(?:26(?:6[13-9]|7[0-7])|442\\d|50(?:2[0-3]|[3-68]2|76))|8(?:27[56]\\d|37(?:5[2-5]|8[239])|84(?:3[2-58]))|9(?:0(?:0(?:6[1-8]|85)|52\\d)|3583|4(?:66[1-8]|9(?:2[01]|81))|63(?:23|3[1-4])|9561))\\d{3}|176888[234678]\\d{2}|16977[23]\\d{3}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"1212345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:4]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:0[01378]|3[0189]|4[017]|8[0-46-9]|9[0-2])\\d{7}|1(?:(?:1(?:3[0-48]|[46][0-4]|5[0-26-9]|[78][0-49])|21[0-7]|31[0-8]|[4-69]1\\d))\\d{6}|1(?:2(?:0[024-9]|2[3-9]|3[3-79]|4[1-689]|[58][02-9]|6[0-47-9]|7[013-9]|9\\d)|3(?:0\\d|[25][02-9]|3[02-579]|[468][0-46-9]|7[1-35-79]|9[2-578])|4(?:0[03-9]|[28][02-57-9]|[37]\\d|4[02-69]|5[0-8]|[69][0-79])|5(?:0[1-35-9]|2[024-9]|3[015689]|4[02-9]|5[03-9]|6\\d|7[0-35-9]|8[0-468]|9[0-57-9])|6(?:0[034689]|2[0-35689]|[38][013-9]|4[1-467]|5[0-69]|6[13-9]|7[0-8]|9[0124578])|7(?:0[0246-9]|2\\d|3[0236-8]|4[03-9]|5[0-46-9]|6[013-9]|7[0-35-9]|8[024-9]|9[02-9])|8(?:0[35-9]|2[1-57-9]|3[02-578]|4[0-578]|5[124-9]|6[2-69]|7\\d|8[02-9]|9[02569])|9(?:0[02-589]|2[02-689]|3[1-57-9]|4[2-9]|5[0-579]|6[2-47-9]|7[0-24578]|8\\d|9[2-57]))\\d{6}|1(?:2(?:0(?:46[1-4]|87[2-9])|545[1-79]|76(?:2\\d|3[1-8]|6[1-6])|9(?:7(?:2[0-4]|3[2-5])|8(?:2[2-8]|7[0-47-9]|8[345])))|3(?:638[2-5]|647[23]|8(?:47[04-9]|64[0157-9]))|4(?:044[1-7]|20(?:2[23]|8\\d)|6(?:0(?:30|5[2-57]|6[1-8]|7[2-8])|140)|8(?:052|87[123]))|5(?:24(?:3[2-79]|6\\d)|276\\d|6(?:26[06-9]|686))|6(?:06(?:4\\d|7[4-79])|295[567]|35[34]\\d|47(?:24|61)|59(?:5[08]|6[67]|74)|955[0-4])|7(?:26(?:6[13-9]|7[0-7])|442\\d|50(?:2[0-3]|[3-68]2|76))|8(?:27[56]\\d|37(?:5[2-5]|8[239])|84(?:3[2-58]))|9(?:0(?:0(?:6[1-8]|85)|52\\d)|3583|4(?:66[1-8]|9(?:2[01]|81))|63(?:23|3[1-4])|9561))\\d{3}|176888[2-46-8]\\d{2}|16977[23]\\d{3}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1212345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -19644,7 +20013,11 @@
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:4]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-57]\\d{5,7}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2[1-4]\\d{5,6}|3(?:1\\d{6}|[23]\\d{4,6})|4(?:[125]\\d{5,6}|[36]\\d{6}|[78]\\d{4,6})|7\\d{6,7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"71234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:4]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2[1-4]\\d{5,6}|3(?:1\\d{6}|[23]\\d{4,6})|4(?:[125]\\d{5,6}|[36]\\d{6}|[78]\\d{4,6})|7\\d{6,7}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"71234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
@@ -19977,9 +20350,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[4589]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"473(?:2(?:3[0-2]|69)|3(?:2[89]|86)|4(?:[06]8|3[5-9]|4[0-49]|5[5-79]|68|73|90)|63[68]|7(?:58|84)|800|938)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"4732691234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"473(?:4(?:0[2-79]|1[04-9]|20|58)|5(?:2[01]|3[3-8])|901)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"4734031234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"473(?:2(?:3[0-2]|69)|3(?:2[89]|86)|4(?:[06]8|3[5-9]|4[0-49]|5[5-79]|68|73|90)|63[68]|7(?:58|84)|800|938)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"4732691234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"473(?:4(?:0[2-79]|1[04-9]|20|58)|5(?:2[01]|3[3-8])|901)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"4734031234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -20250,7 +20629,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[34578]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3(?:[256]\\d|4[124-9]|7[0-4])|4(?:1\\d|2[2-7]|3[1-79]|4[2-8]|7[239]|9[1-7]))\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"322123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:3(?:[256]\\d|4[124-9]|7[0-4])|4(?:1\\d|2[2-7]|3[1-79]|4[2-8]|7[239]|9[1-7]))\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"322123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"5(?:14|5[01578]|68|7[0147-9]|9[0-35-9])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"555123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"800\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"800123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
@@ -20327,7 +20709,7 @@
         NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:7]];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:11]];
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[36-9]\\d{6}|0\\d{10}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[35-9]\\d{6}|0\\d{10}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:7]];
@@ -20335,7 +20717,7 @@
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:7]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:7[0-8]|8[034679]|9\\d)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"7012345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:5[018]|[79]\\d|8[034679])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"7012345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:11]];
@@ -20386,7 +20768,7 @@
         NSMutableArray *numberFormats_FormatArray = [[NSMutableArray alloc] init];
 
         NSMutableArray *numberFormats0_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats0_patternArray addObject:@"[36-9]"];
+        [numberFormats0_patternArray addObject:@"[35-9]"];
         NBNumberFormat *numberFormats0 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{3})(\\d{4})" withFormat:@"$1 $2" withLeadingDigitsPatterns:numberFormats0_patternArray withNationalPrefixFormattingRule:nil whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats0];
 
@@ -20422,7 +20804,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"89164\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"891641234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:8]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"89164\\d{4}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"891641234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -20713,7 +21098,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1481\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"1481456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1481\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1481456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
@@ -20884,7 +21272,10 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3(?:0[237]\\d|[167](?:2[0-6]|7\\d)|2(?:2[0-5]|7\\d)|3(?:2[0-3]|7\\d)|4(?:2[013-9]|3[01]|7\\d)|5(?:2[0-7]|7\\d)|8(?:2[0-2]|7\\d)|9(?:20|7\\d))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"302345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"3(?:0[237]\\d|[167](?:2[0-6]|7\\d)|2(?:2[0-5]|7\\d)|3(?:2[0-3]|7\\d)|4(?:2[013-9]|3[01]|7\\d)|5(?:2[0-7]|7\\d)|8(?:2[0-2]|7\\d)|9(?:20|7\\d))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"302345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -21046,7 +21437,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[178]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(?:1[12568]|20|40|55|6[146])\\d{4}|8\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8370362" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(?:1[12568]|20|40|55|6[146])\\d{4}|8\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"8370362" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"17[1-3]\\d{4}|7\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
@@ -21188,7 +21582,7 @@
         NSMutableArray *generalDesc_descArrayPL = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5-9]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:[13]0|[28][0-8]|[47][1-9]|5[01346-9]|6[0457-9])\\d{6}|9(?:[15]\\d{7}|[238][0-8]\\d{6}|4[1-9]\\d{6}|6(?:[0-8]\\d{6}|9(?:0(?:[0-57-9]\\d{4}|6(?:0[0-8]|1[1-9]|[2-9]\\d)\\d{2})|[1-9]\\d{5}))|7(?:[124-9]\\d{2}|3(?:[0-8]\\d|9[1-9]))\\d{4})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"810123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:[1356]\\d|[28][0-8]|[47][1-9])\\d{6}|9(?:[135]\\d{7}|[28][0-8]\\d{6}|4[1-9]\\d{6}|6(?:[0-8]\\d{6}|9(?:0(?:[0-57-9]\\d{4}|6(?:0[0-8]|1[1-9]|[2-9]\\d)\\d{2})|[1-9]\\d{5}))|7(?:[124-9]\\d{2}|3(?:[0-8]\\d|9[1-9]))\\d{4})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"810123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:6\\d{6}|7[1-48]\\d{5}|9(?:6906(?:09|10)|7390\\d{2}))\\d{2}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"612345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[89]00\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"800123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80[367]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"803123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
@@ -21323,8 +21717,11 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[1-59]\\d{8}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:11(?:1(?:1[124]|2[2-57]|3[1-5]|5[5-8]|8[6-8])|2(?:13|3[6-8]|5[89]|7[05-9]|8[2-6])|3(?:2[01]|3[0-289]|4[1289]|7[1-4]|87)|4(?:1[69]|3[2-49]|4[0-3]|6[5-8])|5(?:1[578]|44|5[0-4])|6(?:18|2[69]|39|4[5-7]|5[1-5]|6[0-59]|8[015-8]))|2(?:2(?:11[1-9]|22[0-7]|33\\d|44[1467]|66[1-68])|5(?:11[124-6]|33[2-8]|44[1467]|55[14]|66[1-3679]|77[124-79]|880))|3(?:3(?:11[0-46-8]|22[0-6]|33[0134689]|44[04]|55[0-6]|66[01467])|4(?:44[0-8]|55[0-69]|66[0-3]|77[1-5]))|4(?:6(?:22[0-24-7]|33[1-5]|44[13-69]|55[14-689]|660|88[1-4])|7(?:11[1-9]|22[1-9]|33[13-7]|44[13-6]|55[1-689]))|5(?:7(?:227|55[05]|(?:66|77)[14-8])|8(?:11[149]|22[013-79]|33[0-68]|44[013-8]|550|66[1-5]|77\\d)))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"111112345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9(?:[1-468]\\d|5[89])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"911234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:11(?:1(?:1[124]|2[2-57]|3[1-5]|5[5-8]|8[6-8])|2(?:13|3[6-8]|5[89]|7[05-9]|8[2-6])|3(?:2[01]|3[0-289]|4[1289]|7[1-4]|87)|4(?:1[69]|3[2-49]|4[0-3]|6[5-8])|5(?:1[578]|44|5[0-4])|6(?:18|2[69]|39|4[5-7]|5[1-5]|6[0-59]|8[015-8]))|2(?:2(?:11[1-9]|22[0-7]|33\\d|44[1467]|66[1-68])|5(?:11[124-6]|33[2-8]|44[1467]|55[14]|66[1-3679]|77[124-79]|880))|3(?:3(?:11[0-46-8]|22[0-6]|33[0134689]|44[04]|55[0-6]|66[01467])|4(?:44[0-8]|55[0-69]|66[0-3]|77[1-5]))|4(?:6(?:22[0-24-7]|33[1-5]|44[13-69]|55[14-689]|660|88[1-4])|7(?:11[1-9]|22[1-9]|33[13-7]|44[13-6]|55[1-689]))|5(?:7(?:227|55[05]|(?:66|77)[14-8])|8(?:11[149]|22[013-79]|33[0-68]|44[013-8]|550|66[1-5]|77\\d)))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"111112345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"9(?:[1-46-8]\\d|5[89])\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"911234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -21648,7 +22045,11 @@
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:9]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:10]];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:11]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:1(?:14\\d{3}|[0-8]\\d{6,7}|500\\d{3}|9\\d{6})|2\\d{6,8}|4\\d{7,8})|(?:2(?:[35][1-4]|6[0-8]|7[1-6]|8\\d|9[1-8])|3(?:1|[25][1-8]|3[1-68]|4[1-3]|6[1-3568]|7[0-469]|8\\d)|4(?:0[1-589]|1[01347-9]|2[0-36-8]|3[0-24-68]|43|5[1-378]|6[1-5]|7[134]|8[1245])|5(?:1[1-35-9]|2[25-8]|3[124-9]|4[1-3589]|5[1-46]|6[1-8])|6(?:19?|[25]\\d|3[1-69]|4[1-6])|7(?:02|[125][1-9]|[36]\\d|4[1-8]|7[0-36-9])|9(?:0[12]|1[013-8]|2[0-479]|5[125-8]|6[23679]|7[159]|8[01346]))\\d{5,8}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"612345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"2(?:1(?:14\\d{3}|[0-8]\\d{6,7}|500\\d{3}|9\\d{6})|2\\d{6,8}|4\\d{7,8})|(?:2(?:[35][1-4]|6[0-8]|7[1-6]|8\\d|9[1-8])|3(?:1|[25][1-8]|3[1-68]|4[1-3]|6[1-3568]|7[0-469]|8\\d)|4(?:0[1-589]|1[01347-9]|2[0-36-8]|3[0-24-68]|43|5[1-378]|6[1-5]|7[134]|8[1245])|5(?:1[1-35-9]|2[25-8]|3[124-9]|4[1-3589]|5[1-46]|6[1-8])|6(?:19?|[25]\\d|3[1-69]|4[1-6])|7(?:02|[125][1-9]|[36]\\d|4[1-8]|7[0-36-9])|9(?:0[12]|1[013-8]|2[0-479]|5[125-8]|6[23679]|7[159]|8[01346]))\\d{5,8}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"612345678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -21950,7 +22351,11 @@
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[124-9]\\d{6,9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{7,8}|2(?:1\\d{6,7}|3\\d{7}|[24-9]\\d{5})|4(?:0[24]\\d{5}|[1-469]\\d{7}|5\\d{6}|7\\d{5}|8[0-46-9]\\d{7})|5(?:0[45]\\d{5}|1\\d{6}|[23679]\\d{7}|8\\d{5})|6(?:1\\d{6}|[237-9]\\d{5}|[4-6]\\d{7})|7[14]\\d{7}|9(?:1\\d{6}|[04]\\d{7}|[35-9]\\d{5})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"2212345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:5]];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{7,8}|2(?:1\\d{6,7}|3\\d{7}|[24-9]\\d{5})|4(?:0[24]\\d{5}|[1-469]\\d{7}|5\\d{6}|7\\d{5}|8[0-46-9]\\d{7})|5(?:0[45]\\d{5}|1\\d{6}|[23679]\\d{7}|8\\d{5})|6(?:1\\d{6}|[237-9]\\d{5}|[4-6]\\d{7})|7[14]\\d{7}|9(?:1\\d{6}|[04]\\d{7}|[35-9]\\d{5})" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"2212345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -22078,11 +22483,11 @@
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:[23]\\d|58)\\d{6}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"21234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:2(?:[13-8]\\d|2[013-9]|9[0-24-9])|3(?:[1569][0-24-9]|4[0-246-9]|7[0-24-69]|89)|58[01])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"21234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:5[1-79]\\d|6\\d{2}|8[4-79]\\d|9(?:0[1-9]|[1-8]\\d))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"51234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:5(?:[1-59][0-46-9]|6[0-4689]|7[0-2469])|6(?:0[1-9]|[1459]\\d|[2368][0-57-9]|7[0-79])|9(?:0[1-9]|1[02-9]|[2358][0-8]|[467]\\d))\\d{5}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"51234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:9]];
@@ -22102,7 +22507,7 @@
 
         NSMutableArray *personalNumber_descArrayPL = [[NSMutableArray alloc] init];
         [personalNumber_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8[1-3]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"81123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.personalNumber = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:1[1-4679]|2[0-367]|3[02-47])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:personalNumber_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"81123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *voip_descArrayPL = [[NSMutableArray alloc] init];
         [voip_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -22110,7 +22515,7 @@
 
         NSMutableArray *pager_descArrayPL = [[NSMutableArray alloc] init];
         [pager_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7\\d{7}" withPossibleNumberPattern:nil withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"71234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.pager = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7(?:1[0-369]|[23][0-37-9]|47|5[1578]|6[0235]|7[278]|8[236-9]|9[025-9])\\d{5}" withPossibleNumberPattern:nil withPossibleLength:pager_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"71234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *uan_descArrayPL = [[NSMutableArray alloc] init];
         [uan_descArrayPL addObject: [NSNumber numberWithInt:-1]];
@@ -22478,7 +22883,10 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[135789]\\d{6,9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1534\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"1534456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:6]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1534\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"1534456789" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"7(?:509\\d|7(?:00[378]|97[7-9])|829\\d|937\\d)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"7797712345" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"80(?:07(?:35|81)|8901)\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8007354567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:871206|90(?:066[59]|1810|71(?:07|55)))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9018105678" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
@@ -22619,9 +23027,15 @@
         NSMutableArray *generalDesc_descArrayPLLO = [[NSMutableArray alloc] init];
         [generalDesc_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
         self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[5689]\\d{9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:generalDesc_descArrayPLLO withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"671(?:3(?:00|3[39]|4[349]|55|6[26])|4(?:56|7[1-9]|8[236-9])|5(?:55|6[2-5]|88)|6(?:3[2-578]|4[24-9]|5[34]|78|8[5-9])|7(?:[079]7|2[0167]|3[45]|47|8[789])|8(?:[2-5789]8|6[48])|9(?:2[29]|6[79]|7[179]|8[789]|9[78]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6713001234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"671(?:3(?:00|3[39]|4[349]|55|6[26])|4(?:56|7[1-9]|8[236-9])|5(?:55|6[2-5]|88)|6(?:3[2-578]|4[24-9]|5[34]|78|8[5-9])|7(?:[079]7|2[0167]|3[45]|47|8[789])|8(?:[2-5789]8|6[48])|9(?:2[29]|6[79]|7[179]|8[789]|9[78]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"6713001234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
-        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"671(?:3(?:00|3[39]|4[349]|55|6[26])|4(?:56|7[1-9]|8[236-9])|5(?:55|6[2-5]|88)|6(?:3[2-578]|4[24-9]|5[34]|78|8[5-9])|7(?:[079]7|2[0167]|3[45]|47|8[789])|8(?:[2-5789]8|6[48])|9(?:2[29]|6[79]|7[179]|8[789]|9[78]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"6713001234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+
+        NSMutableArray *mobile_descArrayPLLO = [[NSMutableArray alloc] init];
+        [mobile_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"671(?:3(?:00|3[39]|4[349]|55|6[26])|4(?:56|7[1-9]|8[236-9])|5(?:55|6[2-5]|88)|6(?:3[2-578]|4[24-9]|5[34]|78|8[5-9])|7(?:[079]7|2[0167]|3[45]|47|8[789])|8(?:[2-5789]8|6[48])|9(?:2[29]|6[79]|7[179]|8[789]|9[78]))\\d{4}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:mobile_descArrayPLLO withExample:@"6713001234" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.tollFree = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"8(?:00|33|44|55|66|77|88)[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"8002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
         self.premiumRate = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"900[2-9]\\d{6}" withPossibleNumberPattern:nil withPossibleLength:nil withPossibleLengthLocalOnly:nil withExample:@"9002123456" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *sharedCost_descArrayPL = [[NSMutableArray alloc] init];
@@ -22684,15 +23098,22 @@
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:8]];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:9]];
         [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[17]\\d{6,9}|[2-589]\\d{3}(?:\\d{3,6})?|6\\d{3}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        [generalDesc_descArrayPL addObject: [NSNumber numberWithInt:12]];
+        self.generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1\\d{6,11}|[2-589]\\d{3}(?:\\d{3,6})?|6\\d{3}|7\\d{6,9}" withPossibleNumberPattern:nil withPossibleLength:generalDesc_descArrayPL withPossibleLengthLocalOnly:nil withExample:nil withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *fixedLine_descArrayPL = [[NSMutableArray alloc] init];
         [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:8]];
-        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"[2-489]\\d{7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"21234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:11]];
+        [fixedLine_descArrayPL addObject: [NSNumber numberWithInt:12]];
+
+        NSMutableArray *fixedLine_descArrayPLLO = [[NSMutableArray alloc] init];
+        [fixedLine_descArrayPLLO addObject: [NSNumber numberWithInt:7]];
+        self.fixedLine = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"(?:153\\d{1,2}|[2-489])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:fixedLine_descArrayPL withPossibleLengthLocalOnly:fixedLine_descArrayPLLO withExample:@"21234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:9]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"5(?:[02-47-9]\\d{2}|5(?:01|2[23]|3[2-4]|4[45]|5[5689]|6[67]|7[0178]|8[6-9]|9[4-9])|6[2-9]\\d)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"501234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"5(?:[02-47-9]\\d{2}|5(?:01|2[23]|3[2-4]|4[45]|5[5689]|6[67]|7[0178]|8[6-9]|9[2-9])|6[2-9]\\d)\\d{5}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"501234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:7]];
@@ -22758,34 +23179,39 @@
         [numberFormats_FormatArray addObject:numberFormats1];
 
         NSMutableArray *numberFormats2_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats2_patternArray addObject:@"1[7-9]"];
-        NBNumberFormat *numberFormats2 = [[NBNumberFormat alloc] initWithPattern:@"(1)([7-9]\\d{2})(\\d{3})(\\d{3})" withFormat:@"$1-$2-$3-$4" withLeadingDigitsPatterns:numberFormats2_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats2_patternArray addObject:@"153"];
+        NBNumberFormat *numberFormats2 = [[NBNumberFormat alloc] initWithPattern:@"(153)(\\d{1,2})(\\d{3})(\\d{4})" withFormat:@"$1 $2 $3 $4" withLeadingDigitsPatterns:numberFormats2_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats2];
 
         NSMutableArray *numberFormats3_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats3_patternArray addObject:@"125"];
-        NBNumberFormat *numberFormats3 = [[NBNumberFormat alloc] initWithPattern:@"(1255)(\\d{3})" withFormat:@"$1-$2" withLeadingDigitsPatterns:numberFormats3_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats3_patternArray addObject:@"1[7-9]"];
+        NBNumberFormat *numberFormats3 = [[NBNumberFormat alloc] initWithPattern:@"(1)([7-9]\\d{2})(\\d{3})(\\d{3})" withFormat:@"$1-$2-$3-$4" withLeadingDigitsPatterns:numberFormats3_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats3];
 
         NSMutableArray *numberFormats4_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats4_patternArray addObject:@"120"];
-        NBNumberFormat *numberFormats4 = [[NBNumberFormat alloc] initWithPattern:@"(1200)(\\d{3})(\\d{3})" withFormat:@"$1-$2-$3" withLeadingDigitsPatterns:numberFormats4_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats4_patternArray addObject:@"125"];
+        NBNumberFormat *numberFormats4 = [[NBNumberFormat alloc] initWithPattern:@"(1255)(\\d{3})" withFormat:@"$1-$2" withLeadingDigitsPatterns:numberFormats4_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats4];
 
         NSMutableArray *numberFormats5_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats5_patternArray addObject:@"121"];
-        NBNumberFormat *numberFormats5 = [[NBNumberFormat alloc] initWithPattern:@"(1212)(\\d{2})(\\d{2})" withFormat:@"$1-$2-$3" withLeadingDigitsPatterns:numberFormats5_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats5_patternArray addObject:@"120"];
+        NBNumberFormat *numberFormats5 = [[NBNumberFormat alloc] initWithPattern:@"(1200)(\\d{3})(\\d{3})" withFormat:@"$1-$2-$3" withLeadingDigitsPatterns:numberFormats5_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats5];
 
         NSMutableArray *numberFormats6_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats6_patternArray addObject:@"15"];
-        NBNumberFormat *numberFormats6 = [[NBNumberFormat alloc] initWithPattern:@"(1599)(\\d{6})" withFormat:@"$1-$2" withLeadingDigitsPatterns:numberFormats6_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats6_patternArray addObject:@"121"];
+        NBNumberFormat *numberFormats6 = [[NBNumberFormat alloc] initWithPattern:@"(1212)(\\d{2})(\\d{2})" withFormat:@"$1-$2-$3" withLeadingDigitsPatterns:numberFormats6_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats6];
 
         NSMutableArray *numberFormats7_patternArray = [[NSMutableArray alloc] init];
-        [numberFormats7_patternArray addObject:@"[2-689]"];
-        NBNumberFormat *numberFormats7 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{4})" withFormat:@"*$1" withLeadingDigitsPatterns:numberFormats7_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats7_patternArray addObject:@"15"];
+        NBNumberFormat *numberFormats7 = [[NBNumberFormat alloc] initWithPattern:@"(1599)(\\d{6})" withFormat:@"$1-$2" withLeadingDigitsPatterns:numberFormats7_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
         [numberFormats_FormatArray addObject:numberFormats7];
+
+        NSMutableArray *numberFormats8_patternArray = [[NSMutableArray alloc] init];
+        [numberFormats8_patternArray addObject:@"[2-689]"];
+        NBNumberFormat *numberFormats8 = [[NBNumberFormat alloc] initWithPattern:@"(\\d{4})" withFormat:@"*$1" withLeadingDigitsPatterns:numberFormats8_patternArray withNationalPrefixFormattingRule:@"$1" whenFormatting:NO withDomesticCarrierCodeFormattingRule:nil];
+        [numberFormats_FormatArray addObject:numberFormats8];
         self.numberFormats = numberFormats_FormatArray;
 
         NSMutableArray *intlNumberFormats_FormatArray = [[NSMutableArray alloc] init];
