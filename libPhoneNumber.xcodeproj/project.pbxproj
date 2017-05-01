@@ -119,28 +119,8 @@
 		8B0FD3021E4A88AC0049DF81 /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */; };
 		8B0FD3031E4A88AC0049DF81 /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */; };
 		8B0FD3041E4A88AC0049DF81 /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */; };
-		8B1FEF981EB7BEFE00FBDE87 /* NBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1FEF971EB7BEFE00FBDE87 /* NBTextField.swift */; };
-		8B1FEF9B1EB7BF3200FBDE87 /* libPhoneNumberiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34ACBB851B7122AC0064B3BD /* libPhoneNumberiOS.framework */; };
-		8B1FEF9C1EB7BF6900FBDE87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6AE8F81BEE72B600263DE1 /* AppDelegate.swift */; };
-		8B1FEF9D1EB7BF6C00FBDE87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6AE8FA1BEE72B600263DE1 /* ViewController.swift */; };
-		8B1FEF9E1EB7BF7000FBDE87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6AE8FC1BEE72B600263DE1 /* Main.storyboard */; };
-		8B1FEF9F1EB7BF7200FBDE87 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6AE9011BEE72B600263DE1 /* LaunchScreen.storyboard */; };
-		8B1FEFA01EB7BFC500FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		8B1FEFA11EB7BFC500FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		8B1FEFA21EB7BFC600FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		8B1FEFA31EB7BFC600FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		A81D6A2B1BECC44600F68F34 /* NBPhoneNumberDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = A81D6A281BECC43A00F68F34 /* NBPhoneNumberDefines.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		8B1FEF991EB7BF2B00FBDE87 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FD7A0613167715A0004BBEB6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 34ACBB841B7122AC0064B3BD;
-			remoteInfo = libPhoneNumberiOS;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1485C5231E06F4890092F541 /* NBAsYouTypeFormatterTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBAsYouTypeFormatterTest1.m; path = libPhoneNumberTests/NBAsYouTypeFormatterTest1.m; sourceTree = SOURCE_ROOT; };
@@ -179,8 +159,6 @@
 		8B0FD2F21E4A85A70049DF81 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		8B0FD2F91E4A88AC0049DF81 /* NSArray+NBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+NBAdditions.h"; sourceTree = "<group>"; };
 		8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+NBAdditions.m"; sourceTree = "<group>"; };
-		8B1FEF731EB7BE7C00FBDE87 /* SwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B1FEF971EB7BEFE00FBDE87 /* NBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NBTextField.swift; path = "libPhoneNumber-iOS/NBTextField.swift"; sourceTree = "<group>"; };
 		8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBGeneratedPhoneNumberMetaData.h; sourceTree = "<group>"; };
 		A81D6A281BECC43A00F68F34 /* NBPhoneNumberDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NBPhoneNumberDefines.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FD12C2681A87401B00B53856 /* NBMetadataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBMetadataHelper.h; sourceTree = "<group>"; };
@@ -263,14 +241,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8B1FEF701EB7BE7C00FBDE87 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B1FEF9B1EB7BF3200FBDE87 /* libPhoneNumberiOS.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -334,7 +304,6 @@
 			isa = PBXGroup;
 			children = (
 				34ACBB891B7122AC0064B3BD /* libPhoneNumberiOS.h */,
-				8B1FEF971EB7BEFE00FBDE87 /* NBTextField.swift */,
 				34ACBB881B7122AC0064B3BD /* Info.plist */,
 			);
 			name = iOS;
@@ -441,7 +410,6 @@
 				14B7A2931DE9B65D0051AED7 /* libPhoneNumberiOSTests.xctest */,
 				14B7A2BE1DE9D7F60051AED7 /* MetadataGenerator.app */,
 				7C72507C1E0EBE7D00F916ED /* libPhoneNumbermacOS.framework */,
-				8B1FEF731EB7BE7C00FBDE87 /* SwiftDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -497,7 +465,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B1FEFA11EB7BFC500FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */,
 				1F31D5461DDD478300257818 /* NBPhoneMetaData.h in Headers */,
 				1F31D5401DDD477300257818 /* NBPhoneNumber.h in Headers */,
 				1F31D5421DDD477800257818 /* NBNumberFormat.h in Headers */,
@@ -515,7 +482,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B1FEFA21EB7BFC600FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */,
 				1F31D5511DDD47BA00257818 /* libPhoneNumbertvOS.h in Headers */,
 				1F31D5551DDD47EB00257818 /* NBMetadataHelper.h in Headers */,
 				1F31D5621DDD482C00257818 /* NBPhoneMetaData.h in Headers */,
@@ -533,7 +499,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B1FEFA01EB7BFC500FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */,
 				34ACBBB61B7124AB0064B3BD /* NBPhoneNumberDefines.h in Headers */,
 				34ACBBBD1B7125450064B3BD /* NBAsYouTypeFormatter.h in Headers */,
 				34ACBBBA1B7124E40064B3BD /* NBPhoneMetaData.h in Headers */,
@@ -551,7 +516,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B1FEFA31EB7BFC600FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */,
 				7C7250801E0EBE7D00F916ED /* libPhoneNumbermacOS.h in Headers */,
 				7C72508E1E0EC05900F916ED /* NBMetadataHelper.h in Headers */,
 				7C7250941E0EC06900F916ED /* NBPhoneMetaData.h in Headers */,
@@ -674,31 +638,13 @@
 			productReference = 7C72507C1E0EBE7D00F916ED /* libPhoneNumbermacOS.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		8B1FEF721EB7BE7C00FBDE87 /* SwiftDemo */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8B1FEF821EB7BE7C00FBDE87 /* Build configuration list for PBXNativeTarget "SwiftDemo" */;
-			buildPhases = (
-				8B1FEF6F1EB7BE7C00FBDE87 /* Sources */,
-				8B1FEF701EB7BE7C00FBDE87 /* Frameworks */,
-				8B1FEF711EB7BE7C00FBDE87 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8B1FEF9A1EB7BF2B00FBDE87 /* PBXTargetDependency */,
-			);
-			name = SwiftDemo;
-			productName = SwiftDemo;
-			productReference = 8B1FEF731EB7BE7C00FBDE87 /* SwiftDemo.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		FD7A0613167715A0004BBEB6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 0710;
 				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = ohtalk.me;
@@ -726,10 +672,6 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 					};
-					8B1FEF721EB7BE7C00FBDE87 = {
-						CreatedOnToolsVersion = 8.3.2;
-						ProvisioningStyle = Automatic;
-					};
 				};
 			};
 			buildConfigurationList = FD7A0616167715A0004BBEB6 /* Build configuration list for PBXProject "libPhoneNumber" */;
@@ -750,7 +692,6 @@
 				7C72507B1E0EBE7D00F916ED /* libPhoneNumbermacOS */,
 				14B7A2921DE9B65D0051AED7 /* libPhoneNumberiOSTests */,
 				14B7A2BD1DE9D7F60051AED7 /* MetadataGenerator */,
-				8B1FEF721EB7BE7C00FBDE87 /* SwiftDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -800,15 +741,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8B1FEF711EB7BE7C00FBDE87 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B1FEF9E1EB7BF7000FBDE87 /* Main.storyboard in Resources */,
-				8B1FEF9F1EB7BF7200FBDE87 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -918,25 +850,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8B1FEF6F1EB7BE7C00FBDE87 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B1FEF9D1EB7BF6C00FBDE87 /* ViewController.swift in Sources */,
-				8B1FEF9C1EB7BF6900FBDE87 /* AppDelegate.swift in Sources */,
-				8B1FEF981EB7BEFE00FBDE87 /* NBTextField.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		8B1FEF9A1EB7BF2B00FBDE87 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 34ACBB841B7122AC0064B3BD /* libPhoneNumberiOS */;
-			targetProxy = 8B1FEF991EB7BF2B00FBDE87 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		14B7A2C91DE9D7F70051AED7 /* Main.storyboard */ = {
@@ -978,6 +892,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_ENABLE_MODULES = YES;
@@ -1007,6 +922,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_ENABLE_MODULES = YES;
@@ -1035,6 +951,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1057,6 +974,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1080,6 +998,7 @@
 		1F31D52F1DDD46B100257818 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1125,6 +1044,7 @@
 		1F31D5301DDD46B100257818 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1172,6 +1092,7 @@
 		1F31D5531DDD47BA00257818 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1217,6 +1138,7 @@
 		1F31D5541DDD47BA00257818 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1264,6 +1186,7 @@
 		34ACBB9E1B7122AC0064B3BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1307,6 +1230,7 @@
 		34ACBB9F1B7122AC0064B3BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1349,6 +1273,7 @@
 		7C7250811E0EBE7D00F916ED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1383,6 +1308,7 @@
 		7C7250821E0EBE7D00F916ED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1416,60 +1342,12 @@
 			};
 			name = Release;
 		};
-		8B1FEF831EB7BE7C00FBDE87 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "$(SRCROOT)/libPhoneNumber-SwiftDemo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.SwiftDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		8B1FEF841EB7BE7C00FBDE87 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "$(SRCROOT)/libPhoneNumber-SwiftDemo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.SwiftDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
 		FD7A064D167715A1004BBEB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1518,6 +1396,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1609,14 +1488,6 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
-		};
-		8B1FEF821EB7BE7C00FBDE87 /* Build configuration list for PBXNativeTarget "SwiftDemo" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8B1FEF831EB7BE7C00FBDE87 /* Debug */,
-				8B1FEF841EB7BE7C00FBDE87 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
 		};
 		FD7A0616167715A0004BBEB6 /* Build configuration list for PBXProject "libPhoneNumber" */ = {
 			isa = XCConfigurationList;
