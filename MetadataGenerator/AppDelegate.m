@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "NBPhoneMetaDataGenerator.h"
 @import libPhoneNumberiOS;
 
 
@@ -25,10 +24,6 @@
 
     [self.window setRootViewController:[[UIViewController alloc] init]];
 
-    // Generate metadata (do not use in release)
-    NBPhoneMetaDataGenerator *generator = [[NBPhoneMetaDataGenerator alloc] init];
-    [generator generateMetadataClasses];
-
     [self testWithRealData];
     //[self testWithGCD];
     //[self testForGetSupportedRegions];
@@ -38,7 +33,7 @@
 
 - (void)testForGetSupportedRegions
 {
-    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
     NSLog(@"%@", [phoneUtil getSupportedRegions]);
 }
 
@@ -79,7 +74,7 @@
 
     // Unit test for isValidNumber is failing some valid numbers. #7
 
-    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
 
     {
         NSError *error = nil;
@@ -91,6 +86,17 @@
         NSLog(@"- isPossibleNumber [%@]", [phoneUtil isPossibleNumber:phoneNumberUS error:&error] ? @"YES" : @"NO");
         NSLog(@"- getRegionCodeForNumber [%@]", [phoneUtil getRegionCodeForNumber:phoneNumberUS]);
     }
+
+  {
+    NSError *error = nil;
+    NBPhoneNumber *phoneNumberUS = [phoneUtil parse:@"14155552671" defaultRegion:@"US" error:&error];
+    if (error) {
+      NSLog(@"err [%@]", [error localizedDescription]);
+    }
+    NSLog(@"- isValidNumber [%@]", [phoneUtil isValidNumber:phoneNumberUS] ? @"YES" : @"NO");
+    NSLog(@"- isPossibleNumber [%@]", [phoneUtil isPossibleNumber:phoneNumberUS error:&error] ? @"YES" : @"NO");
+    NSLog(@"- getRegionCodeForNumber [%@]", [phoneUtil getRegionCodeForNumber:phoneNumberUS]);
+  }
 
     NSLog(@"- - - - -");
 
@@ -147,7 +153,7 @@
         NSLog(@"Error : %@", [anError localizedDescription]);
     }
 
-    NSLog (@"extractCountryCode [%ld]", (unsigned long)[phoneUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
+    NSLog (@"extractCountryCode [%@]", [phoneUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
     NSString *res = nil;
     NSNumber *dRes = [phoneUtil extractCountryCode:@"823213123123" nationalNumber:&res];
     NSLog (@"extractCountryCode [%@] [%@]", dRes, res);
@@ -206,7 +212,7 @@
 
 - (void)testForMultithread
 {
-    NBPhoneNumberUtil *aUtil = [[NBPhoneNumberUtil alloc] init];
+    NBPhoneNumberUtil *aUtil = [NBPhoneNumberUtil sharedInstance];
     NSString *testRegion = [self randomRegion];
 
     if (!testRegion) {
@@ -266,7 +272,7 @@
 
 - (NSString *)getPhoneNumberFormatted:(NSString *)phoneNumber
 {
-    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
     NSString *retValue;
     NBPhoneNumber *phoneNumberFormatted = [phoneUtil parseWithPhoneCarrierRegion:phoneNumber error:nil];
     retValue = [phoneUtil format:phoneNumberFormatted numberFormat:NBEPhoneNumberFormatRFC3966 error:nil];
@@ -277,7 +283,7 @@
 // FIXME: This unit test ALWAYS FAIL ... until google libPhoneNumber fix this issue
 - (void)testAustriaNationalNumberParsing
 {
-    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
 
     NSError *anError = nil;
 
@@ -296,7 +302,7 @@
 
 - (void)testForiOS7
 {
-    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
 
     NSError *anError = nil;
     NBPhoneNumber *myNumber = [phoneUtil parse:@"0174 2340XXX" defaultRegion:@"DE" error:&anError];
