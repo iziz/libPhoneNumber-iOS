@@ -171,28 +171,16 @@ static NSMutableDictionary *kMapCCode2CN = nil;
 }
 
 
-- (NSString *)stringByTrimming:(NSString *)aString
++ (NSString *)stringByTrimming:(NSString *)aString
 {
-    if (aString == nil || aString.length <= 0) return aString;
-    
-    aString = [self normalizeNonBreakingSpace:aString];
-    
-    NSString *aRes = @"";
-    NSArray *newlines = [aString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-    
-    for (NSString *line in newlines) {
-        NSString *performedString = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        
-        if (performedString.length > 0) {
-            aRes = [aRes stringByAppendingString:performedString];
-        }
-    }
-    
-    if (newlines.count <= 0) {
-        return aString;
-    }
-    
-    return aRes;
+  static dispatch_once_t onceToken;
+  static NSCharacterSet *whitespaceCharSet = nil;
+  dispatch_once(&onceToken, ^{
+    NSMutableCharacterSet *spaceCharSet = [NSMutableCharacterSet characterSetWithCharactersInString:NB_NON_BREAKING_SPACE];
+    [spaceCharSet formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    whitespaceCharSet = spaceCharSet;
+  });
+  return [aString stringByTrimmingCharactersInSet:whitespaceCharSet];
 }
 
 
@@ -212,14 +200,14 @@ static NSMutableDictionary *kMapCCode2CN = nil;
 - (NBPhoneMetaData *)getMetadataForRegion:(NSString *)regionCode
 {
     [self initializeHelper];
-    
-    if ([NBMetadataHelper hasValue:regionCode] == NO) {
+    regionCode = [[self class] stringByTrimming:regionCode];
+    if (regionCode.length == 0) {
         return nil;
     }
     
     regionCode = [regionCode uppercaseString];
     
-    if (_cachedMetaDataKey && [_cachedMetaDataKey isEqualToString:regionCode]) {
+    if ([_cachedMetaDataKey isEqualToString:regionCode]) {
         return _cachedMetaData;
     }
     
@@ -255,19 +243,8 @@ static NSMutableDictionary *kMapCCode2CN = nil;
 
 + (BOOL)hasValue:(NSString*)string
 {
-    static dispatch_once_t onceToken;
-    static NSCharacterSet *whitespaceCharSet = nil;
-    dispatch_once(&onceToken, ^{
-        NSMutableCharacterSet *spaceCharSet = [NSMutableCharacterSet characterSetWithCharactersInString:NB_NON_BREAKING_SPACE];
-        [spaceCharSet formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        whitespaceCharSet = spaceCharSet;
-    });
-    
-    if (string == nil || [string stringByTrimmingCharactersInSet:whitespaceCharSet].length <= 0) {
-        return NO;
-    }
-    
-    return YES;
+  string = [self stringByTrimming:string];
+  return string.length != 0;
 }
 
 @end
