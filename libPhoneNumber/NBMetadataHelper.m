@@ -110,29 +110,32 @@ static NSMutableDictionary *kMapCCode2CN = nil;
 {
     NSArray *countryCodes = [NSLocale ISOCountryCodes];
     NSMutableArray *resultMetadata = [[NSMutableArray alloc] init];
-    
+
     for (NSString *countryCode in countryCodes) {
         id countryDictionaryInstance = [NSDictionary dictionaryWithObject:countryCode forKey:NSLocaleCountryCode];
         NSString *identifier = [NSLocale localeIdentifierFromComponents:countryDictionaryInstance];
         NSString *country = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
-        
+        NSString *systemCountry = [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
+
         NSMutableDictionary *countryMeta = [[NSMutableDictionary alloc] init];
         if (country) {
             [countryMeta setObject:country forKey:@"name"];
+        } else if (systemCountry) {
+            [countryMeta setObject:systemCountry forKey:@"name"];
         }
-        
+
         if (countryCode) {
             [countryMeta setObject:countryCode forKey:@"code"];
         }
-        
+
         NBPhoneMetaData *metaData = [self getMetadataForRegion:countryCode];
         if (metaData) {
             [countryMeta setObject:metaData forKey:@"metadata"];
         }
-        
+
         [resultMetadata addObject:countryMeta];
     }
-    
+
     return resultMetadata;
 }
 
@@ -140,19 +143,19 @@ static NSMutableDictionary *kMapCCode2CN = nil;
 - (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber
 {
     [self initializeHelper];
-    
+
     id res = nil;
-    
+
 #if TESTING==1
         res = [NBMetadataCoreTestMapper ISOCodeFromCallingNumber:[countryCodeNumber stringValue]];
 #else
         res = [NBMetadataCoreMapper ISOCodeFromCallingNumber:[countryCodeNumber stringValue]];
 #endif
-    
+
     if (res && [res isKindOfClass:[NSArray class]] && [((NSArray*)res) count] > 0) {
         return res;
     }
-    
+
     return nil;
 }
 
@@ -160,19 +163,20 @@ static NSMutableDictionary *kMapCCode2CN = nil;
 - (NSString *)countryCodeFromRegionCode:(NSString* )regionCode
 {
     [self initializeHelper];
-    
+
     id res = [kMapCCode2CN objectForKey:regionCode];
-    
+
     if (res) {
         return res;
     }
-    
+
     return nil;
 }
 
 
 + (NSString *)stringByTrimming:(NSString *)aString
 {
+
   static dispatch_once_t onceToken;
   static NSCharacterSet *whitespaceCharSet = nil;
   dispatch_once(&onceToken, ^{
@@ -204,26 +208,26 @@ static NSMutableDictionary *kMapCCode2CN = nil;
     if (regionCode.length == 0) {
         return nil;
     }
-    
+
     regionCode = [regionCode uppercaseString];
     
     if ([_cachedMetaDataKey isEqualToString:regionCode]) {
         return _cachedMetaData;
     }
-    
+
     NSString *className = [NSString stringWithFormat:@"%@%@", NB_CLASS_PREFIX, regionCode];
-    
+
     Class metaClass = NSClassFromString(className);
-    
+
     if (metaClass) {
         NBPhoneMetaData *metadata = [[metaClass alloc] init];
-        
+
         _cachedMetaData = metadata;
         _cachedMetaDataKey = regionCode;
-        
+
         return metadata;
     }
-    
+
     return nil;
 }
 
