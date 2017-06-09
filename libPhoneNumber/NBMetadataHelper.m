@@ -90,10 +90,13 @@
         id countryDictionaryInstance = [NSDictionary dictionaryWithObject:countryCode forKey:NSLocaleCountryCode];
         NSString *identifier = [NSLocale localeIdentifierFromComponents:countryDictionaryInstance];
         NSString *country = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
+        NSString *systemCountry = [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
 
         NSMutableDictionary *countryMeta = [[NSMutableDictionary alloc] init];
         if (country) {
             [countryMeta setObject:country forKey:@"name"];
+        } else if (systemCountry) {
+            [countryMeta setObject:systemCountry forKey:@"name"];
         }
 
         if (countryCode) {
