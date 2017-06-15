@@ -5,38 +5,38 @@
 //
 
 #import "NBNumberFormat.h"
-
+#import "NSArray+NBAdditions.h"
 
 @implementation NBNumberFormat
 
 
-- (id)initWithPattern:(NSString *)pattern withFormat:(NSString *)format withLeadingDigitsPatterns:(NSMutableArray *)leadingDigitsPatterns withNationalPrefixFormattingRule:(NSString *)nationalPrefixFormattingRule whenFormatting:(BOOL)nationalPrefixOptionalWhenFormatting withDomesticCarrierCodeFormattingRule:(NSString *)domesticCarrierCodeFormattingRule
-{
-    self = [self init];
-    
-    _pattern = pattern;
-    _format = format;
-    _leadingDigitsPatterns = leadingDigitsPatterns;
-    _nationalPrefixFormattingRule = nationalPrefixFormattingRule;
-    _nationalPrefixOptionalWhenFormatting = nationalPrefixOptionalWhenFormatting;
-    _domesticCarrierCodeFormattingRule = domesticCarrierCodeFormattingRule;
-        
-    return self;
-}
-
-
-- (id)init
+- (id)initWithPattern:(NSString *)pattern withFormat:(NSString *)format withLeadingDigitsPatterns:(NSArray *)leadingDigitsPatterns withNationalPrefixFormattingRule:(NSString *)nationalPrefixFormattingRule whenFormatting:(BOOL)nationalPrefixOptionalWhenFormatting withDomesticCarrierCodeFormattingRule:(NSString *)domesticCarrierCodeFormattingRule
 {
     self = [super init];
-    
     if (self) {
-        self.nationalPrefixOptionalWhenFormatting = NO;
-        self.leadingDigitsPatterns = [[NSMutableArray alloc] init];
+				_pattern = pattern;
+				_format = format;
+				_leadingDigitsPatterns = leadingDigitsPatterns;
+				_nationalPrefixFormattingRule = nationalPrefixFormattingRule;
+				_nationalPrefixOptionalWhenFormatting = nationalPrefixOptionalWhenFormatting;
+				_domesticCarrierCodeFormattingRule = domesticCarrierCodeFormattingRule;
     }
-    
     return self;
 }
 
+- (id)initWithEntry:(NSArray *)entry
+{
+    self = [super init];
+    if (self && entry != nil) {
+        _pattern = [entry nb_safeStringAtIndex:1];
+        _format = [entry nb_safeStringAtIndex:2];
+        _leadingDigitsPatterns = [entry nb_safeArrayAtIndex:3];
+        _nationalPrefixFormattingRule = [entry nb_safeStringAtIndex:4];
+        _nationalPrefixOptionalWhenFormatting = [[entry nb_safeNumberAtIndex:6] boolValue];
+        _domesticCarrierCodeFormattingRule = [entry nb_safeStringAtIndex:5];
+    }
+    return self;
+}
 
 - (NSString *)description
 {
@@ -47,37 +47,24 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	NBNumberFormat *phoneFormatCopy = [[NBNumberFormat allocWithZone:zone] init];
-    
-    /*
-     1 @property (nonatomic, strong, readwrite) NSString *pattern;
-     2 @property (nonatomic, strong, readwrite) NSString *format;
-     3 @property (nonatomic, strong, readwrite) NSString *leadingDigitsPattern;
-     4 @property (nonatomic, strong, readwrite) NSString *nationalPrefixFormattingRule;
-     6 @property (nonatomic, assign, readwrite) BOOL nationalPrefixOptionalWhenFormatting;
-     5 @property (nonatomic, strong, readwrite) NSString *domesticCarrierCodeFormattingRule;
-    */
-    
-    phoneFormatCopy.pattern = [self.pattern copy];
-    phoneFormatCopy.format = [self.format copy];
-    phoneFormatCopy.leadingDigitsPatterns = [self.leadingDigitsPatterns copy];
-    phoneFormatCopy.nationalPrefixFormattingRule = [self.nationalPrefixFormattingRule copy];
-    phoneFormatCopy.nationalPrefixOptionalWhenFormatting = self.nationalPrefixOptionalWhenFormatting;
-    phoneFormatCopy.domesticCarrierCodeFormattingRule = [self.domesticCarrierCodeFormattingRule copy];
-    
-	return phoneFormatCopy;
+    return [[NBNumberFormat alloc] initWithPattern:self.pattern
+                                        withFormat:self.format
+                         withLeadingDigitsPatterns:self.leadingDigitsPatterns
+                  withNationalPrefixFormattingRule:self.nationalPrefixFormattingRule
+                                    whenFormatting:self.nationalPrefixOptionalWhenFormatting
+             withDomesticCarrierCodeFormattingRule:self.domesticCarrierCodeFormattingRule];
 }
 
 
 - (id)initWithCoder:(NSCoder*)coder
 {
     if (self = [super init]) {
-        self.pattern = [coder decodeObjectForKey:@"pattern"];
-        self.format = [coder decodeObjectForKey:@"format"];
-        self.leadingDigitsPatterns = [coder decodeObjectForKey:@"leadingDigitsPatterns"];
-        self.nationalPrefixFormattingRule = [coder decodeObjectForKey:@"nationalPrefixFormattingRule"];
-        self.nationalPrefixOptionalWhenFormatting = [[coder decodeObjectForKey:@"nationalPrefixOptionalWhenFormatting"] boolValue];
-        self.domesticCarrierCodeFormattingRule = [coder decodeObjectForKey:@"domesticCarrierCodeFormattingRule"];
+        _pattern = [coder decodeObjectForKey:@"pattern"];
+        _format = [coder decodeObjectForKey:@"format"];
+        _leadingDigitsPatterns = [coder decodeObjectForKey:@"leadingDigitsPatterns"];
+        _nationalPrefixFormattingRule = [coder decodeObjectForKey:@"nationalPrefixFormattingRule"];
+        _nationalPrefixOptionalWhenFormatting = [[coder decodeObjectForKey:@"nationalPrefixOptionalWhenFormatting"] boolValue];
+        _domesticCarrierCodeFormattingRule = [coder decodeObjectForKey:@"domesticCarrierCodeFormattingRule"];
     }
     return self;
 }

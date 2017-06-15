@@ -1521,8 +1521,13 @@
   NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] init];
   [metadata setNationalPrefixForParsing:@"34"];
   
-  NBPhoneNumberDesc *generalDesc = [[NBPhoneNumberDesc alloc] init];
-  [generalDesc setNationalNumberPattern:@"\\d{4,8}"];
+  NBPhoneNumberDesc *generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{4,8}"
+                                                                  withPossibleNumberPattern:nil
+                                                                         withPossibleLength:nil
+                                                                withPossibleLengthLocalOnly:nil
+                                                                                withExample:nil
+                                                              withNationalNumberMatcherData:nil
+                                                              withPossibleNumberMatcherData:nil];
   [metadata setGeneralDesc:generalDesc];
   
   NBPhoneNumber *numberToStrip = [[NBPhoneNumber alloc] init];
