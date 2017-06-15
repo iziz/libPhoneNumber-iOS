@@ -26,6 +26,7 @@
 + (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber;
 + (NSString *)countryCodeFromRegionCode:(NSString *)regionCode;
 
++ (NSString *)stringByTrimming:(NSString *)aString;
 + (NSString *)normalizeNonBreakingSpace:(NSString *)aString;
 
 @end

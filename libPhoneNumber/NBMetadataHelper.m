@@ -132,6 +132,20 @@
 }
 
 
++ (NSString *)stringByTrimming:(NSString *)aString
+{
+
+  static dispatch_once_t onceToken;
+  static NSCharacterSet *whitespaceCharSet = nil;
+  dispatch_once(&onceToken, ^{
+    NSMutableCharacterSet *spaceCharSet = [NSMutableCharacterSet characterSetWithCharactersInString:NB_NON_BREAKING_SPACE];
+    [spaceCharSet formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    whitespaceCharSet = spaceCharSet;
+  });
+  return [aString stringByTrimmingCharactersInSet:whitespaceCharSet];
+}
+
+
 + (NSString *)normalizeNonBreakingSpace:(NSString *)aString
 {
     return [aString stringByReplacingOccurrencesOfString:NB_NON_BREAKING_SPACE withString:@" "];
@@ -147,13 +161,14 @@
  */
 - (NBPhoneMetaData *)getMetadataForRegion:(NSString *)regionCode
 {
-    if ([[self class] hasValue:regionCode] == NO) {
+    regionCode = [[self class] stringByTrimming:regionCode];
+    if (regionCode.length == 0) {
         return nil;
     }
 
     regionCode = [regionCode uppercaseString];
-
-    if (_cachedMetaDataKey && [_cachedMetaDataKey isEqualToString:regionCode]) {
+    
+    if ([_cachedMetaDataKey isEqualToString:regionCode]) {
         return _cachedMetaData;
     }
 
@@ -185,19 +200,8 @@
 
 + (BOOL)hasValue:(NSString*)string
 {
-    static dispatch_once_t onceToken;
-    static NSCharacterSet *whitespaceCharSet = nil;
-    dispatch_once(&onceToken, ^{
-        NSMutableCharacterSet *spaceCharSet = [NSMutableCharacterSet characterSetWithCharactersInString:NB_NON_BREAKING_SPACE];
-        [spaceCharSet formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        whitespaceCharSet = spaceCharSet;
-    });
-
-    if (string == nil || [string stringByTrimmingCharactersInSet:whitespaceCharSet].length <= 0) {
-        return NO;
-    }
-
-    return YES;
+  string = [self stringByTrimming:string];
+  return string.length != 0;
 }
 
 @end
