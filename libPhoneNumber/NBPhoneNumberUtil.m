@@ -419,54 +419,44 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 - (void)initRegularExpressionSet
 {
-    NSString *EXTN_PATTERNS_FOR_PARSING = @"(?:;ext=([0-9０-９٠-٩۰-۹]{1,7})|[  \\t,]*(?:e?xt(?:ensi(?:ó?|ó))?n?|ｅ?ｘｔｎ?|[,xｘX#＃~～]|int|anexo|ｉｎｔ)[:\\.．]?[  \\t,-]*([0-9０-９٠-٩۰-۹]{1,7})#?|[- ]+([0-9０-９٠-٩۰-۹]{1,5})#)$";
-    
     NSError *error = nil;
     
     if (!_PLUS_CHARS_PATTERN) {
         _PLUS_CHARS_PATTERN = [self regularExpressionWithPattern:[NSString stringWithFormat:@"[%@]+", NB_PLUS_CHARS] options:0 error:&error];
     }
-    
-    if (!LEADING_PLUS_CHARS_PATTERN) {
-        LEADING_PLUS_CHARS_PATTERN = [NSString stringWithFormat:@"^[%@]+", NB_PLUS_CHARS];
-    }
-    
+
     if (!_CAPTURING_DIGIT_PATTERN) {
         _CAPTURING_DIGIT_PATTERN = [self regularExpressionWithPattern:[NSString stringWithFormat:@"([%@])", NB_VALID_DIGITS_STRING] options:0 error:&error];
     }
-    
-    if (!VALID_START_CHAR_PATTERN) {
-        VALID_START_CHAR_PATTERN = [NSString stringWithFormat:@"[%@%@]", NB_PLUS_CHARS, NB_VALID_DIGITS_STRING];
-    }
-    
-    if (!SECOND_NUMBER_START_PATTERN) {
-        SECOND_NUMBER_START_PATTERN = @"[\\\\\\/] *x";
-    }
-    
+
     if (!_VALID_ALPHA_PHONE_PATTERN) {
         _VALID_ALPHA_PHONE_PATTERN = [self regularExpressionWithPattern:VALID_ALPHA_PHONE_PATTERN_STRING options:0 error:&error];
     }
-    
-    if (!UNWANTED_END_CHAR_PATTERN) {
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *EXTN_PATTERNS_FOR_PARSING = @"(?:;ext=([0-9０-９٠-٩۰-۹]{1,7})|[  \\t,]*(?:e?xt(?:ensi(?:ó?|ó))?n?|ｅ?ｘｔｎ?|[,xｘX#＃~～]|int|anexo|ｉｎｔ)[:\\.．]?[  \\t,-]*([0-9０-９٠-٩۰-۹]{1,7})#?|[- ]+([0-9０-９٠-٩۰-۹]{1,5})#)$";
+
+        LEADING_PLUS_CHARS_PATTERN = [NSString stringWithFormat:@"^[%@]+", NB_PLUS_CHARS];
+
+        VALID_START_CHAR_PATTERN = [NSString stringWithFormat:@"[%@%@]", NB_PLUS_CHARS, NB_VALID_DIGITS_STRING];
+
+        SECOND_NUMBER_START_PATTERN = @"[\\\\\\/] *x";
+
         UNWANTED_END_CHAR_PATTERN = [NSString stringWithFormat:@"[^%@%@#]+$", NB_VALID_DIGITS_STRING, VALID_ALPHA];
-    }
-    
-    if (!EXTN_PATTERN) {
+
         EXTN_PATTERN = [NSString stringWithFormat:@"(?:%@)$", EXTN_PATTERNS_FOR_PARSING];
-    }
-    
-    if (!SEPARATOR_PATTERN) {
+
         SEPARATOR_PATTERN = [NSString stringWithFormat:@"[%@]+", VALID_PUNCTUATION];
-    }
-    
-    if (!VALID_PHONE_NUMBER_PATTERN) {
+
         VALID_PHONE_NUMBER_PATTERN = @"^[0-9０-９٠-٩۰-۹]{2}$|^[+＋]*(?:[-x‐-―−ー－-／  ­​⁠　()（）［］.\\[\\]/~⁓∼～*]*[0-9０-９٠-٩۰-۹]){3,}[-x‐-―−ー－-／  ­​⁠　()（）［］.\\[\\]/~⁓∼～*A-Za-z0-9０-９٠-٩۰-۹]*(?:;ext=([0-9０-９٠-٩۰-۹]{1,7})|[  \\t,]*(?:e?xt(?:ensi(?:ó?|ó))?n?|ｅ?ｘｔｎ?|[,xｘ#＃~～]|int|anexo|ｉｎｔ)[:\\.．]?[  \\t,-]*([0-9０-９٠-٩۰-۹]{1,7})#?|[- ]+([0-9０-９٠-٩۰-۹]{1,5})#)?$";
-    }
+    });
 }
 
 - (NSDictionary *)DIGIT_MAPPINGS
 {
-    if (!DIGIT_MAPPINGS) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         DIGIT_MAPPINGS = [NSDictionary dictionaryWithObjectsAndKeys:
                           @"0", @"0", @"1", @"1", @"2", @"2", @"3", @"3", @"4", @"4", @"5", @"5", @"6", @"6", @"7", @"7", @"8", @"8", @"9", @"9",
                           // Fullwidth digit 0 to 9
@@ -479,27 +469,25 @@ static NSArray *GEO_MOBILE_COUNTRIES;
                           @"0", @"\u09E6", @"1", @"\u09E7", @"2", @"\u09E8", @"3", @"\u09E9", @"4", @"\u09EA", @"5", @"\u09EB", @"6", @"\u09EC", @"7", @"\u09ED", @"8", @"\u09EE", @"9", @"\u09EF",
                           // DEVANAGARI digit 0 to 9
                           @"0", @"\u0966", @"1", @"\u0967", @"2", @"\u0968", @"3", @"\u0969", @"4", @"\u096A", @"5", @"\u096B", @"6", @"\u096C", @"7", @"\u096D", @"8", @"\u096E", @"9", @"\u096F", nil];
-    }
+    });
+
     return DIGIT_MAPPINGS;
 }
 
 
 - (void)initNormalizationMappings
 {
-    if (!DIALLABLE_CHAR_MAPPINGS) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         DIALLABLE_CHAR_MAPPINGS = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"0", @"0", @"1", @"1", @"2", @"2", @"3", @"3", @"4", @"4", @"5", @"5", @"6", @"6", @"7", @"7", @"8", @"8", @"9", @"9",
                                    @"+", @"+", @"*", @"*", @"#", @"#", nil];
-    }
-    
-    if (!ALPHA_MAPPINGS) {
+
         ALPHA_MAPPINGS = [NSDictionary dictionaryWithObjectsAndKeys:
                           @"2", @"A", @"2", @"B", @"2", @"C", @"3", @"D", @"3", @"E", @"3", @"F", @"4", @"G", @"4", @"H", @"4", @"I", @"5", @"J",
                           @"5", @"K", @"5", @"L", @"6", @"M", @"6", @"N", @"6", @"O", @"7", @"P", @"7", @"Q", @"7", @"R", @"7", @"S", @"8", @"T",
                           @"8", @"U", @"8", @"V", @"9", @"W", @"9", @"X", @"9", @"Y", @"9", @"Z", nil];
-    }
-    
-    if (!ALL_NORMALIZATION_MAPPINGS) {
+
         ALL_NORMALIZATION_MAPPINGS = [NSDictionary dictionaryWithObjectsAndKeys:
                                       @"0", @"0", @"1", @"1", @"2", @"2", @"3", @"3", @"4", @"4", @"5", @"5", @"6", @"6", @"7", @"7", @"8", @"8", @"9", @"9",
                                       // Fullwidth digit 0 to 9
@@ -511,9 +499,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
                                       @"2", @"A", @"2", @"B", @"2", @"C", @"3", @"D", @"3", @"E", @"3", @"F", @"4", @"G", @"4", @"H", @"4", @"I", @"5", @"J",
                                       @"5", @"K", @"5", @"L", @"6", @"M", @"6", @"N", @"6", @"O", @"7", @"P", @"7", @"Q", @"7", @"R", @"7", @"S", @"8", @"T",
                                       @"8", @"U", @"8", @"V", @"9", @"W", @"9", @"X", @"9", @"Y", @"9", @"Z", nil];
-    }
-    
-    if (!ALL_PLUS_NUMBER_GROUPING_SYMBOLS) {
+
         ALL_PLUS_NUMBER_GROUPING_SYMBOLS = [NSDictionary dictionaryWithObjectsAndKeys:
                                             @"0", @"0", @"1", @"1", @"2", @"2", @"3", @"3", @"4", @"4", @"5", @"5", @"6", @"6", @"7", @"7", @"8", @"8", @"9", @"9",
                                             @"A", @"A", @"B", @"B", @"C", @"C", @"D", @"D", @"E", @"E", @"F", @"F", @"G", @"G", @"H", @"H", @"I", @"I", @"J", @"J",
@@ -523,7 +509,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
                                             @"O", @"o", @"P", @"p", @"Q", @"q", @"R", @"r", @"S", @"s", @"T", @"t", @"U", @"u", @"V", @"v", @"W", @"w", @"X", @"x",
                                             @"Y", @"y", @"Z", @"z", @"-", @"-", @"-", @"\uFF0D", @"-", @"\u2010", @"-", @"\u2011", @"-", @"\u2012", @"-", @"\u2013", @"-", @"\u2014", @"-", @"\u2015",
                                             @"-", @"\u2212", @"/", @"/", @"/", @"\uFF0F", @" ", @" ", @" ", @"\u3000", @" ", @"\u2060", @".", @".", @".", @"\uFF0E", nil];
-    }
+    });
 }
 
 
