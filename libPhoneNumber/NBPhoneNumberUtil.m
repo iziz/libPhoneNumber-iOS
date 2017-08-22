@@ -2622,6 +2622,61 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 }
 
 
+- (NBEValidationResult)testNumberLength:(NSString *)number metadata:(NBPhoneMetaData *)metadata {
+    return [self testNumberLength:number metadata:metadata type:NBEPhoneNumberTypeUNKNOWN];
+}
+
+- (NBEValidationResult)testNumberLength:(NSString *)number metadata:(NBPhoneMetaData *)metadata type:(NBEPhoneNumberType)type {
+    NBPhoneNumberDesc *descForType = [self getNumberDescByType:metadata type:type];
+    
+    NSArray<NSNumber *> *possibleLengths = [descForType.possibleLength count] == 0 ? metadata.generalDesc.possibleLength : descForType.possibleLength;
+    
+    NSArray<NSNumber *> *localLengths = descForType.possibleLengthLocalOnly;
+    
+    if (type == NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE) {
+        if ([self descHasPossibleNumberData:[self getNumberDescByType:metadata type:NBEPhoneNumberTypeFIXED_LINE]]) {
+            return [self testNumberLength:number metadata:metadata type:NBEPhoneNumberTypeMOBILE];
+        } else {
+            NBPhoneNumberDesc *mobileDesc = [self getNumberDescByType:metadata type:NBEPhoneNumberTypeMOBILE];
+            if([self descHasPossibleNumberData:mobileDesc]) {
+                possibleLengths = [[possibleLengths arrayByAddingObjectsFromArray:[mobileDesc.possibleLength count] == 0 ? metadata.generalDesc.possibleLength : mobileDesc.possibleLength] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                    return obj1 < obj2;
+                }];
+                
+                if (![localLengths count]) {
+                    localLengths = mobileDesc.possibleLengthLocalOnly;
+                } else {
+                    localLengths = [[localLengths arrayByAddingObjectsFromArray:mobileDesc.possibleLengthLocalOnly] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                        return obj1 < obj2;
+                    }];
+                    
+                }
+            }
+        }
+    }
+    
+    if ([possibleLengths.firstObject isEqualToNumber:@-1]) {
+        return NBEValidationResultINVALID_LENGTH;
+    }
+    
+    NSUInteger actualLength = number.length;
+    
+    if ([localLengths containsObject:@(actualLength)]) {
+        return NBEValidationResultIS_POSSIBLE_LOCAL_ONLY;
+    }
+    
+    NSNumber *minimumLength = possibleLengths.firstObject;
+    if (minimumLength.integerValue == actualLength) {
+        return NBEValidationResultIS_POSSIBLE;
+    } else if (minimumLength.integerValue > actualLength) {
+        return NBEValidationResultTOO_SHORT;
+    } else if (possibleLengths.lastObject.integerValue < actualLength) {
+        return NBEValidationResultTOO_LONG;
+    }
+    
+    return [[possibleLengths subarrayWithRange:NSMakeRange(1, possibleLengths.count - 1)] containsObject:@(actualLength)] ? NBEValidationResultIS_POSSIBLE : NBEValidationResultINVALID_LENGTH;    
+}
+
 /**
  * Helper method to check a number against a particular pattern and determine
  * whether it matches, or is too short or too long. Currently, if a number
@@ -3018,6 +3073,10 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     return @0;
 }
 
+
+- (BOOL)descHasPossibleNumberData:(NBPhoneNumberDesc *)desc {
+    return [desc.possibleLength count] != 1 || ![[desc.possibleLength firstObject]  isEqualToNumber: @-1];
+}
 
 /**
  * Strips the IDD from the start of the number if present. Helper function used
@@ -3548,10 +3607,19 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
     
     if (regionMetadata != nil) {
         NSString *carrierCode = @"";
-        [self maybeStripNationalPrefixAndCarrierCode:&normalizedNationalNumber metadata:regionMetadata carrierCode:&carrierCode];
         
-        if (keepRawInput) {
-            phoneNumber.preferredDomesticCarrierCode = [carrierCode copy];
+        NSString *potentialNationalNumber = [normalizedNationalNumber copy];
+        
+        [self maybeStripNationalPrefixAndCarrierCode:&potentialNationalNumber metadata:regionMetadata carrierCode:&carrierCode];
+        
+        NBEValidationResult validationResult = [self testNumberLength:potentialNationalNumber metadata:regionMetadata];
+        
+        if (validationResult != NBEValidationResultTOO_SHORT && validationResult != NBEValidationResultIS_POSSIBLE_LOCAL_ONLY && validationResult != NBEValidationResultINVALID_LENGTH) {
+            normalizedNationalNumber = potentialNationalNumber;
+         
+            if (keepRawInput) {
+                phoneNumber.preferredDomesticCarrierCode = [carrierCode copy];
+            }
         }
     }
     
