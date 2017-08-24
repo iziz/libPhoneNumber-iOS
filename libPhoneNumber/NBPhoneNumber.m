@@ -48,8 +48,12 @@
 
 - (NSUInteger)hash
 {
-    NSData *selfObject = [NSKeyedArchiver archivedDataWithRootObject:self];
-    return [selfObject hash];
+    // See https://stackoverflow.com/questions/4948780/magic-number-in-boosthash-combine
+    NSUInteger hash = self.countryCode.hash;
+    hash ^= self.nationalNumber.hash + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+    hash ^= self.numberOfLeadingZeros.hash + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+    hash ^= self.extension.hash + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+    return hash;
 }
 
 
