@@ -21,6 +21,7 @@
 - (BOOL)truncateTooLongNumber:(NBPhoneNumber*)number;
 - (NBEValidationResult)isPossibleNumberWithReason:(NBPhoneNumber*)number;
 - (BOOL)isPossibleNumber:(NBPhoneNumber*)number;
+- (NBEValidationResult)validateNumberLength:(NSString *)number metadata:(NBPhoneMetaData *)metadata type:(NBEPhoneNumberType)type;
 - (NBEMatchType)isNumberMatch:(id)firstNumberIn second:(id)secondNumberIn;
 - (int)getLengthOfGeographicalAreaCode:(NBPhoneNumber*)phoneNumber;
 - (int)getLengthOfNationalDestinationCode:(NBPhoneNumber*)phoneNumber;
@@ -1945,6 +1946,26 @@
   [arNumber setNationalNumber:@2312340000];
   XCTAssertTrue([arNumber isEqual:[_aUtil parse:@"+54 23 1234 0000" defaultRegion:@"AR" error:&anError]]);
   XCTAssertTrue([arNumber isEqual:[_aUtil parse:@"023 1234 0000" defaultRegion:@"AR" error:&anError]]);
+}
+
+- (void)testParseNationalNumberRussia {
+    NSError *anError = nil;
+    // Test parsing mobile numbers for Russia.
+    NBPhoneNumber *ruNumber = [[NBPhoneNumber alloc] init];
+    [ruNumber setCountryCode:@7];
+    [ruNumber setNationalNumber:@8125555646];
+    
+    XCTAssertTrue([ruNumber isEqual:[_aUtil parse:@"+7 812 555 56-46" defaultRegion:@"RU" error:&anError]]);
+    XCTAssertTrue([ruNumber isEqual:[_aUtil parse:@"+7 812 555 56-46" defaultRegion:nil error:&anError]]);
+    
+    // Test alternative country code formats
+    XCTAssertTrue([ruNumber isEqual:[_aUtil parse:@"8 812 555 56-46" defaultRegion:@"RU" error:&anError]]);
+    XCTAssertTrue([ruNumber isEqual:[_aUtil parse:@"7 812 555 56-46" defaultRegion:@"RU" error:&anError]]);
+    
+    
+    // Test removes leading 8 when number contains one digit more than required
+    XCTAssertTrue([ruNumber isEqual:[_aUtil parse:@"+7 8 812 555 56-46" defaultRegion:@"RU" error:&anError]]);
+    XCTAssertTrue([ruNumber isEqual:[_aUtil parse:@"+7 8 812 555 56-46" defaultRegion:nil error:&anError]]);
 }
 
 
