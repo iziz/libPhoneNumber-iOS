@@ -2622,11 +2622,11 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 }
 
 
-- (NBEValidationResult)testNumberLength:(NSString *)number metadata:(NBPhoneMetaData *)metadata {
-    return [self testNumberLength:number metadata:metadata type:NBEPhoneNumberTypeUNKNOWN];
+- (NBEValidationResult)validateNumberLength:(NSString *)number metadata:(NBPhoneMetaData *)metadata {
+    return [self validateNumberLength:number metadata:metadata type:NBEPhoneNumberTypeUNKNOWN];
 }
 
-- (NBEValidationResult)testNumberLength:(NSString *)number metadata:(NBPhoneMetaData *)metadata type:(NBEPhoneNumberType)type {
+- (NBEValidationResult)validateNumberLength:(NSString *)number metadata:(NBPhoneMetaData *)metadata type:(NBEPhoneNumberType)type {
     NBPhoneNumberDesc *descForType = [self getNumberDescByType:metadata type:type];
     
     NSArray<NSNumber *> *possibleLengths = [descForType.possibleLength count] == 0 ? metadata.generalDesc.possibleLength : descForType.possibleLength;
@@ -2635,7 +2635,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     
     if (type == NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE) {
         if ([self descHasPossibleNumberData:[self getNumberDescByType:metadata type:NBEPhoneNumberTypeFIXED_LINE]]) {
-            return [self testNumberLength:number metadata:metadata type:NBEPhoneNumberTypeMOBILE];
+            return [self validateNumberLength:number metadata:metadata type:NBEPhoneNumberTypeMOBILE];
         } else {
             NBPhoneNumberDesc *mobileDesc = [self getNumberDescByType:metadata type:NBEPhoneNumberTypeMOBILE];
             if([self descHasPossibleNumberData:mobileDesc]) {
@@ -3619,7 +3619,7 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
         
         [self maybeStripNationalPrefixAndCarrierCode:&potentialNationalNumber metadata:regionMetadata carrierCode:&carrierCode];
         
-        NBEValidationResult validationResult = [self testNumberLength:potentialNationalNumber metadata:regionMetadata];
+        NBEValidationResult validationResult = [self validateNumberLength:potentialNationalNumber metadata:regionMetadata];
         
         if (validationResult != NBEValidationResultTOO_SHORT && validationResult != NBEValidationResultIS_POSSIBLE_LOCAL_ONLY && validationResult != NBEValidationResultINVALID_LENGTH) {
             normalizedNationalNumber = potentialNationalNumber;
