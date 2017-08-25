@@ -2639,15 +2639,17 @@ static NSArray *GEO_MOBILE_COUNTRIES;
         } else {
             NBPhoneNumberDesc *mobileDesc = [self getNumberDescByType:metadata type:NBEPhoneNumberTypeMOBILE];
             if([self descHasPossibleNumberData:mobileDesc]) {
-                possibleLengths = [[possibleLengths arrayByAddingObjectsFromArray:[mobileDesc.possibleLength count] == 0 ? metadata.generalDesc.possibleLength : mobileDesc.possibleLength] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                    return obj1 < obj2;
+                NSArray *combinedArray = [possibleLengths arrayByAddingObjectsFromArray:[mobileDesc.possibleLength count] == 0 ? metadata.generalDesc.possibleLength : mobileDesc.possibleLength];
+                possibleLengths = [combinedArray sortedArrayUsingComparator:^NSComparisonResult(NSNumber * _Nonnull obj1, NSNumber * _Nonnull obj2) {
+                    return [obj1 compare:obj2] == NSOrderedAscending;
                 }];
                 
                 if (![localLengths count]) {
                     localLengths = mobileDesc.possibleLengthLocalOnly;
                 } else {
-                    localLengths = [[localLengths arrayByAddingObjectsFromArray:mobileDesc.possibleLengthLocalOnly] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                        return obj1 < obj2;
+                    NSArray *combinedArray = [localLengths arrayByAddingObjectsFromArray:mobileDesc.possibleLengthLocalOnly];
+                    localLengths = [combinedArray sortedArrayUsingComparator:^NSComparisonResult(NSNumber * _Nonnull obj1, NSNumber * _Nonnull obj2) {
+                        return [obj1 compare:obj2] == NSOrderedAscending;
                     }];
                     
                 }
@@ -2655,26 +2657,31 @@ static NSArray *GEO_MOBILE_COUNTRIES;
         }
     }
     
-    if ([possibleLengths.firstObject isEqualToNumber:@-1]) {
+    if ([possibleLengths.firstObject isEqualToNumber:@(-1)]) {
         return NBEValidationResultINVALID_LENGTH;
     }
     
-    NSUInteger actualLength = number.length;
+    NSNumber *actualLength = @(number.length);
     
-    if ([localLengths containsObject:@(actualLength)]) {
+    if ([localLengths containsObject:actualLength]) {
         return NBEValidationResultIS_POSSIBLE_LOCAL_ONLY;
     }
     
     NSNumber *minimumLength = possibleLengths.firstObject;
-    if (minimumLength.integerValue == actualLength) {
+    
+    NSComparisonResult comparisionResult = [minimumLength compare:actualLength];
+    
+    if (comparisionResult == NSOrderedSame) {
         return NBEValidationResultIS_POSSIBLE;
-    } else if (minimumLength.integerValue > actualLength) {
+    } else if (comparisionResult == NSOrderedDescending) {
         return NBEValidationResultTOO_SHORT;
-    } else if (possibleLengths.lastObject.integerValue < actualLength) {
+    } else if ([possibleLengths.lastObject compare:actualLength] == NSOrderedAscending) {
         return NBEValidationResultTOO_LONG;
     }
     
-    return [[possibleLengths subarrayWithRange:NSMakeRange(1, possibleLengths.count - 1)] containsObject:@(actualLength)] ? NBEValidationResultIS_POSSIBLE : NBEValidationResultINVALID_LENGTH;    
+    NSArray *possibleLengthsSubarray = [possibleLengths subarrayWithRange:NSMakeRange(1, possibleLengths.count - 1)];
+    
+    return [possibleLengthsSubarray containsObject:actualLength] ? NBEValidationResultIS_POSSIBLE : NBEValidationResultINVALID_LENGTH;
 }
 
 /**
@@ -3075,7 +3082,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 
 - (BOOL)descHasPossibleNumberData:(NBPhoneNumberDesc *)desc {
-    return [desc.possibleLength count] != 1 || ![[desc.possibleLength firstObject]  isEqualToNumber: @-1];
+    return [desc.possibleLength count] != 1 || ![[desc.possibleLength firstObject]  isEqualToNumber: @(-1)];
 }
 
 /**
