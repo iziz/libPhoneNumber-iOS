@@ -2641,7 +2641,6 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     // type exist at all, there is one possible length (-1) which is guaranteed not to match the
     // length of any real phone number).
     NSArray<NSNumber *> *possibleLengths = [descForType.possibleLength count] == 0 ? metadata.generalDesc.possibleLength : descForType.possibleLength;
-    
     NSArray<NSNumber *> *localLengths = descForType.possibleLengthLocalOnly;
     
     if (type == NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE) {
@@ -2686,7 +2685,6 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     }
     
     NSNumber *minimumLength = possibleLengths.firstObject;
-    
     NSComparisonResult comparisionResult = [minimumLength compare:actualLength];
     
     if (comparisionResult == NSOrderedSame) {
@@ -2699,7 +2697,6 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     
     // We skip the first element; we've already checked it.
     NSArray *possibleLengthsSubarray = [possibleLengths subarrayWithRange:NSMakeRange(1, possibleLengths.count - 1)];
-    
     return [possibleLengthsSubarray containsObject:actualLength] ? NBEValidationResultIS_POSSIBLE : NBEValidationResultINVALID_LENGTH;
 }
 
