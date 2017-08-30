@@ -2621,48 +2621,66 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     return [self isPossibleNumberWithReason:number] == NBEValidationResultIS_POSSIBLE;
 }
 
-
+/**
+ * Helper method to check a number against possible lengths for this region, based on the metadata
+ * being passed in, and determine whether it matches, or is too short or too long.
+ */
 - (NBEValidationResult)validateNumberLength:(NSString *)number metadata:(NBPhoneMetaData *)metadata {
     return [self validateNumberLength:number metadata:metadata type:NBEPhoneNumberTypeUNKNOWN];
 }
 
+/**
+ * Helper method to check a number against possible lengths for this number type, and determine
+ * whether it matches, or is too short or too long.
+ */
 - (NBEValidationResult)validateNumberLength:(NSString *)number metadata:(NBPhoneMetaData *)metadata type:(NBEPhoneNumberType)type {
     NBPhoneNumberDesc *descForType = [self getNumberDescByType:metadata type:type];
-    
+    // There should always be "possibleLengths" set for every element.
+    // For size efficiency, where a sub-description (e.g. fixed-line) has the same possibleLengths
+    // as the parent, this is missing, so we fall back to the general desc (where no numbers of the
+    // type exist at all, there is one possible length (-1) which is guaranteed not to match the
+    // length of any real phone number).
     NSArray<NSNumber *> *possibleLengths = [descForType.possibleLength count] == 0 ? metadata.generalDesc.possibleLength : descForType.possibleLength;
     
     NSArray<NSNumber *> *localLengths = descForType.possibleLengthLocalOnly;
     
     if (type == NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE) {
         if ([self descHasPossibleNumberData:[self getNumberDescByType:metadata type:NBEPhoneNumberTypeFIXED_LINE]]) {
+            // The rare case has been encountered where no fixedLine data is available (true for some
+            // non-geographical entities), so we just check mobile.
             return [self validateNumberLength:number metadata:metadata type:NBEPhoneNumberTypeMOBILE];
         } else {
             NBPhoneNumberDesc *mobileDesc = [self getNumberDescByType:metadata type:NBEPhoneNumberTypeMOBILE];
             if([self descHasPossibleNumberData:mobileDesc]) {
+                // Merge the mobile data in if there was any. We have to make a copy to do this.
+                // Note that when adding the possible lengths from mobile, we have to again check they
+                // aren't empty since if they are this indicates they are the same as the general desc and
+                // should be obtained from there.
                 NSArray *combinedArray = [possibleLengths arrayByAddingObjectsFromArray:[mobileDesc.possibleLength count] == 0 ? metadata.generalDesc.possibleLength : mobileDesc.possibleLength];
-                possibleLengths = [combinedArray sortedArrayUsingComparator:^NSComparisonResult(NSNumber * _Nonnull obj1, NSNumber * _Nonnull obj2) {
-                    return [obj1 compare:obj2] == NSOrderedAscending;
-                }];
+                
+                // The current list is sorted; we need to merge in the new list and re-sort (duplicates
+                // are okay). Sorting isn't so expensive because the lists are very small.
+                possibleLengths = [combinedArray sortedArrayUsingSelector:@selector(compare:)];
                 
                 if (![localLengths count]) {
                     localLengths = mobileDesc.possibleLengthLocalOnly;
                 } else {
                     NSArray *combinedArray = [localLengths arrayByAddingObjectsFromArray:mobileDesc.possibleLengthLocalOnly];
-                    localLengths = [combinedArray sortedArrayUsingComparator:^NSComparisonResult(NSNumber * _Nonnull obj1, NSNumber * _Nonnull obj2) {
-                        return [obj1 compare:obj2] == NSOrderedAscending;
-                    }];
-                    
+                    localLengths = [combinedArray sortedArrayUsingSelector:@selector(compare:)];
                 }
             }
         }
     }
     
+    // If the type is not supported at all (indicated by the possible lengths containing -1 at this
+    // point) we return invalid length.
     if ([possibleLengths.firstObject isEqualToNumber:@(-1)]) {
         return NBEValidationResultINVALID_LENGTH;
     }
     
     NSNumber *actualLength = @(number.length);
-    
+    // This is safe because there is never an overlap beween the possible lengths and the local-only
+    // lengths; this is checked at build time.
     if ([localLengths containsObject:actualLength]) {
         return NBEValidationResultIS_POSSIBLE_LOCAL_ONLY;
     }
@@ -2679,6 +2697,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
         return NBEValidationResultTOO_LONG;
     }
     
+    // We skip the first element; we've already checked it.
     NSArray *possibleLengthsSubarray = [possibleLengths subarrayWithRange:NSMakeRange(1, possibleLengths.count - 1)];
     
     return [possibleLengthsSubarray containsObject:actualLength] ? NBEValidationResultIS_POSSIBLE : NBEValidationResultINVALID_LENGTH;
@@ -3080,9 +3099,13 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     return @0;
 }
 
-
+/**
+ * Returns true if there is any possible number data set for a particular PhoneNumberDesc.
+ */
 - (BOOL)descHasPossibleNumberData:(NBPhoneNumberDesc *)desc {
-    return [desc.possibleLength count] != 1 || ![[desc.possibleLength firstObject]  isEqualToNumber: @(-1)];
+    // If this is empty, it means numbers of this type inherit from the "general desc" -> the value
+    // "-1" means that no numbers exist for this type.
+    return [desc.possibleLength count] != 1 || ![[desc.possibleLength firstObject] isEqualToNumber: @(-1)];
 }
 
 /**
@@ -3614,16 +3637,11 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
     
     if (regionMetadata != nil) {
         NSString *carrierCode = @"";
-        
         NSString *potentialNationalNumber = [normalizedNationalNumber copy];
-        
         [self maybeStripNationalPrefixAndCarrierCode:&potentialNationalNumber metadata:regionMetadata carrierCode:&carrierCode];
-        
         NBEValidationResult validationResult = [self validateNumberLength:potentialNationalNumber metadata:regionMetadata];
-        
         if (validationResult != NBEValidationResultTOO_SHORT && validationResult != NBEValidationResultIS_POSSIBLE_LOCAL_ONLY && validationResult != NBEValidationResultINVALID_LENGTH) {
             normalizedNationalNumber = potentialNationalNumber;
-         
             if (keepRawInput) {
                 phoneNumber.preferredDomesticCarrierCode = [carrierCode copy];
             }
