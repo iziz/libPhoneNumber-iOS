@@ -21,6 +21,7 @@
 - (BOOL)truncateTooLongNumber:(NBPhoneNumber*)number;
 - (NBEValidationResult)isPossibleNumberWithReason:(NBPhoneNumber*)number;
 - (BOOL)isPossibleNumber:(NBPhoneNumber*)number;
+- (NBEValidationResult)validateNumberLength:(NSString *)number metadata:(NBPhoneMetaData *)metadata type:(NBEPhoneNumberType)type;
 - (NBEMatchType)isNumberMatch:(id)firstNumberIn second:(id)secondNumberIn;
 - (int)getLengthOfGeographicalAreaCode:(NBPhoneNumber*)phoneNumber;
 - (int)getLengthOfNationalDestinationCode:(NBPhoneNumber*)phoneNumber;
@@ -1947,6 +1948,35 @@
   XCTAssertTrue([arNumber isEqual:[_aUtil parse:@"023 1234 0000" defaultRegion:@"AR" error:&anError]]);
 }
 
+- (void)testParseNationalNumberRussia {
+    NSError *anError = nil;
+    // Test parsing mobile numbers for Russia.
+    NBPhoneNumber *ruNumber = [[NBPhoneNumber alloc] init];
+    [ruNumber setCountryCode:@7];
+    [ruNumber setNationalNumber:@8125555646];
+    
+    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"+7 812 555 56-46" defaultRegion:@"RU" error:&anError]);
+    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"+7 812 555 56-46" defaultRegion:nil error:&anError]);
+    
+    // Test alternative country code formats
+    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"8 812 555 56-46" defaultRegion:@"RU" error:&anError]);
+    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"7 812 555 56-46" defaultRegion:@"RU" error:&anError]);
+    
+    // Test removes leading 8 when number contains one digit more than required
+    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"+7 8 812 555 56-46" defaultRegion:@"RU" error:&anError]);
+    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"+7 8 812 555 56-46" defaultRegion:nil error:&anError]);
+}
+
+- (void)testValidateNumberLength {
+    NBPhoneMetaData *ruMetadata = [self.helper getMetadataForRegion:@"RU"];
+    XCTAssertEqual(NBEValidationResultIS_POSSIBLE, [_aUtil validateNumberLength:@"8125555646" metadata:ruMetadata type:NBEPhoneNumberTypeUNKNOWN]);
+    XCTAssertEqual(NBEValidationResultTOO_SHORT, [_aUtil validateNumberLength:@"81255556" metadata:ruMetadata type:NBEPhoneNumberTypeUNKNOWN]);
+    XCTAssertEqual(NBEValidationResultTOO_LONG, [_aUtil validateNumberLength:@"812555564643" metadata:ruMetadata type:NBEPhoneNumberTypeUNKNOWN]);
+    
+    NBPhoneMetaData *usMetadata = [self.helper getMetadataForRegion:@"US"];
+    XCTAssertEqual(NBEValidationResultIS_POSSIBLE_LOCAL_ONLY, [_aUtil validateNumberLength:self.usLocalNumber.nationalNumber.stringValue metadata:usMetadata type:NBEPhoneNumberTypeUNKNOWN]);
+    XCTAssertEqual(NBEValidationResultIS_POSSIBLE, [_aUtil validateNumberLength:self.usNumber.nationalNumber.stringValue metadata:usMetadata type:NBEPhoneNumberTypeUNKNOWN]);
+}
 
 - (void)testParseWithXInNumber {
   NSError *anError = nil;
