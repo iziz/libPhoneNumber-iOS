@@ -1256,7 +1256,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 {
     NBMetadataHelper *helper = self.helper;
     
-    return [NB_REGION_CODE_FOR_NON_GEO_ENTITY isEqualToString:regionCode] ?
+    return [regionCode isEqualToString:NB_REGION_CODE_FOR_NON_GEO_ENTITY] ?
         [helper getMetadataForNonGeographicalRegion:countryCallingCode] : [helper getMetadataForRegion:regionCode];
 }
 

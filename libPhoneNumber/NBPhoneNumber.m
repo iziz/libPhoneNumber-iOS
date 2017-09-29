@@ -32,7 +32,7 @@
 
 - (NBECountryCodeSource)getCountryCodeSourceOrDefault
 {
-    if (!self.countryCodeSource) {
+    if (nil == self.countryCodeSource) {
         return NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN;
     }
     
