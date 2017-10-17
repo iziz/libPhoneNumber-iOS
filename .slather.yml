@@ -5,8 +5,6 @@ ignore:
  - libPhoneNumber/AppDelegate.m 
  - libPhoneNumber/main.m
  - libPhoneNumber/NBPhoneMetaDataGenerator.m
- - libPhoneNumber/NBMetadataCore.m
- - libPhoneNumber/NBMetadataCoreMapper.m
  - libPhoneNumber/NBPhoneMetaData.m
  - libPhoneNumber/NBPhoneNumberDesc.m
  - libPhoneNumber/NBMetadataHelper.m
