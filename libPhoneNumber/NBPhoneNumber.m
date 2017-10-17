@@ -39,13 +39,6 @@
     return [self.countryCodeSource integerValue];
 }
 
-
-- (BOOL)isEqualToObject:(NBPhoneNumber*)otherObj
-{
-    return [self isEqual:otherObj];
-}
-
-
 - (NSUInteger)hash
 {
     // See https://stackoverflow.com/questions/4948780/magic-number-in-boosthash-combine
