@@ -24,8 +24,6 @@ FOUNDATION_EXPORT const unsigned char libPhoneNumbermacOSVersionString[];
 #import "NBAsYouTypeFormatter.h"
 
 // Metadata
-#import "NBMetadataCore.h"
-#import "NBMetadataCoreMapper.h"
 #import "NBMetadataHelper.h"
 
 // Model
