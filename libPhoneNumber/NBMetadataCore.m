@@ -19092,7 +19092,7 @@
 
         NSMutableArray *mobile_descArrayPL = [[NSMutableArray alloc] init];
         [mobile_descArrayPL addObject: [NSNumber numberWithInt:10]];
-        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(?:0[0-269]|1[0-245]|2[0-278])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"1001234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
+        self.mobile = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"1(?:0[0-269]|1[0-245]|2[0-278]|5[0-9])\\d{7}" withPossibleNumberPattern:nil withPossibleLength:mobile_descArrayPL withPossibleLengthLocalOnly:nil withExample:@"1001234567" withNationalNumberMatcherData:nil withPossibleNumberMatcherData:nil];
 
         NSMutableArray *tollFree_descArrayPL = [[NSMutableArray alloc] init];
         [tollFree_descArrayPL addObject: [NSNumber numberWithInt:10]];
