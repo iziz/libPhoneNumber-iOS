@@ -57,6 +57,8 @@
 @property (nonatomic, readonly, copy) NBPhoneNumber *itMobile;
 @property (nonatomic, readonly, copy) NBPhoneNumber *itNumber;
 @property (nonatomic, readonly, copy) NBPhoneNumber *mxNumber;
+@property (nonatomic, readonly, copy) NBPhoneNumber *mxMobile1;
+@property (nonatomic, readonly, copy) NBPhoneNumber *mxMobile2;
 @property (nonatomic, readonly, copy) NBPhoneNumber *nzNumber;
 @property (nonatomic, readonly, copy) NBPhoneNumber *sgNumber;
 @property (nonatomic, readonly, copy) NBPhoneNumber *universalPremiumRateNumber;
@@ -246,6 +248,23 @@
   return deNumber;
 }
 
+// Numbers to test the formatting rules from Mexico.
+- (NBPhoneNumber *)mxMobile1 {
+    // Note that this is the same as the example number for DE in the metadata.
+    NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+    number.countryCode = @52;
+    number.nationalNumber = @12345678900;
+    return number;
+}
+
+- (NBPhoneNumber *)mxMobile2 {
+    // Note that this is the same as the example number for DE in the metadata.
+    NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+    number.countryCode = @52;
+    number.nationalNumber = @15512345678;
+    return number;
+}
+
 - (NBPhoneNumber *)mxNumber {
   NBPhoneNumber *mxNumber = [[NBPhoneNumber alloc] init];
   mxNumber.countryCode = @52;
@@ -328,8 +347,9 @@
   XCTAssertEqualObjects(@"[13-689]\\d{9}|2[0-35-9]\\d{8}", metadata.generalDesc.nationalNumberPattern);
   XCTAssertEqualObjects(@"[13-689]\\d{9}|2[0-35-9]\\d{8}", metadata.fixedLine.nationalNumberPattern);
   XCTAssertEqualObjects(@"900\\d{7}", metadata.premiumRate.nationalNumberPattern);
-  // No shared-cost data is available, so it should be initialised to 'NA'.
-  XCTAssertEqualObjects(@"NA", metadata.sharedCost.nationalNumberPattern);
+  // No shared-cost data is available, so its national number data should not be
+  // set.
+  XCTAssertFalse([metadata.sharedCost nationalNumberPattern] != nil);
 }
 
 -(void) testGetInstanceLoadDEMetadata {
@@ -380,19 +400,14 @@
   XCTAssertTrue([_aUtil isNumberGeographical:self.auNumber]);
   // International toll free number.
   XCTAssertFalse([_aUtil isNumberGeographical:self.internationalTollFreeNumber]);
-}
-
-- (void)testIsLeadingZeroPossible {
-  // Italy
-  XCTAssertTrue([_aUtil isLeadingZeroPossible:@39]);
-  // USA
-  XCTAssertFalse([_aUtil isLeadingZeroPossible:@1]);
-  // International toll free
-  XCTAssertTrue([_aUtil isLeadingZeroPossible:@800]);
-  // International premium-rate
-  XCTAssertFalse([_aUtil isLeadingZeroPossible:@979]);
-  // Not in metadata file, just default to false.
-  XCTAssertFalse([_aUtil isLeadingZeroPossible:@888]);
+  // We test that mobile phone numbers in relevant regions are indeed considered
+  // geographical.
+  // Argentina, mobile phone number.
+  XCTAssertTrue([_aUtil isNumberGeographical:self.arMobile]);
+  // Mexico, mobile phone number.
+  XCTAssertTrue([_aUtil isNumberGeographical:[self mxMobile1]]);
+  // Mexico, another mobile phone number.
+  XCTAssertTrue([_aUtil isNumberGeographical:[self mxMobile2]]);
 }
 
 - (void)testgetLengthOfGeographicalAreaCode {
@@ -1946,36 +1961,6 @@
   [arNumber setNationalNumber:@2312340000];
   XCTAssertTrue([arNumber isEqual:[_aUtil parse:@"+54 23 1234 0000" defaultRegion:@"AR" error:&anError]]);
   XCTAssertTrue([arNumber isEqual:[_aUtil parse:@"023 1234 0000" defaultRegion:@"AR" error:&anError]]);
-}
-
-- (void)testParseNationalNumberRussia {
-    NSError *anError = nil;
-    // Test parsing mobile numbers for Russia.
-    NBPhoneNumber *ruNumber = [[NBPhoneNumber alloc] init];
-    [ruNumber setCountryCode:@7];
-    [ruNumber setNationalNumber:@8125555646];
-    
-    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"+7 812 555 56-46" defaultRegion:@"RU" error:&anError]);
-    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"+7 812 555 56-46" defaultRegion:nil error:&anError]);
-    
-    // Test alternative country code formats
-    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"8 812 555 56-46" defaultRegion:@"RU" error:&anError]);
-    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"7 812 555 56-46" defaultRegion:@"RU" error:&anError]);
-    
-    // Test removes leading 8 when number contains one digit more than required
-    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"+7 8 812 555 56-46" defaultRegion:@"RU" error:&anError]);
-    XCTAssertEqualObjects(ruNumber, [_aUtil parse:@"+7 8 812 555 56-46" defaultRegion:nil error:&anError]);
-}
-
-- (void)testValidateNumberLength {
-    NBPhoneMetaData *ruMetadata = [self.helper getMetadataForRegion:@"RU"];
-    XCTAssertEqual(NBEValidationResultIS_POSSIBLE, [_aUtil validateNumberLength:@"8125555646" metadata:ruMetadata type:NBEPhoneNumberTypeUNKNOWN]);
-    XCTAssertEqual(NBEValidationResultTOO_SHORT, [_aUtil validateNumberLength:@"81255556" metadata:ruMetadata type:NBEPhoneNumberTypeUNKNOWN]);
-    XCTAssertEqual(NBEValidationResultTOO_LONG, [_aUtil validateNumberLength:@"812555564643" metadata:ruMetadata type:NBEPhoneNumberTypeUNKNOWN]);
-    
-    NBPhoneMetaData *usMetadata = [self.helper getMetadataForRegion:@"US"];
-    XCTAssertEqual(NBEValidationResultIS_POSSIBLE_LOCAL_ONLY, [_aUtil validateNumberLength:self.usLocalNumber.nationalNumber.stringValue metadata:usMetadata type:NBEPhoneNumberTypeUNKNOWN]);
-    XCTAssertEqual(NBEValidationResultIS_POSSIBLE, [_aUtil validateNumberLength:self.usNumber.nationalNumber.stringValue metadata:usMetadata type:NBEPhoneNumberTypeUNKNOWN]);
 }
 
 - (void)testParseWithXInNumber {

@@ -1538,7 +1538,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 - (NSString *)formatInOriginalFormat:(NBPhoneNumber*)number regionCallingFrom:(NSString *)regionCallingFrom
 {
-    if ([NBMetadataHelper hasValue:number.rawInput] && ([self hasUnexpectedItalianLeadingZero:number] || [self hasFormattingPatternForNumber:number] == NO)) {
+    if ([NBMetadataHelper hasValue:number.rawInput] && ([self hasFormattingPatternForNumber:number] == NO)) {
         // We check if we have the formatting pattern because without that, we might
         // format the number as a group without national prefix.
         return number.rawInput;
