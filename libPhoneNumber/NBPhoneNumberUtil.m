@@ -20,6 +20,10 @@
 #import <CoreTelephony/CTCarrier.h>
 #endif
 
+static NSString *NormalizeNonBreakingSpace(NSString *aString) {
+  return [aString stringByReplacingOccurrencesOfString:NB_NON_BREAKING_SPACE withString:@" "];
+}
+
 
 #pragma mark - NBPhoneNumberUtil interface -
 
@@ -520,7 +524,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 - (NSString *)extractPossibleNumber:(NSString *)number
 {
   
-    number = [NBMetadataHelper normalizeNonBreakingSpace:number];
+    number = NormalizeNonBreakingSpace(number);
     
     NSString *possibleNumber = @"";
     int start = [self stringPositionByRegex:number regex:VALID_START_CHAR_PATTERN];
@@ -561,7 +565,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  */
 - (BOOL)isViablePhoneNumber:(NSString *)phoneNumber
 {
-    phoneNumber = [NBMetadataHelper normalizeNonBreakingSpace:phoneNumber];
+    phoneNumber = NormalizeNonBreakingSpace(phoneNumber);
     
     if (phoneNumber.length < MIN_LENGTH_FOR_NSN_)
     {
@@ -632,7 +636,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  */
 - (NSString *)normalizeDigitsOnly:(NSString *)number
 {
-    number = [NBMetadataHelper normalizeNonBreakingSpace:number];
+    number = NormalizeNonBreakingSpace(number);
     
     return [self stringByReplacingOccurrencesString:number withMap:self.DIGIT_MAPPINGS removeNonMatches:YES];
 }
@@ -648,7 +652,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   */
 - (NSString*)normalizeDiallableCharsOnly:(NSString*)number
 {
-  number = [NBMetadataHelper normalizeNonBreakingSpace:number];
+  number = NormalizeNonBreakingSpace(number);
 
   return [self stringByReplacingOccurrencesString:number withMap:DIALLABLE_CHAR_MAPPINGS removeNonMatches:YES];
 }
@@ -664,7 +668,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  */
 - (NSString *)convertAlphaCharactersInNumber:(NSString *)number
 {
-    number = [NBMetadataHelper normalizeNonBreakingSpace:number];
+    number = NormalizeNonBreakingSpace(number);
     return [self stringByReplacingOccurrencesString:number withMap:ALL_NORMALIZATION_MAPPINGS removeNonMatches:NO];
 }
 
@@ -2545,7 +2549,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
         return NO;
     }
     
-    number = [NBMetadataHelper normalizeNonBreakingSpace:number];
+    number = NormalizeNonBreakingSpace(number);
     
     /** @type {!goog.string.StringBuffer} */
     NSString *strippedNumber = [number copy];
@@ -2796,7 +2800,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  */
 - (BOOL)isPossibleNumberString:(NSString *)number regionDialingFrom:(NSString *)regionDialingFrom error:(NSError**)error
 {
-    number = [NBMetadataHelper normalizeNonBreakingSpace:number];
+    number = NormalizeNonBreakingSpace(number);
     
     BOOL res = [self isPossibleNumber:[self parse:number defaultRegion:regionDialingFrom error:error]];
     return res;
@@ -2846,7 +2850,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  */
 - (NSNumber *)extractCountryCode:(NSString *)fullNumber nationalNumber:(NSString **)nationalNumber
 {
-    fullNumber = [NBMetadataHelper normalizeNonBreakingSpace:fullNumber];
+    fullNumber = NormalizeNonBreakingSpace(fullNumber);
     
     if ((fullNumber.length == 0) || ([[fullNumber substringToIndex:1] isEqualToString:@"0"])) {
         // Country codes do not begin with a '0'.
@@ -3335,7 +3339,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  */
 - (NBPhoneNumber*)parseWithPhoneCarrierRegion:(NSString *)numberToParse error:(NSError**)error
 {
-    numberToParse = [NBMetadataHelper normalizeNonBreakingSpace:numberToParse];
+    numberToParse = NormalizeNonBreakingSpace(numberToParse);
     
     NSString *defaultRegion = nil;
 #if TARGET_OS_IOS
@@ -3356,7 +3360,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
 
-- (CTTelephonyNetworkInfo*)telephonyNetworkInfo{
+- (CTTelephonyNetworkInfo*)telephonyNetworkInfo {
     
     // cache telephony network info;
     // CTTelephonyNetworkInfo objects are unnecessarily created for every call to parseWithPhoneCarrierRegion:error:
@@ -3382,7 +3386,7 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
     
     // The 2nd part of the if is working around an iOS 7 bug
     // If the SIM card is missing, iOS 7 returns an empty string instead of nil
-    if (!isoCode || [isoCode isEqualToString:@""]) {
+    if (isoCode.length == 0) {
         isoCode = NB_UNKNOWN_REGION;
     }
     
@@ -3433,10 +3437,10 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
  *     buffer to fill in.
  * @private
  */
-- (void)setItalianLeadingZerosForPhoneNumber:(NSString *)nationalNumber phoneNumber:(NBPhoneNumber **)phoneNumber
+- (void)setItalianLeadingZerosForPhoneNumber:(NSString *)nationalNumber phoneNumber:(NBPhoneNumber *)phoneNumber
 {
     if (nationalNumber.length > 1 && [nationalNumber hasPrefix:@"0"]) {
-        (*phoneNumber).italianLeadingZero = YES;
+        phoneNumber.italianLeadingZero = YES;
         NSInteger numberOfLeadingZeros = 1;
         // Note that if the national number is all "0"s, the last "0" is not counted
         // as a leading zero.
@@ -3445,10 +3449,10 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
             numberOfLeadingZeros++;
         }
         if (numberOfLeadingZeros != 1) {
-            (*phoneNumber).numberOfLeadingZeros = @(numberOfLeadingZeros);
+            phoneNumber.numberOfLeadingZeros = @(numberOfLeadingZeros);
         }
     }
-};
+}
 
 
 /**
@@ -3475,7 +3479,7 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
 - (NBPhoneNumber*)parseHelper:(NSString *)numberToParse defaultRegion:(NSString *)defaultRegion
                  keepRawInput:(BOOL)keepRawInput checkRegion:(BOOL)checkRegion error:(NSError**)error
 {
-    numberToParse = [NBMetadataHelper normalizeNonBreakingSpace:numberToParse];
+    numberToParse = NormalizeNonBreakingSpace(numberToParse);
     
     if (numberToParse == nil) {
         if (error != NULL) {
@@ -3627,7 +3631,7 @@ static CTTelephonyNetworkInfo* _telephonyNetworkInfo;
         return nil;
     }
 
-    [self setItalianLeadingZerosForPhoneNumber:normalizedNationalNumberStr phoneNumber:&phoneNumber];
+    [self setItalianLeadingZerosForPhoneNumber:normalizedNationalNumberStr phoneNumber:phoneNumber];
 
     phoneNumber.nationalNumber =  [NSNumber numberWithLongLong:[normalizedNationalNumberStr longLongValue]];
     return phoneNumber;

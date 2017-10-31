@@ -19,6 +19,17 @@
 
 @end
 
+static NSString *StringByTrimming(NSString *aString) {
+  static dispatch_once_t onceToken;
+  static NSCharacterSet *whitespaceCharSet = nil;
+  dispatch_once(&onceToken, ^{
+    NSMutableCharacterSet *spaceCharSet = [NSMutableCharacterSet characterSetWithCharactersInString:NB_NON_BREAKING_SPACE];
+    [spaceCharSet formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    whitespaceCharSet = spaceCharSet;
+  });
+  return [aString stringByTrimmingCharactersInSet:whitespaceCharSet];
+}
+
 
 @implementation NBMetadataHelper
 
@@ -84,19 +95,21 @@
 - (NSArray*)getAllMetadata
 {
     NSArray *countryCodes = [NSLocale ISOCountryCodes];
-    NSMutableArray *resultMetadata = [[NSMutableArray alloc] init];
+    NSMutableArray *resultMetadata = [[NSMutableArray alloc] initWithCapacity:countryCodes.count];
 
     for (NSString *countryCode in countryCodes) {
         id countryDictionaryInstance = [NSDictionary dictionaryWithObject:countryCode forKey:NSLocaleCountryCode];
         NSString *identifier = [NSLocale localeIdentifierFromComponents:countryDictionaryInstance];
         NSString *country = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
-        NSString *systemCountry = [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
 
         NSMutableDictionary *countryMeta = [[NSMutableDictionary alloc] init];
         if (country) {
             [countryMeta setObject:country forKey:@"name"];
-        } else if (systemCountry) {
-            [countryMeta setObject:systemCountry forKey:@"name"];
+        } else {
+            NSString *systemCountry = [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
+            if (systemCountry) {
+              [countryMeta setObject:systemCountry forKey:@"name"];
+            }
         }
 
         if (countryCode) {
@@ -131,27 +144,6 @@
     return [self CCode2CNMap][regionCode];
 }
 
-
-+ (NSString *)stringByTrimming:(NSString *)aString
-{
-
-  static dispatch_once_t onceToken;
-  static NSCharacterSet *whitespaceCharSet = nil;
-  dispatch_once(&onceToken, ^{
-    NSMutableCharacterSet *spaceCharSet = [NSMutableCharacterSet characterSetWithCharactersInString:NB_NON_BREAKING_SPACE];
-    [spaceCharSet formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    whitespaceCharSet = spaceCharSet;
-  });
-  return [aString stringByTrimmingCharactersInSet:whitespaceCharSet];
-}
-
-
-+ (NSString *)normalizeNonBreakingSpace:(NSString *)aString
-{
-    return [aString stringByReplacingOccurrencesOfString:NB_NON_BREAKING_SPACE withString:@" "];
-}
-
-
 /**
  * Returns the metadata for the given region code or {@code nil} if the region
  * code is invalid or unknown.
@@ -161,7 +153,7 @@
  */
 - (NBPhoneMetaData *)getMetadataForRegion:(NSString *)regionCode
 {
-    regionCode = [[self class] stringByTrimming:regionCode];
+    regionCode = StringByTrimming(regionCode);
     if (regionCode.length == 0) {
         return nil;
     }
@@ -195,12 +187,9 @@
     return [self getMetadataForRegion:countryCallingCodeStr];
 }
 
-
-#pragma mark - Regular expression Utilities -
-
 + (BOOL)hasValue:(NSString*)string
 {
-  string = [self stringByTrimming:string];
+  string = StringByTrimming(string);
   return string.length != 0;
 }
 
