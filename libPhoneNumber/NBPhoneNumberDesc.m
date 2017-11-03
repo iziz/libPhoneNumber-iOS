@@ -25,25 +25,6 @@
 }
 
 
-- (id)initWithNationalNumberPattern:(NSString *)nnp withPossibleNumberPattern:(NSString *)pnp
-                 withPossibleLength:(NSArray<NSNumber *> *)pl withPossibleLengthLocalOnly:(NSArray<NSNumber *> *)pllo withExample:(NSString *)exp
-      withNationalNumberMatcherData:(NSData *)nnmd withPossibleNumberMatcherData:(NSData *)pnmd {
-    self = [super init];
-
-    if (self) {
-        _nationalNumberPattern = nnp;
-        _possibleNumberPattern = pnp;
-        _possibleLength = pl;
-        _possibleLengthLocalOnly = pllo;
-        _exampleNumber = exp;
-        _nationalNumberMatcherData = nnmd;
-        _possibleNumberMatcherData = pnmd;
-    }
-
-    return self;
-
-}
-
 - (id)initWithCoder:(NSCoder*)coder
 {
     if (self = [super init]) {
@@ -80,13 +61,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	return [[NBPhoneNumberDesc allocWithZone:zone] initWithNationalNumberPattern:self.nationalNumberPattern
-                                                     withPossibleNumberPattern:self.possibleNumberPattern
-                                                            withPossibleLength:self.possibleLength
-                                                   withPossibleLengthLocalOnly:self.possibleLengthLocalOnly
-                                                                   withExample:self.exampleNumber
-                                                 withNationalNumberMatcherData:self.nationalNumberMatcherData
-                                                 withPossibleNumberMatcherData:self.possibleNumberMatcherData];
+  return self;
 }
 
 

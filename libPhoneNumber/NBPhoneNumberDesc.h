@@ -18,13 +18,5 @@
 /*  7 */ @property (nonatomic, strong, readonly) NSData *nationalNumberMatcherData;
 /*  8 */ @property (nonatomic, strong, readonly) NSData *possibleNumberMatcherData;
 
-- (id)initWithNationalNumberPattern:(NSString *)nnp
-          withPossibleNumberPattern:(NSString *)pnp
-                 withPossibleLength:(NSArray<NSNumber *> *)pl
-        withPossibleLengthLocalOnly:(NSArray<NSNumber *> *)pllo
-                        withExample:(NSString *)exp
-      withNationalNumberMatcherData:(NSData *)nnmd
-      withPossibleNumberMatcherData:(NSData *)pnmd;
-
 - (id)initWithEntry:(NSArray *)entry;
 @end

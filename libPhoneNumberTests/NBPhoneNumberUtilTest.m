@@ -14,6 +14,12 @@
 #import "NBPhoneNumberUtil.h"
 #import "NBNumberFormat.h"
 
+// Create an entry array for a phone number desc based on numberPattern
+static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPattern) {
+  // nationalNumberPattern is entry #2
+  return @[[NSNull null], [NSNull null], numberPattern];
+}
+
 
 @interface NBPhoneNumberUtil (FOR_UNIT_TEST)
 
@@ -1536,14 +1542,8 @@
 - (void)testMaybeStripNationalPrefix {
   NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] init];
   [metadata setNationalPrefixForParsing:@"34"];
-  
-  NBPhoneNumberDesc *generalDesc = [[NBPhoneNumberDesc alloc] initWithNationalNumberPattern:@"\\d{4,8}"
-                                                                  withPossibleNumberPattern:nil
-                                                                         withPossibleLength:nil
-                                                                withPossibleLengthLocalOnly:nil
-                                                                                withExample:nil
-                                                              withNationalNumberMatcherData:nil
-                                                              withPossibleNumberMatcherData:nil];
+  NSArray *entry = PhoneNumberDescEntryForNationalNumberPattern(@"\\d{4,8}");
+  NBPhoneNumberDesc *generalDesc = [[NBPhoneNumberDesc alloc] initWithEntry:entry];
   [metadata setGeneralDesc:generalDesc];
   
   NBPhoneNumber *numberToStrip = [[NBPhoneNumber alloc] init];
