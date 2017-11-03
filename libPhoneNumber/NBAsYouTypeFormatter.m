@@ -265,11 +265,6 @@
 	return [self initWithRegionCode:regionCode bundle:[NSBundle mainBundle]];
 }
 
-- (id)initWithRegionCodeForTest:(NSString*)regionCode
-{
-	return [self initWithRegionCodeForTest:regionCode bundle:[NSBundle mainBundle]];
-}
-
 - (id)initWithRegionCode:(NSString*)regionCode bundle:(NSBundle *)bundle
 {
     self = [self init];
@@ -297,22 +292,6 @@
     
     return self;
 
-}
-
-- (id)initWithRegionCodeForTest:(NSString*)regionCode bundle:(NSBundle *)bundle
-{
-	self = [self init];
-    
-    if (self) {
-        self.phoneUtil_ = [NBPhoneNumberUtil sharedInstance];
-        
-        self.defaultCountry_ = regionCode;
-        self.currentMetaData_ = [self getMetadataForRegion_:self.defaultCountry_];
-        self.defaultMetaData_ = self.currentMetaData_;
-        self.EMPTY_METADATA_ = [[NBPhoneMetaData alloc] init];
-    }
-    
-    return self;
 }
 
 /**
