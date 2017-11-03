@@ -11,14 +11,11 @@
 @implementation NSArray (NBAdditions)
 
 - (id)nb_safeObjectAtIndex:(NSUInteger)index class:(Class)clazz {
-    id res;
-    @synchronized(self) {
-        if (index >= [self count]) {
-            return nil;
-        }
-        res = [self objectAtIndex:index];
+    if (index >= self.count) {
+        return nil;
     }
-    if (res == nil || res == [NSNull null] || ![res isKindOfClass:clazz]) {
+    id res = [self objectAtIndex:index];
+    if (![res isKindOfClass:clazz]) {
         return nil;
     }
     return res;
