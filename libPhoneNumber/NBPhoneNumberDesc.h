@@ -18,5 +18,5 @@
 /*  7 */ @property (nonatomic, strong, readonly) NSData *nationalNumberMatcherData;
 /*  8 */ @property (nonatomic, strong, readonly) NSData *possibleNumberMatcherData;
 
-- (id)initWithEntry:(NSArray *)entry;
+- (instancetype)initWithEntry:(NSArray *)entry;
 @end

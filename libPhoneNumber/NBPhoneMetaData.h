@@ -40,5 +40,5 @@
 /* 23 */ @property (nonatomic, strong) NSString *leadingDigits;
 /* 26 */ @property (nonatomic, assign) BOOL leadingZeroPossible;
 
-- (id)initWithEntry:(NSArray *)entry;
+- (instancetype)initWithEntry:(NSArray *)entry;
 @end

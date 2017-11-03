@@ -13,7 +13,7 @@
 @implementation NBPhoneMetaData
 
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
 
@@ -30,7 +30,7 @@
     return self;
 }
 
-- (id)initWithEntry:(NSArray *)entry {
+- (instancetype)initWithEntry:(NSArray *)entry {
 		self = [super init];
 		if (self && entry != nil) {
 				_generalDesc = [[NBPhoneNumberDesc alloc] initWithEntry:[entry nb_safeArrayAtIndex:1]];
@@ -81,7 +81,7 @@
 }
 
 
-- (id)initWithCoder:(NSCoder*)coder
+- (instancetype)initWithCoder:(NSCoder*)coder
 {
     if (self = [super init]) {
         _generalDesc = [coder decodeObjectForKey:@"generalDesc"];

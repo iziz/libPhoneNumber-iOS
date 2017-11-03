@@ -10,7 +10,7 @@
 @implementation NBNumberFormat
 
 
-- (id)initWithPattern:(NSString *)pattern withFormat:(NSString *)format withLeadingDigitsPatterns:(NSArray *)leadingDigitsPatterns withNationalPrefixFormattingRule:(NSString *)nationalPrefixFormattingRule whenFormatting:(BOOL)nationalPrefixOptionalWhenFormatting withDomesticCarrierCodeFormattingRule:(NSString *)domesticCarrierCodeFormattingRule
+- (instancetype)initWithPattern:(NSString *)pattern withFormat:(NSString *)format withLeadingDigitsPatterns:(NSArray *)leadingDigitsPatterns withNationalPrefixFormattingRule:(NSString *)nationalPrefixFormattingRule whenFormatting:(BOOL)nationalPrefixOptionalWhenFormatting withDomesticCarrierCodeFormattingRule:(NSString *)domesticCarrierCodeFormattingRule
 {
     self = [super init];
     if (self) {
@@ -24,7 +24,7 @@
     return self;
 }
 
-- (id)initWithEntry:(NSArray *)entry
+- (instancetype)initWithEntry:(NSArray *)entry
 {
     self = [super init];
     if (self && entry != nil) {
@@ -56,7 +56,7 @@
 }
 
 
-- (id)initWithCoder:(NSCoder*)coder
+- (instancetype)initWithCoder:(NSCoder*)coder
 {
     if (self = [super init]) {
         _pattern = [coder decodeObjectForKey:@"pattern"];

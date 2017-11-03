@@ -397,7 +397,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 }
 
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self)

@@ -10,7 +10,7 @@
 
 @implementation NBPhoneNumber
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     
@@ -80,7 +80,7 @@
 }
 
 
-- (id)initWithCoder:(NSCoder*)coder
+- (instancetype)initWithCoder:(NSCoder*)coder
 {
     if (self = [super init]) {
         self.countryCode = [coder decodeObjectForKey:@"countryCode"];

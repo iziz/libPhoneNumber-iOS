@@ -13,8 +13,8 @@
 
 @interface NBAsYouTypeFormatter : NSObject
 
-- (id)initWithRegionCode:(NSString *)regionCode;
-- (id)initWithRegionCode:(NSString *)regionCode bundle:(NSBundle *)bundle;
+- (instancetype)initWithRegionCode:(NSString *)regionCode;
+- (instancetype)initWithRegionCode:(NSString *)regionCode bundle:(NSBundle *)bundle;
 
 - (NSString *)inputString:(NSString *)string;
 - (NSString *)inputStringAndRememberPosition:(NSString *)string;

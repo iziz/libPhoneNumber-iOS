@@ -9,7 +9,7 @@
 
 @implementation NBPhoneNumberDesc
 
-- (id)initWithEntry:(NSArray *)entry
+- (instancetype)initWithEntry:(NSArray *)entry
 {
     self = [super init];
     if (self && entry != nil) {
@@ -25,7 +25,7 @@
 }
 
 
-- (id)initWithCoder:(NSCoder*)coder
+- (instancetype)initWithCoder:(NSCoder*)coder
 {
     if (self = [super init]) {
         _nationalNumberPattern = [coder decodeObjectForKey:@"nationalNumberPattern"];

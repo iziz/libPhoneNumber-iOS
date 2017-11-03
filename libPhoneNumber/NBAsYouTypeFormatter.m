@@ -37,7 +37,7 @@
 
 @implementation NBAsYouTypeFormatter
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     
@@ -260,12 +260,12 @@
  * @constructor
  */
 
-- (id)initWithRegionCode:(NSString*)regionCode
+- (instancetype)initWithRegionCode:(NSString*)regionCode
 {
 	return [self initWithRegionCode:regionCode bundle:[NSBundle mainBundle]];
 }
 
-- (id)initWithRegionCode:(NSString*)regionCode bundle:(NSBundle *)bundle
+- (instancetype)initWithRegionCode:(NSString*)regionCode bundle:(NSBundle *)bundle
 {
     self = [self init];
 	if (self) {
