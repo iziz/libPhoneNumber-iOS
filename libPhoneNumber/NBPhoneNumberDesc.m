@@ -25,6 +25,19 @@
 }
 
 
+
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"nationalNumberPattern[%@] possibleNumberPattern[%@] possibleLength[%@] possibleLengthLocalOnly[%@] exampleNumber[%@]",
+            self.nationalNumberPattern, self.possibleNumberPattern, self.possibleLength, self.possibleLengthLocalOnly, self.exampleNumber];
+}
+
+#ifdef NB_USE_EXTENSIONS
+// We believe these methods are unused.
+// If you would like them back (not behind a flag) please file a bug with a reason for needing
+// them.
+
 - (instancetype)initWithCoder:(NSCoder*)coder
 {
     if (self = [super init]) {
@@ -52,13 +65,6 @@
 }
 
 
-- (NSString *)description
-{
-    return [NSString stringWithFormat:@"nationalNumberPattern[%@] possibleNumberPattern[%@] possibleLength[%@] possibleLengthLocalOnly[%@] exampleNumber[%@]",
-            self.nationalNumberPattern, self.possibleNumberPattern, self.possibleLength, self.possibleLengthLocalOnly, self.exampleNumber];
-}
-
-
 - (id)copyWithZone:(NSZone *)zone
 {
   return self;
@@ -80,5 +86,7 @@
         [self.nationalNumberMatcherData isEqualToData:other.nationalNumberMatcherData] &&
         [self.possibleNumberMatcherData isEqualToData:other.possibleNumberMatcherData];
 }
+
+#endif // NB_USE_EXTENSIONS
 
 @end

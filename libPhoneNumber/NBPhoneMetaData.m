@@ -80,6 +80,10 @@
              _codeID, _countryCode, _generalDesc, _fixedLine, _mobile, _tollFree, _premiumRate, _sharedCost, _personalNumber, _voip, _pager, _uan, _emergency, _voicemail, _noInternationalDialling, _internationalPrefix, _preferredInternationalPrefix, _nationalPrefix, _preferredExtnPrefix, _nationalPrefixForParsing, _nationalPrefixTransformRule, _sameMobileAndFixedLinePattern?@"Y":@"N", _numberFormats, _intlNumberFormats, _mainCountryForCode?@"Y":@"N", _leadingDigits, _leadingZeroPossible?@"Y":@"N"];
 }
 
+#ifdef NB_USE_EXTENSIONS
+// We believe these methods are unused.
+// If you would like them back (not behind a flag) please file a bug with a reason for needing
+// them.
 
 - (instancetype)initWithCoder:(NSCoder*)coder
 {
@@ -147,5 +151,6 @@
     [coder encodeObject:[NSNumber numberWithBool:_leadingZeroPossible] forKey:@"leadingZeroPossible"];
 }
 
+#endif // NB_USE_EXTENSIONS
 
 @end

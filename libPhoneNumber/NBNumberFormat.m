@@ -56,6 +56,11 @@
 }
 
 
+#ifdef NB_USE_EXTENSIONS
+// We believe these methods are unused.
+// If you would like them back (not behind a flag) please file a bug with a reason for needing
+// them.
+
 - (instancetype)initWithCoder:(NSCoder*)coder
 {
     if (self = [super init]) {
@@ -80,5 +85,6 @@
     [coder encodeObject:self.domesticCarrierCodeFormattingRule forKey:@"domesticCarrierCodeFormattingRule"];
 }
 
+#endif // NB_USE_EXTENSIONS
 
 @end
