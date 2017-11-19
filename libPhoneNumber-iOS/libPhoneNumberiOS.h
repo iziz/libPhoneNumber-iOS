@@ -14,20 +14,20 @@ FOUNDATION_EXPORT double libPhoneNumber_iOSVersionNumber;
 //! Project version string for libPhoneNumber-iOS.
 FOUNDATION_EXPORT const unsigned char libPhoneNumber_iOSVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <libPhoneNumber_iOS/PublicHeader.h>
-
+// In this header, you should import all the public headers of your framework
+// using statements like #import <libPhoneNumber_iOS/PublicHeader.h>
 
 #import "NBPhoneNumberDefines.h"
 
 // Features
-#import "NBPhoneNumberUtil.h"
 #import "NBAsYouTypeFormatter.h"
+#import "NBPhoneNumberUtil.h"
 
 // Metadata
 #import "NBMetadataHelper.h"
 
 // Model
-#import "NBPhoneMetaData.h"
 #import "NBNumberFormat.h"
+#import "NBPhoneMetaData.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"

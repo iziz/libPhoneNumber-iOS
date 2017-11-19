@@ -14,20 +14,20 @@ FOUNDATION_EXPORT double libPhoneNumber_watchOSVersionNumber;
 //! Project version string for libPhoneNumber-watchOS.
 FOUNDATION_EXPORT const unsigned char libPhoneNumber_watchOSVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <libPhoneNumber_watchOS/PublicHeader.h>
-
+// In this header, you should import all the public headers of your framework
+// using statements like #import <libPhoneNumber_watchOS/PublicHeader.h>
 
 #import "NBPhoneNumberDefines.h"
 
 // Features
-#import "NBPhoneNumberUtil.h"
 #import "NBAsYouTypeFormatter.h"
+#import "NBPhoneNumberUtil.h"
 
 // Metadata
 #import "NBMetadataCore.h"
 
 // Model
-#import "NBPhoneMetaData.h"
 #import "NBNumberFormat.h"
+#import "NBPhoneMetaData.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"

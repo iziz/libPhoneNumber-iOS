@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "NBPhoneNumberDefines.h"
 
-
 @class NBPhoneMetaData;
 
 @interface NBMetadataHelper : NSObject
