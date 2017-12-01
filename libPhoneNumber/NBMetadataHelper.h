@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "NBPhoneNumberDefines.h"
 
-
 @class NBPhoneMetaData;
 
 @interface NBMetadataHelper : NSObject
@@ -25,5 +24,18 @@
 
 + (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber;
 + (NSString *)countryCodeFromRegionCode:(NSString *)regionCode;
+
+#if SHORT_NUMBER_SUPPORT
+
+/**
+ * Returns the short number metadata for the given region code or {@code nil} if the region
+ * code is invalid or unknown.
+ *
+ * @param regionCode regionCode
+ * @return {i18n.phonenumbers.PhoneMetadata}
+ */
+- (NBPhoneMetaData *)shortNumberMetadataForRegion:(NSString *)regionCode;
+
+#endif // SHORT_NUMBER_SUPPORT
 
 @end
