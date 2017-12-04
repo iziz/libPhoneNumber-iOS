@@ -62,7 +62,7 @@
                                                      options:NSMatchingAnchored
                                                        range:wholeStringRange];
 
-    return (allowsPrefixMatch || exactResult.numberOfRanges > 0)
+    return (allowsPrefixMatch || exactResult.numberOfRanges > 0);
   }
 }
 
