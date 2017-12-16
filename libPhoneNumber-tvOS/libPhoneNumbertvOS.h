@@ -14,20 +14,20 @@ FOUNDATION_EXPORT double libPhoneNumber_tvOSVersionNumber;
 //! Project version string for libPhoneNumber-tvOS.
 FOUNDATION_EXPORT const unsigned char libPhoneNumber_tvOSVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <libPhoneNumber_tvOS/PublicHeader.h>
-
+// In this header, you should import all the public headers of your framework
+// using statements like #import <libPhoneNumber_tvOS/PublicHeader.h>
 
 #import "NBPhoneNumberDefines.h"
 
 // Features
-#import "NBPhoneNumberUtil.h"
 #import "NBAsYouTypeFormatter.h"
+#import "NBPhoneNumberUtil.h"
 
 // Metadata
 #import "NBMetadataCore.h"
 
 // Model
-#import "NBPhoneMetaData.h"
 #import "NBNumberFormat.h"
+#import "NBPhoneMetaData.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
