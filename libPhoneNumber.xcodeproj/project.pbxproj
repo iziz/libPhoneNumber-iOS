@@ -185,7 +185,6 @@
 		0F58330A1FD1FC9500F26ED4 /* NBPhoneNumberUtil+ShortNumberTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NBPhoneNumberUtil+ShortNumberTest.m"; sourceTree = "<group>"; };
 		0F5833091FD1FC9500F26ED4 /* NBPhoneNumberUtil+ShortNumberTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NBPhoneNumberUtil+ShortNumberTestHelper.h"; sourceTree = "<group>"; };
 		0F58330A1FD1FC9500F26ED4 /* NBPhoneNumberUtil+ShortNumberTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NBPhoneNumberUtil+ShortNumberTestHelper.m"; sourceTree = "<group>"; };
-		0F58330E1FD2004A00F26ED4 /* NBPhoneNumberUtil+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NBPhoneNumberUtil+Category.h"; sourceTree = "<group>"; };
 		1485C5231E06F4890092F541 /* NBAsYouTypeFormatterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBAsYouTypeFormatterTest.m; path = libPhoneNumberTests/NBAsYouTypeFormatterTest.m; sourceTree = SOURCE_ROOT; };
 		1485C5251E06F4890092F541 /* NBPhoneNumberUtilTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBPhoneNumberUtilTest.m; path = libPhoneNumberTests/NBPhoneNumberUtilTest.m; sourceTree = SOURCE_ROOT; };
 		1485C52B1E06F4930092F541 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = libPhoneNumberTests/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -322,7 +321,6 @@
 				0F2870971FCF8F13006230BF /* NBRegExMatcher.m */,
 				0F2870A01FCF9368006230BF /* NBRegularExpressionCache.h */,
 				0F2870A11FCF9368006230BF /* NBRegularExpressionCache.m */,
-				0F58330E1FD2004A00F26ED4 /* NBPhoneNumberUtil+Category.h */,
 			);
 			path = Internal;
 			sourceTree = "<group>";

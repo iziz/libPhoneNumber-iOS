@@ -11,9 +11,14 @@
 #import "NBMetadataHelper.h"
 #import "NBPhoneMetadata.h"
 #import "NBPhoneNumberDesc.h"
-#import "NBPhoneNumberUtil+Category.h"
 
 #if SHORT_NUMBER_SUPPORT
+
+@interface NBPhoneNumberUtil()
+
+@property (nonatomic, strong, readonly) NBMetadataHelper *helper;
+
+@end
 
 @implementation NBPhoneNumberUtil(ShortNumberTestHelper)
 

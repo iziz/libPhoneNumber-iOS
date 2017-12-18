@@ -14,7 +14,6 @@
 #import "NBPhoneMetaData.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
-#import "NBPhoneNumberUtil+Category.h"
 #import "NBRegExMatcher.h"
 #import "NBRegularExpressionCache.h"
 
@@ -23,6 +22,9 @@
 static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 
 @interface NBPhoneNumberUtil()
+
+@property (nonatomic, strong, readonly) NBMetadataHelper *helper;
+@property (nonatomic, strong, readonly) NBRegExMatcher *matcher;
 
 @property (nonatomic) NSDictionary<NSNumber *, NSArray<NSString *> *> *countryToRegionCodeMap;
 
