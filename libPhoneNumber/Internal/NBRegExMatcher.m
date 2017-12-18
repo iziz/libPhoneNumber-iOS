@@ -52,11 +52,7 @@
   NSTextCheckingResult *prefixResult = [prefixRegEx firstMatchInString:string
                                                                options:NSMatchingAnchored
                                                                  range:wholeStringRange];
-<<<<<<< HEAD
-  if (prefixResult.numberOfRanges < 1) {
-=======
   if (prefixResult.numberOfRanges <= 0) {
->>>>>>> Add support for short number and emegerncy number in libPhoneNumber-iOS
     // No prefix match found.
     return NO;
   } else {
@@ -66,15 +62,7 @@
                                                      options:NSMatchingAnchored
                                                        range:wholeStringRange];
 
-<<<<<<< HEAD
-    if (exactResult.numberOfRanges > 0) {
-      return YES;
-    } else {
-      return allowsPrefixMatch;
-    }
-=======
-    return (allowsPrefixMatch || exactResult.numberOfRanges > 0)
->>>>>>> Add support for short number and emegerncy number in libPhoneNumber-iOS
+    return (allowsPrefixMatch || exactResult.numberOfRanges > 0);
   }
 }
 

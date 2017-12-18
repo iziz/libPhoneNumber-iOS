@@ -321,6 +321,7 @@
 				0F2870971FCF8F13006230BF /* NBRegExMatcher.m */,
 				0F2870A01FCF9368006230BF /* NBRegularExpressionCache.h */,
 				0F2870A11FCF9368006230BF /* NBRegularExpressionCache.m */,
+				0F58330E1FD2004A00F26ED4 /* NBPhoneNumberUtil+Category.h */,
 			);
 			path = Internal;
 			sourceTree = "<group>";

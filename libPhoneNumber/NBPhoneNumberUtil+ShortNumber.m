@@ -23,8 +23,8 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 
 @interface NBPhoneNumberUtil()
 
-@property (nonatomic, strong, readonly) NBMetadataHelper *helper;
-@property (nonatomic, strong, readonly) NBRegExMatcher *matcher;
+@property(nonatomic, strong, readonly) NBMetadataHelper *helper;
+@property(nonatomic, strong, readonly) NBRegExMatcher *matcher;
 
 @property (nonatomic) NSDictionary<NSNumber *, NSArray<NSString *> *> *countryToRegionCodeMap;
 

@@ -46,11 +46,7 @@
     NSRegularExpression *regEx = [[NSRegularExpression alloc] initWithPattern:pattern
                                                                       options:kNilOptions
                                                                         error:&error];
-<<<<<<< HEAD
-    if (regEx == nil && error != nil) {
-=======
     if (regEx == nil || error != nil) {
->>>>>>> Add support for short number and emegerncy number in libPhoneNumber-iOS
       NSLog(@"An error parsing a regular expression: %@", error);
       return nil;
     }
