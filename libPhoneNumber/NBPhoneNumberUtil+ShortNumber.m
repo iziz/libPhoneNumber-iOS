@@ -293,7 +293,8 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
                    allowsPrefixMatch:(BOOL)allowsPrefixMatch {
   NSString *possibleNumber = [self extractPossibleNumber:number];
   NSRegularExpression *regex =
-      [[NBRegularExpressionCache sharedInstance] regularExpressionForPattern:PLUS_CHARS_PATTERN];
+      [[NBRegularExpressionCache sharedInstance] regularExpressionForPattern:PLUS_CHARS_PATTERN
+                                                                       error:NULL];
 
   NSTextCheckingResult *result = [regex firstMatchInString:possibleNumber
                                                    options:kNilOptions

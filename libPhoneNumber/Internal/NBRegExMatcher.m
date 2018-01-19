@@ -48,7 +48,13 @@
 
   // Prefix match (lookingAt()) search
   NSRegularExpression *prefixRegEx =
-      [[NBRegularExpressionCache sharedInstance] regularExpressionForPattern:nationalNumberPattern];
+    [[NBRegularExpressionCache sharedInstance] regularExpressionForPattern:nationalNumberPattern
+                                                                     error:NULL];
+  if (prefixRegEx == nil) {
+    NSAssert(true, @"Regular expression shouldn't be nil");
+    return NO;
+  }
+
   NSTextCheckingResult *prefixResult = [prefixRegEx firstMatchInString:string
                                                                options:NSMatchingAnchored
                                                                  range:wholeStringRange];

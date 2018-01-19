@@ -35,19 +35,21 @@
   return self;
 }
 
-- (NSRegularExpression *)regularExpressionForPattern:(NSString *)pattern {
+- (NSRegularExpression *)regularExpressionForPattern:(NSString *)pattern error:(NSError **)error {
   @synchronized(self) {
     NSRegularExpression *cachedObject = [self.cache objectForKey:pattern];
     if (cachedObject != nil) {
       return cachedObject;
     }
 
-    NSError *error = nil;
+    NSError *regExError = nil;
     NSRegularExpression *regEx = [[NSRegularExpression alloc] initWithPattern:pattern
                                                                       options:kNilOptions
-                                                                        error:&error];
-    if (regEx == nil || error != nil) {
-      NSLog(@"An error parsing a regular expression: %@", error);
+                                                                        error:&regExError];
+    if (regEx == nil && error != nil) {
+      if (error != NULL) {
+        *error = regExError;
+      }
       return nil;
     }
 

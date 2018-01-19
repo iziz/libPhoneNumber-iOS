@@ -23,9 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
  Returns compiled regular expression for a given pattern.
 
  @param pattern Regular expression pattern.
+ @param error If an error occurs, upon returns contains an NSError object that describes
+              the problem. If you are not interested in possible errors, pass in NULL.
  @return A regular expression.
  */
-- (nullable NSRegularExpression *)regularExpressionForPattern:(NSString *)pattern;
+- (nullable NSRegularExpression *)regularExpressionForPattern:(NSString *)pattern
+                                                        error:(NSError * _Nullable *)error;
 
 @end
 
