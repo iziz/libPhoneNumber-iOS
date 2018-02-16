@@ -886,6 +886,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1485C5291E06F4890092F541 /* NBPhoneNumberUtilTest.m in Sources */,
+				0FAE11922037990100193503 /* NBPhoneNumberParsingPerfTest.m in Sources */,
 				14B7A2AB1DE9BF160051AED7 /* NBMetadataHelper.m in Sources */,
 				14B7A2B01DE9BF160051AED7 /* NBPhoneNumber.m in Sources */,
 				0F4D824C1FCF60A5009F9C17 /* NBShortNumberInfoTest.m in Sources */,

@@ -17,8 +17,7 @@
 
 #if SHORT_NUMBER_SUPPORT
 
-@property (nonatomic, strong) NSString *cachedShortNumberMetaDataKey;
-@property (nonatomic, strong) NBPhoneMetaData *cachedShortNumberMetadata;
+@property (nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *shortNumberMetadataCache;
 
 #endif //SHORT_NUMBER_SUPPORT
 
@@ -42,6 +41,7 @@ static NSString *StringByTrimming(NSString *aString) {
   self = [super init];
   if (self != nil) {
     _metadataCache = [[NSCache alloc] init];
+    _shortNumberMetadataCache = [[NSCache alloc] init];
   }
   return self;
 }
@@ -203,20 +203,25 @@ static NSString *StringByTrimming(NSString *aString) {
 
     regionCode = [regionCode uppercaseString];
 
-    if ([_cachedShortNumberMetaDataKey isEqualToString:regionCode]) {
-        return _cachedShortNumberMetadata;
+  @synchronized(_shortNumberMetadataCache) {
+    NBPhoneMetaData *cachedMetadata = [_shortNumberMetadataCache objectForKey:regionCode];
+    if (cachedMetadata != nil) {
+      return cachedMetadata;
+    }
+  }
+
+  NSDictionary *dict = [[self class] shortNumberDataMap][@"countryToMetadata"];
+  NSArray *entry = dict[regionCode];
+  if (entry) {
+    NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] initWithEntry:entry];
+    @synchronized(_shortNumberMetadataCache) {
+      [_shortNumberMetadataCache setObject:metadata forKey:regionCode];
     }
 
-    NSDictionary *dict = [[self class] shortNumberDataMap][@"countryToMetadata"];
-    NSArray *entry = dict[regionCode];
-    if (entry) {
-        NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] initWithEntry:entry];
-        _cachedShortNumberMetadata = metadata;
-        _cachedShortNumberMetaDataKey = regionCode;
-        return metadata;
-    }
+    return metadata;
+  }
 
-    return nil;
+  return nil;
 }
 
 #endif // SHORT_NUMBER_SUPPORT
