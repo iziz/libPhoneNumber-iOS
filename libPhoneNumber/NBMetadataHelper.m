@@ -13,8 +13,7 @@
 @interface NBMetadataHelper ()
 
 // Cached metadata
-@property(nonatomic, strong) NBPhoneMetaData *cachedMetaData;
-@property(nonatomic, strong) NSString *cachedMetaDataKey;
+@property (nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *metadataCache;
 
 #if SHORT_NUMBER_SUPPORT
 
@@ -38,6 +37,14 @@ static NSString *StringByTrimming(NSString *aString) {
 }
 
 @implementation NBMetadataHelper
+
+- (instancetype)init {
+  self = [super init];
+  if (self != nil) {
+    _metadataCache = [[NSCache alloc] init];
+  }
+  return self;
+}
 
 /*
  Terminologies
@@ -142,16 +149,17 @@ static NSString *StringByTrimming(NSString *aString) {
 
   regionCode = [regionCode uppercaseString];
 
-  if ([_cachedMetaDataKey isEqualToString:regionCode]) {
-    return _cachedMetaData;
+  NBPhoneMetaData *cachedMetadata = [_metadataCache objectForKey:regionCode];
+  if (cachedMetadata != nil) {
+    return cachedMetadata;
   }
 
   NSDictionary *dict = [[self class] phoneNumberDataMap][@"countryToMetadata"];
   NSArray *entry = dict[regionCode];
   if (entry) {
     NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] initWithEntry:entry];
-    _cachedMetaData = metadata;
-    _cachedMetaDataKey = regionCode;
+    [_metadataCache setObject:metadata forKey:regionCode];
+
     return metadata;
   }
 
