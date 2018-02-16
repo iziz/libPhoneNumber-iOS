@@ -44,8 +44,8 @@
 @end
 
 @implementation NBPhoneNumberParsingPerfTest
-//#define PERF_TEST
-//#if PERF_TEST
+
+#if PERF_TEST
 
 - (void)testParsing {
   NSArray *regionCodes = [[NBMetadataHelper CCode2CNMap] allKeys];
@@ -94,6 +94,6 @@
   }];
 }
 
-//#endif // PERF_TEST
+#endif // PERF_TEST
 
 @end
