@@ -25,6 +25,17 @@ static NSString *NormalizeNonBreakingSpace(NSString *aString) {
   return [aString stringByReplacingOccurrencesOfString:NB_NON_BREAKING_SPACE withString:@" "];
 }
 
+static BOOL isNan(NSString *sourceString) {
+  static dispatch_once_t onceToken;
+  static NSCharacterSet *nonDecimalCharacterSet;
+  dispatch_once(&onceToken, ^{
+    nonDecimalCharacterSet = [[NSMutableCharacterSet decimalDigitCharacterSet] invertedSet];
+  });
+
+  // Return YES if the sourceString doesn't have any characters that can be represented as a Float.
+  return !([sourceString rangeOfCharacterFromSet:nonDecimalCharacterSet].length == NSNotFound);
+}
+
 #pragma mark - NBPhoneNumberUtil interface -
 
 @interface NBPhoneNumberUtil ()
@@ -44,8 +55,6 @@ static NSString *NormalizeNonBreakingSpace(NSString *aString) {
 #if TARGET_OS_IOS
 @property(nonatomic, readonly) CTTelephonyNetworkInfo *telephonyNetworkInfo;
 #endif
-
-@property (nonatomic, strong) NSCharacterSet *nonDecimalCharacterSet;
 
 @end
 
@@ -345,11 +354,6 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   return r.location == NSNotFound;
 }
 
-- (BOOL)isNaN:(NSString *)sourceString {
-  // Return YES if the sourceString doesn't have any characters that can be represented as a Float.
-  return !([sourceString rangeOfCharacterFromSet:self.nonDecimalCharacterSet].length == NSNotFound);
-}
-
 /**
  * Gets the national significant number of the a phone number. Note a national
  * significant number doesn't contain a national prefix or any formatting.
@@ -399,9 +403,6 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     _entireStringCacheLock = [[NSLock alloc] init];
     _helper = [[NBMetadataHelper alloc] init];
     _matcher = [[NBRegExMatcher alloc] init];
-    NSMutableCharacterSet *decimal = [NSMutableCharacterSet decimalDigitCharacterSet];
-    [decimal addCharactersInString:@"."];
-    _nonDecimalCharacterSet = [decimal invertedSet];
     [self initRegularExpressionSet];
     [self initNormalizationMappings];
   }
@@ -907,8 +908,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   NSMutableString *normalizedNumber = [[NSMutableString alloc] init];
 
   for (NSUInteger i = 0; i < numberLength; ++i) {
-    unichar character = [sourceString characterAtIndex:i];
-    NSString *charString = [NSString stringWithCharacters:&character length:1];
+    NSString *charString = [sourceString substringWithRange:NSMakeRange(i, 1)];
     NSString *newDigit = [normalizationReplacements objectForKey:[charString uppercaseString]];
     if (newDigit != nil) {
       [normalizedNumber appendString:newDigit];
@@ -975,7 +975,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   // (e.g. +800) we use the country calling codes instead of the region code as
   // key in the map we have to make sure regionCode is not a number to prevent
   // returning NO for non-geographical country calling codes.
-  return [NBMetadataHelper hasValue:regionCode] && [self isNaN:regionCode] &&
+  return [NBMetadataHelper hasValue:regionCode] && isNan(regionCode) &&
          [self.helper getMetadataForRegion:regionCode.uppercaseString] != nil;
 }
 
@@ -2952,7 +2952,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   NSArray *allKeys = [[NBMetadataHelper CCode2CNMap] allKeys];
   NSPredicate *predicateIsNaN =
       [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [self isNaN:evaluatedObject];
+        return isNan(evaluatedObject);
       }];
 
   NSArray *supportedRegions = [allKeys filteredArrayUsingPredicate:predicateIsNaN];

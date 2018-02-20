@@ -83,8 +83,6 @@
     [exampleNumbers addObjectsFromArray:exampleNumbers];
   }
 
-  NSLog(@"Count: %@", @(exampleNumbers.count));
-
   [self measureBlock:^{
     for (NBExampleNumber *example in exampleNumbers) {
       [util parseAndKeepRawInput:example.phoneNumber

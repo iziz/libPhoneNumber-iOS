@@ -203,21 +203,16 @@ static NSString *StringByTrimming(NSString *aString) {
 
     regionCode = [regionCode uppercaseString];
 
-  @synchronized(_shortNumberMetadataCache) {
-    NBPhoneMetaData *cachedMetadata = [_shortNumberMetadataCache objectForKey:regionCode];
-    if (cachedMetadata != nil) {
-      return cachedMetadata;
-    }
+  NBPhoneMetaData *cachedMetadata = [_shortNumberMetadataCache objectForKey:regionCode];
+  if (cachedMetadata != nil) {
+    return cachedMetadata;
   }
 
   NSDictionary *dict = [[self class] shortNumberDataMap][@"countryToMetadata"];
   NSArray *entry = dict[regionCode];
   if (entry) {
     NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] initWithEntry:entry];
-    @synchronized(_shortNumberMetadataCache) {
-      [_shortNumberMetadataCache setObject:metadata forKey:regionCode];
-    }
-
+    [_shortNumberMetadataCache setObject:metadata forKey:regionCode];
     return metadata;
   }
 
