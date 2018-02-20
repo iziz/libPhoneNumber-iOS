@@ -41,7 +41,9 @@ static NSString *StringByTrimming(NSString *aString) {
   self = [super init];
   if (self != nil) {
     _metadataCache = [[NSCache alloc] init];
+#if SHORT_NUMBER_SUPPORT
     _shortNumberMetadataCache = [[NSCache alloc] init];
+#endif //SHORT_NUMBER_SUPPORT
   }
   return self;
 }
