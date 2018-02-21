@@ -33,7 +33,7 @@ static BOOL isNan(NSString *sourceString) {
   });
 
   // Return YES if the sourceString doesn't have any characters that can be represented as a Float.
-  return !([sourceString rangeOfCharacterFromSet:nonDecimalCharacterSet].length == NSNotFound);
+  return !([sourceString rangeOfCharacterFromSet:nonDecimalCharacterSet].location == NSNotFound);
 }
 
 #pragma mark - NBPhoneNumberUtil interface -
