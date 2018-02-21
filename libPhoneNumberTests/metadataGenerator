@@ -14,9 +14,10 @@ import JavaScriptCore
 
 enum GeneratorError: Error {
   case dataNotString
+  case genericError
 }
 
-func synchronouslyLoadStringResource(from url: URL) throws -> String? {
+func synchronouslyLoadStringResource(from url: URL) throws -> String {
   let session = URLSession(configuration: .default)
   var resultData: Data?
   var resultError: Error?
@@ -43,12 +44,12 @@ func synchronouslyLoadStringResource(from url: URL) throws -> String? {
     return string
   }
 
-  return nil
+  throw GeneratorError.genericError
 }
 
 func loadJS(from url: URL, to context: JSContext) {
   guard let script = try? synchronouslyLoadStringResource(from: url) else {
-    fputs("Cannot load dependency at \(url)", __stderrp)
+    fputs("Cannot load dependency at \(url)\n", __stderrp)
     exit(1)
   }
 
@@ -57,6 +58,10 @@ func loadJS(from url: URL, to context: JSContext) {
 
 // Create JavaScript context.
 let context = JSContext()!
+context.exceptionHandler = { _, exception in
+  fputs("Javascript exception thrown: \(exception!)\n", __stderrp)
+//  exit(1)
+}
 
 // Load required dependencies.
 let googleClosure = URL(
@@ -79,47 +84,59 @@ let requires = """
 context.evaluateScript(requires)
 
 // Load metadata file from GitHub.
-let phoneMetadata = "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/metadata.js"
-let phoneMetadataForTesting = "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/metadatafortesting.js"
-let shortNumberMetadata = "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/shortnumbermetadata.js"
+let phoneMetadata = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/metadata.js")!
+let phoneMetadataForTesting = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/metadatafortesting.js")!
+let shortNumberMetadata = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/shortnumbermetadata.js")!
 
 let currentDir = FileManager.default.currentDirectoryPath
 let baseURL = URL(fileURLWithPath: currentDir).appendingPathComponent("generatedJSON")
 
 // Phone metadata.
-if let metadata = try? synchronouslyLoadStringResource(from: URL(string: phoneMetadata)!) {
+do {
+  let metadata = try synchronouslyLoadStringResource(from: phoneMetadata)
   context.evaluateScript(metadata)
   let result = context.evaluateScript("JSON.stringify(i18n.phonenumbers.metadata)")!.toString()!
   let url = baseURL.appendingPathComponent("PhoneNumberMetaData.json")
-  try! result.write(
+  try result.write(
     to: url,
     atomically: true,
     encoding: .utf8)
+  // Clean up
+  context.evaluateScript("i18n.phonenumbers.metadata = null")
+} catch (let error) {
+  fputs("Error loading phone number metadata \(error)\n", __stderrp)
+  exit(1)
 }
 
 // Phone metadata for testing.
-if let metadata =
-   try? synchronouslyLoadStringResource(from: URL(string: phoneMetadataForTesting)!) {
+do {
+  let metadata = try synchronouslyLoadStringResource(from: phoneMetadataForTesting)
   context.evaluateScript(metadata)
   let result = context.evaluateScript("JSON.stringify(i18n.phonenumbers.metadata)")!.toString()!
   let url = baseURL.appendingPathComponent("PhoneNumberMetaDataForTesting.json")
-  try! result.write(
+  try result.write(
     to: url,
     atomically: true,
     encoding: .utf8)
+} catch (let error) {
+  fputs("Error loading phone number metadata for testing \(error)\n", __stderrp)
+  exit(1)
 }
 
 // Short number metadata.
-if let metadata =
-   try? synchronouslyLoadStringResource(from: URL(string: shortNumberMetadata)!) {
+do {
+  let metadata = try synchronouslyLoadStringResource(from: shortNumberMetadata)
   context.evaluateScript(metadata)
   let result = context.evaluateScript(
     "JSON.stringify(i18n.phonenumbers.shortnumbermetadata)")!.toString()!
   let url = baseURL.appendingPathComponent("ShortNumberMetadata.json")
-  try! result.write(
+  try result.write(
     to: url,
     atomically: true,
     encoding: .utf8)
+} catch (let error) {
+  fputs("Error loading short number metadata \(error)\n", __stderrp)
+  exit(1)
 }
 
 print("Done")
