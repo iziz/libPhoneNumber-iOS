@@ -25,6 +25,17 @@ static NSString *NormalizeNonBreakingSpace(NSString *aString) {
   return [aString stringByReplacingOccurrencesOfString:NB_NON_BREAKING_SPACE withString:@" "];
 }
 
+static BOOL isNan(NSString *sourceString) {
+  static dispatch_once_t onceToken;
+  static NSCharacterSet *nonDecimalCharacterSet;
+  dispatch_once(&onceToken, ^{
+    nonDecimalCharacterSet = [[NSMutableCharacterSet decimalDigitCharacterSet] invertedSet];
+  });
+
+  // Return YES if the sourceString doesn't have any characters that can be represented as a Float.
+  return !([sourceString rangeOfCharacterFromSet:nonDecimalCharacterSet].location == NSNotFound);
+}
+
 #pragma mark - NBPhoneNumberUtil interface -
 
 @interface NBPhoneNumberUtil ()
@@ -230,9 +241,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 - (NSString *)replaceStringByRegex:(NSString *)sourceString
                              regex:(NSString *)pattern
                       withTemplate:(NSString *)templateString {
-  NSString *replacementResult = [sourceString copy];
   NSError *error = nil;
-
   NSRegularExpression *currentPattern =
       [self regularExpressionWithPattern:pattern options:0 error:&error];
   NSArray *matches = [currentPattern matchesInString:sourceString
@@ -240,6 +249,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
                                                range:NSMakeRange(0, sourceString.length)];
 
   if ([matches count] == 1) {
+    NSString *replacementResult;
     NSRange replaceRange =
         [currentPattern rangeOfFirstMatchInString:sourceString
                                           options:0
@@ -251,20 +261,20 @@ static NSArray *GEO_MOBILE_COUNTRIES;
                                                    options:0
                                                      range:replaceRange
                                               withTemplate:templateString];
+    } else {
+      replacementResult = [sourceString copy];
     }
     return replacementResult;
   }
 
   if ([matches count] > 1) {
-    replacementResult =
-        [currentPattern stringByReplacingMatchesInString:[replacementResult mutableCopy]
-                                                 options:0
-                                                   range:NSMakeRange(0, sourceString.length)
-                                            withTemplate:templateString];
-    return replacementResult;
+    return [currentPattern stringByReplacingMatchesInString:sourceString
+                                                    options:0
+                                                      range:NSMakeRange(0, sourceString.length)
+                                               withTemplate:templateString];
   }
 
-  return replacementResult;
+  return [sourceString copy];
 }
 
 - (NSTextCheckingResult *)matchFirstByRegex:(NSString *)sourceString regex:(NSString *)pattern {
@@ -342,19 +352,6 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   NSCharacterSet *nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
   NSRange r = [sourceString rangeOfCharacterFromSet:nonNumbers];
   return r.location == NSNotFound;
-}
-
-- (BOOL)isNumeric:(NSString *)sourceString {
-  NSScanner *sc = [NSScanner scannerWithString:sourceString];
-  if ([sc scanFloat:NULL]) {
-    return [sc isAtEnd];
-  }
-  return NO;
-}
-
-- (BOOL)isNaN:(NSString *)sourceString {
-  if ([self isNumeric:sourceString]) return NO;
-  return YES;
 }
 
 /**
@@ -911,13 +908,12 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   NSMutableString *normalizedNumber = [[NSMutableString alloc] init];
 
   for (NSUInteger i = 0; i < numberLength; ++i) {
-    unichar character = [sourceString characterAtIndex:i];
-    NSString *newDigit = [normalizationReplacements
-        objectForKey:[[NSString stringWithFormat:@"%C", character] uppercaseString]];
+    NSString *charString = [sourceString substringWithRange:NSMakeRange(i, 1)];
+    NSString *newDigit = [normalizationReplacements objectForKey:[charString uppercaseString]];
     if (newDigit != nil) {
       [normalizedNumber appendString:newDigit];
     } else if (removeNonMatches == NO) {
-      [normalizedNumber appendString:[NSString stringWithFormat:@"%C", character]];
+      [normalizedNumber appendString:charString];
     }
     // If neither of the above are NO, we remove this character.
 
@@ -979,7 +975,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   // (e.g. +800) we use the country calling codes instead of the region code as
   // key in the map we have to make sure regionCode is not a number to prevent
   // returning NO for non-geographical country calling codes.
-  return [NBMetadataHelper hasValue:regionCode] && [self isNaN:regionCode] &&
+  return [NBMetadataHelper hasValue:regionCode] && isNan(regionCode) &&
          [self.helper getMetadataForRegion:regionCode.uppercaseString] != nil;
 }
 
@@ -2956,7 +2952,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   NSArray *allKeys = [[NBMetadataHelper CCode2CNMap] allKeys];
   NSPredicate *predicateIsNaN =
       [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [self isNaN:evaluatedObject];
+        return isNan(evaluatedObject);
       }];
 
   NSArray *supportedRegions = [allKeys filteredArrayUsingPredicate:predicateIsNaN];
@@ -3764,6 +3760,8 @@ static CTTelephonyNetworkInfo *_telephonyNetworkInfo;
                        nationalNumber:(NSString **)nationalNumber {
   if (nationalNumber == NULL) return;
 
+  NSMutableString *result = [[NSMutableString alloc] init];
+
   int indexOfPhoneContext = [self indexOfStringByString:numberToParse target:RFC3966_PHONE_CONTEXT];
   if (indexOfPhoneContext > 0) {
     NSUInteger phoneContextStart = indexOfPhoneContext + RFC3966_PHONE_CONTEXT.length;
@@ -3779,12 +3777,9 @@ static CTTelephonyNetworkInfo *_telephonyNetworkInfo;
                   range:NSMakeRange(phoneContextStart, numberToParse.length - phoneContextStart)];
       if (foundRange.location != NSNotFound) {
         NSRange subRange = NSMakeRange(phoneContextStart, foundRange.location - phoneContextStart);
-        (*nationalNumber) =
-            [(*nationalNumber) stringByAppendingString:[numberToParse substringWithRange:subRange]];
+        [result appendString:[numberToParse substringWithRange:subRange]];
       } else {
-        (*nationalNumber) =
-            [(*nationalNumber) stringByAppendingString:[numberToParse
-                                                           substringFromIndex:phoneContextStart]];
+        [result appendString:[numberToParse substringFromIndex:phoneContextStart]];
       }
     }
 
@@ -3795,29 +3790,29 @@ static CTTelephonyNetworkInfo *_telephonyNetworkInfo;
         [self indexOfStringByString:numberToParse target:RFC3966_PREFIX] + RFC3966_PREFIX.length;
     NSString *subString = [numberToParse
         substringWithRange:NSMakeRange(rfc3966Start, indexOfPhoneContext - rfc3966Start)];
-    (*nationalNumber) = [(*nationalNumber) stringByAppendingString:subString];
+    [result appendString:subString];
   } else {
     // Extract a possible number from the string passed in (this strips leading
     // characters that could not be the start of a phone number.)
-    (*nationalNumber) =
-        [(*nationalNumber) stringByAppendingString:[self extractPossibleNumber:numberToParse]];
+    [result appendString:[self extractPossibleNumber:numberToParse]];
   }
 
   // Delete the isdn-subaddress and everything after it if it is present.
   // Note extension won't appear at the same time with isdn-subaddress
   // according to paragraph 5.3 of the RFC3966 spec,
-  NSString *nationalNumberStr = [(*nationalNumber)copy];
+  NSString *nationalNumberStr = [result copy];
   int indexOfIsdn = [self indexOfStringByString:nationalNumberStr target:RFC3966_ISDN_SUBADDRESS];
   if (indexOfIsdn > 0) {
-    (*nationalNumber) = @"";
-    (*nationalNumber) = [(*nationalNumber)
-        stringByAppendingString:[nationalNumberStr substringWithRange:NSMakeRange(0, indexOfIsdn)]];
+    NSRange range = NSMakeRange(0, indexOfIsdn);
+    result = [[NSMutableString alloc] initWithString:[nationalNumberStr substringWithRange:range]];
   }
   // If both phone context and isdn-subaddress are absent but other
   // parameters are present, the parameters are left in nationalNumber. This
   // is because we are concerned about deleting content from a potential
   // number string when there is no strong evidence that the number is
   // actually written in RFC3966.
+
+  *nationalNumber = [result copy];
 }
 
 /**
