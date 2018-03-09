@@ -127,7 +127,7 @@ import libPhoneNumberiOS
 ```
 
 ##### Case (3) with CocoaPods
-import libPhoneNumberiOS
+import libPhoneNumber_iOS
 
 
 ##### - in swift class file
