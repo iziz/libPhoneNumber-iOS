@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "34ACBB841B7122AC0064B3BD"
-               BuildableName = "libPhoneNumberiOS.framework"
+               BuildableName = "libPhoneNumber.framework"
                BlueprintName = "libPhoneNumberiOS"
                ReferencedContainer = "container:libPhoneNumber.xcodeproj">
             </BuildableReference>
@@ -26,7 +26,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
@@ -44,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "34ACBB841B7122AC0064B3BD"
-            BuildableName = "libPhoneNumberiOS.framework"
+            BuildableName = "libPhoneNumber.framework"
             BlueprintName = "libPhoneNumberiOS"
             ReferencedContainer = "container:libPhoneNumber.xcodeproj">
          </BuildableReference>
@@ -56,7 +55,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -67,7 +65,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "34ACBB841B7122AC0064B3BD"
-            BuildableName = "libPhoneNumberiOS.framework"
+            BuildableName = "libPhoneNumber.framework"
             BlueprintName = "libPhoneNumberiOS"
             ReferencedContainer = "container:libPhoneNumber.xcodeproj">
          </BuildableReference>
@@ -85,7 +83,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "34ACBB841B7122AC0064B3BD"
-            BuildableName = "libPhoneNumberiOS.framework"
+            BuildableName = "libPhoneNumber.framework"
             BlueprintName = "libPhoneNumberiOS"
             ReferencedContainer = "container:libPhoneNumber.xcodeproj">
          </BuildableReference>

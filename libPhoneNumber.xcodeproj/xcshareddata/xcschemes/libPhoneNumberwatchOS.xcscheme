@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1F31D5291DDD46B100257818"
-               BuildableName = "libPhoneNumberwatchOS.framework"
+               BuildableName = "libPhoneNumber.framework"
                BlueprintName = "libPhoneNumberwatchOS"
                ReferencedContainer = "container:libPhoneNumber.xcodeproj">
             </BuildableReference>
@@ -26,7 +26,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -37,7 +36,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -48,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1F31D5291DDD46B100257818"
-            BuildableName = "libPhoneNumberwatchOS.framework"
+            BuildableName = "libPhoneNumber.framework"
             BlueprintName = "libPhoneNumberwatchOS"
             ReferencedContainer = "container:libPhoneNumber.xcodeproj">
          </BuildableReference>
@@ -66,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1F31D5291DDD46B100257818"
-            BuildableName = "libPhoneNumberwatchOS.framework"
+            BuildableName = "libPhoneNumber.framework"
             BlueprintName = "libPhoneNumberwatchOS"
             ReferencedContainer = "container:libPhoneNumber.xcodeproj">
          </BuildableReference>

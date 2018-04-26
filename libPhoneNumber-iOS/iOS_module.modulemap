@@ -1,0 +1,6 @@
+framework module libPhoneNumber {
+    umbrella header "libPhoneNumberiOS.h"
+
+    export *
+    module * { export * }
+}

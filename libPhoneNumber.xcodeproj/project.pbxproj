@@ -149,7 +149,7 @@
 		8B0FD3031E4A88AC0049DF81 /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */; };
 		8B0FD3041E4A88AC0049DF81 /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */; };
 		8B1FEF981EB7BEFE00FBDE87 /* NBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1FEF971EB7BEFE00FBDE87 /* NBTextField.swift */; };
-		8B1FEF9B1EB7BF3200FBDE87 /* libPhoneNumberiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34ACBB851B7122AC0064B3BD /* libPhoneNumberiOS.framework */; };
+		8B1FEF9B1EB7BF3200FBDE87 /* libPhoneNumber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34ACBB851B7122AC0064B3BD /* libPhoneNumber.framework */; };
 		8B1FEF9C1EB7BF6900FBDE87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6AE8F81BEE72B600263DE1 /* AppDelegate.swift */; };
 		8B1FEF9D1EB7BF6C00FBDE87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6AE8FA1BEE72B600263DE1 /* ViewController.swift */; };
 		8B1FEF9E1EB7BF7000FBDE87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6AE8FC1BEE72B600263DE1 /* Main.storyboard */; };
@@ -199,18 +199,18 @@
 		14B7A2D11DE9D7F70051AED7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		187A618A1A25DF04000D8BB6 /* PhoneNumberMetaData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = PhoneNumberMetaData.json; path = libPhoneNumberTests/generatedJSON/PhoneNumberMetaData.json; sourceTree = SOURCE_ROOT; };
 		187A618B1A25DF04000D8BB6 /* PhoneNumberMetaDataForTesting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = PhoneNumberMetaDataForTesting.json; path = libPhoneNumberTests/generatedJSON/PhoneNumberMetaDataForTesting.json; sourceTree = SOURCE_ROOT; };
-		1F31D52A1DDD46B100257818 /* libPhoneNumberwatchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libPhoneNumberwatchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F31D52A1DDD46B100257818 /* libPhoneNumber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libPhoneNumber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F31D52C1DDD46B100257818 /* libPhoneNumberwatchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libPhoneNumberwatchOS.h; sourceTree = "<group>"; };
 		1F31D52D1DDD46B100257818 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1F31D54D1DDD47B900257818 /* libPhoneNumbertvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libPhoneNumbertvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F31D54D1DDD47B900257818 /* libPhoneNumber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libPhoneNumber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F31D54F1DDD47BA00257818 /* libPhoneNumbertvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libPhoneNumbertvOS.h; sourceTree = "<group>"; };
 		1F31D5501DDD47BA00257818 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29F3A15C17B98AE1005D8E07 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		34ACBB851B7122AC0064B3BD /* libPhoneNumberiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libPhoneNumberiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		34ACBB851B7122AC0064B3BD /* libPhoneNumber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libPhoneNumber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		34ACBB881B7122AC0064B3BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "libPhoneNumber-iOS/Info.plist"; sourceTree = "<group>"; };
 		34ACBB891B7122AC0064B3BD /* libPhoneNumberiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = libPhoneNumberiOS.h; path = "libPhoneNumber-iOS/libPhoneNumberiOS.h"; sourceTree = "<group>"; };
 		4D43EF831740825100C24FF3 /* libPhoneNumber-iOS.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "libPhoneNumber-iOS.podspec"; sourceTree = SOURCE_ROOT; };
-		7C72507C1E0EBE7D00F916ED /* libPhoneNumbermacOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libPhoneNumbermacOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C72507C1E0EBE7D00F916ED /* libPhoneNumber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libPhoneNumber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C72507E1E0EBE7D00F916ED /* libPhoneNumbermacOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libPhoneNumbermacOS.h; sourceTree = "<group>"; };
 		7C72507F1E0EBE7D00F916ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B0FD2E61E4A846F0049DF81 /* GeneratePhoneNumberHeader.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = GeneratePhoneNumberHeader.sh; sourceTree = "<group>"; };
@@ -305,7 +305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B1FEF9B1EB7BF3200FBDE87 /* libPhoneNumberiOS.framework in Frameworks */,
+				8B1FEF9B1EB7BF3200FBDE87 /* libPhoneNumber.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,12 +487,12 @@
 		FD7A061D167715A0004BBEB6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				34ACBB851B7122AC0064B3BD /* libPhoneNumberiOS.framework */,
-				1F31D52A1DDD46B100257818 /* libPhoneNumberwatchOS.framework */,
-				1F31D54D1DDD47B900257818 /* libPhoneNumbertvOS.framework */,
+				34ACBB851B7122AC0064B3BD /* libPhoneNumber.framework */,
+				1F31D52A1DDD46B100257818 /* libPhoneNumber.framework */,
+				1F31D54D1DDD47B900257818 /* libPhoneNumber.framework */,
 				14B7A2931DE9B65D0051AED7 /* libPhoneNumberiOSTests.xctest */,
 				14B7A2BE1DE9D7F60051AED7 /* MetadataGenerator.app */,
-				7C72507C1E0EBE7D00F916ED /* libPhoneNumbermacOS.framework */,
+				7C72507C1E0EBE7D00F916ED /* libPhoneNumber.framework */,
 				8B1FEF731EB7BE7C00FBDE87 /* SwiftDemo.app */,
 			);
 			name = Products;
@@ -683,7 +683,7 @@
 			);
 			name = libPhoneNumberwatchOS;
 			productName = "libPhoneNumber-watchOS";
-			productReference = 1F31D52A1DDD46B100257818 /* libPhoneNumberwatchOS.framework */;
+			productReference = 1F31D52A1DDD46B100257818 /* libPhoneNumber.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		1F31D54C1DDD47B900257818 /* libPhoneNumbertvOS */ = {
@@ -701,7 +701,7 @@
 			);
 			name = libPhoneNumbertvOS;
 			productName = "libPhoneNumber-tvOS";
-			productReference = 1F31D54D1DDD47B900257818 /* libPhoneNumbertvOS.framework */;
+			productReference = 1F31D54D1DDD47B900257818 /* libPhoneNumber.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		34ACBB841B7122AC0064B3BD /* libPhoneNumberiOS */ = {
@@ -719,7 +719,7 @@
 			);
 			name = libPhoneNumberiOS;
 			productName = "libPhoneNumber-iOS";
-			productReference = 34ACBB851B7122AC0064B3BD /* libPhoneNumberiOS.framework */;
+			productReference = 34ACBB851B7122AC0064B3BD /* libPhoneNumber.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		7C72507B1E0EBE7D00F916ED /* libPhoneNumbermacOS */ = {
@@ -737,7 +737,7 @@
 			);
 			name = libPhoneNumbermacOS;
 			productName = libPhoneNumbermacOS;
-			productReference = 7C72507C1E0EBE7D00F916ED /* libPhoneNumbermacOS.framework */;
+			productReference = 7C72507C1E0EBE7D00F916ED /* libPhoneNumber.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8B1FEF721EB7BE7C00FBDE87 /* SwiftDemo */ = {
@@ -1198,9 +1198,10 @@
 				INFOPLIST_FILE = "libPhoneNumber-watchOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "${SRCROOT}/libPhoneNumber-watchOS/watchOS_module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.libPhoneNumber.watchOS;
-				PRODUCT_NAME = libPhoneNumberwatchOS;
+				PRODUCT_NAME = libPhoneNumber;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1244,9 +1245,10 @@
 				INFOPLIST_FILE = "libPhoneNumber-watchOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "${SRCROOT}/libPhoneNumber-watchOS/watchOS_module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.libPhoneNumber.watchOS;
-				PRODUCT_NAME = libPhoneNumberwatchOS;
+				PRODUCT_NAME = libPhoneNumber;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1288,9 +1290,10 @@
 				INFOPLIST_FILE = "libPhoneNumber-tvOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "${SRCROOT}/libPhoneNumber-tvOS/tvOS_module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.libPhoneNumber.tvOS;
-				PRODUCT_NAME = libPhoneNumbertvOS;
+				PRODUCT_NAME = libPhoneNumber;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -1334,9 +1337,10 @@
 				INFOPLIST_FILE = "libPhoneNumber-tvOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "${SRCROOT}/libPhoneNumber-tvOS/tvOS_module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.libPhoneNumber.tvOS;
-				PRODUCT_NAME = libPhoneNumbertvOS;
+				PRODUCT_NAME = libPhoneNumber;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -1379,10 +1383,11 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "${SRCROOT}/libPhoneNumber-iOS/iOS_module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.libPhoneNumber.iOS;
-				PRODUCT_NAME = libPhoneNumberiOS;
+				PRODUCT_NAME = libPhoneNumber;
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1420,10 +1425,11 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "${SRCROOT}/libPhoneNumber-iOS/iOS_module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.libPhoneNumber.iOS;
-				PRODUCT_NAME = libPhoneNumberiOS;
+				PRODUCT_NAME = libPhoneNumber;
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1453,9 +1459,10 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MODULEMAP_FILE = "${SRCROOT}/libPhoneNumber-macOS/macOS_module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.libPhoneNumber.macOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = libPhoneNumber;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64";
@@ -1489,9 +1496,10 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MODULEMAP_FILE = "${SRCROOT}/libPhoneNumber-macOS/macOS_module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.libPhoneNumber.macOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = libPhoneNumber;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64";

@@ -1,0 +1,6 @@
+framework module libPhoneNumber {
+    umbrella header "libPhoneNumberwatchOS.h"
+
+    export *
+    module * { export * }
+}
