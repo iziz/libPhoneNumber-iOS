@@ -14,7 +14,6 @@
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDefines.h"
 #import "NBPhoneNumberDesc.h"
-#import "NBRegExMatcher.h"
 
 #if TARGET_OS_IOS
 #import <CoreTelephony/CTCarrier.h>
@@ -50,7 +49,6 @@ static BOOL isNan(NSString *sourceString) {
 @property(nonatomic, strong) NSRegularExpression *VALID_ALPHA_PHONE_PATTERN;
 
 @property(nonatomic, strong, readwrite) NBMetadataHelper *helper;
-@property(nonatomic, strong, readwrite) NBRegExMatcher *matcher;
 
 #if TARGET_OS_IOS
 @property(nonatomic, readonly) CTTelephonyNetworkInfo *telephonyNetworkInfo;
@@ -402,7 +400,6 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     _lockPatternCache = [[NSLock alloc] init];
     _entireStringCacheLock = [[NSLock alloc] init];
     _helper = [[NBMetadataHelper alloc] init];
-    _matcher = [[NBRegExMatcher alloc] init];
     [self initRegularExpressionSet];
     [self initNormalizationMappings];
   }
