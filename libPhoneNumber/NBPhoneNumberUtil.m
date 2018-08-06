@@ -104,6 +104,11 @@ static NSDictionary *ALL_NORMALIZATION_MAPPINGS;
 static NSDictionary *DIALLABLE_CHAR_MAPPINGS;
 static NSDictionary *ALL_PLUS_NUMBER_GROUPING_SYMBOLS;
 
+// Map of country calling codes that use a mobile token before the area code. One example of when
+// this is relevant is when determining the length of the national destination code, which should
+// be the length of the area code plus the length of the mobile token.
+static NSDictionary<NSNumber *, NSString *> *MOBILE_TOKEN_MAPPINGS;
+
 static NSDictionary *DIGIT_MAPPINGS;
 
 static NSArray *GEO_MOBILE_COUNTRIES;
@@ -536,6 +541,11 @@ static NSArray *GEO_MOBILE_COUNTRIES;
                                      @"-", @"\u2014", @"-", @"\u2015", @"-", @"\u2212", @"/", @"/",
                                      @"/", @"\uFF0F", @" ", @" ", @" ", @"\u3000", @" ", @"\u2060",
                                      @".", @".", @".", @"\uFF0E", nil];
+
+    MOBILE_TOKEN_MAPPINGS = @{
+      @52: @"1",
+      @54: @"9",
+    };
   });
 }
 
@@ -884,6 +894,14 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   }
 
   return (int)((NSString *)[numberGroups objectAtIndex:1]).length;
+}
+
+- (NSString *)getCountryMobileTokenFromCountryCode:(NSInteger)countryCallingCode {
+    NSString *mobileToken = MOBILE_TOKEN_MAPPINGS[@(countryCallingCode)];
+    if (mobileToken != nil) {
+        return mobileToken;
+    }
+    return @"";
 }
 
 /**
