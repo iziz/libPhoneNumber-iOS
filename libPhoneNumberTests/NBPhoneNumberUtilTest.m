@@ -3257,4 +3257,11 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertFalse([_aUtil isAlphaNumber:@"+800 1234-1234"]);
 }
 
+- (void)testGetCountryMobileToken {
+  XCTAssertEqualObjects(@"1",
+      [_aUtil getCountryMobileTokenFromCountryCode:[[_aUtil getCountryCodeForRegion:@"MX"] integerValue]]);
+  XCTAssertEqualObjects(@"",
+      [_aUtil getCountryMobileTokenFromCountryCode:[[_aUtil getCountryCodeForRegion:@"SE"] integerValue]]);
+}
+
 @end
