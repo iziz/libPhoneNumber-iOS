@@ -11,6 +11,7 @@ DESC
   s.authors      = { "iziz" => "zen.isis@gmail.com", "hyukhur" => "hyukhur@gmail.com" }
   s.source       = { :git => "https://github.com/iziz/libPhoneNumber-iOS.git", :tag => s.version.to_s }
   s.libraries 	 = 'z'
+  s.module_name  = "libPhoneNumberiOS"
   s.ios.framework    = 'CoreTelephony'
   s.ios.deployment_target = "6.0"
   s.osx.deployment_target = "10.9"
