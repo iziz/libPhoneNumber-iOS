@@ -187,6 +187,21 @@
         [phoneUtil format:phoneJP numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:nil]);
   NSLog(@"- isValidNumber %@", [phoneUtil isValidNumber:phoneJP] ? @"Y" : @"N");
   NSLog(@"- isPossibleNumber %@", [phoneUtil isPossibleNumber:phoneJP] ? @"Y" : @"N");
+  
+  NSLog(@"-- BE --");
+  NSArray *numbers = @[@"0455 142418", @"0499 377799"];
+  for (NSString *number in numbers) {
+    NSLog(@"%@", number);
+    NSError *error = nil;
+    NBPhoneNumber *phoneNumberUS = [phoneUtil parse: number defaultRegion:@"BE" error:&error];
+    if (error) {
+      NSLog(@"err [%@]", [error localizedDescription]);
+    }
+    NSLog(@"- isValidNumber [%@]", [phoneUtil isValidNumber:phoneNumberUS] ? @"YES" : @"NO");
+    NSLog(@"- isPossibleNumber [%@]",
+          [phoneUtil isPossibleNumber:phoneNumberUS error:&error] ? @"YES" : @"NO");
+    NSLog(@"- getRegionCodeForNumber [%@]", [phoneUtil getRegionCodeForNumber:phoneNumberUS]);
+  }
 }
 
 - (NSString *)stringWithRandomNumber {
