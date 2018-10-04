@@ -262,7 +262,7 @@
 - (void)testGetExampleShortNumber {
   NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
 
-  XCTAssertEqualObjects(@"8711", [util exampleShortNumberWithRegionCode:@"AM"]);
+  XCTAssertEqualObjects(@"100", [util exampleShortNumberWithRegionCode:@"AM"]);
   XCTAssertEqualObjects(@"1010", [util exampleShortNumberWithRegionCode:@"FR"]);
   XCTAssertEqualObjects(@"", [util exampleShortNumberWithRegionCode:@"UN001"]);
 }
