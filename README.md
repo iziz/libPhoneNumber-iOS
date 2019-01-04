@@ -12,6 +12,51 @@
 
 > ARC only, or add the **"-fobjc-arc"** flag for non-ARC
 
+## Life360 Fork
+
+Sometimes (as in https://life360.atlassian.net/browse/LIFE-29045), the upstream repo of libPhoneNumber-iOS (https://github.com/iziz/libPhoneNumber-iOS) does not contain the latest phone number metadata required to support all latest phone numbers. In that case, you have to update this fork with data from Google's repo (https://github.com/googlei18n/libphonenumber). Here are the steps to do that:
+We (Lu) did a similar fix in July to update our fork of libPhoneNumber with the latest from Google.
+
+	$ cd life360/libPhoneNumber-iOS
+	$ swift libPhoneNumber-iOS/metadataGenerator
+	
+	error: unable to invoke subcommand: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-metadataGenerator (No such file or directory)
+	
+	$ sudo cp metadataGenerator /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-metadataGenerator
+	
+	$ swift libPhoneNumber-iOS/metadataGenerator
+	Javascript exception thrown: ReferenceError: Can't find variable: window
+	Javascript exception thrown: Error: goog.require could not find: goog.proto2.Message
+	Done
+	
+	$ git status
+	On branch master
+	Your branch is up to date with 'origin/master'.
+	
+	Changes not staged for commit:
+	  (use "git add <file>..." to update what will be committed)
+	  (use "git checkout -- <file>..." to discard changes in working directory)
+	
+	    modified:   generatedJSON/PhoneNumberMetaData.json
+	    modified:   generatedJSON/PhoneNumberMetaDataForTesting.json
+	    modified:   generatedJSON/ShortNumberMetadata.json
+	
+	$ cd libPhoneNumber
+	$ ./GeneratePhoneNumberHeader.sh ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaData.json ../libPhoneNumberTests/generatedJSON/ShortNumberMetadata.json ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaDataForTesting.json 
+	$ git status
+	On branch master
+	Your branch is up to date with 'origin/master'.
+	
+	Changes not staged for commit:
+	  (use "git add <file>..." to update what will be committed)
+	  (use "git checkout -- <file>..." to discard changes in working directory)
+	
+	    modified:   NBGeneratedPhoneNumberMetaData.h
+	    modified:   ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaData.json
+	    modified:   ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaDataForTesting.json
+	    modified:   ../libPhoneNumberTests/generatedJSON/ShortNumberMetadata.json
+
+
 ## Update Log
 [https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
 
