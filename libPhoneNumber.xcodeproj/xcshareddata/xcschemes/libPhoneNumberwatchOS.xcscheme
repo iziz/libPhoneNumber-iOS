@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1F31D5291DDD46B100257818"
-               BuildableName = "libPhoneNumberwatchOS.framework"
+               BuildableName = "libPhoneNumber.framework"
                BlueprintName = "libPhoneNumberwatchOS"
                ReferencedContainer = "container:libPhoneNumber.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1F31D5291DDD46B100257818"
-            BuildableName = "libPhoneNumberwatchOS.framework"
+            BuildableName = "libPhoneNumber.framework"
             BlueprintName = "libPhoneNumberwatchOS"
             ReferencedContainer = "container:libPhoneNumber.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1F31D5291DDD46B100257818"
-            BuildableName = "libPhoneNumberwatchOS.framework"
+            BuildableName = "libPhoneNumber.framework"
             BlueprintName = "libPhoneNumberwatchOS"
             ReferencedContainer = "container:libPhoneNumber.xcodeproj">
          </BuildableReference>
