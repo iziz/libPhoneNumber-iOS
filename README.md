@@ -17,44 +17,63 @@
 Sometimes (as in https://life360.atlassian.net/browse/LIFE-29045), the upstream repo of libPhoneNumber-iOS (https://github.com/iziz/libPhoneNumber-iOS) does not contain the latest phone number metadata required to support all latest phone numbers. In that case, you have to update this fork with data from Google's repo (https://github.com/googlei18n/libphonenumber). Here are the steps to do that:
 We (Lu) did a similar fix in July to update our fork of libPhoneNumber with the latest from Google.
 
-	$ cd life360/libPhoneNumber-iOS
-	$ swift libPhoneNumber-iOS/metadataGenerator
-	
-	error: unable to invoke subcommand: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-metadataGenerator (No such file or directory)
-	
-	$ sudo cp metadataGenerator /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-metadataGenerator
-	
-	$ swift libPhoneNumber-iOS/metadataGenerator
-	Javascript exception thrown: ReferenceError: Can't find variable: window
-	Javascript exception thrown: Error: goog.require could not find: goog.proto2.Message
-	Done
-	
-	$ git status
-	On branch master
-	Your branch is up to date with 'origin/master'.
-	
-	Changes not staged for commit:
-	  (use "git add <file>..." to update what will be committed)
-	  (use "git checkout -- <file>..." to discard changes in working directory)
-	
-	    modified:   generatedJSON/PhoneNumberMetaData.json
-	    modified:   generatedJSON/PhoneNumberMetaDataForTesting.json
-	    modified:   generatedJSON/ShortNumberMetadata.json
-	
-	$ cd libPhoneNumber
-	$ ./GeneratePhoneNumberHeader.sh ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaData.json ../libPhoneNumberTests/generatedJSON/ShortNumberMetadata.json ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaDataForTesting.json 
-	$ git status
-	On branch master
-	Your branch is up to date with 'origin/master'.
-	
-	Changes not staged for commit:
-	  (use "git add <file>..." to update what will be committed)
-	  (use "git checkout -- <file>..." to discard changes in working directory)
-	
-	    modified:   NBGeneratedPhoneNumberMetaData.h
-	    modified:   ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaData.json
-	    modified:   ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaDataForTesting.json
-	    modified:   ../libPhoneNumberTests/generatedJSON/ShortNumberMetadata.json
+$ git clone git@github.com:life360/libPhoneNumber-iOS.git
+$ cd libPhoneNumber-iOS/
+
+Build libPhoneNumbermacOS in xcode
+
+$ cd libPhoneNumberTests/
+$ ls
+Info.plist					NBPhoneNumberUtil+ShortNumberTest.m		NBShortNumberInfoTest.m				metadataGenerator
+NBAsYouTypeFormatterTest.m			NBPhoneNumberUtil+ShortNumberTestHelper.h	generatedJSON
+NBPhoneNumberParsingPerfTest.m			NBPhoneNumberUtil+ShortNumberTestHelper.m	index.php
+NBPhoneNumberUtil+ShortNumberTest.h		NBPhoneNumberUtilTest.m				libPhoneNumberGenerator.php
+
+$ cd libPhoneNumberTests/
+$ ls
+Info.plist					NBPhoneNumberUtil+ShortNumberTest.m		NBShortNumberInfoTest.m				metadataGenerator
+NBAsYouTypeFormatterTest.m			NBPhoneNumberUtil+ShortNumberTestHelper.h	generatedJSON
+NBPhoneNumberParsingPerfTest.m			NBPhoneNumberUtil+ShortNumberTestHelper.m	index.php
+NBPhoneNumberUtil+ShortNumberTest.h		NBPhoneNumberUtilTest.m				libPhoneNumberGenerator.php
+
+$ swift metadataGenerator
+error: unable to invoke subcommand: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-metadataGenerator (No such file or directory)
+sudo cp metadataGenerator /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-metadataGenerator
+
+$ swift metadataGenerator
+Javascript exception thrown: ReferenceError: Can't find variable: window
+Javascript exception thrown: Error: goog.require could not find: goog.proto2.Message
+Done
+
+$ cd libPhoneNumber
+
+$ ./GeneratePhoneNumberHeader.sh ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaData.json ../libPhoneNumberTests/generatedJSON/PhoneNumberMetaDataForTesting.json ../libPhoneNumberTests/generatedJSON/ShortNumberMetadata.json
+
+
+
+$ cd ..
+$ git status
+On branch bitphreak/lpn_update_8.10.10
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   libPhoneNumber/NBGeneratedPhoneNumberMetaData.h
+	modified:   libPhoneNumberTests/generatedJSON/PhoneNumberMetaData.json
+	modified:   libPhoneNumberTests/generatedJSON/ShortNumberMetadata.json
+    modified:   libPhoneNumber-iOS.podspec
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	libPhoneNumber.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git add libPhoneNumber
+$ git add libPhoneNumberTests/
+$ git add libPhoneNumber-iOS.podspec
+$ git commit
 
 
 ## Update Log
