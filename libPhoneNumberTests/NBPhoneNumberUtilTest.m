@@ -371,13 +371,10 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertEqualObjects(@"011", metadata.internationalPrefix);
   XCTAssertTrue(metadata.nationalPrefix != nil);
   XCTAssertEqual(2, (int)[metadata.numberFormats count]);
-  XCTAssertEqualObjects(@"(\\d{3})(\\d{3})(\\d{4})",
-                        ((NBNumberFormat *)metadata.numberFormats[1]).pattern);
+  XCTAssertEqualObjects(@"(\\d{3})(\\d{3})(\\d{4})", ((NBNumberFormat *)metadata.numberFormats[1]).pattern);
   XCTAssertEqualObjects(@"$1 $2 $3", ((NBNumberFormat *)metadata.numberFormats[1]).format);
-  XCTAssertEqualObjects(@"[13-689]\\d{9}|2[0-35-9]\\d{8}",
-                        metadata.generalDesc.nationalNumberPattern);
-  XCTAssertEqualObjects(@"[13-689]\\d{9}|2[0-35-9]\\d{8}",
-                        metadata.fixedLine.nationalNumberPattern);
+  XCTAssertEqualObjects(@"[13-689]\\d{9}|2[0-35-9]\\d{8}", metadata.generalDesc.nationalNumberPattern);
+  XCTAssertEqualObjects(@"[13-689]\\d{9}|2[0-35-9]\\d{8}", metadata.fixedLine.nationalNumberPattern);
   XCTAssertEqualObjects(@"900\\d{7}", metadata.premiumRate.nationalNumberPattern);
   // No shared-cost data is available, so its national number data should not be
   // set.
@@ -391,12 +388,9 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertEqualObjects(@"00", metadata.internationalPrefix);
   XCTAssertEqualObjects(@"0", metadata.nationalPrefix);
   XCTAssertEqual(6, (int)[metadata.numberFormats count]);
-  XCTAssertEqual(1,
-                 (int)[((NBNumberFormat *)metadata.numberFormats[5]).leadingDigitsPatterns count]);
-  XCTAssertEqualObjects(@"900",
-                        ((NBNumberFormat *)metadata.numberFormats[5]).leadingDigitsPatterns[0]);
-  XCTAssertEqualObjects(@"(\\d{3})(\\d{3,4})(\\d{4})",
-                        ((NBNumberFormat *)metadata.numberFormats[5]).pattern);
+  XCTAssertEqual(1, (int)[((NBNumberFormat *)metadata.numberFormats[5]).leadingDigitsPatterns count]);
+  XCTAssertEqualObjects(@"900", ((NBNumberFormat *)metadata.numberFormats[5]).leadingDigitsPatterns[0]);
+  XCTAssertEqualObjects(@"(\\d{3})(\\d{3,4})(\\d{4})", ((NBNumberFormat *)metadata.numberFormats[5]).pattern);
   XCTAssertEqualObjects(@"$1 $2 $3", ((NBNumberFormat *)metadata.numberFormats[5]).format);
   XCTAssertEqualObjects(@"(?:[24-6]\\d{2}|3[03-9]\\d|[789](?:0[2-9]|[1-9]\\d))\\d{1,8}",
                         metadata.fixedLine.nationalNumberPattern);
@@ -413,10 +407,8 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertEqualObjects(@"0(?:(11|343|3715)15)?", metadata.nationalPrefixForParsing);
   XCTAssertEqualObjects(@"9$1", metadata.nationalPrefixTransformRule);
   XCTAssertEqualObjects(@"$2 15 $3-$4", ((NBNumberFormat *)metadata.numberFormats[2]).format);
-  XCTAssertEqualObjects(@"(9)(\\d{4})(\\d{2})(\\d{4})",
-                        ((NBNumberFormat *)metadata.numberFormats[3]).pattern);
-  XCTAssertEqualObjects(@"(9)(\\d{4})(\\d{2})(\\d{4})",
-                        ((NBNumberFormat *)metadata.intlNumberFormats[3]).pattern);
+  XCTAssertEqualObjects(@"(\\d)(\\d{4})(\\d{2})(\\d{4})", ((NBNumberFormat *)metadata.numberFormats[3]).pattern);
+  XCTAssertEqualObjects(@"(\\d)(\\d{4})(\\d{2})(\\d{4})", ((NBNumberFormat *)metadata.intlNumberFormats[3]).pattern);
   XCTAssertEqualObjects(@"$1 $2 $3 $4", ((NBNumberFormat *)metadata.intlNumberFormats[3]).format);
 }
 
