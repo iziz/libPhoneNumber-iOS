@@ -770,8 +770,6 @@ static const NSUInteger NBMinLeadingDigitsLength = 3;
         return [self attemptToChooseFormattingPattern_];
       }
   }
-
-  _isSuccessfulFormatting = NO;
 }
 
 /**
