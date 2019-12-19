@@ -89,7 +89,7 @@ let phoneMetadataForTesting = URL(string: "https://raw.githubusercontent.com/goo
 let shortNumberMetadata = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/shortnumbermetadata.js")!
 
 let currentDir = FileManager.default.currentDirectoryPath
-let baseURL = URL(fileURLWithPath: currentDir).appendingPathComponent("generatedJSON")
+let baseURL = URL(fileURLWithPath: currentDir).appendingPathComponent("libPhoneNumberTests").appendingPathComponent("generatedJSON")
 
 // Phone metadata.
 do {
