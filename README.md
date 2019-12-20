@@ -18,13 +18,13 @@ Sometimes (as in https://life360.atlassian.net/browse/LIFE-29045), the upstream 
 We (Lu) did a similar fix in July to update our fork of libPhoneNumber with the latest from Google.
 
 	$ cd life360/libPhoneNumber-iOS
-	$ swift libPhoneNumber-iOS/metadataGenerator
+	$ swift libPhoneNumberTests/metadataGenerator
 	
 	error: unable to invoke subcommand: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-metadataGenerator (No such file or directory)
 	
-	$ sudo cp metadataGenerator /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-metadataGenerator
+	$ sudo cp libPhoneNumberTests/metadataGenerator /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-metadataGenerator
 	
-	$ swift libPhoneNumber-iOS/metadataGenerator
+	$ swift libPhoneNumberTests/metadataGenerator
 	Javascript exception thrown: ReferenceError: Can't find variable: window
 	Javascript exception thrown: Error: goog.require could not find: goog.proto2.Message
 	Done
