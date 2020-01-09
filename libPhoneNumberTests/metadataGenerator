@@ -60,28 +60,13 @@ func loadJS(from url: URL, to context: JSContext) {
 let context = JSContext()!
 context.exceptionHandler = { _, exception in
   fputs("Javascript exception thrown: \(exception!)\n", __stderrp)
-//  exit(1)
+  exit(1)
 }
 
 // Load required dependencies.
 let googleClosure = URL(
   string: "http://cdn.rawgit.com/google/closure-library/master/closure/goog/base.js")!
 loadJS(from: googleClosure, to: context)
-
-let jQuery = URL(string: "http://code.jquery.com/jquery-1.8.3.min.js")!
-loadJS(from: jQuery, to: context)
-
-// Evaluate requires.
-let requires = """
-  goog.require('goog.proto2.Message');
-  goog.require('goog.dom');
-  goog.require('goog.json');
-  goog.require('goog.array');
-  goog.require('goog.proto2.ObjectSerializer');
-  goog.require('goog.string.StringBuffer');
-  goog.require('i18n.phonenumbers.metadata');
-  """
-context.evaluateScript(requires)
 
 // Load metadata file from GitHub.
 let phoneMetadata = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/metadata.js")!
