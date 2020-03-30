@@ -262,19 +262,19 @@
 - (void)testGetExampleShortNumber {
   NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
 
-  XCTAssertEqualObjects(@"8711", [util exampleShortNumberWithRegionCode:@"AM"]);
-  XCTAssertEqualObjects(@"1010", [util exampleShortNumberWithRegionCode:@"FR"]);
+  XCTAssertEqualObjects(@"100", [util exampleShortNumberWithRegionCode:@"AM"]);
+  XCTAssertEqualObjects(@"15", [util exampleShortNumberWithRegionCode:@"FR"]);
   XCTAssertEqualObjects(@"", [util exampleShortNumberWithRegionCode:@"UN001"]);
 }
 
 - (void)testGetExampleShortNumberForCost {
   NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
 
-  XCTAssertEqualObjects(@"3010", [util exampleShortNumberForCost:NBEShortNumberCostTollFree
+  XCTAssertEqualObjects(@"15", [util exampleShortNumberForCost:NBEShortNumberCostTollFree
                                                       regionCode:@"FR"]);
-  XCTAssertEqualObjects(@"1023", [util exampleShortNumberForCost:NBEShortNumberCostStandardRate
+  XCTAssertEqualObjects(@"611", [util exampleShortNumberForCost:NBEShortNumberCostStandardRate
                                                       regionCode:@"FR"]);
-  XCTAssertEqualObjects(@"42000", [util exampleShortNumberForCost:NBEShortNumberCostPremiumRate
+  XCTAssertEqualObjects(@"36665", [util exampleShortNumberForCost:NBEShortNumberCostPremiumRate
                                                       regionCode:@"FR"]);
   XCTAssertEqualObjects(@"", [util exampleShortNumberForCost:NBEShortNumberCostUnknown
                                                       regionCode:@"FR"]);
