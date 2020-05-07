@@ -9,7 +9,7 @@ DESC
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
   s.license      = 'Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)'
   s.authors      = { "iziz" => "zen.isis@gmail.com", "hyukhur" => "hyukhur@gmail.com" }
-  s.source       = { :git => "https://github.com/iziz/libPhoneNumber-iOS.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/life360/libPhoneNumber-iOS.git", :tag => s.version.to_s }
   s.libraries 	 = 'z'
   s.ios.framework    = 'CoreTelephony'
   s.ios.deployment_target = "6.0"
