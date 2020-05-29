@@ -1,0 +1,12 @@
+# This is the Life360 libPhoneNumber-iOS repo file for code owners.
+#
+# The syntax for this file can be found here:
+# https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
+#
+# This document is currently a work in progress but should eventually contain an owner for every
+# folder in the project. The ownership in this file should match the ownership listed in the
+# Component Owners Spreadsheet here:
+# https://docs.google.com/spreadsheets/d/1PTr2ZEoI9ug2ULxsSN3MInzA4d-k0FST8jinzTsPqZk/edit?usp=sharing
+
+#Phone Number Validation
+* @arunlife360 @carlosh
