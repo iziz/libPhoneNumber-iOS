@@ -19,8 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSArray<NSString*>* supportedLanguages;
 -(instancetype) init;
 -(NSString*) getCountryNameForNumber: (NBPhoneNumber*) number withLanguage: (NSString*) language;
--(NSString*) getDescriptionForNumber: (NBPhoneNumber*) number withLanguage: (NSString*) language;
-
+-(NSString*) getDescriptionForNumber: (NBPhoneNumber*) number;
 
 @end
 

@@ -21,11 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSNumber *countryCode;
 @property (nonatomic) NSString *language;
 
--(instancetype) initWithCountryCode: (NSString*) countryCode withLanguage: (NSString*) language;
+-(instancetype) initWithCountryCode: (NSNumber*) countryCode withLanguage: (NSString*) language;
 -(void) createTable: (NSString*) countryCode;
 -(int) createInsertStatement: (NSString*) phoneNumber withDescription: (NSString*) description withCountryCode: (NSString*) countryCode;
 -(int) createSelectStatement: (NBPhoneNumber*) number;
--(BOOL) databaseExists;
 -(void) addEntryToDB: (NSString*) phoneNumber withDescription: (NSString*) description withShouldCreateTable: (BOOL) createIndex withCountryCode: (NSString*) countryCode;
 
 -(NSString*) searchPhoneNumberInDatabase:(NBPhoneNumber*) number withLanguage: (NSString*) language;

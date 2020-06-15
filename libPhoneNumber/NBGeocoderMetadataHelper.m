@@ -10,21 +10,18 @@
 
 @implementation NBGeocoderMetadataHelper
 
--(instancetype) initWithCountryCode:(NSString *)countryCode withLanguage: (NSString*) language {
+-(instancetype) initWithCountryCode:(NSNumber *)countryCode withLanguage: (NSString*) language {
     self = [super init];
-    
-    // grab bundle using `Class` in pod source (`self`, in this case)
+    self.countryCode = countryCode;
+    NSLog(@"country code: %@", self.countryCode);
+    self.language = language;
+    // grab bundle of current pod instance
     NSBundle *bundle = [NSBundle bundleForClass: self.classForCoder];
     NSURL *bundleURL = [[bundle resourceURL] URLByAppendingPathComponent:@"Resources.bundle"];
-    NSString* databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, language];
+    // create string for database directory
+    NSString* databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, self.language];
     self.databasePath = databasePath;
     NSLog(@"%@", databasePath);
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    if ([fileManager fileExistsAtPath:databasePath]){
-        NSLog(@"File path found! %@", databasePath);
-    }
     
     // open the database position
     if(sqlite3_open([databasePath UTF8String], & _DB) == SQLITE_OK) {
@@ -32,8 +29,7 @@
     } else {
         NSLog(@"Was unable to open SQLite file properly");
     }
-    self.countryCode = [NSNumber numberWithInt:1];
-    self.language = language;
+    
     // set up prepared statements for inserting entry and searching for entry
     sqlite3_prepare_v2(self.DB, [[NSString stringWithFormat:@"WITH RECURSIVE cnt(x) AS ( SELECT 1 UNION ALL SELECT x+1 FROM cnt LIMIT length(?)), toSearch as (SELECT substr(?, 1, x) as indata FROM cnt) select nationalnumber, description, length(nationalnumber) as natLength from geocodingPairs%@ where NATIONALNUMBER in toSearch order by natLength desc limit 1", countryCode] UTF8String], -1, &_selectStatement, NULL);
 //    NSLog(@"%s", sqlite3_expanded_sql(self.selectStatement));
@@ -104,19 +100,6 @@
     return sqliteResultCode;
 }
 
-
-
--(BOOL) databaseExists {
-    NSArray *documentDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    NSString *filePath = [documentDirectory objectAtIndex:0];
-    NSString *databasePath = [filePath stringByAppendingPathComponent:@"geocoding.db"];
-    NSLog(@"%@", databasePath);
-    //Check plist's existance using FileManager
-    NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:databasePath error:NULL];
-    NSLog(@"File Size: %llu", [fileAttributes fileSize]);
-    return [fileAttributes fileSize] > 100000; // YES if >1Mb, NO if less. WILL USE OTHER METHOD FOR CHECKING LATER
-}
-
 // creating an index, full text search
 -(void) addEntryToDB: (NSString*) phoneNumber withDescription: (NSString*) description withShouldCreateTable: (BOOL) shouldCreateTable withCountryCode: (NSString*) countryCode {
     @autoreleasepool {
@@ -141,16 +124,18 @@
             NSLog(@"CHANGED COUNTRY CODE FOR SEARCHING");
         }
         
+        // if device language was altered since last call.
         if(![self.language isEqualToString:language]) {
             NSLog(@"LANGUAGE WAS CHANGED");
             self.language = language;
-            sqlite3_close_v2(self.DB);
-            NSString *documentDirectory;
-            NSArray *directoryPath;
-            directoryPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            documentDirectory = directoryPath[0];
-            NSString* databasePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@%@%@%@", documentDirectory, @"/geocoding-", language, @".db"]];
-//             NSLog(@"DATABASEPATH IS: %@", databasePath);
+            
+            // grab bundle of current pod instance
+            NSBundle *bundle = [NSBundle bundleForClass: self.classForCoder];
+            NSURL *bundleURL = [[bundle resourceURL] URLByAppendingPathComponent:@"Resources.bundle"];
+            // create string for database directory
+            NSString* databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, language];
+            self.databasePath = databasePath;
+            NSLog(@"%@", databasePath);
              // open the database position
              if(sqlite3_open([databasePath UTF8String], & _DB) == SQLITE_OK) {
                  NSLog(@"Opened SQLite file successfully");
@@ -169,9 +154,7 @@
                 NSLog(@"Opened DB");
             }
         }
-
         sql_command_results = [self createSelectStatement:number];
-//        NSLog(@"The search statement was:%s", sqlite3_expanded_sql(self.selectStatement));
         if(sql_command_results != SQLITE_OK) {
           NSLog(@"Error with preparing statement");
           return NULL;
@@ -181,6 +164,7 @@
         if(step == SQLITE_ROW) {
             NSString *description = @((const char *)sqlite3_column_text(_selectStatement, 1));
             self.regionDescription = description;
+            NSLog(@"description was: %@", description);
             return description;
        }
     }

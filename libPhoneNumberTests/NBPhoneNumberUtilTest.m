@@ -102,7 +102,11 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   self.aUtil = [[NBPhoneNumberUtil alloc] init];
   self.helper = [[NBMetadataHelper alloc] init];
     NBPhoneNumberOfflineGeocoder* geo = [[NBPhoneNumberOfflineGeocoder alloc] init];
-    NSLog(@"%@", [geo getDescriptionForNumber:self.gbMobile withLanguage:@"en"]);
+    NBPhoneNumber* validUS = [[NBPhoneNumber alloc] init];
+    validUS.countryCode = @1;
+    validUS.nationalNumber = @9098611234;
+    NSLog(@"%@", [geo getDescriptionForNumber:validUS]);
+    
 }
 
 - (void)tearDown {
