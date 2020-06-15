@@ -13,6 +13,7 @@
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
 #import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumberOfflineGeocoder.h"
 
 // Create an entry array for a phone number desc based on numberPattern
 static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPattern) {
@@ -58,6 +59,7 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
 @end
 
 @interface NBPhoneNumberUtilTest : XCTestCase
+
 @property(nonatomic, strong) NBPhoneNumberUtil *aUtil;
 @property(nonatomic, strong) NBMetadataHelper *helper;
 
@@ -99,6 +101,8 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   [super setUp];
   self.aUtil = [[NBPhoneNumberUtil alloc] init];
   self.helper = [[NBMetadataHelper alloc] init];
+    NBPhoneNumberOfflineGeocoder* geo = [[NBPhoneNumberOfflineGeocoder alloc] init];
+    NSLog(@"%@", [geo getDescriptionForNumber:self.gbMobile withLanguage:@"en"]);
 }
 
 - (void)tearDown {
@@ -938,6 +942,7 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertEqualObjects(@"1800 749 352", [_aUtil formatOutOfCountryCallingNumber:alphaNumericNumber
                                                                regionCallingFrom:@"AU"]);
 
+
   // Testing a region with multiple international prefixes.
   XCTAssertEqualObjects(
       @"+61 1-800-SIX-FLAG",
@@ -1354,6 +1359,7 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
       [_aUtil parseAndKeepRawInput:@"012 3121286979" defaultRegion:@"BR" error:&anError];
   XCTAssertEqualObjects(@"012 3121286979", [_aUtil formatInOriginalFormat:numberWithCarrierCodeBR
                                                         regionCallingFrom:@"BR"]);
+    
 
   // The default national prefix used in this case is 045. When a number with
   // national prefix 044 is entered, we return the raw input as we don't want to

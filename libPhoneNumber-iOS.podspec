@@ -17,6 +17,9 @@ DESC
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
   s.requires_arc = true
+  s.resource_bundles = {
+    'Databases' => ['libPhoneNumber/Resources/*']
+  }
   s.private_header_files = 'libPhoneNumber/NBGeneratedPhoneNumberMetaData.h'
   s.source_files = 'libPhoneNumber/NBPhoneNumberDefines.{h,m}', 'libPhoneNumber/NBPhoneNumber.{h,m}', 'libPhoneNumber/NBNumberFormat.{h,m}', 'libPhoneNumber/NBPhoneNumberDesc.{h,m}', 'libPhoneNumber/NBPhoneMetaData.{h,m}', 'libPhoneNumber/NBPhoneNumberUtil.{h,m}', 'libPhoneNumber/NBMetadataHelper.{h,m}', 'libPhoneNumber/NBAsYouTypeFormatter.{h,m}', 'libPhoneNumber/NSArray+NBAdditions.{h,m}', 'libPhoneNumber/NBGeneratedPhoneNumberMetaData.h', 'libPhoneNumber/Internal/NBRegExMatcher.{h,m}', 'libPhoneNumber/Internal/NBRegularExpressionCache.{h,m}'
 end
