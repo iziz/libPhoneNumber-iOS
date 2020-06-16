@@ -12,15 +12,18 @@
 
 -(instancetype) init {
     self = [super init];
-    // TODO: replace with an iterative approach
+    // gather all available language database files
     NSBundle *bundle = [NSBundle bundleForClass: self.classForCoder];
     NSURL *bundleURL = [[bundle resourceURL] URLByAppendingPathComponent:@"Resources.bundle"];
-    NSArray* languages = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:bundleURL includingPropertiesForKeys:NULL options:0 error:NULL];
-    for(int i = 0; i < languages.count; i++) {
-        NSLog(@"%@", [languages objectAtIndex:i]);
-    }
-    
-    self.supportedLanguages = @[@"ar", @"be", @"bg", @"bs", @"de", @"el", @"en", @"es", @"fa", @"fi", @"fr", @"hr", @"hu", @"hy", @"id", @"it", @"iw", @"ja", @"ko", @"nl", @"pl", @"pt", @"ro", @"ru", @"sq", @"sr", @"sv", @"th", @"tr", @"uk", @"vi", @"zh_Hant", @"zh"];
+    NSArray *filesInResourceBundle = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:bundleURL includingPropertiesForKeys:NULL options:0 error:NULL];
+    self.supportedLanguages = [[NSMutableArray alloc] init];
+    [filesInResourceBundle enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSString *filename = (NSString *)obj;
+        if(filename != NULL) {
+            [self.supportedLanguages addObject: [[filename lastPathComponent] stringByDeletingPathExtension]];
+        }
+    }];
+//    NSLog(@"The supported languages are: %@", self.supportedLanguages);
     
     // need to get from ios device settings
     if ([[NSLocale preferredLanguages] count] > 0) {
@@ -33,7 +36,7 @@
         }
     }
     
-    NSLog(@"Preferred language: %@", self.language);
+//    NSLog(@"Preferred language: %@", self.language);
     self.geocoderHelper = [[NBGeocoderMetadataHelper alloc] initWithCountryCode:@1 withLanguage: self.language];
     return self;
 }

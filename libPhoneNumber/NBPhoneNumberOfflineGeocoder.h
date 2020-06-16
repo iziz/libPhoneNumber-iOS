@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) NSString *language;
 @property (nonatomic) NBGeocoderMetadataHelper *geocoderHelper;
-@property (nonatomic) NSArray<NSString*>* supportedLanguages;
+@property (nonatomic) NSMutableArray<NSString*>* supportedLanguages;
 -(instancetype) init;
 -(NSString*) getCountryNameForNumber: (NBPhoneNumber*) number withLanguage: (NSString*) language;
 -(NSString*) getDescriptionForNumber: (NBPhoneNumber*) number;

@@ -13,7 +13,6 @@
 -(instancetype) initWithCountryCode:(NSNumber *)countryCode withLanguage: (NSString*) language {
     self = [super init];
     self.countryCode = countryCode;
-    NSLog(@"country code: %@", self.countryCode);
     self.language = language;
     // grab bundle of current pod instance
     NSBundle *bundle = [NSBundle bundleForClass: self.classForCoder];
@@ -21,20 +20,13 @@
     // create string for database directory
     NSString* databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, self.language];
     self.databasePath = databasePath;
-    NSLog(@"%@", databasePath);
     
     // open the database position
-    if(sqlite3_open([databasePath UTF8String], & _DB) == SQLITE_OK) {
-        NSLog(@"Opened SQLite file at path: %@ successfully", _databasePath);
-    } else {
-        NSLog(@"Was unable to open SQLite file properly");
-    }
+    sqlite3_open([databasePath UTF8String], & _DB);
     
     // set up prepared statements for inserting entry and searching for entry
     sqlite3_prepare_v2(self.DB, [[NSString stringWithFormat:@"WITH RECURSIVE cnt(x) AS ( SELECT 1 UNION ALL SELECT x+1 FROM cnt LIMIT length(?)), toSearch as (SELECT substr(?, 1, x) as indata FROM cnt) select nationalnumber, description, length(nationalnumber) as natLength from geocodingPairs%@ where NATIONALNUMBER in toSearch order by natLength desc limit 1", countryCode] UTF8String], -1, &_selectStatement, NULL);
-//    NSLog(@"%s", sqlite3_expanded_sql(self.selectStatement));
     sqlite3_prepare_v2(self.DB, [[NSString stringWithFormat:@"INSERT INTO geocodingPairs%@ (NATIONALNUMBER, DESCRIPTION) VALUES (?, ?)", countryCode] UTF8String], -1, &_insertStatement, NULL);
-//    NSLog(@"Reached end of DatabaseConnection init, %@", language);
     return self;
 }
 
@@ -96,7 +88,6 @@
             NSLog(@"The prepare statement result code was: %d", sqliteResultCode);
         }
     }
-//    NSLog(@"%s", sqlite3_expanded_sql(self.selectStatement));
     return sqliteResultCode;
 }
 
@@ -164,7 +155,6 @@
         if(step == SQLITE_ROW) {
             NSString *description = @((const char *)sqlite3_column_text(_selectStatement, 1));
             self.regionDescription = description;
-            NSLog(@"description was: %@", description);
             return description;
        }
     }
