@@ -105,8 +105,11 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
     NBPhoneNumber* validUS = [[NBPhoneNumber alloc] init];
     validUS.countryCode = @1;
     validUS.nationalNumber = @9098611234;
-    NSLog(@"%@", [geo getDescriptionForNumber:validUS]);
-    
+    NSLog(@"%@", [geo descriptionForValidNumber:validUS]);
+    NSLog(@"%@", [geo descriptionForValidNumber:self.gbMobile]);
+    NSLog(@"%@", [geo descriptionForValidNumber:self.auNumber]);
+    NSLog(@"%@", [geo descriptionForValidNumber:self.mxMobile2]);
+    NSLog(@"%@", [geo descriptionForValidNumber:self.arMobile]);
 }
 
 - (void)tearDown {

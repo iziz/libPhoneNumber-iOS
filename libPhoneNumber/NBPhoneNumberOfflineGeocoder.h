@@ -9,18 +9,21 @@
 #import <Foundation/Foundation.h>
 #import "NBPhoneNumber.h"
 #import "NBGeocoderMetadataHelper.h"
-
+#import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumberDefines.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NBPhoneNumberOfflineGeocoder : NSObject
 
-@property (nonatomic) NSString *language;
+@property (nonatomic) NBPhoneNumberUtil *phoneUtil;
 @property (nonatomic) NBGeocoderMetadataHelper *geocoderHelper;
-@property (nonatomic) NSMutableArray<NSString*>* supportedLanguages;
 -(instancetype) init;
--(NSString*) getCountryNameForNumber: (NBPhoneNumber*) number withLanguage: (NSString*) language;
--(NSString*) getDescriptionForNumber: (NBPhoneNumber*) number;
-
+-(NSString*) countryNameForNumber: (NBPhoneNumber*) phoneNumber withLanguage: (NSLocale*) language;
+-(NSString*) regionDisplayName:(NSString *) regionCode withLanguage: (NSLocale *) language;
+-(NSString*) descriptionForValidNumber: (NBPhoneNumber*) phoneNumber withLanguage: (NSLocale*) language;
+-(NSString*) descriptionForValidNumber:(NBPhoneNumber *)phoneNumber withLanguage: (NSLocale*) language withUserRegion: (NSString*) userRegion;
+-(NSString*) descriptionForNumber: (NBPhoneNumber*) phoneNumber withLocale: (NSLocale*) locale;
+-(NSString*) descriptionForNumber: (NBPhoneNumber*) phoneNumber withLanguageCode: (NSLocale*) languageCode withUserRegion: (NSString*) userRegion;
 @end
 
 NS_ASSUME_NONNULL_END
