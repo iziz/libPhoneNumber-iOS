@@ -104,12 +104,12 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
     NBPhoneNumberOfflineGeocoder* geo = [[NBPhoneNumberOfflineGeocoder alloc] init];
     NBPhoneNumber* validUS = [[NBPhoneNumber alloc] init];
     validUS.countryCode = @1;
-    validUS.nationalNumber = @9098611234;
-    NSLog(@"%@", [geo descriptionForValidNumber:validUS]);
-    NSLog(@"%@", [geo descriptionForValidNumber:self.gbMobile]);
-    NSLog(@"%@", [geo descriptionForValidNumber:self.auNumber]);
-    NSLog(@"%@", [geo descriptionForValidNumber:self.mxMobile2]);
-    NSLog(@"%@", [geo descriptionForValidNumber:self.arMobile]);
+    validUS.nationalNumber = @123456789UL;
+    self.gbMobile.countryCode = @218;
+    self.gbMobile.nationalNumber = @2184271234;
+    NSLocale *locale = [NSLocale currentLocale];
+    NSLog(@"%@", [geo descriptionForValidNumber:validUS withLanguage:locale]);
+    NSLog(@"Searching with british number: %@", [geo descriptionForNumber: self.gbMobile withLocale:locale]);
 }
 
 - (void)tearDown {

@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(instancetype) initWithCountryCode: (NSNumber*) countryCode withLanguage: (NSString*) language;
 -(int) createSelectStatement: (NBPhoneNumber*) number;
--(NSString*) searchPhoneNumberInDatabase:(NBPhoneNumber*) number;
+-(NSString*) searchPhoneNumberInDatabase:(NBPhoneNumber*) number withLanguage: (NSLocale*) language ;
 
 @end
 

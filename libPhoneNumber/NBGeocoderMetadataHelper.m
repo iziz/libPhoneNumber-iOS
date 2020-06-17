@@ -58,13 +58,27 @@
 }
 
 // returns YES if result found, NO if no results found
--(NSString*) searchPhoneNumberInDatabase:(NBPhoneNumber*) phoneNumber {
+-(NSString*) searchPhoneNumberInDatabase:(NBPhoneNumber*) phoneNumber withLanguage: (NSLocale*) language {
 //    NSLog(@"in SearchPhoneNumberInDatabase for: %@, %@", number, language);
     @autoreleasepool {
         if(![phoneNumber.countryCode isEqualToNumber:self.countryCode]) {
             self.countryCode = phoneNumber.countryCode;
             sqlite3_prepare_v2(self->DB, [[NSString stringWithFormat:@"WITH RECURSIVE cnt(x) AS ( SELECT 1 UNION ALL SELECT x+1 FROM cnt LIMIT length(?)), toSearch as (SELECT substr(?, 1, x) as indata FROM cnt) select nationalnumber, description, length(nationalnumber) as natLength from geocodingPairs%@ where NATIONALNUMBER in toSearch order by natLength desc limit 1", [self.countryCode stringValue]] UTF8String], -1, &self->selectStatement, NULL);
             NSLog(@"CHANGED COUNTRY CODE FOR SEARCHING");
+        }
+        
+        if(![self.language isEqualToString:language.languageCode]) {
+            NSLog(@"CHANGED LANGUAGE CODE FOR SEARCHING");
+            sqlite3_close(self->DB);
+            self.language = language.languageCode;
+            // grab bundle of current pod instance
+            NSBundle *bundle = [NSBundle bundleForClass: self.classForCoder];
+            NSURL *bundleURL = [[bundle resourceURL] URLByAppendingPathComponent:@"Resources.bundle"];
+            // create string for database directory
+            NSString* databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, self.language];
+            self->databasePath = databasePath;
+            // open the database position
+            sqlite3_open([databasePath UTF8String], & self->DB);
         }
         
         int sql_command_results;
@@ -78,12 +92,14 @@
             }
         }
         sql_command_results = [self createSelectStatement:phoneNumber];
+        //NSLog(@"%s", sqlite3_expanded_sql(self->selectStatement));
+
         if(sql_command_results != SQLITE_OK) {
           NSLog(@"Error with preparing statement");
           return @"";
         }
        // only get the first row found
-        NSLog(@"%s", sqlite3_expanded_sql(self->selectStatement));
+        //NSLog(@"%s", sqlite3_expanded_sql(self->selectStatement));
         int step = sqlite3_step(self->selectStatement);
         if(step == SQLITE_ROW) {
             NSString *description = @((const char *)sqlite3_column_text(self->selectStatement, 1));
