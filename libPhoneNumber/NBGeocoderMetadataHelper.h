@@ -12,15 +12,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NBGeocoderMetadataHelper : NSObject 
+@interface NBGeocoderMetadataHelper : NSObject
 
-@property (nonatomic, copy) NSString *regionDescription;
-@property (nonatomic, copy) NSNumber *countryCode;
-@property (nonatomic, copy) NSString *language;
+@property(nonatomic, copy) NSString *regionDescription;
+@property(nonatomic, copy) NSNumber *countryCode;
+@property(nonatomic, copy) NSString *language;
 
--(instancetype) initWithCountryCode: (NSNumber*) countryCode withLanguage: (NSString*) language;
--(int) createSelectStatement: (NBPhoneNumber*) number;
--(NSString*) searchPhoneNumberInDatabase:(NBPhoneNumber*) number withLanguage: (NSLocale*) language ;
+- (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)language;
+- (int)createSelectStatement:(NBPhoneNumber *)number;
+- (NSString *)searchPhoneNumberInDatabase:(NBPhoneNumber *)number withLanguage:(NSString *)language;
 
 @end
 

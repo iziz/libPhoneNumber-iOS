@@ -13,7 +13,6 @@
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
 #import "NBPhoneNumberUtil.h"
-#import "NBPhoneNumberOfflineGeocoder.h"
 
 // Create an entry array for a phone number desc based on numberPattern
 static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPattern) {
@@ -101,15 +100,6 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   [super setUp];
   self.aUtil = [[NBPhoneNumberUtil alloc] init];
   self.helper = [[NBMetadataHelper alloc] init];
-    NBPhoneNumberOfflineGeocoder* geo = [[NBPhoneNumberOfflineGeocoder alloc] init];
-    NBPhoneNumber* validUS = [[NBPhoneNumber alloc] init];
-    validUS.countryCode = @1;
-    validUS.nationalNumber = @123456789UL;
-    self.gbMobile.countryCode = @218;
-    self.gbMobile.nationalNumber = @2184271234;
-    NSLocale *locale = [NSLocale currentLocale];
-    NSLog(@"%@", [geo descriptionForValidNumber:validUS withLanguage:locale]);
-    NSLog(@"Searching with british number: %@", [geo descriptionForNumber: self.gbMobile withLocale:locale]);
 }
 
 - (void)tearDown {
