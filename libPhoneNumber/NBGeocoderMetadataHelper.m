@@ -71,6 +71,7 @@
 - (NSString *)searchPhoneNumberInDatabase:(NBPhoneNumber *)phoneNumber
                              withLanguage:(NSString *)language {
   @autoreleasepool {
+    NSLog(@"In the searchPhoneNumberInDatabase class: %@, %@", phoneNumber, language);
     if (![phoneNumber.countryCode isEqualToNumber:self.countryCode]) {
       self.countryCode = phoneNumber.countryCode;
       sqlite3_prepare_v2(

@@ -15,20 +15,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NBPhoneNumberOfflineGeocoder : NSObject
 
-@property(nonatomic) NBPhoneNumberUtil *phoneUtil;
-@property(nonatomic) NBGeocoderMetadataHelper *geocoderHelper;
 - (instancetype)init;
-- (NSString *)countryNameForNumber:(NBPhoneNumber *)phoneNumber withLanguage:(NSLocale *)language;
-- (NSString *)regionDisplayName:(NSString *)regionCode withLanguage:(NSLocale *)language;
+
 - (NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
-                           withLanguage:(NSLocale *)language;
+                       withLanguageCode:(NSString *)language;
 - (NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
-                           withLanguage:(NSLocale *)language
+                       withLanguageCode:(NSString *)language
                          withUserRegion:(NSString *)userRegion;
-- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber withLocale:(NSLocale *)locale;
 - (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
-                  withLanguageCode:(NSLocale *)languageCode
+                  withLanguageCode:(NSString *)languageCode;
+- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
+                  withLanguageCode:(NSString *)languageCode
                     withUserRegion:(NSString *)userRegion;
+@end
+
+@interface NBPhoneNumberOfflineGeocoder ()
+
+- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber;
+- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
+                    withUserRegion:(NSString *)userRegion;
+
 @end
 
 NS_ASSUME_NONNULL_END

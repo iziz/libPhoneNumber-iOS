@@ -8,11 +8,15 @@
 
 #import "NBPhoneNumberOfflineGeocoder.h"
 
-@implementation NBPhoneNumberOfflineGeocoder
+@implementation NBPhoneNumberOfflineGeocoder {
+ @private
+  NBPhoneNumberUtil *phoneUtil;
+  NBGeocoderMetadataHelper *geocoderHelper;
+}
 
 - (instancetype)init {
   self = [super init];
-  self.phoneUtil = NBPhoneNumberUtil.sharedInstance;
+  self->phoneUtil = NBPhoneNumberUtil.sharedInstance;
   // gather all available language database files
   NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
   NSURL *bundleURL = [[bundle resourceURL] URLByAppendingPathComponent:@"Resources.bundle"];
@@ -42,22 +46,21 @@
     language = @"en";
   }
 
-  self.geocoderHelper = [[NBGeocoderMetadataHelper alloc] initWithCountryCode:@1
-                                                                 withLanguage:language];
+  self->geocoderHelper = [[NBGeocoderMetadataHelper alloc] initWithCountryCode:@1
+                                                                  withLanguage:language];
   return self;
 }
 
-- (NSString *)countryNameForNumber:(NBPhoneNumber *)number withLanguage:(NSLocale *)language {
+- (NSString *)countryNameForNumber:(NBPhoneNumber *)number
+                  withLanguageCode:(NSString *)languageCode {
   if (number == NULL) return @"";
-  NSArray *regionCodes = [_phoneUtil getRegionCodesForCountryCode:number.countryCode];
+  NSArray *regionCodes = [self->phoneUtil getRegionCodesForCountryCode:number.countryCode];
   if ([regionCodes count] == 1) {
-    NSLog(@"Region code array: %@", regionCodes);
-    return [self regionDisplayName:[regionCodes objectAtIndex:0] withLanguage:language];
+    return [self regionDisplayName:[regionCodes objectAtIndex:0] withLanguageCode:languageCode];
   } else {
     NSString *regionWhereNumberIsValid = @"ZZ";
     for (NSString *regionCode in regionCodes) {
-      NSLog(@"RegionCode: %@", regionCode);
-      if ([self.phoneUtil isValidNumberForRegion:number regionCode:regionCode]) {
+      if ([self->phoneUtil isValidNumberForRegion:number regionCode:regionCode]) {
         if (![regionWhereNumberIsValid isEqualToString:@"ZZ"]) {
           NSLog(@"multiple valid regions found, so returning none");
           return @"";
@@ -66,24 +69,25 @@
         regionWhereNumberIsValid = regionCode;
       }
     }
-    NSLog(@"Returning where regionWhereNumberIsValid to %@", regionWhereNumberIsValid);
-    return [self regionDisplayName:regionWhereNumberIsValid withLanguage:language];
+
+    return [self regionDisplayName:regionWhereNumberIsValid withLanguageCode:languageCode];
   }
 }
 
-- (NSString *)regionDisplayName:(NSString *)regionCode withLanguage:(NSLocale *)language {
+- (NSString *)regionDisplayName:(NSString *)regionCode withLanguageCode:(NSString *)languageCode {
   return (regionCode == NULL || [regionCode isEqualToString:@"ZZ"] ||
           [regionCode isEqual:NB_REGION_CODE_FOR_NON_GEO_ENTITY])
              ? @""
-             : [[[NSLocale alloc] initWithLocaleIdentifier:language.localeIdentifier]
+             : [[[NSLocale alloc] initWithLocaleIdentifier:languageCode]
                    displayNameForKey:NSLocaleCountryCode
                                value:regionCode];
 }
 
-- (NSString *)descriptionForValidNumber:(NBPhoneNumber *)number withLanguage:(NSLocale *)language {
-  [self.geocoderHelper setLanguage:language.languageCode];
-  NSString *descriptionResult =
-      [self.geocoderHelper searchPhoneNumberInDatabase:number withLanguage:language.languageCode];
+- (NSString *)descriptionForValidNumber:(NBPhoneNumber *)number
+                       withLanguageCode:(NSString *)languageCode {
+  [self->geocoderHelper setLanguage:languageCode];
+  NSString *descriptionResult = [self->geocoderHelper searchPhoneNumberInDatabase:number
+                                                                     withLanguage:languageCode];
   if ([descriptionResult isEqualToString:@""]) {
     return @"";
   } else {
@@ -92,37 +96,77 @@
 }
 
 - (NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
-                           withLanguage:(NSLocale *)language
+                       withLanguageCode:(NSString *)languageCode
                          withUserRegion:(NSString *)userRegion {
-  NSString *regionCode = [self.phoneUtil getRegionCodeForNumber:phoneNumber];
+  NSString *regionCode = [self->phoneUtil getRegionCodeForNumber:phoneNumber];
   if ([userRegion isEqualToString:regionCode]) {
-    return [self descriptionForValidNumber:phoneNumber withLanguage:language];
+    return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
   }
 
-  return [self regionDisplayName:regionCode withLanguage:language];
-}
-
-- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber withLocale:(NSLocale *)locale {
-  NBEPhoneNumberType numberType = [self.phoneUtil getNumberType:phoneNumber];
-  if (numberType == NBEPhoneNumberTypeUNKNOWN) {
-    return @"";
-  } else if (![self.phoneUtil isNumberGeographical:phoneNumber]) {
-    return [self countryNameForNumber:phoneNumber withLanguage:locale];
-  }
-  return [self descriptionForValidNumber:phoneNumber withLanguage:locale];
+  return [self regionDisplayName:regionCode withLanguageCode:languageCode];
 }
 
 - (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
-                  withLanguageCode:(NSLocale *)languageCode
-                    withUserRegion:(NSString *)userRegion {
-  NBEPhoneNumberType numberType = [self.phoneUtil getNumberType:phoneNumber];
+                  withLanguageCode:(NSString *)languageCode {
+  NBEPhoneNumberType numberType = [self->phoneUtil getNumberType:phoneNumber];
   if (numberType == NBEPhoneNumberTypeUNKNOWN) {
     return @"";
-  } else if (![self.phoneUtil isNumberGeographical:phoneNumber]) {
-    return [self countryNameForNumber:phoneNumber withLanguage:languageCode];
+  } else if (![self->phoneUtil isNumberGeographical:phoneNumber]) {
+    return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
+  }
+  return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
+}
+
+- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
+                  withLanguageCode:(NSString *)languageCode
+                    withUserRegion:(NSString *)userRegion {
+  NBEPhoneNumberType numberType = [self->phoneUtil getNumberType:phoneNumber];
+  if (numberType == NBEPhoneNumberTypeUNKNOWN) {
+    return @"";
+  } else if (![self->phoneUtil isNumberGeographical:phoneNumber]) {
+    return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
   }
   return [self descriptionForValidNumber:phoneNumber
-                            withLanguage:languageCode
+                        withLanguageCode:languageCode
+                          withUserRegion:userRegion];
+}
+
+- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber {
+  NBEPhoneNumberType numberType = [self->phoneUtil getNumberType:phoneNumber];
+  NSString *languageCode;
+  // need to get from ios device settings
+  if ([[NSLocale preferredLanguages] count] > 0) {
+    // set language to preferred
+    languageCode = [NSLocale preferredLanguages][0];
+  } else {
+    languageCode = @"en";
+  }
+  if (numberType == NBEPhoneNumberTypeUNKNOWN) {
+    return @"";
+  } else if (![self->phoneUtil isNumberGeographical:phoneNumber]) {
+    return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
+  }
+  return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
+}
+- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
+                    withUserRegion:(NSString *)userRegion {
+  NBEPhoneNumberType numberType = [self->phoneUtil getNumberType:phoneNumber];
+  NSString *languageCode;
+  // need to get from ios device settings
+  if ([[NSLocale preferredLanguages] count] > 0) {
+    // set language to preferred
+    languageCode = [NSLocale preferredLanguages][0];
+  } else {
+    languageCode = @"en";
+  }
+  if (numberType == NBEPhoneNumberTypeUNKNOWN) {
+    return @"";
+  } else if (![self->phoneUtil isNumberGeographical:phoneNumber]) {
+    NSLog(@"not geographical");
+    return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
+  }
+  return [self descriptionForValidNumber:phoneNumber
+                        withLanguageCode:languageCode
                           withUserRegion:userRegion];
 }
 
