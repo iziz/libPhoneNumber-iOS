@@ -19,42 +19,42 @@
 }
 
 NSString *const preparedStatement = @"WITH recursive count(x)"
-                                            @"AS"
-                                                @"( "
-                                                    @"SELECT 1 "
-                                                    @"UNION ALL "
-                                                    @"SELECT x+1 "
-                                                    @"FROM   count "
-                                                    @"LIMIT  length(?)), tosearch "
-                                            @"AS "
-                                                @"( "
-                                                    @"SELECT substr(?, 1, x) AS indata "
-                                                    @"FROM   count) "
-                                                @"SELECT   nationalnumber, "
-                                                    @"description, "
-                                                    @"length(nationalnumber) AS nationalnumberlength "
-                                                @"FROM     geocodingpairs%@ "
-                                                @"WHERE    nationalnumber IN tosearch "
-                                                @"ORDER BY nationalnumberlength DESC "
-                                                @"LIMIT    1";
+                                    @"AS"
+                                    @"( "
+                                    @"SELECT 1 "
+                                    @"UNION ALL "
+                                    @"SELECT x+1 "
+                                    @"FROM   count "
+                                    @"LIMIT  length(?)), tosearch "
+                                    @"AS "
+                                    @"( "
+                                    @"SELECT substr(?, 1, x) AS indata "
+                                    @"FROM   count) "
+                                    @"SELECT   nationalnumber, "
+                                    @"description, "
+                                    @"length(nationalnumber) AS nationalnumberlength "
+                                    @"FROM     geocodingpairs%@ "
+                                    @"WHERE    nationalnumber IN tosearch "
+                                    @"ORDER BY nationalnumberlength DESC "
+                                    @"LIMIT    1";
 
-- (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)language {
+- (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)languageCode {
   self = [super init];
-    if (self != nil) {
-        _countryCode = countryCode;
-        _language = language;
-        
-        NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
-        NSURL *bundleURL = [[bundle resourceURL] URLByAppendingPathComponent:@"Resources.bundle"];
-        NSString *databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, _language];
-        _databasePath = databasePath;
+  if (self != nil) {
+    _countryCode = countryCode;
+    _language = languageCode;
 
-        sqlite3_open([databasePath UTF8String], &_database);
+    NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
+    NSURL *bundleURL = [[bundle resourceURL] URLByAppendingPathComponent:@"Resources.bundle"];
+    NSString *databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, _language];
+    _databasePath = databasePath;
 
-        sqlite3_prepare_v2(
-            _database,
-            [[NSString stringWithFormat: preparedStatement, countryCode] UTF8String], -1, &_selectStatement, NULL);
-    }
+    sqlite3_open([databasePath UTF8String], &_database);
+
+    sqlite3_prepare_v2(_database,
+                       [[NSString stringWithFormat:preparedStatement, countryCode] UTF8String], -1,
+                       &_selectStatement, NULL);
+  }
   return self;
 }
 
@@ -66,8 +66,8 @@ NSString *const preparedStatement = @"WITH recursive count(x)"
 - (int)createSelectStatement:(NBPhoneNumber *)phoneNumber {
   int sqliteResultCode;
   @autoreleasepool {
-    sqliteResultCode = sqlite3_reset(_selectStatement);
-    sqlite3_clear_bindings(_selectStatement);
+    sqlite3_reset(_selectStatement);
+    sqliteResultCode = sqlite3_clear_bindings(_selectStatement);
     if (sqliteResultCode == SQLITE_OK) {
       const char *completePhoneNumber =
           [[NSString stringWithFormat:@"%@%@", phoneNumber.countryCode, phoneNumber.nationalNumber]
@@ -75,34 +75,32 @@ NSString *const preparedStatement = @"WITH recursive count(x)"
       sqlite3_bind_text(_selectStatement, 1, completePhoneNumber, -1, SQLITE_TRANSIENT);
       sqlite3_bind_text(_selectStatement, 2, completePhoneNumber, -1, SQLITE_TRANSIENT);
     } else {
-      NSLog(@"The prepare statement result code was: %d", sqliteResultCode);
+      NSLog(@"The SQLite3 resulting code was: %d", sqliteResultCode);
     }
   }
   return sqliteResultCode;
 }
 
 - (NSString *)searchPhoneNumber:(NBPhoneNumber *)phoneNumber {
-    if (![phoneNumber.countryCode isEqualToNumber: _countryCode]) {
-      _countryCode = phoneNumber.countryCode;
-      sqlite3_prepare_v2(
-          self->_database,
-          [[NSString
-            stringWithFormat: preparedStatement, _countryCode] UTF8String],
-          -1, &_selectStatement, NULL);
-    }
+  if (![phoneNumber.countryCode isEqualToNumber:_countryCode]) {
+    _countryCode = phoneNumber.countryCode;
+    sqlite3_prepare_v2(self->_database,
+                       [[NSString stringWithFormat:preparedStatement, _countryCode] UTF8String], -1,
+                       &_selectStatement, NULL);
+  }
 
-    int sqlCommandResults = [self createSelectStatement:phoneNumber];
+  int sqlCommandResults = [self createSelectStatement:phoneNumber];
 
-    if (sqlCommandResults != SQLITE_OK) {
-      NSLog(@"Error with preparing statement");
-      return @"";
-    }
-    int step = sqlite3_step(_selectStatement);
-    if (step == SQLITE_ROW) {
-      return @((const char *)sqlite3_column_text(_selectStatement, 1));
-    } else {
-        return nil;
-    }
+  if (sqlCommandResults != SQLITE_OK) {
+    NSLog(@"Error with preparing statement. SQLite3 error code was: %d", sqlCommandResults);
+    return @"";
+  }
+  int step = sqlite3_step(_selectStatement);
+  if (step == SQLITE_ROW) {
+    return @((const char *)sqlite3_column_text(_selectStatement, 1));
+  } else {
+    return nil;
+  }
 }
 
 @end

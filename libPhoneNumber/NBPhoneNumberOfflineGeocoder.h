@@ -31,13 +31,13 @@ NS_ASSUME_NONNULL_BEGIN
  *     in fact invalid
  */
 - (nullable NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
-                       withLanguageCode:(NSString *)languageCode;
+                                withLanguageCode:(NSString *)languageCode;
 
 /**
- * Returns a text description for the given phone number, in the language provided, but also considers the
- * region of the user. If the phone number is from the same region as the user, only a lower-level
- * description will be returned, if one exists. Otherwise, the phone number's region will be
- * returned, with optionally some more detailed information.
+ * Returns a text description for the given phone number, in the language provided, but also
+ * considers the region of the user. If the phone number is from the same region as the user, only a
+ * lower-level description will be returned, if one exists. Otherwise, the phone number's region
+ * will be returned, with optionally some more detailed information.
  *
  * For example, for a user from the region "US" (United States), we would show "Mountain View,
  * CA" for a particular number, omitting the United States from the description. For a user from
@@ -56,8 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
  *     in fact invalid
  */
 - (nullable NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
-                       withLanguageCode:(NSString *)languageCode
-                         withUserRegion:(NSString *)userRegion;
+                                withLanguageCode:(NSString *)languageCode
+                                  withUserRegion:(NSString *)userRegion;
 
 /**
  * As per descriptionForValidNumber:phoneNumber:languageCode but explicitly checks
@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
  *     string if the number passed in is invalid or could belong to multiple countries
  */
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
-                  withLanguageCode:(NSString *)languageCode;
+                           withLanguageCode:(NSString *)languageCode;
 
 /**
  * As per descriptionForValidNumber:phoneNumber:languageCode:userRegion  but
@@ -84,8 +84,8 @@ NS_ASSUME_NONNULL_BEGIN
  *     string if the number passed in is invalid or could belong to multiple countries
  */
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
-                  withLanguageCode:(NSString *)languageCode
-                    withUserRegion:(NSString *)userRegion;
+                           withLanguageCode:(NSString *)languageCode
+                             withUserRegion:(NSString *)userRegion;
 
 #pragma mark - Convenience Methods
 
@@ -106,7 +106,6 @@ NS_ASSUME_NONNULL_BEGIN
  preferred language code using NSLocale.
 *
 * @param phoneNumber  the phone number for which we want to get a text description
-* @param languageCode  the language code for which the description should be written
 * @param userRegion  the region code for a given user. This region will be omitted from the
 *     description if the phone number comes from this region. It should be a two-letter
 *     upper-case CLDR region code.
@@ -114,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 *     string if the number passed in is invalid or could belong to multiple countries
 */
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
-                    withUserRegion:(NSString *)userRegion;
+                             withUserRegion:(NSString *)userRegion;
 
 @end
 
