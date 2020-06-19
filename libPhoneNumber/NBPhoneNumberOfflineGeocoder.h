@@ -3,36 +3,117 @@
 //  libPhoneNumberiOS
 //
 //  Created by Rastaar Haghi on 6/12/20.
-//  Copyright © 2020 ohtalk.me. All rights reserved.
+//  Copyright © 2020 Google LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "NBGeocoderMetadataHelper.h"
-#import "NBPhoneNumber.h"
-#import "NBPhoneNumberDefines.h"
-#import "NBPhoneNumberUtil.h"
+
+@class NBPhoneNumber;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NBPhoneNumberOfflineGeocoder : NSObject
 
-- (instancetype)init;
+/**
+ * Returns a text description for the given phone number, in the language provided. The
+ * description might consist of the name of the country where the phone number is from, or the
+ * name of the geographical area the phone number is from if more detailed information is
+ * available.
+ *
+ * This method assumes the validity of the number passed in has already been checked, and that
+ * the number is suitable for geocoding. We consider fixed-line and mobile numbers possible
+ * candidates for geocoding.
+ *
+ * @param phoneNumber  a valid phone number for which we want to get a text description
+ * @param languageCode  the language code for which the description should be written
+ * @return  a text description for the given language code for the given phone number, or an
+ *     empty string if the number could come from multiple countries, or the country code is
+ *     in fact invalid
+ */
+- (nullable NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
+                       withLanguageCode:(NSString *)languageCode;
 
-- (NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
-                       withLanguageCode:(NSString *)language;
-- (NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
-                       withLanguageCode:(NSString *)language
+/**
+ * Returns a text description for the given phone number, in the language provided, but also considers the
+ * region of the user. If the phone number is from the same region as the user, only a lower-level
+ * description will be returned, if one exists. Otherwise, the phone number's region will be
+ * returned, with optionally some more detailed information.
+ *
+ * For example, for a user from the region "US" (United States), we would show "Mountain View,
+ * CA" for a particular number, omitting the United States from the description. For a user from
+ * the United Kingdom (region "GB"), for the same number we may show "Mountain View, CA, United
+ * States" or even just "United States".
+ *
+ * This method assumes the validity of the number passed in has already been checked.
+ *
+ * @param phoneNumber  the phone number for which we want to get a text description
+ * @param languageCode  the language code for which the description should be written
+ * @param userRegion  the region code for a given user. This region will be omitted from the
+ *     description if the phone number comes from this region. It should be a two-letter
+ *     upper-case CLDR region code.
+ * @return  a text description for the given language code for the given phone number, or an
+ *     empty string if the number could come from multiple countries, or the country code is
+ *     in fact invalid
+ */
+- (nullable NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
+                       withLanguageCode:(NSString *)languageCode
                          withUserRegion:(NSString *)userRegion;
-- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
+
+/**
+ * As per descriptionForValidNumber:phoneNumber:languageCode but explicitly checks
+ * the validity of the number passed in.
+ *
+ * @param phoneNumber  the phone number for which we want to get a text description
+ * @param languageCode  the language code for which the description should be written
+ * @return  a text description for the given language code for the given phone number, or empty
+ *     string if the number passed in is invalid or could belong to multiple countries
+ */
+- (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
                   withLanguageCode:(NSString *)languageCode;
-- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
+
+/**
+ * As per descriptionForValidNumber:phoneNumber:languageCode:userRegion  but
+ * explicitly checks the validity of the number passed in.
+ *
+ * @param phoneNumber  the phone number for which we want to get a text description
+ * @param languageCode  the language code for which the description should be written
+ * @param userRegion  the region code for a given user. This region will be omitted from the
+ *     description if the phone number comes from this region. It should be a two-letter
+ *     upper-case CLDR region code.
+ * @return  a text description for the given language code for the given phone number, or empty
+ *     string if the number passed in is invalid or could belong to multiple countries
+ */
+- (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
                   withLanguageCode:(NSString *)languageCode
                     withUserRegion:(NSString *)userRegion;
-@end
 
-@interface NBPhoneNumberOfflineGeocoder ()
+#pragma mark - Convenience Methods
 
-- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber;
-- (NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
+/**
+* Convenience method.
+* As per descriptionForNumber:phoneNumber:languageCode but manually gathers device's preferred
+ language code using NSLocale.
+*
+* @param phoneNumber  the phone number for which we want to get a text description
+* @return  a text description for the given language code for the given phone number, or empty
+*     string if the number passed in is invalid or could belong to multiple countries
+*/
+- (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber;
+
+/**
+* Convenience method.
+* As per descriptionForNumber:phoneNumber:languageCode:userRegion manually gathers device's
+ preferred language code using NSLocale.
+*
+* @param phoneNumber  the phone number for which we want to get a text description
+* @param languageCode  the language code for which the description should be written
+* @param userRegion  the region code for a given user. This region will be omitted from the
+*     description if the phone number comes from this region. It should be a two-letter
+*     upper-case CLDR region code.
+* @return  a text description for the given language code for the given phone number, or empty
+*     string if the number passed in is invalid or could belong to multiple countries
+*/
+- (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
                     withUserRegion:(NSString *)userRegion;
 
 @end
