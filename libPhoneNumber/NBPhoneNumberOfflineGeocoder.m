@@ -23,18 +23,11 @@
     _phoneNumberUtil = NBPhoneNumberUtil.sharedInstance;
     // NSLocale provides an array of the user's preferred languages, which can be used
     // to gather the appropriate language code for NBGeocoderMetadataHelper
-    NSString *languageCode = nil;
-    NSArray<NSString *> *languages = [NSLocale preferredLanguages];
-    for (NSString *language in languages) {
-      if (language != nil) {
-        languageCode = language;
-        break;
-      }
-    }
+    NSString *languageCode = [[NSLocale preferredLanguages] firstObject];
     if (languageCode == nil) {
       return nil;
     }
-    _metadataHelpers = [[NSCache<NSString *, NBGeocoderMetadataHelper *> alloc] init];
+    _metadataHelpers = [[NSCache alloc] init];
   }
   return self;
 }
@@ -71,6 +64,9 @@
 
 - (nullable NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
                                 withLanguageCode:(NSString *)languageCode {
+  // If the NSCache doesn't contain a key equivalent to languageCode, create a new
+  // NBGeocoderMetadataHelper object with a language set equal to languageCode and
+  // default country code to United States / Canada
   if ([_metadataHelpers objectForKey:languageCode] == nil) {
     [_metadataHelpers setObject:[[NBGeocoderMetadataHelper alloc] initWithCountryCode:@1
                                                                          withLanguage:languageCode]
@@ -84,6 +80,9 @@
                                   withUserRegion:(NSString *)userRegion {
   NSString *regionCode = [_phoneNumberUtil getRegionCodeForNumber:phoneNumber];
   if ([userRegion isEqualToString:regionCode]) {
+    // If the NSCache doesn't contain a key equivalent to languageCode, create a new
+    // NBGeocoderMetadataHelper object with a language set equal to languageCode and
+    // default country code to United States / Canada
     if ([_metadataHelpers objectForKey:languageCode] == nil) {
       [_metadataHelpers
           setObject:[[NBGeocoderMetadataHelper alloc] initWithCountryCode:@1
@@ -123,22 +122,15 @@
 
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber {
   NBEPhoneNumberType numberType = [_phoneNumberUtil getNumberType:phoneNumber];
-  NSString *languageCode = nil;
+  NSString *languageCode = [[NSLocale preferredLanguages] firstObject];
 
-  NSArray<NSString *> *languages = [NSLocale preferredLanguages];
-  for (NSString *language in languages) {
-    if (language != nil) {
-      languageCode = language;
-      break;
-    }
-  }
   if (languageCode == nil) {
     return nil;
   }
 
   if (numberType == NBEPhoneNumberTypeUNKNOWN) {
     return nil;
-  } else if (![self->_phoneNumberUtil isNumberGeographical:phoneNumber]) {
+  } else if (![_phoneNumberUtil isNumberGeographical:phoneNumber]) {
     return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
   }
   return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
@@ -147,14 +139,8 @@
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
                              withUserRegion:(NSString *)userRegion {
   NBEPhoneNumberType numberType = [_phoneNumberUtil getNumberType:phoneNumber];
-  NSString *languageCode;
-  NSArray<NSString *> *languages = [NSLocale preferredLanguages];
-  for (NSString *language in languages) {
-    if (language != nil) {
-      languageCode = language;
-      break;
-    }
-  }
+  NSString *languageCode = [[NSLocale preferredLanguages] firstObject];
+    
   if (languageCode == nil) {
     return nil;
   }

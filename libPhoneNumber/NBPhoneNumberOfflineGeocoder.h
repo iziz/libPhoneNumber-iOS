@@ -26,9 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param phoneNumber  a valid phone number for which we want to get a text description
  * @param languageCode  the language code for which the description should be written
- * @return  a text description for the given language code for the given phone number, or an
- *     empty string if the number could come from multiple countries, or the country code is
- *     in fact invalid
+ * @return a text description for the given language code for the given phone number, or returns nil
+ *     if the number could come from multiple countries, the country code is in fact invalid, or doesn't
+ *     have a region description available.
  */
 - (nullable NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
                                 withLanguageCode:(NSString *)languageCode;
@@ -51,9 +51,9 @@ NS_ASSUME_NONNULL_BEGIN
  * @param userRegion  the region code for a given user. This region will be omitted from the
  *     description if the phone number comes from this region. It should be a two-letter
  *     upper-case CLDR region code.
- * @return  a text description for the given language code for the given phone number, or an
- *     empty string if the number could come from multiple countries, or the country code is
- *     in fact invalid
+ * @return a text description for the given language code for the given phone number, or returns
+ *     nil if the number could come from multiple countries, the country code is invalid, or doesn't have
+ *     a region description available.
  */
 - (nullable NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
                                 withLanguageCode:(NSString *)languageCode
@@ -65,8 +65,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param phoneNumber  the phone number for which we want to get a text description
  * @param languageCode  the language code for which the description should be written
- * @return  a text description for the given language code for the given phone number, or empty
- *     string if the number passed in is invalid or could belong to multiple countries
+ * @return a text description for the given language code for the given phone number, or returns nil
+ *     if the number passed in is invalid, could belong to multiple countries, or doesn't have a region
+ *     description available.
  */
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
                            withLanguageCode:(NSString *)languageCode;
@@ -80,8 +81,9 @@ NS_ASSUME_NONNULL_BEGIN
  * @param userRegion  the region code for a given user. This region will be omitted from the
  *     description if the phone number comes from this region. It should be a two-letter
  *     upper-case CLDR region code.
- * @return  a text description for the given language code for the given phone number, or empty
- *     string if the number passed in is invalid or could belong to multiple countries
+ * @return a text description for the given language code for the given phone number, or returns nil
+ *     if the number passed in is invalid, could belong to multiple countries, or doesn't have a region
+ *     description available.
  */
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
                            withLanguageCode:(NSString *)languageCode
@@ -90,27 +92,28 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Convenience Methods
 
 /**
-* Convenience method.
-* As per descriptionForNumber:phoneNumber:languageCode but manually gathers device's preferred
- language code using NSLocale.
-*
-* @param phoneNumber  the phone number for which we want to get a text description
-* @return  a text description for the given language code for the given phone number, or empty
-*     string if the number passed in is invalid or could belong to multiple countries
+ * Convenience method.
+ * As per descriptionForNumber:phoneNumber:languageCode but manually gathers device's preferred
+ * language code using NSLocale.
+ * @param phoneNumber  the phone number for which we want to get a text description
+ * @return a text description for the given language code for the given phone number, or returns nil
+ *     if the number passed in is invalid, could belong to multiple countries, cannot obtain a language
+ *     code using NSLocale, or doesn't have a region description available.
 */
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber;
 
 /**
-* Convenience method.
-* As per descriptionForNumber:phoneNumber:languageCode:userRegion manually gathers device's
- preferred language code using NSLocale.
-*
-* @param phoneNumber  the phone number for which we want to get a text description
-* @param userRegion  the region code for a given user. This region will be omitted from the
-*     description if the phone number comes from this region. It should be a two-letter
-*     upper-case CLDR region code.
-* @return  a text description for the given language code for the given phone number, or empty
-*     string if the number passed in is invalid or could belong to multiple countries
+ * Convenience method.
+ * As per descriptionForNumber:phoneNumber:languageCode:userRegion manually gathers device's
+ * preferred language code using NSLocale.
+ *
+ * @param phoneNumber  the phone number for which we want to get a text description
+ * @param userRegion  the region code for a given user. This region will be omitted from the
+ *     description if the phone number comes from this region. It should be a two-letter
+ *     upper-case CLDR region code.
+ * @return a text description for the given language code for the given phone number, or returns nil
+ *     if the number passed in is invalid, could belong to multiple countries, cannot obtain a language
+ *     code using NSLocale, or doesn't have a region description available.
 */
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
                              withUserRegion:(NSString *)userRegion;
