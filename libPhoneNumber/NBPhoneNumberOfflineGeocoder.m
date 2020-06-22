@@ -101,7 +101,7 @@
   NBEPhoneNumberType numberType = [_phoneNumberUtil getNumberType:phoneNumber];
   if (numberType == NBEPhoneNumberTypeUNKNOWN) {
     return nil;
-  } else if (![self->_phoneNumberUtil isNumberGeographical:phoneNumber]) {
+  } else if (![_phoneNumberUtil isNumberGeographical:phoneNumber]) {
     return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
   }
   return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
@@ -113,7 +113,7 @@
   NBEPhoneNumberType numberType = [_phoneNumberUtil getNumberType:phoneNumber];
   if (numberType == NBEPhoneNumberTypeUNKNOWN) {
     return nil;
-  } else if (![self->_phoneNumberUtil isNumberGeographical:phoneNumber]) {
+  } else if (![_phoneNumberUtil isNumberGeographical:phoneNumber]) {
     return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
   }
   return [self descriptionForValidNumber:phoneNumber

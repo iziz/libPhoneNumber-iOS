@@ -84,7 +84,7 @@ NSString *const preparedStatement = @"WITH recursive count(x)"
 - (NSString *)searchPhoneNumber:(NBPhoneNumber *)phoneNumber {
   if (![phoneNumber.countryCode isEqualToNumber:_countryCode]) {
     _countryCode = phoneNumber.countryCode;
-    sqlite3_prepare_v2(self->_database,
+    sqlite3_prepare_v2(_database,
                        [[NSString stringWithFormat:preparedStatement, _countryCode] UTF8String], -1,
                        &_selectStatement, NULL);
   }
