@@ -48,11 +48,12 @@ NSString *const preparedStatement = @"WITH recursive count(x)"
     NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
     NSURL *bundleURL = [[bundle resourceURL] URLByAppendingPathComponent:@"Resources.bundle"];
     NSString *databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, _language];
-      if (databasePath == nil) {
-          @throw [NSException exceptionWithName: NSInvalidArgumentException
-                                         reason:@"Geocoding Database URL not found" userInfo: nil];
-      }
-      
+    if (databasePath == nil) {
+      @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                     reason:@"Geocoding Database URL not found"
+                                   userInfo:nil];
+    }
+
     _databasePath = databasePath;
 
     sqlite3_open([databasePath UTF8String], &_database);
@@ -75,9 +76,8 @@ NSString *const preparedStatement = @"WITH recursive count(x)"
     sqlite3_reset(_selectStatement);
     sqliteResultCode = sqlite3_clear_bindings(_selectStatement);
     if (sqliteResultCode == SQLITE_OK) {
-      _completePhoneNumber =
-          [[NSString stringWithFormat:@"%@%@", phoneNumber.countryCode, phoneNumber.nationalNumber]
-              UTF8String];
+      _completePhoneNumber = [[NSString stringWithFormat:@"%@%@", phoneNumber.countryCode,
+                                                         phoneNumber.nationalNumber] UTF8String];
       sqlite3_bind_text(_selectStatement, 1, _completePhoneNumber, -1, SQLITE_TRANSIENT);
       sqlite3_bind_text(_selectStatement, 2, _completePhoneNumber, -1, SQLITE_TRANSIENT);
     } else {

@@ -140,7 +140,7 @@
                              withUserRegion:(NSString *)userRegion {
   NBEPhoneNumberType numberType = [_phoneNumberUtil getNumberType:phoneNumber];
   NSString *languageCode = [[NSLocale preferredLanguages] firstObject];
-    
+
   if (languageCode == nil) {
     return nil;
   }

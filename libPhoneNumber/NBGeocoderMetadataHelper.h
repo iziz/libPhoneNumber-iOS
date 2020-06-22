@@ -28,21 +28,20 @@ NS_ASSUME_NONNULL_BEGIN
  *     code set to the parameters, countryCode and  languageCode, or nil if the NSObject couldn't be
  *     initialized or there was no database URL found for the provided language code.
  */
-- (instancetype)initWithCountryCode:(NSNumber *)countryCode
-                       withLanguage:(NSString *)languageCode;
+- (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)languageCode;
 
 /**
- * Returns a text description for the given phone number. The description will be based on the country
- * code and national number attributes of the NBPhoneNumber parameter. If no result was found from
- * querying the geocoding databases, this method will return nil.
+ * Returns a text description for the given phone number. The description will be based on the
+ * country code and national number attributes of the NBPhoneNumber parameter. If no result was
+ * found from querying the geocoding databases, this method will return nil.
  *
  * This method assumes the validity of the NBPhoneNumber object passed in that it contains a
- * countryCode and nationalNumber attribute. This method prepares a select statement to search through a
- * SQLite database for the most accurate text description for the phone number parameter.
+ * countryCode and nationalNumber attribute. This method prepares a select statement to search
+ * through a SQLite database for the most accurate text description for the phone number parameter.
  *
  * @param phoneNumber  a valid phone number for which we want to get a text description
- * @return a text description for the given language code for the given phone number, or nil if there
- *     were no search results found for the given phone number.
+ * @return a text description for the given language code for the given phone number, or nil if
+ *     there were no search results found for the given phone number.
  */
 - (NSString *)searchPhoneNumber:(NBPhoneNumber *)phoneNumber;
 
