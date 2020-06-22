@@ -99,7 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @return a text description for the given language code for the given phone number, or returns nil
  *     if the number passed in is invalid, could belong to multiple countries, cannot obtain a language
  *     code using NSLocale, or doesn't have a region description available.
-*/
+ */
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber;
 
 /**
@@ -114,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @return a text description for the given language code for the given phone number, or returns nil
  *     if the number passed in is invalid, could belong to multiple countries, cannot obtain a language
  *     code using NSLocale, or doesn't have a region description available.
-*/
+ */
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
                              withUserRegion:(NSString *)userRegion;
 

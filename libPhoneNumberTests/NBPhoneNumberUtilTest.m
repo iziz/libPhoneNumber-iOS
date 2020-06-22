@@ -14,6 +14,8 @@
 #import "NBPhoneNumberDesc.h"
 #import "NBPhoneNumberUtil.h"
 
+#import "NBPhoneNumberOfflineGeocoder.h"
+
 // Create an entry array for a phone number desc based on numberPattern
 static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPattern) {
   // nationalNumberPattern is entry #2
@@ -100,6 +102,12 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   [super setUp];
   self.aUtil = [[NBPhoneNumberUtil alloc] init];
   self.helper = [[NBMetadataHelper alloc] init];
+    
+    NBPhoneNumberOfflineGeocoder *geocoder = NBPhoneNumberOfflineGeocoder.new;
+    NBPhoneNumber *diamondBarNumber = NBPhoneNumber.new;
+    diamondBarNumber.countryCode = @1;
+    diamondBarNumber.nationalNumber = @9098611758;
+    NSLog(@"Printing diamond bar phone number description: %@", [geocoder descriptionForNumber:diamondBarNumber]);
 }
 
 - (void)tearDown {
