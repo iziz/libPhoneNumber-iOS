@@ -38,6 +38,7 @@ NSString *const preparedStatement = @"WITH recursive count(x)"
                                     @"WHERE    nationalnumber IN tosearch "
                                     @"ORDER BY nationalnumberlength DESC "
                                     @"LIMIT    1";
+static NSString * const kResourceBundleName = @"GeocodingMetadata.bundle";
 
 - (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)languageCode {
   self = [super init];
@@ -46,8 +47,9 @@ NSString *const preparedStatement = @"WITH recursive count(x)"
     _language = languageCode;
 
     NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
-    NSURL *bundleURL = [[bundle resourceURL] URLByAppendingPathComponent:@"Resources.bundle"];
-    NSString *databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, _language];
+    NSURL *bundleURL = [[bundle resourceURL] URLByAppendingPathComponent:kResourceBundleName];
+    NSString *shortLanguageCode = [[languageCode componentsSeparatedByString:@"-"] firstObject];
+    NSString *databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, shortLanguageCode];
     if (databasePath == nil) {
       @throw [NSException exceptionWithName:NSInvalidArgumentException
                                      reason:@"Geocoding Database URL not found"
