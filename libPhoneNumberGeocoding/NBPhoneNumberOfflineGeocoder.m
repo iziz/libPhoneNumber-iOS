@@ -23,10 +23,10 @@
     _phoneNumberUtil = NBPhoneNumberUtil.sharedInstance;
     // NSLocale provides an array of the user's preferred languages, which can be used
     // to gather the appropriate language code for NBGeocoderMetadataHelper
-    NSString *languageCode = [[NSLocale preferredLanguages] firstObject];
-    if (languageCode == nil) {
-      return nil;
-    }
+//    NSString *languageCode = [[NSLocale preferredLanguages] firstObject];
+//    if (languageCode == nil) {
+//      return nil;
+//    }
     _metadataHelpers = [[NSCache alloc] init];
   }
   return self;
@@ -58,7 +58,8 @@
       [regionCode isEqual:NB_REGION_CODE_FOR_NON_GEO_ENTITY]) {
     return nil;
   } else {
-    return [[NSLocale currentLocale] displayNameForKey:NSLocaleCountryCode value:regionCode];
+    return [[NSLocale localeWithLocaleIdentifier:languageCode]
+                               displayNameForKey:NSLocaleCountryCode value:regionCode];
   }
 }
 
@@ -72,7 +73,13 @@
                                                                          withLanguage:languageCode]
                          forKey:languageCode];
   }
-  return [[_metadataHelpers objectForKey:languageCode] searchPhoneNumber:phoneNumber];
+  NSString * ans = [[_metadataHelpers objectForKey:languageCode] searchPhoneNumber:phoneNumber];
+    if (ans == nil) {
+        NSLog(@"Entered this nil statement");
+        return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
+    } else {
+        return ans;
+    }
 }
 
 - (nullable NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
@@ -80,18 +87,8 @@
                                   withUserRegion:(NSString *)userRegion {
   NSString *regionCode = [_phoneNumberUtil getRegionCodeForNumber:phoneNumber];
   if ([userRegion isEqualToString:regionCode]) {
-    // If the NSCache doesn't contain a key equivalent to languageCode, create a new
-    // NBGeocoderMetadataHelper object with a language set equal to languageCode and
-    // default country code to United States / Canada
-    if ([_metadataHelpers objectForKey:languageCode] == nil) {
-      [_metadataHelpers
-          setObject:[[NBGeocoderMetadataHelper alloc] initWithCountryCode:@1
-                                                             withLanguage:languageCode]
-             forKey:languageCode];
-    }
-    return [[_metadataHelpers objectForKey:languageCode] searchPhoneNumber:phoneNumber];
+      return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
   }
-
   return [self regionDisplayName:regionCode withLanguageCode:languageCode];
 }
 
@@ -99,8 +96,11 @@
                            withLanguageCode:(NSString *)languageCode {
   NBEPhoneNumberType numberType = [_phoneNumberUtil getNumberType:phoneNumber];
   if (numberType == NBEPhoneNumberTypeUNKNOWN) {
+      NSLog(@"Phone Number: %@ is unknown type", phoneNumber.nationalNumber);
+
     return nil;
   } else if (![_phoneNumberUtil isNumberGeographical:phoneNumber]) {
+      NSLog(@"Phone Number: %@ is not geographical", phoneNumber.nationalNumber);
     return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
   }
   return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];

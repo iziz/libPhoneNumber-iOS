@@ -3,7 +3,7 @@
 //  Geocoding
 //
 //  Created by Frank Itthipalkul on 6/23/20.
-//  Copyright © 2020 ohtalk.me. All rights reserved.
+//  Copyright © 2020 Google LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

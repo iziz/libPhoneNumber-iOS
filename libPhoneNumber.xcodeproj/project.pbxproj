@@ -158,6 +158,7 @@
 		944B9B1F2497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */; };
 		944B9B202497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */; };
 		944B9B212497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */; };
+		94A4CEE324A2A6A000B77DAF /* NBPhoneNumberOfflineGeocoderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A4CEE224A2A6A000B77DAF /* NBPhoneNumberOfflineGeocoderTest.m */; };
 		A025047D214C61FD00AFC260 /* NBPhoneNumberUtil+ShortNumberTestHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F5833091FD1FC9500F26ED4 /* NBPhoneNumberUtil+ShortNumberTestHelper.h */; };
 		A025047E214C61FD00AFC260 /* NBPhoneNumberUtil+ShortNumberTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F58330A1FD1FC9500F26ED4 /* NBPhoneNumberUtil+ShortNumberTestHelper.m */; };
 		A81D6A2B1BECC44600F68F34 /* NBPhoneNumberDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = A81D6A281BECC43A00F68F34 /* NBPhoneNumberDefines.m */; };
@@ -239,7 +240,7 @@
 		7C72507C1E0EBE7D00F916ED /* libPhoneNumbermacOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libPhoneNumbermacOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C72507E1E0EBE7D00F916ED /* libPhoneNumbermacOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libPhoneNumbermacOS.h; sourceTree = "<group>"; };
 		7C72507F1E0EBE7D00F916ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8B0FD2E61E4A846F0049DF81 /* GeneratePhoneNumberHeader.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = GeneratePhoneNumberHeader.sh; sourceTree = "<group>"; };
+		8B0FD2E61E4A846F0049DF81 /* GeneratePhoneNumberHeader.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = GeneratePhoneNumberHeader.sh; path = "/Users/rastaar/Desktop/libPhoneNumber-iOS/libPhoneNumber/GeneratePhoneNumberHeader.sh"; sourceTree = "<absolute>"; };
 		8B0FD2F21E4A85A70049DF81 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		8B0FD2F91E4A88AC0049DF81 /* NSArray+NBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+NBAdditions.h"; sourceTree = "<group>"; };
 		8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+NBAdditions.m"; sourceTree = "<group>"; };
@@ -251,6 +252,7 @@
 		944B9B0B2497EEDC007E17B5 /* NBPhoneNumberOfflineGeocoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBPhoneNumberOfflineGeocoder.h; sourceTree = "<group>"; };
 		944B9B0C2497EEDC007E17B5 /* NBPhoneNumberOfflineGeocoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBPhoneNumberOfflineGeocoder.m; sourceTree = "<group>"; };
 		944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GeocodingMetadata.bundle; sourceTree = "<group>"; };
+		94A4CEE224A2A6A000B77DAF /* NBPhoneNumberOfflineGeocoderTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NBPhoneNumberOfflineGeocoderTest.m; path = libPhoneNumberTests/NBPhoneNumberOfflineGeocoderTest.m; sourceTree = SOURCE_ROOT; };
 		A81D6A281BECC43A00F68F34 /* NBPhoneNumberDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NBPhoneNumberDefines.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FD12C2681A87401B00B53856 /* NBMetadataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBMetadataHelper.h; sourceTree = "<group>"; };
 		FD12C2691A87401B00B53856 /* NBMetadataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBMetadataHelper.m; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 		0FC0D37724A2A05E0087AFCF /* libPhoneNumberGeocodingTests */ = {
 			isa = PBXGroup;
 			children = (
+				94A4CEE224A2A6A000B77DAF /* NBPhoneNumberOfflineGeocoderTest.m */,
 				0FC0D37824A2A05E0087AFCF /* libPhoneNumberGeocodingTests.m */,
 				0FC0D37A24A2A05E0087AFCF /* Info.plist */,
 			);
@@ -991,6 +994,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FC0D37924A2A05E0087AFCF /* libPhoneNumberGeocodingTests.m in Sources */,
+				94A4CEE324A2A6A000B77DAF /* NBPhoneNumberOfflineGeocoderTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1559,7 +1563,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "libPhoneNumber-iOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
@@ -1602,7 +1606,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "libPhoneNumber-iOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;

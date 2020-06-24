@@ -37,7 +37,7 @@ NSString *const preparedStatement = @"WITH recursive count(x)"
                                     @"FROM     geocodingpairs%@ "
                                     @"WHERE    nationalnumber IN tosearch "
                                     @"ORDER BY nationalnumberlength DESC "
-                                    @"LIMIT    1";
+                                    @"LIMIT    2";
 static NSString * const kResourceBundleName = @"GeocodingMetadata.bundle";
 
 - (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)languageCode {
@@ -90,6 +90,7 @@ static NSString * const kResourceBundleName = @"GeocodingMetadata.bundle";
 }
 
 - (NSString *)searchPhoneNumber:(NBPhoneNumber *)phoneNumber {
+    NSLog(@"ENTERED SEARCH %@", phoneNumber );
   if (![phoneNumber.countryCode isEqualToNumber:_countryCode]) {
     _countryCode = phoneNumber.countryCode;
     sqlite3_prepare_v2(_database,
@@ -105,8 +106,13 @@ static NSString * const kResourceBundleName = @"GeocodingMetadata.bundle";
   }
   int step = sqlite3_step(_selectStatement);
   if (step == SQLITE_ROW) {
+      NSLog(@"SOMEHOW ENTERED HERE. VALUE FOUND!!!!!! %@", @((const char *)sqlite3_column_text(_selectStatement, 1)));
     return @((const char *)sqlite3_column_text(_selectStatement, 1));
   } else {
+      NSLog(@"SADLY DIDNT FIND NUMBER IN DB FOR: %@%@", phoneNumber.countryCode, phoneNumber.nationalNumber);
+      NSLog(@"SADLY sql statement: %s", sqlite3_expanded_sql(_selectStatement));
+
+
     return nil;
   }
 }
