@@ -37,7 +37,6 @@
 		0FC0D36C24A29F590087AFCF /* NBPhoneNumberOfflineGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B9B0C2497EEDC007E17B5 /* NBPhoneNumberOfflineGeocoder.m */; };
 		0FC0D36D24A29F680087AFCF /* libPhoneNumberiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34ACBB851B7122AC0064B3BD /* libPhoneNumberiOS.framework */; };
 		0FC0D36E24A29F680087AFCF /* libPhoneNumberiOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34ACBB851B7122AC0064B3BD /* libPhoneNumberiOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0FC0D37924A2A05E0087AFCF /* libPhoneNumberGeocodingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC0D37824A2A05E0087AFCF /* libPhoneNumberGeocodingTests.m */; };
 		0FC0D37B24A2A05E0087AFCF /* libPhoneNumberGeocoding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FC0D36424A29F510087AFCF /* libPhoneNumberGeocoding.framework */; };
 		0FC0D38124A2A18D0087AFCF /* NBPhoneNumberOfflineGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 944B9B0B2497EEDC007E17B5 /* NBPhoneNumberOfflineGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0FC0D38224A2A18F0087AFCF /* NBGeocoderMetadataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -218,7 +217,6 @@
 		0FC0D36624A29F510087AFCF /* Geocoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Geocoding.h; sourceTree = "<group>"; };
 		0FC0D36724A29F510087AFCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FC0D37624A2A05E0087AFCF /* libPhoneNumberGeocodingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = libPhoneNumberGeocodingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0FC0D37824A2A05E0087AFCF /* libPhoneNumberGeocodingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = libPhoneNumberGeocodingTests.m; sourceTree = "<group>"; };
 		0FC0D37A24A2A05E0087AFCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1485C5231E06F4890092F541 /* NBAsYouTypeFormatterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBAsYouTypeFormatterTest.m; path = libPhoneNumberTests/NBAsYouTypeFormatterTest.m; sourceTree = SOURCE_ROOT; };
 		1485C5251E06F4890092F541 /* NBPhoneNumberUtilTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBPhoneNumberUtilTest.m; path = libPhoneNumberTests/NBPhoneNumberUtilTest.m; sourceTree = SOURCE_ROOT; };
@@ -390,7 +388,6 @@
 			isa = PBXGroup;
 			children = (
 				94A4CEE224A2A6A000B77DAF /* NBPhoneNumberOfflineGeocoderTest.m */,
-				0FC0D37824A2A05E0087AFCF /* libPhoneNumberGeocodingTests.m */,
 				0FC0D37A24A2A05E0087AFCF /* Info.plist */,
 			);
 			path = libPhoneNumberGeocodingTests;
@@ -993,7 +990,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FC0D37924A2A05E0087AFCF /* libPhoneNumberGeocodingTests.m in Sources */,
 				94A4CEE324A2A6A000B77DAF /* NBPhoneNumberOfflineGeocoderTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1239,6 +1235,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1248,6 +1245,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = libPhoneNumberGeocodingTests/Info.plist;
@@ -1267,6 +1265,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1278,6 +1277,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = libPhoneNumberGeocodingTests/Info.plist;

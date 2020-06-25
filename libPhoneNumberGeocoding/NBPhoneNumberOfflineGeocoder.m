@@ -21,12 +21,6 @@
   self = [super init];
   if (self != nil) {
     _phoneNumberUtil = NBPhoneNumberUtil.sharedInstance;
-    // NSLocale provides an array of the user's preferred languages, which can be used
-    // to gather the appropriate language code for NBGeocoderMetadataHelper
-//    NSString *languageCode = [[NSLocale preferredLanguages] firstObject];
-//    if (languageCode == nil) {
-//      return nil;
-//    }
     _metadataHelpers = [[NSCache alloc] init];
   }
   return self;
@@ -58,8 +52,8 @@
       [regionCode isEqual:NB_REGION_CODE_FOR_NON_GEO_ENTITY]) {
     return nil;
   } else {
-    return [[NSLocale localeWithLocaleIdentifier:languageCode]
-                               displayNameForKey:NSLocaleCountryCode value:regionCode];
+    return [[NSLocale localeWithLocaleIdentifier:languageCode] displayNameForKey:NSLocaleCountryCode
+                                                                           value:regionCode];
   }
 }
 
@@ -73,21 +67,22 @@
                                                                          withLanguage:languageCode]
                          forKey:languageCode];
   }
-  NSString * ans = [[_metadataHelpers objectForKey:languageCode] searchPhoneNumber:phoneNumber];
-    if (ans == nil) {
-        NSLog(@"Entered this nil statement");
-        return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
-    } else {
-        return ans;
-    }
+  NSString *ans = [[_metadataHelpers objectForKey:languageCode] searchPhoneNumber:phoneNumber];
+  if (ans == nil) {
+    return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
+  } else {
+    return ans;
+  }
 }
 
 - (nullable NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
                                 withLanguageCode:(NSString *)languageCode
                                   withUserRegion:(NSString *)userRegion {
   NSString *regionCode = [_phoneNumberUtil getRegionCodeForNumber:phoneNumber];
+  NSLog(@"The region code from phone util was: %@, compared to parameter: %@", regionCode,
+        userRegion);
   if ([userRegion isEqualToString:regionCode]) {
-      return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
+    return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
   }
   return [self regionDisplayName:regionCode withLanguageCode:languageCode];
 }
@@ -96,11 +91,8 @@
                            withLanguageCode:(NSString *)languageCode {
   NBEPhoneNumberType numberType = [_phoneNumberUtil getNumberType:phoneNumber];
   if (numberType == NBEPhoneNumberTypeUNKNOWN) {
-      NSLog(@"Phone Number: %@ is unknown type", phoneNumber.nationalNumber);
-
     return nil;
   } else if (![_phoneNumberUtil isNumberGeographical:phoneNumber]) {
-      NSLog(@"Phone Number: %@ is not geographical", phoneNumber.nationalNumber);
     return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
   }
   return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
