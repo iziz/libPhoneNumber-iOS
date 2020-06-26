@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NBPhoneNumberOfflineGeocoder : NSObject
 
++ (NBPhoneNumberOfflineGeocoder *)sharedInstance;
+
 /**
  * Returns a text description for the given phone number, in the language provided. The
  * description might consist of the name of the country where the phone number is from, or the

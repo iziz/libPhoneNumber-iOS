@@ -42,7 +42,7 @@
 - (void)setUp {
   // Put setup code here. This method is called before the invocation of each test method in the
   // class.
-  self.geocoder = [[NBPhoneNumberOfflineGeocoder alloc] init];
+    self.geocoder = NBPhoneNumberOfflineGeocoder.sharedInstance;
 }
 
 - (void)tearDown {
