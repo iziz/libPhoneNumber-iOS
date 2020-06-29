@@ -38,16 +38,15 @@ static NSString *const preparedStatement = @"WITH recursive count(x)"
                                            @"ORDER BY nationalnumberlength DESC "
                                            @"LIMIT    2";
 
-static NSString *const kResourceBundleName = @"GeocodingMetadata.bundle";
-
-- (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)languageCode {
+- (instancetype)initWithCountryCode:(NSNumber *)countryCode
+                       withLanguage:(NSString *)languageCode
+                         withBundle:(NSBundle *)bundle {
   self = [super init];
   if (self != nil) {
     _countryCode = countryCode;
     _language = languageCode;
 
-    NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
-    NSURL *bundleURL = [[bundle resourceURL] URLByAppendingPathComponent:kResourceBundleName];
+    NSURL *bundleURL = [bundle resourceURL];
     NSString *shortLanguageCode = [[languageCode componentsSeparatedByString:@"-"] firstObject];
     NSString *databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, shortLanguageCode];
     if (databasePath == nil) {
@@ -63,6 +62,14 @@ static NSString *const kResourceBundleName = @"GeocodingMetadata.bundle";
                        &_selectStatement, NULL);
   }
   return self;
+}
+
+- (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)languageCode {
+  NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
+  NSURL *resourceURL =
+      [[bundle resourceURL] URLByAppendingPathComponent:@"GeocodingMetadata.bundle"];
+  NSBundle *databaseBundle = [NSBundle bundleWithURL:resourceURL];
+  return [self initWithCountryCode:countryCode withLanguage:languageCode withBundle:databaseBundle];
 }
 
 - (NSString *)searchPhoneNumber:(NBPhoneNumber *)phoneNumber {

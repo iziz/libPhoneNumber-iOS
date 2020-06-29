@@ -11,7 +11,6 @@
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberOfflineGeocoder.h"
 #import "NBPhoneNumberUtil.h"
-
 @interface NBPhoneNumberOfflineGeocoderTest : XCTestCase
 
 @property(nonatomic, strong) NBPhoneNumberOfflineGeocoder *geocoder;
@@ -40,9 +39,17 @@
 @implementation NBPhoneNumberOfflineGeocoderTest
 
 - (void)setUp {
-  // Put setup code here. This method is called before the invocation of each test method in the
-  // class.
-    self.geocoder = NBPhoneNumberOfflineGeocoder.sharedInstance;
+  // For testing purposes, this set-up will pass in a testing database.
+  NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
+  NSURL *resourceURL = [[bundle resourceURL] URLByAppendingPathComponent:@"TestingSource.bundle"];
+  NSBundle *testDatabaseBundle = [NSBundle bundleWithURL:resourceURL];
+  self.geocoder = [[NBPhoneNumberOfflineGeocoder alloc]
+      initWithMetadataHelperFactory:^NBGeocoderMetadataHelper *(NSNumber *_Nonnull countryCode,
+                                                                NSString *_Nonnull language) {
+        return [[NBGeocoderMetadataHelper alloc] initWithCountryCode:countryCode
+                                                        withLanguage:language
+                                                          withBundle:testDatabaseBundle];
+      }];
 }
 
 - (void)tearDown {

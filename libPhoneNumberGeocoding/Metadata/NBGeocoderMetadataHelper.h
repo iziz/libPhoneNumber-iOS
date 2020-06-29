@@ -28,6 +28,10 @@ NS_ASSUME_NONNULL_BEGIN
  *     code set to the parameters, countryCode and  languageCode, or nil if the NSObject couldn't be
  *     initialized or there was no database URL found for the provided language code.
  */
+- (instancetype)initWithCountryCode:(NSNumber *)countryCode
+                       withLanguage:(NSString *)languageCode
+                         withBundle:(NSBundle *)bundle;
+
 - (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)languageCode;
 
 /**

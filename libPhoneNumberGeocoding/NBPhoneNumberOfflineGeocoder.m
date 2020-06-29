@@ -16,16 +16,25 @@
   NBPhoneNumberUtil *_phoneNumberUtil;
   NSCache<NSString *, NBGeocoderMetadataHelper *> *_metadataHelpers;
   NSNumber const *_US_REGION_CODE;
+  NBGeocoderMetadataHelperFactory _metadataHelperFactory;
 }
 
 NSString *const _INVALID_REGION_CODE = @"ZZ";
 
 - (instancetype)init {
+  return [self initWithMetadataHelperFactory:^NBGeocoderMetadataHelper *(
+                   NSNumber *_Nonnull countryCode, NSString *_Nonnull language) {
+    return [[NBGeocoderMetadataHelper alloc] initWithCountryCode:countryCode withLanguage:language];
+  }];
+}
+
+- (instancetype)initWithMetadataHelperFactory:(NBGeocoderMetadataHelperFactory)factory {
   self = [super init];
   if (self != nil) {
     _phoneNumberUtil = NBPhoneNumberUtil.sharedInstance;
     _metadataHelpers = [[NSCache alloc] init];
     _US_REGION_CODE = @1;
+    _metadataHelperFactory = [factory copy];
   }
   return self;
 }
@@ -45,10 +54,8 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
   // NBGeocoderMetadataHelper object with a language set equal to languageCode and
   // default country code to United States / Canada
   if ([_metadataHelpers objectForKey:languageCode] == nil) {
-    [_metadataHelpers
-        setObject:[[NBGeocoderMetadataHelper alloc] initWithCountryCode:_US_REGION_CODE
-                                                           withLanguage:languageCode]
-           forKey:languageCode];
+    [_metadataHelpers setObject:_metadataHelperFactory(phoneNumber.countryCode, languageCode)
+                         forKey:languageCode];
   }
   NSString *ans = [[_metadataHelpers objectForKey:languageCode] searchPhoneNumber:phoneNumber];
   if (ans == nil) {
