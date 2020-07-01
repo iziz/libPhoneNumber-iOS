@@ -24,7 +24,7 @@ typedef NBGeocoderMetadataHelper *_Nonnull (^NBGeocoderMetadataHelperFactory)(
  * predefined NBGeocoderMetadataHelperFactory method to use whenever this class
  * creates an object of type NBGeocoderMetadataHelper
  *
- * @param factory  a factory method that has countryCode and language parameters
+ * @param factory  a factory method, with countryCode and language parameters,
  * that returns an instance of NBGeocoderMetadataHelper
  * @return an instance of NBPhoneNumberOfflineGeocoder that creates
  * NBGeocoderMetadataHelper instances using the factory method parameter
