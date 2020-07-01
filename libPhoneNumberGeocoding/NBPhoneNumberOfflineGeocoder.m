@@ -12,28 +12,29 @@
 #import "NBPhoneNumberUtil.h"
 
 @implementation NBPhoneNumberOfflineGeocoder {
- @private
+@private
   NBPhoneNumberUtil *_phoneNumberUtil;
   NSCache<NSString *, NBGeocoderMetadataHelper *> *_metadataHelpers;
-  NSNumber const *_US_REGION_CODE;
   NBGeocoderMetadataHelperFactory _metadataHelperFactory;
 }
 
 NSString *const _INVALID_REGION_CODE = @"ZZ";
 
 - (instancetype)init {
-  return [self initWithMetadataHelperFactory:^NBGeocoderMetadataHelper *(
-                   NSNumber *_Nonnull countryCode, NSString *_Nonnull language) {
-    return [[NBGeocoderMetadataHelper alloc] initWithCountryCode:countryCode withLanguage:language];
-  }];
+  return
+      [self initWithMetadataHelperFactory:^NBGeocoderMetadataHelper *(
+                NSNumber *_Nonnull countryCode, NSString *_Nonnull language) {
+        return [[NBGeocoderMetadataHelper alloc] initWithCountryCode:countryCode
+                                                        withLanguage:language];
+      }];
 }
 
-- (instancetype)initWithMetadataHelperFactory:(NBGeocoderMetadataHelperFactory)factory {
+- (instancetype)initWithMetadataHelperFactory:
+    (NBGeocoderMetadataHelperFactory)factory {
   self = [super init];
   if (self != nil) {
     _phoneNumberUtil = NBPhoneNumberUtil.sharedInstance;
     _metadataHelpers = [[NSCache alloc] init];
-    _US_REGION_CODE = @1;
     _metadataHelperFactory = [factory copy];
   }
   return self;
@@ -50,18 +51,21 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
 
 - (nullable NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
                                 withLanguageCode:(NSString *)languageCode {
-  // If the NSCache doesn't contain a key equivalent to languageCode, create a new
-  // NBGeocoderMetadataHelper object with a language set equal to languageCode and
-  // default country code to United States / Canada
+  // If the NSCache doesn't contain a key equivalent to languageCode, create a
+  // new NBGeocoderMetadataHelper object with a language set equal to
+  // languageCode and default country code to United States / Canada
   if ([_metadataHelpers objectForKey:languageCode] == nil) {
-    [_metadataHelpers setObject:_metadataHelperFactory(phoneNumber.countryCode, languageCode)
-                         forKey:languageCode];
+    [_metadataHelpers
+        setObject:_metadataHelperFactory(phoneNumber.countryCode, languageCode)
+           forKey:languageCode];
   }
-  NSString *ans = [[_metadataHelpers objectForKey:languageCode] searchPhoneNumber:phoneNumber];
-  if (ans == nil) {
-    return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
+  NSString *result = [[_metadataHelpers objectForKey:languageCode]
+      searchPhoneNumber:phoneNumber];
+  if (result == nil) {
+    return [self countryNameForNumber:phoneNumber
+                     withLanguageCode:languageCode];
   } else {
-    return ans;
+    return result;
   }
 }
 
@@ -70,7 +74,8 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
                                   withUserRegion:(NSString *)userRegion {
   NSString *regionCode = [_phoneNumberUtil getRegionCodeForNumber:phoneNumber];
   if ([userRegion isEqualToString:regionCode]) {
-    return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
+    return [self descriptionForValidNumber:phoneNumber
+                          withLanguageCode:languageCode];
   }
   return [self regionDisplayName:regionCode withLanguageCode:languageCode];
 }
@@ -81,9 +86,11 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
   if (numberType == NBEPhoneNumberTypeUNKNOWN) {
     return nil;
   } else if (![_phoneNumberUtil isNumberGeographical:phoneNumber]) {
-    return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
+    return [self countryNameForNumber:phoneNumber
+                     withLanguageCode:languageCode];
   }
-  return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
+  return [self descriptionForValidNumber:phoneNumber
+                        withLanguageCode:languageCode];
 }
 
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
@@ -93,7 +100,8 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
   if (numberType == NBEPhoneNumberTypeUNKNOWN) {
     return nil;
   } else if (![_phoneNumberUtil isNumberGeographical:phoneNumber]) {
-    return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
+    return [self countryNameForNumber:phoneNumber
+                     withLanguageCode:languageCode];
   }
   return [self descriptionForValidNumber:phoneNumber
                         withLanguageCode:languageCode
@@ -111,9 +119,11 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
   if (numberType == NBEPhoneNumberTypeUNKNOWN) {
     return nil;
   } else if (![_phoneNumberUtil isNumberGeographical:phoneNumber]) {
-    return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
+    return [self countryNameForNumber:phoneNumber
+                     withLanguageCode:languageCode];
   }
-  return [self descriptionForValidNumber:phoneNumber withLanguageCode:languageCode];
+  return [self descriptionForValidNumber:phoneNumber
+                        withLanguageCode:languageCode];
 }
 
 - (nullable NSString *)descriptionForNumber:(NBPhoneNumber *)phoneNumber
@@ -128,7 +138,8 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
   if (numberType == NBEPhoneNumberTypeUNKNOWN) {
     return nil;
   } else if (![_phoneNumberUtil isNumberGeographical:phoneNumber]) {
-    return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
+    return [self countryNameForNumber:phoneNumber
+                     withLanguageCode:languageCode];
   }
   return [self descriptionForValidNumber:phoneNumber
                         withLanguageCode:languageCode
@@ -137,13 +148,16 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
 
 - (nullable NSString *)countryNameForNumber:(NBPhoneNumber *)number
                            withLanguageCode:(NSString *)languageCode {
-  NSArray *regionCodes = [_phoneNumberUtil getRegionCodesForCountryCode:number.countryCode];
+  NSArray *regionCodes =
+      [_phoneNumberUtil getRegionCodesForCountryCode:number.countryCode];
   if ([regionCodes count] == 1) {
-    return [self regionDisplayName:regionCodes[0] withLanguageCode:languageCode];
+    return [self regionDisplayName:regionCodes[0]
+                  withLanguageCode:languageCode];
   } else {
     NSString *regionWhereNumberIsValid = _INVALID_REGION_CODE;
     for (NSString *regionCode in regionCodes) {
-      if ([_phoneNumberUtil isValidNumberForRegion:number regionCode:regionCode]) {
+      if ([_phoneNumberUtil isValidNumberForRegion:number
+                                        regionCode:regionCode]) {
         if (![regionWhereNumberIsValid isEqualToString:_INVALID_REGION_CODE]) {
           return nil;
         }
@@ -151,7 +165,8 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
       }
     }
 
-    return [self regionDisplayName:regionWhereNumberIsValid withLanguageCode:languageCode];
+    return [self regionDisplayName:regionWhereNumberIsValid
+                  withLanguageCode:languageCode];
   }
 }
 
@@ -161,8 +176,9 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
       [regionCode isEqual:NB_REGION_CODE_FOR_NON_GEO_ENTITY]) {
     return nil;
   } else {
-    return [[NSLocale localeWithLocaleIdentifier:languageCode] displayNameForKey:NSLocaleCountryCode
-                                                                           value:regionCode];
+    return [[NSLocale localeWithLocaleIdentifier:languageCode]
+        displayNameForKey:NSLocaleCountryCode
+                    value:regionCode];
   }
 }
 
