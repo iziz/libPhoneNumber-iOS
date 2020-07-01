@@ -54,7 +54,6 @@ static NSString *const preparedStatement = @"WITH recursive count(x)"
                                      reason:@"Geocoding Database URL not found"
                                    userInfo:nil];
     }
-
     sqlite3_open([databasePath UTF8String], &_database);
 
     sqlite3_prepare_v2(_database,
@@ -73,25 +72,27 @@ static NSString *const preparedStatement = @"WITH recursive count(x)"
 }
 
 - (NSString *)searchPhoneNumber:(NBPhoneNumber *)phoneNumber {
-  if (![phoneNumber.countryCode isEqualToNumber:_countryCode]) {
-    _countryCode = phoneNumber.countryCode;
-    sqlite3_finalize(_selectStatement);
-    sqlite3_prepare_v2(_database,
-                       [[NSString stringWithFormat:preparedStatement, _countryCode] UTF8String], -1,
-                       &_selectStatement, NULL);
-  }
+  @synchronized(self) {
+    if (![phoneNumber.countryCode isEqualToNumber:_countryCode]) {
+      _countryCode = phoneNumber.countryCode;
+      sqlite3_finalize(_selectStatement);
+      sqlite3_prepare_v2(_database,
+                         [[NSString stringWithFormat:preparedStatement, _countryCode] UTF8String],
+                         -1, &_selectStatement, NULL);
+    }
 
-  int sqlCommandResults = [self createSelectStatement:phoneNumber];
+    int sqlCommandResults = [self createSelectStatement:phoneNumber];
 
-  if (sqlCommandResults != SQLITE_OK) {
-    NSLog(@"Error with preparing statement. SQLite3 error code was: %d", sqlCommandResults);
-    return nil;
-  }
-  int step = sqlite3_step(_selectStatement);
-  if (step == SQLITE_ROW) {
-    return @((const char *)sqlite3_column_text(_selectStatement, 1));
-  } else {
-    return nil;
+    if (sqlCommandResults != SQLITE_OK) {
+      NSLog(@"Error with preparing statement. SQLite3 error code was: %d", sqlCommandResults);
+      return nil;
+    }
+    int step = sqlite3_step(_selectStatement);
+    if (step == SQLITE_ROW) {
+      return @((const char *)sqlite3_column_text(_selectStatement, 1));
+    } else {
+      return nil;
+    }
   }
 }
 

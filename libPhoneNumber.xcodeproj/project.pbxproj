@@ -150,6 +150,7 @@
 		942B2D3F24AA58B600D4594F /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 942B2D3A24AA588F00D4594F /* TestingSource.bundle */; };
 		942B2D4024AA58B600D4594F /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 942B2D3A24AA588F00D4594F /* TestingSource.bundle */; };
 		942B2D4124AA9ABF00D4594F /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 942B2D3A24AA588F00D4594F /* TestingSource.bundle */; };
+		942B2F4824AD46EA00D4594F /* NBPhoneNumberOfflineGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B9B0C2497EEDC007E17B5 /* NBPhoneNumberOfflineGeocoder.m */; };
 		944B9B022497ED79007E17B5 /* NBGeocoderMetadataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		944B9B032497ED79007E17B5 /* NBGeocoderMetadataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		944B9B042497ED79007E17B5 /* NBGeocoderMetadataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1070,6 +1071,7 @@
 				0F28709E1FCF8F13006230BF /* NBRegExMatcher.m in Sources */,
 				1F31D5691DDD484000257818 /* NBAsYouTypeFormatter.m in Sources */,
 				944B9B082497ED79007E17B5 /* NBGeocoderMetadataHelper.m in Sources */,
+				942B2F4824AD46EA00D4594F /* NBPhoneNumberOfflineGeocoder.m in Sources */,
 				1F31D5671DDD483A00257818 /* NBPhoneNumberUtil.m in Sources */,
 				1F31D55F1DDD482300257818 /* NBNumberFormat.m in Sources */,
 			);
@@ -1190,7 +1192,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = libPhoneNumberGeocoding/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1231,7 +1233,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = libPhoneNumberGeocoding/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
