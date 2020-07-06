@@ -143,14 +143,6 @@
 		8B1FEFA11EB7BFC500FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8B1FEFA21EB7BFC600FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8B1FEFA31EB7BFC600FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		942B2D3B24AA588F00D4594F /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 942B2D3A24AA588F00D4594F /* TestingSource.bundle */; };
-		942B2D3C24AA58B400D4594F /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 942B2D3A24AA588F00D4594F /* TestingSource.bundle */; };
-		942B2D3D24AA58B500D4594F /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 942B2D3A24AA588F00D4594F /* TestingSource.bundle */; };
-		942B2D3E24AA58B500D4594F /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 942B2D3A24AA588F00D4594F /* TestingSource.bundle */; };
-		942B2D3F24AA58B600D4594F /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 942B2D3A24AA588F00D4594F /* TestingSource.bundle */; };
-		942B2D4024AA58B600D4594F /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 942B2D3A24AA588F00D4594F /* TestingSource.bundle */; };
-		942B2D4124AA9ABF00D4594F /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 942B2D3A24AA588F00D4594F /* TestingSource.bundle */; };
-		942B2F4824AD46EA00D4594F /* NBPhoneNumberOfflineGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B9B0C2497EEDC007E17B5 /* NBPhoneNumberOfflineGeocoder.m */; };
 		944B9B022497ED79007E17B5 /* NBGeocoderMetadataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		944B9B032497ED79007E17B5 /* NBGeocoderMetadataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		944B9B042497ED79007E17B5 /* NBGeocoderMetadataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -160,12 +152,10 @@
 		944B9B082497ED79007E17B5 /* NBGeocoderMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B9B012497ED79007E17B5 /* NBGeocoderMetadataHelper.m */; };
 		944B9B092497ED79007E17B5 /* NBGeocoderMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B9B012497ED79007E17B5 /* NBGeocoderMetadataHelper.m */; };
 		944B9B0A2497ED79007E17B5 /* NBGeocoderMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B9B012497ED79007E17B5 /* NBGeocoderMetadataHelper.m */; };
-		944B9B1D2497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */; };
-		944B9B1E2497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */; };
-		944B9B1F2497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */; };
-		944B9B202497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */; };
-		944B9B212497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */; };
 		94C9AF0F24B3AAF900469F54 /* NBPhoneNumberOfflineGeocoderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C9AF0E24B3AAF900469F54 /* NBPhoneNumberOfflineGeocoderTest.m */; };
+		94C9AF5B24B3CAF300469F54 /* GeocodingMetadata.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */; };
+		94C9AF5F24B3CE0D00469F54 /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94C9AF5E24B3CE0D00469F54 /* TestingSource.bundle */; };
+		94C9AF6024B3CE1000469F54 /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94C9AF5E24B3CE0D00469F54 /* TestingSource.bundle */; };
 		A025047D214C61FD00AFC260 /* NBPhoneNumberUtil+ShortNumberTestHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F5833091FD1FC9500F26ED4 /* NBPhoneNumberUtil+ShortNumberTestHelper.h */; };
 		A025047E214C61FD00AFC260 /* NBPhoneNumberUtil+ShortNumberTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F58330A1FD1FC9500F26ED4 /* NBPhoneNumberUtil+ShortNumberTestHelper.m */; };
 		A81D6A2B1BECC44600F68F34 /* NBPhoneNumberDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = A81D6A281BECC43A00F68F34 /* NBPhoneNumberDefines.m */; };
@@ -253,13 +243,14 @@
 		8B1FEF731EB7BE7C00FBDE87 /* SwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B1FEF971EB7BEFE00FBDE87 /* NBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NBTextField.swift; path = "libPhoneNumber-iOS/NBTextField.swift"; sourceTree = "<group>"; };
 		8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBGeneratedPhoneNumberMetaData.h; sourceTree = "<group>"; };
-		942B2D3A24AA588F00D4594F /* TestingSource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TestingSource.bundle; sourceTree = "<group>"; };
 		944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBGeocoderMetadataHelper.h; sourceTree = "<group>"; };
 		944B9B012497ED79007E17B5 /* NBGeocoderMetadataHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBGeocoderMetadataHelper.m; sourceTree = "<group>"; };
 		944B9B0B2497EEDC007E17B5 /* NBPhoneNumberOfflineGeocoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBPhoneNumberOfflineGeocoder.h; sourceTree = "<group>"; };
 		944B9B0C2497EEDC007E17B5 /* NBPhoneNumberOfflineGeocoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBPhoneNumberOfflineGeocoder.m; sourceTree = "<group>"; };
-		944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GeocodingMetadata.bundle; sourceTree = "<group>"; };
+		944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GeocodingMetadata.bundle; path = libPhoneNumberGeocoding/Metadata/GeocodingMetadata.bundle; sourceTree = SOURCE_ROOT; };
 		94C9AF0E24B3AAF900469F54 /* NBPhoneNumberOfflineGeocoderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPhoneNumberOfflineGeocoderTest.m; sourceTree = "<group>"; };
+		94C9AF5924B3C40C00469F54 /* libPhoneNumberGeocoding.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = libPhoneNumberGeocoding.podspec; sourceTree = "<group>"; };
+		94C9AF5E24B3CE0D00469F54 /* TestingSource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TestingSource.bundle; sourceTree = "<group>"; };
 		A81D6A281BECC43A00F68F34 /* NBPhoneNumberDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NBPhoneNumberDefines.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FD12C2681A87401B00B53856 /* NBMetadataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBMetadataHelper.h; sourceTree = "<group>"; };
 		FD12C2691A87401B00B53856 /* NBMetadataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBMetadataHelper.m; sourceTree = "<group>"; };
@@ -374,7 +365,7 @@
 		0FC0D35E24A29EFA0087AFCF /* Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				942B2D3A24AA588F00D4594F /* TestingSource.bundle */,
+				94C9AF5E24B3CE0D00469F54 /* TestingSource.bundle */,
 				944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */,
 				944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */,
 				944B9B012497ED79007E17B5 /* NBGeocoderMetadataHelper.m */,
@@ -534,6 +525,7 @@
 				14B7A2941DE9B65D0051AED7 /* libPhoneNumber.tests */,
 				14C114F11DE9A9070029FE1C /* libPhoneNumber.samples */,
 				4D43EF831740825100C24FF3 /* libPhoneNumber-iOS.podspec */,
+				94C9AF5924B3C40C00469F54 /* libPhoneNumberGeocoding.podspec */,
 				0FC0D36524A29F510087AFCF /* libPhoneNumberGeocoding */,
 				0FC0D37724A2A05E0087AFCF /* libPhoneNumberGeocodingTests */,
 				FD7A061F167715A0004BBEB6 /* Frameworks */,
@@ -926,7 +918,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FC0D38324A2A1D30087AFCF /* GeocodingMetadata.bundle in Resources */,
-				942B2D3B24AA588F00D4594F /* TestingSource.bundle in Resources */,
+				94C9AF5F24B3CE0D00469F54 /* TestingSource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -934,7 +926,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				942B2D4124AA9ABF00D4594F /* TestingSource.bundle in Resources */,
+				94C9AF5B24B3CAF300469F54 /* GeocodingMetadata.bundle in Resources */,
+				94C9AF6024B3CE1000469F54 /* TestingSource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -942,8 +935,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				944B9B212497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */,
-				942B2D3C24AA58B400D4594F /* TestingSource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -951,8 +942,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				944B9B1E2497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */,
-				942B2D3F24AA58B600D4594F /* TestingSource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -960,8 +949,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				944B9B1F2497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */,
-				942B2D3E24AA58B500D4594F /* TestingSource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -969,8 +956,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				944B9B1D2497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */,
-				942B2D4024AA58B600D4594F /* TestingSource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -978,8 +963,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				944B9B202497F63B007E17B5 /* GeocodingMetadata.bundle in Resources */,
-				942B2D3D24AA58B500D4594F /* TestingSource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1071,7 +1054,6 @@
 				0F28709E1FCF8F13006230BF /* NBRegExMatcher.m in Sources */,
 				1F31D5691DDD484000257818 /* NBAsYouTypeFormatter.m in Sources */,
 				944B9B082497ED79007E17B5 /* NBGeocoderMetadataHelper.m in Sources */,
-				942B2F4824AD46EA00D4594F /* NBPhoneNumberOfflineGeocoder.m in Sources */,
 				1F31D5671DDD483A00257818 /* NBPhoneNumberUtil.m in Sources */,
 				1F31D55F1DDD482300257818 /* NBNumberFormat.m in Sources */,
 			);
