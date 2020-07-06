@@ -18,7 +18,7 @@
   NBGeocoderMetadataHelperFactory _metadataHelperFactory;
 }
 
-NSString *const _INVALID_REGION_CODE = @"ZZ";
+static NSString *const INVALID_REGION_CODE = @"ZZ";
 
 - (instancetype)init {
   return [self initWithMetadataHelperFactory:^NBGeocoderMetadataHelper *(
@@ -139,10 +139,10 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
   if ([regionCodes count] == 1) {
     return [self regionDisplayName:regionCodes[0] withLanguageCode:languageCode];
   } else {
-    NSString *regionWhereNumberIsValid = _INVALID_REGION_CODE;
+    NSString *regionWhereNumberIsValid = INVALID_REGION_CODE;
     for (NSString *regionCode in regionCodes) {
       if ([_phoneNumberUtil isValidNumberForRegion:number regionCode:regionCode]) {
-        if (![regionWhereNumberIsValid isEqualToString:_INVALID_REGION_CODE]) {
+        if (![regionWhereNumberIsValid isEqualToString:INVALID_REGION_CODE]) {
           return nil;
         }
         regionWhereNumberIsValid = regionCode;
@@ -155,7 +155,7 @@ NSString *const _INVALID_REGION_CODE = @"ZZ";
 
 - (nullable NSString *)regionDisplayName:(NSString *)regionCode
                         withLanguageCode:(NSString *)languageCode {
-  if (regionCode == nil || [regionCode isEqualToString:_INVALID_REGION_CODE] ||
+  if (regionCode == nil || [regionCode isEqualToString:INVALID_REGION_CODE] ||
       [regionCode isEqual:NB_REGION_CODE_FOR_NON_GEO_ENTITY]) {
     return nil;
   } else {
