@@ -156,6 +156,9 @@
 		94C9AF5B24B3CAF300469F54 /* GeocodingMetadata.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 944B9B1C2497F63B007E17B5 /* GeocodingMetadata.bundle */; };
 		94C9AF5F24B3CE0D00469F54 /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94C9AF5E24B3CE0D00469F54 /* TestingSource.bundle */; };
 		94C9AF6024B3CE1000469F54 /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94C9AF5E24B3CE0D00469F54 /* TestingSource.bundle */; };
+		94C9AF6124B3E24900469F54 /* NBGeocoderMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B9B012497ED79007E17B5 /* NBGeocoderMetadataHelper.m */; };
+		94C9AF6224B3E24B00469F54 /* NBGeocoderMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B9B012497ED79007E17B5 /* NBGeocoderMetadataHelper.m */; };
+		94C9AF6324B3E25F00469F54 /* NBPhoneNumberOfflineGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B9B0C2497EEDC007E17B5 /* NBPhoneNumberOfflineGeocoder.m */; };
 		A025047D214C61FD00AFC260 /* NBPhoneNumberUtil+ShortNumberTestHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F5833091FD1FC9500F26ED4 /* NBPhoneNumberUtil+ShortNumberTestHelper.h */; };
 		A025047E214C61FD00AFC260 /* NBPhoneNumberUtil+ShortNumberTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F58330A1FD1FC9500F26ED4 /* NBPhoneNumberUtil+ShortNumberTestHelper.m */; };
 		A81D6A2B1BECC44600F68F34 /* NBPhoneNumberDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = A81D6A281BECC43A00F68F34 /* NBPhoneNumberDefines.m */; };
@@ -851,7 +854,7 @@
 				LastSwiftUpdateCheck = 0830;
 				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0940;
-				ORGANIZATIONNAME = ohtalk.me;
+				ORGANIZATIONNAME = Google;
 				TargetAttributes = {
 					0FC0D36324A29F510087AFCF = {
 						CreatedOnToolsVersion = 11.3.1;
@@ -982,6 +985,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94C9AF6124B3E24900469F54 /* NBGeocoderMetadataHelper.m in Sources */,
 				0FC0D36C24A29F590087AFCF /* NBPhoneNumberOfflineGeocoder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -990,6 +994,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94C9AF6324B3E25F00469F54 /* NBPhoneNumberOfflineGeocoder.m in Sources */,
+				94C9AF6224B3E24B00469F54 /* NBGeocoderMetadataHelper.m in Sources */,
 				94C9AF0F24B3AAF900469F54 /* NBPhoneNumberOfflineGeocoderTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1165,6 +1171,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_ASSET_PATHS = "libPhoneNumberGeocoding/Metadata/TestingSource.bundle libPhoneNumberGeocoding/Metadata/GeocodingMetadata.bundle";
 				DEVELOPMENT_TEAM = MQV8HVXR99;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1205,6 +1212,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_ASSET_PATHS = "libPhoneNumberGeocoding/Metadata/TestingSource.bundle libPhoneNumberGeocoding/Metadata/GeocodingMetadata.bundle";
 				DEVELOPMENT_TEAM = MQV8HVXR99;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
