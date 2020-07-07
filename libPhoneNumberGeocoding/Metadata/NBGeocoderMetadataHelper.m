@@ -6,6 +6,8 @@
 //  Copyright © 2020 Google LLC. All rights reserved.
 //
 
+#import <sqlite3.h>
+
 #import "NBGeocoderMetadataHelper.h"
 #import "NBPhoneNumber.h"
 

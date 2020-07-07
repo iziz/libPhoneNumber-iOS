@@ -11,7 +11,6 @@ DESC
   s.authors      = { "rastaarh" => "rastaar@google.com", "paween" => "paween@google.com", "aalexli" => "aalexli@google.com" }
   s.source       = { :git => "https://github.com/iziz/libPhoneNumber-iOS.git", :tag => s.version.to_s }
   s.libraries      = 'z'
-  s.ios.framework    = 'CoreTelephony'
   s.ios.deployment_target = "6.0"
   s.osx.deployment_target = "10.9"
   s.watchos.deployment_target = "2.0"
@@ -19,5 +18,6 @@ DESC
   s.requires_arc = true
   s.resources = "libPhoneNumberGeocoding/Metadata/*.bundle"
   s.private_header_files = 'libPhoneNumber/NBGeneratedPhoneNumberMetaData.h'
-  s.source_files = 'libPhoneNumber/NBPhoneNumberDefines.{h,m}', 'libPhoneNumber/NBPhoneNumber.{h,m}', 'libPhoneNumber/NBNumberFormat.{h,m}', 'libPhoneNumber/NBPhoneNumberDesc.{h,m}', 'libPhoneNumber/NBPhoneMetaData.{h,m}', 'libPhoneNumber/NBPhoneNumberUtil.{h,m}', 'libPhoneNumber/NBMetadataHelper.{h,m}', 'libPhoneNumber/NBAsYouTypeFormatter.{h,m}', 'libPhoneNumber/NSArray+NBAdditions.{h,m}', 'libPhoneNumber/NBGeneratedPhoneNumberMetaData.h', 'libPhoneNumber/Internal/NBRegExMatcher.{h,m}', 'libPhoneNumber/Internal/NBRegularExpressionCache.{h,m}', 'libPhoneNumberGeocoding/NBPhoneNumberOfflineGeocoder.{h,m}', 'libPhoneNumberGeocoding/Metadata/NBGeocoderMetadataHelper.{h,m}'
+  s.dependency 'libPhoneNumber-iOS'
+  s.source_files = 'libPhoneNumberGeocoding/NBPhoneNumberOfflineGeocoder.{h,m}', 'libPhoneNumberGeocoding/Metadata/NBGeocoderMetadataHelper.{h,m}'
 end

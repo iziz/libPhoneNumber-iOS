@@ -14,8 +14,6 @@
 #import "NBPhoneNumberDesc.h"
 #import "NBPhoneNumberUtil.h"
 
-#import "NBPhoneNumberOfflineGeocoder.h"
-
 // Create an entry array for a phone number desc based on numberPattern
 static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPattern) {
   // nationalNumberPattern is entry #2
