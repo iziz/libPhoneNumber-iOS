@@ -3,7 +3,7 @@
 //  Demo App
 //
 //  Created by Rastaar Haghi on 7/8/20.
-//  Copyright © 2020 Rastaar Haghi. All rights reserved.
+//  Copyright © 2020 Google LLC. All rights reserved.
 //
 
 import UIKit

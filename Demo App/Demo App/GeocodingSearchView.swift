@@ -11,12 +11,13 @@ import libPhoneNumber_iOS
 import libPhoneNumberGeocoding
 
 struct GeocodingSearchView: View {
-    @State var localeSelection = 0
-    @State var phoneNumber: String = ""
+    @State private var localeSelection = 0
+    @State private var phoneNumber: String = ""
+    @State private var regionDescription: String = ""
+
     let languages = ["Default Device Language", "Arabic", "Belarusian", "Bulgarian", "Bosnian", "German", "Greek", "English", "Spanish", "Persian", "Finnish", "French", "Croatian", "Hungarian", "Armenian", "Indonesian", "Italian", "Hebrew", "Japanese", "Korean", "Dutch", "Polish", "Portuguese", "Romanian", "Russian", "Albanian", "Serbian", "Swedish", "Thai", "Turkish", "Ukrainian", "Vietnamese", "Chinese", "Chinese (Traditional)"]
 
     let locales = ["Default Device Language", "ar", "be", "bg", "bs", "de", "el", "en", "es", "fa", "fi",  "fr", "hr", "hu", "hy", "id", "it", "iw", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sq", "sr", "sv", "th", "tr", "uk", "vi", "zh", "zh_Hant"]
-    @State var regionDescription: String = ""
     
     let geocoder = NBPhoneNumberOfflineGeocoder()
     let phoneUtil = NBPhoneNumberUtil()

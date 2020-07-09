@@ -20,6 +20,7 @@
 		94217CBD24B644F900DFBE5C /* GeocodingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94217CBC24B644F900DFBE5C /* GeocodingView.swift */; };
 		94217CBF24B64E2900DFBE5C /* GeocodingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94217CBE24B64E2900DFBE5C /* GeocodingTableView.swift */; };
 		94217CC124B651D800DFBE5C /* GeocodingSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94217CC024B651D800DFBE5C /* GeocodingSearchView.swift */; };
+		94217CC524B78C6300DFBE5C /* PhoneUtilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94217CC424B78C6300DFBE5C /* PhoneUtilView.swift */; };
 		B08B26C2DA8DB3B2DE22CFFD /* Pods_Demo_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F3BF7A812E08B2D63C260E4 /* Pods_Demo_AppTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		94217CBC24B644F900DFBE5C /* GeocodingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingView.swift; sourceTree = "<group>"; };
 		94217CBE24B64E2900DFBE5C /* GeocodingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingTableView.swift; sourceTree = "<group>"; };
 		94217CC024B651D800DFBE5C /* GeocodingSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingSearchView.swift; sourceTree = "<group>"; };
+		94217CC424B78C6300DFBE5C /* PhoneUtilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneUtilView.swift; sourceTree = "<group>"; };
 		A00636F0EF460907F9A981CB /* Pods-Demo App-Demo AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo App-Demo AppUITests.release.xcconfig"; path = "Target Support Files/Pods-Demo App-Demo AppUITests/Pods-Demo App-Demo AppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A68840919C83E038AFEC55DA /* Pods-Demo App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo App.release.xcconfig"; path = "Target Support Files/Pods-Demo App/Pods-Demo App.release.xcconfig"; sourceTree = "<group>"; };
 		ADB797CE86F3CACFBD8521F2 /* Pods-Demo App-Demo AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo App-Demo AppUITests.debug.xcconfig"; path = "Target Support Files/Pods-Demo App-Demo AppUITests/Pods-Demo App-Demo AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				94217C9724B6410200DFBE5C /* LaunchScreen.storyboard */,
 				94217C9A24B6410200DFBE5C /* Info.plist */,
 				94217C9424B6410200DFBE5C /* Preview Content */,
+				94217CC424B78C6300DFBE5C /* PhoneUtilView.swift */,
 			);
 			path = "Demo App";
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 			files = (
 				94217CBD24B644F900DFBE5C /* GeocodingView.swift in Sources */,
 				94217C8D24B6410200DFBE5C /* AppDelegate.swift in Sources */,
+				94217CC524B78C6300DFBE5C /* PhoneUtilView.swift in Sources */,
 				94217CBF24B64E2900DFBE5C /* GeocodingTableView.swift in Sources */,
 				94217C8F24B6410200DFBE5C /* SceneDelegate.swift in Sources */,
 				94217CC124B651D800DFBE5C /* GeocodingSearchView.swift in Sources */,
@@ -594,10 +598,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 87F9D9221943092C8D0B36DD /* Pods-Demo App.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Demo App/Preview Content\"";
 				DEVELOPMENT_TEAM = 973LHT5R86;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Demo App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -615,10 +621,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A68840919C83E038AFEC55DA /* Pods-Demo App.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Demo App/Preview Content\"";
 				DEVELOPMENT_TEAM = 973LHT5R86;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Demo App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

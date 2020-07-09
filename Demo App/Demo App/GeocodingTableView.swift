@@ -12,15 +12,14 @@ import libPhoneNumberGeocoding
 
 struct GeocodingTableView: View {
     init() {
-        for _ in 1..<50 {
+        for _ in 1..<100 {
             self.makeGeocodingAPICalls()
         }
 
     }
     var body: some View {
-        Section {
-            Text("This table makes 500 Geocoding API calls per page refresh.")
-        
+        Form {
+        Section(header: Text("This table makes 500 Geocoding API calls per page refresh.")) {        
             List {
                 ForEach(regionDescriptions, id: \.self) { pair in
                     HStack {
@@ -30,6 +29,7 @@ struct GeocodingTableView: View {
                     }
                 }
             }
+        }
         }
         .navigationBarTitle("Large Set of Geocoding Calls")
     }
