@@ -15,21 +15,21 @@ struct GeocodingTableView: View {
         for _ in 1..<100 {
             self.makeGeocodingAPICalls()
         }
-
+        
     }
     var body: some View {
         Form {
-        Section(header: Text("This table makes 500 Geocoding API calls per page refresh.")) {        
-            List {
-                ForEach(regionDescriptions, id: \.self) { pair in
-                    HStack {
-                        Text(pair[0]!)
-                        Spacer()
-                        Text(pair[1]!)
+            Section(header: Text("This table makes 500 Geocoding API calls per page refresh.")) {        
+                List {
+                    ForEach(regionDescriptions, id: \.self) { pair in
+                        HStack {
+                            Text(pair[0]!)
+                            Spacer()
+                            Text(pair[1]!)
+                        }
                     }
                 }
             }
-        }
         }
         .navigationBarTitle("Large Set of Geocoding Calls")
     }

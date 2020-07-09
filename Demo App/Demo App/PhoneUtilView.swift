@@ -19,6 +19,7 @@ struct PhoneUtilView: View {
     @State private var formatSelection = 0
     @State private var formattedPhoneNumber: String = ""
     let formatOptions = ["Select a phone number format", "E164", "INTERNATIONAL", "NATIONAL", "RFC3966"]
+    
     var body: some View {
         VStack {
             Form {

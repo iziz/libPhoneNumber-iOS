@@ -23,7 +23,7 @@ struct ContentView: View {
                 NavigationLink(destination: GeocodingView()) {
                     Text("Phone Util")
                 }
-
+                
             }
             .navigationBarTitle("libPhoneNumber-iOS")
         }
