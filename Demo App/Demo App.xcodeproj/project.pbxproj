@@ -142,9 +142,11 @@
 				94217C8C24B6410200DFBE5C /* AppDelegate.swift */,
 				94217C8E24B6410200DFBE5C /* SceneDelegate.swift */,
 				94217C9024B6410200DFBE5C /* ContentView.swift */,
-				9478475B24B9261E004F5637 /* Geocoding */,
-				9478475D24B92635004F5637 /* PhoneUtil */,
-				9478475C24B9262B004F5637 /* Formatter */,
+				94217CBC24B644F900DFBE5C /* GeocodingView.swift */,
+				94217CBE24B64E2900DFBE5C /* GeocodingTableView.swift */,
+				94217CC024B651D800DFBE5C /* GeocodingSearchView.swift */,
+				94217CC424B78C6300DFBE5C /* PhoneUtilView.swift */,
+				94EC89C324B8FC2A003AE33C /* FormatterView.swift */,
 				94217C9224B6410200DFBE5C /* Assets.xcassets */,
 				94217C9724B6410200DFBE5C /* LaunchScreen.storyboard */,
 				94217C9A24B6410200DFBE5C /* Info.plist */,
@@ -177,32 +179,6 @@
 				94217CB024B6410200DFBE5C /* Info.plist */,
 			);
 			path = "Demo AppUITests";
-			sourceTree = "<group>";
-		};
-		9478475B24B9261E004F5637 /* Geocoding */ = {
-			isa = PBXGroup;
-			children = (
-				94217CBC24B644F900DFBE5C /* GeocodingView.swift */,
-				94217CBE24B64E2900DFBE5C /* GeocodingTableView.swift */,
-				94217CC024B651D800DFBE5C /* GeocodingSearchView.swift */,
-			);
-			path = Geocoding;
-			sourceTree = "<group>";
-		};
-		9478475C24B9262B004F5637 /* Formatter */ = {
-			isa = PBXGroup;
-			children = (
-				94EC89C324B8FC2A003AE33C /* FormatterView.swift */,
-			);
-			path = Formatter;
-			sourceTree = "<group>";
-		};
-		9478475D24B92635004F5637 /* PhoneUtil */ = {
-			isa = PBXGroup;
-			children = (
-				94217CC424B78C6300DFBE5C /* PhoneUtilView.swift */,
-			);
-			path = PhoneUtil;
 			sourceTree = "<group>";
 		};
 		9F5E8E0A45473DA6153E7CE6 /* Frameworks */ = {
