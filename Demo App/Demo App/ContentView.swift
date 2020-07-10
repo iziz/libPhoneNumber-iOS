@@ -15,15 +15,12 @@ struct ContentView: View {
                 NavigationLink(destination: GeocodingView()) {
                     Text("Geocoding")
                 }
-                
                 NavigationLink(destination: PhoneUtilView()) {
                     Text("Phone Number Parser")
                 }
-                
-                NavigationLink(destination: GeocodingView()) {
-                    Text("Phone Util")
+                NavigationLink(destination: FormatterView()) {
+                    Text("Phone Number Formatter")
                 }
-                
             }
             .navigationBarTitle("libPhoneNumber-iOS")
         }
