@@ -23,9 +23,8 @@ int main(int argc, const char *argv[]) {
     } else {
       NSString *geocodingMetadataDirectory = @(argv[1]);
       NSURL *databaseDesiredLocation = [NSURL URLWithString:@(argv[2])];
-
       NBGeocoderMetadataParser *metadataParser =
-          [[NBGeocoderMetadataParser alloc] initWithDestinationPath:databaseDesiredLocation];
+          [[NBGeocoderMetadataParser alloc] initWithDestinationPath:[databaseDesiredLocation copy]];
       NSError *error;
       NSArray *languages =
           [[NSFileManager defaultManager] contentsOfDirectoryAtPath:geocodingMetadataDirectory

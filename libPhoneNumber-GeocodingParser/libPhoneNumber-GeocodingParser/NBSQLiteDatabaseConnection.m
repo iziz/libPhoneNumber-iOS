@@ -30,7 +30,7 @@ static NSString *const createIndexStatement = @"CREATE INDEX IF NOT EXISTS natio
 
 - (instancetype)initWithCountryCode:(NSString *)countryCode
                        withLanguage:(NSString *)language
-             withDestinationPath:(NSURL *)destinationPath {
+                withDestinationPath:(NSURL *)destinationPath {
   self = [super init];
   if (self != nil) {
     NSString *databasePath = [[NSString alloc]
