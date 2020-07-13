@@ -30,11 +30,11 @@ static NSString *const createIndexStatement = @"CREATE INDEX IF NOT EXISTS natio
 
 - (instancetype)initWithCountryCode:(NSString *)countryCode
                        withLanguage:(NSString *)language
-             withDesiredDestination:(NSURL *)desiredDestination {
+             withDestinationPath:(NSURL *)destinationPath {
   self = [super init];
   if (self != nil) {
     NSString *databasePath = [[NSString alloc]
-        initWithString:[NSString stringWithFormat:@"%@/%@.db", desiredDestination, language]];
+        initWithString:[NSString stringWithFormat:@"%@/%@.db", destinationPath, language]];
     _sqliteDatabaseCode = sqlite3_open([databasePath UTF8String], &_DB);
 
     if (_sqliteDatabaseCode == SQLITE_OK) {
@@ -45,7 +45,7 @@ static NSString *const createIndexStatement = @"CREATE INDEX IF NOT EXISTS natio
     } else {
       NSLog(@"Cannot open database at desired location: %@. \n"
             @"SQLite3 Error Message: %s",
-            desiredDestination, sqlite3_errstr(_sqliteDatabaseCode));
+            destinationPath, sqlite3_errstr(_sqliteDatabaseCode));
     }
   }
   return self;

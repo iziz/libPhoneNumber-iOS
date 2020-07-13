@@ -9,13 +9,13 @@
 #import "NBGeocoderMetadataParser.h"
 
 @implementation NBGeocoderMetadataParser {
-  NSURL *_desiredDatabaseLocation;
+  NSURL *destinationPath;
 }
 
-- (instancetype)initWithDestinationPath:(NSURL *)desiredDatabaseLocation {
+- (instancetype)initWithDestinationPath:(NSURL *)destinationPath {
   self = [super init];
   if (self != nil) {
-    _desiredDatabaseLocation = desiredDatabaseLocation;
+    destinationPath = destinationPath;
   }
   return self;
 }
@@ -34,7 +34,7 @@
   NBSQLiteDatabaseConnection *databaseConnection =
       [[NBSQLiteDatabaseConnection alloc] initWithCountryCode:countryCode
                                                  withLanguage:languageCode
-                                       withDesiredDestination:_desiredDatabaseLocation];
+                                       withDestinationPath:destinationPath];
 
   // Split into phone number prefix and region description.
   NSCharacterSet *separator = [NSCharacterSet newlineCharacterSet];
