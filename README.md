@@ -157,7 +157,7 @@ override func viewDidLoad() {
 
 ## Usage - **NBAsYouTypeFormatter**
 ```obj-c
-    NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+ NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
     NSLog(@"%@", [f inputDigit:@"6"]); // "6"
     NSLog(@"%@", [f inputDigit:@"5"]); // "65"
     NSLog(@"%@", [f inputDigit:@"0"]); // "650"
@@ -178,31 +178,31 @@ override func viewDidLoad() {
 
 ## Usage - **NBPhoneNumberOfflineGeocoder**
 ```obj-c
-       NBPhoneNumberOfflineGeocoder *geocoder = [[NBPhoneNumberOfflineGeocoder alloc] init];
+NBPhoneNumberOfflineGeocoder *geocoder = [[NBPhoneNumberOfflineGeocoder alloc] init];
     
-       // unitedStatesPhoneNumber                   : +16509601234
-       NSLog(@Valid US Number: "%@", [geocoder descriptionForNumber: unitedStatesPhoneNumber 
+    // unitedStatesPhoneNumber                   : +16509601234
+    NSLog(@Valid US Number: "%@", [geocoder descriptionForNumber: unitedStatesPhoneNumber 
                                                withLanguageCode: @"en"]);
-       // Convenience Method
-       NSLog(@"Convenience Method: %@", [geocoder descriptionForNumber: unitedStatesPhoneNumber]);
+    // Convenience Method
+    NSLog(@"Convenience Method: %@", [geocoder descriptionForNumber: unitedStatesPhoneNumber]);
        
-       // United States Phone Number, with user located in Italy and device language set to Spanish
-       NSLog(@"Method using Spanish Language: %@", [geocoder descriptionForNumber: unitedStatesPhoneNumber 
+    // United States Phone Number, with user located in Italy and device language set to Spanish
+    NSLog(@"Method using Spanish Language: %@", [geocoder descriptionForNumber: unitedStatesPhoneNumber 
                                   withLanguageCode: @"es" 
                                     withUserRegion: @"IT"]);
 
-       // southKoreaPhoneNumber                     : +8222123456
-       NSLog(@"South Korea Phone Number: %@", [geocoder descriptionForNumber: southKoreaPhoneNumber 
+    // southKoreaPhoneNumber                     : +8222123456
+    NSLog(@"South Korea Phone Number: %@", [geocoder descriptionForNumber: southKoreaPhoneNumber 
                                                             withLanguageCode: @"en"]);
-       NSLog(@"South Korea Phone Number: %@", [geocoder descriptionForNumber: southKoreanPhoneNumber 
+    NSLog(@"South Korea Phone Number: %@", [geocoder descriptionForNumber: southKoreanPhoneNumber 
                                                             withLanguageCode: @"ko"]);
 
-       // invalidUSPhoneNumber                      : +1123456789
-       NSLog(@"%@", [geocoder descriptionForNumber: invalidUSPhoneNumber 
+    // invalidUSPhoneNumber                      : +1123456789
+    NSLog(@"%@", [geocoder descriptionForNumber: invalidUSPhoneNumber 
                                   withLanguageCode: @"en"]);
                                   
-       // Non-geographical South Korea Phone Number: +82101234567
-       NSLog(@"Non-geographical number: %@", [geocoder descriptionForNumber: southKoreaMobilePhone]);
+    // Non-geographical South Korea Phone Number: +82101234567
+    NSLog(@"Non-geographical number: %@", [geocoder descriptionForNumber: southKoreaMobilePhone]);
 ```
 ##### Output
 ```
