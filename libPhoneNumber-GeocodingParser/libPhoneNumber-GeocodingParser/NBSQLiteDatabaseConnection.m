@@ -91,7 +91,14 @@ static NSString *const createIndexStatement = @"CREATE INDEX IF NOT EXISTS natio
 }
 
 - (int)resetInsertStatement {
-  return sqlite3_reset(_insertStatement) | sqlite3_clear_bindings(_insertStatement);
+    // If an error occurs during statement reset, return error code.
+    // Otherwise, return outcome of clearing bindings on the statement.
+    int sqlResultCode = sqlite3_reset(_insertStatement);
+    if (sqlResultCode != SQLITE_OK) {
+        return sqlResultCode;
+    } else {
+        return sqlite3_clear_bindings(_insertStatement);
+    }
 }
 
 - (int)createInsertStatement:(NSString *)phoneNumber withDescription:(NSString *)description {
