@@ -34,7 +34,7 @@ static NSString *const createIndexStatement = @"CREATE INDEX IF NOT EXISTS natio
   self = [super init];
   if (self != nil) {
     NSString *databasePath = [[NSString alloc]
-                              initWithString:[NSString stringWithFormat:@"%@/%@.db", destinationPath.path, language]];
+        initWithString:[NSString stringWithFormat:@"%@/%@.db", destinationPath.path, language]];
     _sqliteDatabaseCode = sqlite3_open([databasePath UTF8String], &_DB);
 
     if (_sqliteDatabaseCode == SQLITE_OK) {
