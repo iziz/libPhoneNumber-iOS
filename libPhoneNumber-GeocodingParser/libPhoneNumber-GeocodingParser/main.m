@@ -22,7 +22,7 @@ int main(int argc, const char *argv[]) {
       NSLog(@"Example arguments: Users/JohnDoe/Documents/geocoding Users/JohnDoe/Desktop");
     } else {
       NSString *geocodingMetadataDirectory = @(argv[1]);
-      NSURL *databaseDesiredLocation = [NSURL URLWithString:@(argv[2])];
+      NSURL *databaseDesiredLocation = [NSURL fileURLWithPath:@(argv[2])];
       NBGeocoderMetadataParser *metadataParser =
           [[NBGeocoderMetadataParser alloc] initWithDestinationPath:[databaseDesiredLocation copy]];
       NSError *error;

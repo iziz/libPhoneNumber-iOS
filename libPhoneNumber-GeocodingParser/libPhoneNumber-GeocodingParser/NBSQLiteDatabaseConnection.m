@@ -34,7 +34,7 @@ static NSString *const createIndexStatement = @"CREATE INDEX IF NOT EXISTS natio
   self = [super init];
   if (self != nil) {
     NSString *databasePath = [[NSString alloc]
-        initWithString:[NSString stringWithFormat:@"%@/%@.db", destinationPath, language]];
+                              initWithString:[NSString stringWithFormat:@"%@/%@.db", destinationPath.path, language]];
     _sqliteDatabaseCode = sqlite3_open([databasePath UTF8String], &_DB);
 
     if (_sqliteDatabaseCode == SQLITE_OK) {
@@ -79,12 +79,14 @@ static NSString *const createIndexStatement = @"CREATE INDEX IF NOT EXISTS natio
   char *sqliteErrorMessage;
   if (sqlite3_exec(_DB, sqliteCreateTableStatement, NULL, NULL, &sqliteErrorMessage) != SQLITE_OK) {
     NSLog(@"Error creating table, %s", sqliteErrorMessage);
+    return;
   }
 
   NSString *createIndexQuery = [NSString stringWithFormat:createIndexStatement, countryCode];
   const char *sqlCreateIndexStatement = [createIndexQuery UTF8String];
   if (sqlite3_exec(_DB, sqlCreateIndexStatement, NULL, NULL, &sqliteErrorMessage) != SQLITE_OK) {
     NSLog(@"Error occurred when applying index to nationalnumber column: %s", sqliteErrorMessage);
+    return;
   }
 }
 
