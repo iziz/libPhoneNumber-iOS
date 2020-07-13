@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NBGeocoderMetadataParser : NSObject
 
-- (instancetype)initWithDesiredDatabaseLocation:(NSString *)desiredDatabaseLocation;
+- (instancetype)initWithDestinationPath:(NSURL *)desiredDatabaseLocation;
 
 - (void)convertFileToSQLiteDatabase:(NSString *)metaData
                        withFileName:(NSString *)textFile

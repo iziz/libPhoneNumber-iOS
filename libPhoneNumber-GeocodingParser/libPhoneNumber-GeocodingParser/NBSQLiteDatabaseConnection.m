@@ -10,7 +10,7 @@
 
 @implementation NBSQLiteDatabaseConnection {
  @private
-  NSString *_databasePath;
+  NSURL *_databasePath;
   sqlite3 *_DB;
   sqlite3_stmt *_insertStatement;
   int _sqliteDatabaseCode;
@@ -30,7 +30,7 @@ static NSString *const createIndexStatement = @"CREATE INDEX IF NOT EXISTS natio
 
 - (instancetype)initWithCountryCode:(NSString *)countryCode
                        withLanguage:(NSString *)language
-             withDesiredDestination:(NSString *)desiredDestination {
+             withDesiredDestination:(NSURL *)desiredDestination {
   self = [super init];
   if (self != nil) {
     NSString *databasePath = [[NSString alloc]
@@ -82,15 +82,14 @@ static NSString *const createIndexStatement = @"CREATE INDEX IF NOT EXISTS natio
   }
 
   NSString *createIndexQuery = [NSString stringWithFormat:createIndexStatement, countryCode];
-  const char *SQLCreateIndexStatement = [createIndexQuery UTF8String];
-  if (sqlite3_exec(_DB, SQLCreateIndexStatement, NULL, NULL, &sqliteErrorMessage) != SQLITE_OK) {
+  const char *sqlCreateIndexStatement = [createIndexQuery UTF8String];
+  if (sqlite3_exec(_DB, sqlCreateIndexStatement, NULL, NULL, &sqliteErrorMessage) != SQLITE_OK) {
     NSLog(@"Error occurred when applying index to nationalnumber column: %s", sqliteErrorMessage);
   }
 }
 
 - (int)resetInsertStatement {
-  sqlite3_reset(_insertStatement);
-  return sqlite3_clear_bindings(_insertStatement);
+  return sqlite3_reset(_insertStatement) | sqlite3_clear_bindings(_insertStatement);
 }
 
 - (int)createInsertStatement:(NSString *)phoneNumber withDescription:(NSString *)description {
@@ -99,6 +98,7 @@ static NSString *const createIndexStatement = @"CREATE INDEX IF NOT EXISTS natio
     NSLog(@"SQLite3 error occurred when resetting and clearing bindings in "
           @"insert statement: %s",
           sqlite3_errstr(sqliteResultCode));
+    return sqliteResultCode;
   } else {
     sqlite3_bind_text(_insertStatement, 1, [phoneNumber UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(_insertStatement, 2, [description UTF8String], -1, SQLITE_TRANSIENT);

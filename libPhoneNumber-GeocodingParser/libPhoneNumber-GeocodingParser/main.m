@@ -19,17 +19,23 @@ int main(int argc, const char *argv[]) {
             @"is stored on disk.");
       NSLog(@"2. The complete directory path to the desired location to store the corresponding "
             @"SQLite databases created.");
-      NSLog(@"Example arguments: Users/JohnDoe/Documents/geocoding   Users/JohnDoe/Desktop");
+      NSLog(@"Example arguments: Users/JohnDoe/Documents/geocoding Users/JohnDoe/Desktop");
     } else {
-      NSString *geocodingMetadataDirectory = [NSString stringWithUTF8String:argv[1]];
-      NSString *databaseDesiredLocation = [NSString stringWithUTF8String:argv[2]];
+      NSString *geocodingMetadataDirectory = @(argv[1]);
+      NSURL *databaseDesiredLocation = [NSURL URLWithString:@(argv[2])];
 
-      NBGeocoderMetadataParser *metadataParser = [[NBGeocoderMetadataParser alloc]
-          initWithDesiredDatabaseLocation:databaseDesiredLocation];
-
+      NBGeocoderMetadataParser *metadataParser =
+          [[NBGeocoderMetadataParser alloc] initWithDestinationPath:databaseDesiredLocation];
+      NSError *error;
       NSArray *languages =
           [[NSFileManager defaultManager] contentsOfDirectoryAtPath:geocodingMetadataDirectory
-                                                              error:NULL];
+                                                              error:&error];
+      if (error != NULL) {
+        NSLog(@"Error occurred when trying to read directory: %@"
+              @"Error message: %@",
+              geocodingMetadataDirectory, [error localizedDescription]);
+        return 1;
+      }
       NSArray *textFilesAvailable;
       NSString *languageFolderPath;
       for (NSString *language in languages) {
@@ -38,9 +44,14 @@ int main(int argc, const char *argv[]) {
             [NSString stringWithFormat:@"%@/%@", geocodingMetadataDirectory, language];
         textFilesAvailable =
             [[NSFileManager defaultManager] contentsOfDirectoryAtPath:languageFolderPath
-                                                                error:NULL];
-        [textFilesAvailable enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-          NSString *filename = (NSString *)obj;
+                                                                error:&error];
+        if (error != NULL) {
+          NSLog(@"Error occurred when trying to read files for the language directory: %@",
+                languageFolderPath);
+          error = NULL;
+          continue;
+        }
+        for (NSString *filename in textFilesAvailable) {
           NSString *extension = [[filename pathExtension] lowercaseString];
 
           if ([extension isEqualToString:@"txt"]) {
@@ -50,7 +61,7 @@ int main(int argc, const char *argv[]) {
                                            withFileName:filename
                                            withLanguage:language];
           }
-        }];
+        }
         NSLog(@"Created SQLite database file for the language: %@", language);
       }
     }

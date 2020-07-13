@@ -9,10 +9,10 @@
 #import "NBGeocoderMetadataParser.h"
 
 @implementation NBGeocoderMetadataParser {
-  NSString *_desiredDatabaseLocation;
+  NSURL *_desiredDatabaseLocation;
 }
 
-- (instancetype)initWithDesiredDatabaseLocation:(NSString *)desiredDatabaseLocation {
+- (instancetype)initWithDestinationPath:(NSURL *)desiredDatabaseLocation {
   self = [super init];
   if (self != nil) {
     _desiredDatabaseLocation = desiredDatabaseLocation;
