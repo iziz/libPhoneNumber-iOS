@@ -116,9 +116,7 @@ extension GeocodingTableView {
 }
 
 let phoneNumbers: [String] = ["19098611758", "14159601234", "12014321234", "12034811234", "12067061234", "12077711234", "12144681234", "12158231234", "12394351234", "12534591234"]
-var x = 20
-var geocoder: NBPhoneNumberOfflineGeocoder = NBPhoneNumberOfflineGeocoder()
-var phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
+private var geocoder: NBPhoneNumberOfflineGeocoder = NBPhoneNumberOfflineGeocoder()
+private var phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
 var regionDescriptions: [[String?]] = []
 var runtimeArray: [CGFloat] = []
-

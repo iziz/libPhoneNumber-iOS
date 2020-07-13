@@ -66,6 +66,7 @@
 		94217CBE24B64E2900DFBE5C /* GeocodingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingTableView.swift; sourceTree = "<group>"; };
 		94217CC024B651D800DFBE5C /* GeocodingSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingSearchView.swift; sourceTree = "<group>"; };
 		94217CC424B78C6300DFBE5C /* PhoneUtilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneUtilView.swift; sourceTree = "<group>"; };
+		9478477724BCEC49004F5637 /* libPhoneNumber_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = libPhoneNumber_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94EC89C324B8FC2A003AE33C /* FormatterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatterView.swift; sourceTree = "<group>"; };
 		A00636F0EF460907F9A981CB /* Pods-Demo App-Demo AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo App-Demo AppUITests.release.xcconfig"; path = "Target Support Files/Pods-Demo App-Demo AppUITests/Pods-Demo App-Demo AppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A68840919C83E038AFEC55DA /* Pods-Demo App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo App.release.xcconfig"; path = "Target Support Files/Pods-Demo App/Pods-Demo App.release.xcconfig"; sourceTree = "<group>"; };
@@ -184,6 +185,7 @@
 		9F5E8E0A45473DA6153E7CE6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9478477724BCEC49004F5637 /* libPhoneNumber_iOS.framework */,
 				7E5628D7D65C905AACC99393 /* Pods_Demo_App.framework */,
 				E98444A6F741FEC5813830DF /* Pods_Demo_App_Demo_AppUITests.framework */,
 				3F3BF7A812E08B2D63C260E4 /* Pods_Demo_AppTests.framework */,
@@ -602,7 +604,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 87F9D9221943092C8D0B36DD /* Pods-Demo App.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Demo App/Preview Content\"";
@@ -614,7 +615,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Demo-Apprasty";
+				"OTHER_CFLAGS[arch=*]" = "-DSHORT_NUMBER_SUPPORT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Demo-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -625,7 +627,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A68840919C83E038AFEC55DA /* Pods-Demo App.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Demo App/Preview Content\"";
@@ -637,7 +638,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Demo-Apprasty";
+				OTHER_CFLAGS = "";
+				"OTHER_CFLAGS[arch=*]" = "-DSHORT_NUMBER_SUPPORT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Demo-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -18,6 +18,9 @@ struct PhoneUtilView: View {
     @State private var searchMade: Bool = false
     @State private var formatSelection = 0
     @State private var formattedPhoneNumber: String = ""
+    @State private var isShortNumber: Bool = false
+    var phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
+
     let formatOptions = ["Select a phone number format", "E164", "INTERNATIONAL", "NATIONAL", "RFC3966"]
     
     var body: some View {
@@ -49,6 +52,10 @@ struct PhoneUtilView: View {
                     SuccessResultView
                 } else {
                     FailedResultView
+                }
+                
+                if isShortNumber {
+                    Text("Short Number Details")
                 }
             }
         }
@@ -86,11 +93,8 @@ struct PhoneUtilView: View {
 extension PhoneUtilView {
     func parsePhoneNumber() {
         do {
-            print(formatSelection)
             self.searchMade = true
-            print(Locale.current.regionCode!)
             let parsedPhoneNumber: NBPhoneNumber = try phoneUtil.parse(phoneNumber, defaultRegion: Locale.current.regionCode!)
-            print(parsedPhoneNumber)
             self.isValidNumber = phoneUtil.isValidNumber(parsedPhoneNumber)
             self.countryCode = parsedPhoneNumber.countryCode.stringValue
             self.nationalNumber = parsedPhoneNumber.nationalNumber.stringValue
@@ -99,6 +103,7 @@ extension PhoneUtilView {
             } else {
                 self.formattedPhoneNumber = ""
             }
+            
         } catch let error {
             print(error)
         }

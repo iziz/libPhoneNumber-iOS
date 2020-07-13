@@ -19,8 +19,8 @@ struct GeocodingSearchView: View {
 
     let locales = ["Default Device Language", "ar", "be", "bg", "bs", "de", "el", "en", "es", "fa", "fi",  "fr", "hr", "hu", "hy", "id", "it", "iw", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sq", "sr", "sv", "th", "tr", "uk", "vi", "zh", "zh_Hant"]
     
-    let geocoder = NBPhoneNumberOfflineGeocoder()
-    let phoneUtil = NBPhoneNumberUtil()
+    private let geocoder = NBPhoneNumberOfflineGeocoder()
+    private let phoneUtil = NBPhoneNumberUtil()
     
     var body: some View {
         VStack {

@@ -3,7 +3,7 @@
 //  Demo App
 //
 //  Created by Rastaar Haghi on 7/10/20.
-//  Copyright © 2020 Rastaar Haghi. All rights reserved.
+//  Copyright © 2020 Google LLC. All rights reserved.
 //
 
 import SwiftUI
@@ -17,7 +17,7 @@ struct FormatterView: View {
         VStack {
             Form {
                 Section(header: Text("Phone Number")) {
-                    TextField("Ex: 19098611758", text: $phoneNumber)
+                    TextField("Ex: 19091234567", text: $phoneNumber)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .font(.largeTitle)
                         .padding()
@@ -28,7 +28,9 @@ struct FormatterView: View {
                 }
             }
         }
-        .navigationBarTitle("NBAsYouTypeFormatter")
+        .navigationBarTitle("As-You-Type Formatter")
+            .lineLimit(2)
+            .multilineTextAlignment(.center)
     }
     
     func formatPhoneNumber(phoneNumber: String) -> String{
