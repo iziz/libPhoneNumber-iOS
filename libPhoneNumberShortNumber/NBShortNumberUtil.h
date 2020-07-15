@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NBPhoneNumberUtil.h"
 
 @class NBPhoneNumber;
 
@@ -20,7 +19,7 @@ typedef NS_ENUM(NSUInteger, NBEShortNumberCost) {
   NBEShortNumberCostPremiumRate = 3,
 };
 
-@interface NBPhoneNumberUtil (ShortNumber)
+@interface NBShortNumberUtil : NSObject
 
 // Short number related methods
 /**

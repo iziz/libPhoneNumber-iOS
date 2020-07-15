@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Includes methods used only for testing NBPhoneNumberUtil+ShortNumber.
  */
-@interface NBPhoneNumberUtil(ShortNumberTestHelper)
+@interface NBShortNumberTestHelper : NSObject
 
 - (NSString *)exampleShortNumberForCost:(NBEShortNumberCost)cost regionCode:(NSString *)regionCode;
 - (NSString *)exampleShortNumberWithRegionCode:(NSString *)regionCode;
