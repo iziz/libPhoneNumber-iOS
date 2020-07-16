@@ -1,6 +1,6 @@
 //
-//  NBPhoneNumberUtil+ShortNumber.m
-//  libPhoneNumberiOS
+//  NBShortNumberUtil.m
+//  libPhoneNumberShortNumber
 //
 //  Created by Paween Itthipalkul on 11/29/17.
 //  Copyright © 2017 Google LLC. All rights reserved.
@@ -8,30 +8,31 @@
 
 #import <Foundation/Foundation.h>
 
-#import "NBShortNumberUtil.h"
-#import "NBPhoneNumberUtil.h"
-#import "NBShortNumberMetadataHelper.h"
 #import "NBPhoneMetaData.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
+#import "NBPhoneNumberUtil.h"
 #import "NBRegExMatcher.h"
 #import "NBRegularExpressionCache.h"
+#import "NBShortNumberMetadataHelper.h"
+#import "NBShortNumberUtil.h"
 
-static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
+static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 
 @implementation NBShortNumberUtil {
-    NBShortNumberMetadataHelper *_helper;
-    NBRegExMatcher *_matcher;
-    NBPhoneNumberUtil *_phoneUtil;
+  NBShortNumberMetadataHelper *_helper;
+  NBRegExMatcher *_matcher;
+  NBPhoneNumberUtil *_phoneUtil;
 }
 
-- (instancetype) init {
-    self = [super init];
-    if (self != nil) {
-        _phoneUtil = [[NBPhoneNumberUtil alloc] init];
-        _helper = [[NBShortNumberMetadataHelper alloc] init];
-    }
-    return self;
+- (instancetype)init {
+  self = [super init];
+  if (self != nil) {
+    _phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    _helper = [[NBShortNumberMetadataHelper alloc] init];
+    _matcher = [[NBRegExMatcher alloc] init];
+  }
+  return self;
 }
 
 - (BOOL)isPossibleShortNumber:(NBPhoneNumber *)phoneNumber forRegion:(NSString *)regionDialingFrom {
@@ -49,7 +50,8 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 }
 
 - (BOOL)isPossibleShortNumber:(NBPhoneNumber *)phoneNumber {
-  NSArray<NSString *> *regionCodes = [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
+  NSArray<NSString *> *regionCodes =
+      [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
   NSUInteger shortNumberLength = [[_phoneUtil getNationalSignificantNumber:phoneNumber] length];
   for (NSString *region in regionCodes) {
     NBPhoneMetaData *metadata = [_helper shortNumberMetadataForRegion:region];
@@ -65,9 +67,8 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
   return NO;
 }
 
-- (BOOL)isValidShortNumber:(NBPhoneNumber *)phoneNumber
-                 forRegion:(NSString *)regionDialingFrom {
-    NSLog(@"ISVALIDSHORTNUMBER: %@, %@", phoneNumber, regionDialingFrom);
+- (BOOL)isValidShortNumber:(NBPhoneNumber *)phoneNumber forRegion:(NSString *)regionDialingFrom {
+  NSLog(@"ISVALIDSHORTNUMBER: %@, %@", phoneNumber, regionDialingFrom);
   if (![self doesPhoneNumber:phoneNumber matchesRegion:regionDialingFrom]) {
     return NO;
   }
@@ -77,7 +78,7 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
     return NO;
   }
 
-  NSString *shortNumber = [_phoneUtil  getNationalSignificantNumber:phoneNumber];
+  NSString *shortNumber = [_phoneUtil getNationalSignificantNumber:phoneNumber];
   NBPhoneNumberDesc *generalDesc = metadata.generalDesc;
   if (![self matchesPossibleNumber:shortNumber andNationalNumber:generalDesc]) {
     return NO;
@@ -88,8 +89,9 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 }
 
 - (BOOL)isValidShortNumber:(NBPhoneNumber *)phoneNumber {
-  NSArray<NSString *> *regionCodes = [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
-    NSLog(@"REGION CODES: %@", regionCodes);
+  NSArray<NSString *> *regionCodes =
+      [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
+  NSLog(@"REGION CODES: %@", regionCodes);
   NSString *regionCode = [self regionCodeForShortNumber:phoneNumber fromRegionList:regionCodes];
   if (regionCodes.count > 1 && regionCode != nil) {
     // If a matching region had been found for the phone number from among two or more regions,
@@ -111,7 +113,7 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
     return NBEShortNumberCostUnknown;
   }
 
-  NSString *shortNumber = [_phoneUtil  getNationalSignificantNumber:phoneNumber];
+  NSString *shortNumber = [_phoneUtil getNationalSignificantNumber:phoneNumber];
 
   // The possible lengths are not present for a particular sub-type if they match the general
   // description; for this reason, we check the possible lengths against the general description
@@ -139,7 +141,8 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 }
 
 - (NBEShortNumberCost)expectedCostOfPhoneNumber:(NBPhoneNumber *)phoneNumber {
-  NSArray<NSString *> *regionCodes = [_phoneUtil  getRegionCodesForCountryCode:phoneNumber.countryCode];
+  NSArray<NSString *> *regionCodes =
+      [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
   if (regionCodes.count == 0) {
     return NBEShortNumberCostUnknown;
   }
@@ -172,12 +175,13 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 }
 
 - (BOOL)isPhoneNumberCarrierSpecific:(NBPhoneNumber *)phoneNumber {
-  NSArray<NSString *> *regionCodes = [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
+  NSArray<NSString *> *regionCodes =
+      [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
   NSString *regionCode = [self regionCodeForShortNumber:phoneNumber fromRegionList:regionCodes];
   NSString *nationalNumber = [_phoneUtil getNationalSignificantNumber:phoneNumber];
   NBPhoneMetaData *metadata = [_helper shortNumberMetadataForRegion:regionCode];
-  return (metadata != nil &&
-      ([self matchesPossibleNumber:nationalNumber andNationalNumber:metadata.carrierSpecific]));
+  return (metadata != nil && ([self matchesPossibleNumber:nationalNumber
+                                        andNationalNumber:metadata.carrierSpecific]));
 }
 
 - (BOOL)isPhoneNumberCarrierSpecific:(NBPhoneNumber *)phoneNumber forRegion:(NSString *)regionCode {
@@ -187,8 +191,8 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 
   NSString *nationalNumber = [_phoneUtil getNationalSignificantNumber:phoneNumber];
   NBPhoneMetaData *metadata = [_helper shortNumberMetadataForRegion:regionCode];
-  return (metadata != nil
-      && ([self matchesPossibleNumber:nationalNumber andNationalNumber:metadata.carrierSpecific]));
+  return (metadata != nil && ([self matchesPossibleNumber:nationalNumber
+                                        andNationalNumber:metadata.carrierSpecific]));
 }
 
 - (BOOL)isPhoneNumberSMSService:(NBPhoneNumber *)phoneNumber forRegion:(NSString *)regionCode {
@@ -198,8 +202,8 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 
   NSString *nationalNumber = [_phoneUtil getNationalSignificantNumber:phoneNumber];
   NBPhoneMetaData *metadata = [_helper shortNumberMetadataForRegion:regionCode];
-  return (metadata != nil
-      && ([self matchesPossibleNumber:nationalNumber andNationalNumber:metadata.smsServices]));
+  return (metadata != nil && ([self matchesPossibleNumber:nationalNumber
+                                        andNationalNumber:metadata.smsServices]));
 }
 
 - (BOOL)connectsToEmergencyNumberFromString:(NSString *)number forRegion:(NSString *)regionCode {
@@ -228,7 +232,8 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
  * being dialed from.
  */
 - (BOOL)doesPhoneNumber:(NBPhoneNumber *)phoneNumber matchesRegion:(NSString *)regionCode {
-  NSArray<NSString *> *regionCodes = [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
+  NSArray<NSString *> *regionCodes =
+      [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
   return [regionCodes containsObject:regionCode];
 }
 
@@ -255,8 +260,8 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 }
 
 - (BOOL)matchesPossibleNumber:(NSString *)number andNationalNumber:(NBPhoneNumberDesc *)numberDesc {
-  if (numberDesc.possibleLength.count > 0
-    && ![numberDesc.possibleLength containsObject:@(number.length)]) {
+  if (numberDesc.possibleLength.count > 0 &&
+      ![numberDesc.possibleLength containsObject:@(number.length)]) {
     return NO;
   }
 
@@ -289,11 +294,13 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 
 - (BOOL)doesRegionDialingFrom:(NSString *)regionCode
            matchesPhoneNumber:(NBPhoneNumber *)phoneNumber {
-  NSArray<NSString *> *regionCodes = [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
+  NSArray<NSString *> *regionCodes =
+      [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
   return [regionCodes containsObject:regionCode];
 }
 
-- (BOOL)matchesEmergencyNumberHelper:(NSString *)number regionCode:(NSString *)regionCode
+- (BOOL)matchesEmergencyNumberHelper:(NSString *)number
+                          regionCode:(NSString *)regionCode
                    allowsPrefixMatch:(BOOL)allowsPrefixMatch {
   NSString *possibleNumber = [_phoneUtil extractPossibleNumber:number];
   NSRegularExpression *regex =
@@ -321,8 +328,8 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
   BOOL allowsPrefixMatchForRegion = allowsPrefixMatch && ![exactRegions containsObject:regionCode];
 
   return [_matcher matchNationalNumber:normalizedNumber
-                           phoneNumberDesc:metadata.emergency
-                         allowsPrefixMatch:allowsPrefixMatchForRegion];
+                       phoneNumberDesc:metadata.emergency
+                     allowsPrefixMatch:allowsPrefixMatchForRegion];
 }
 
 @end

@@ -1,6 +1,6 @@
 //
-//  NBPhoneNumberUtil+ShortNumberTestHelper.h
-//  libPhoneNumber
+//  NBShortNumberTestHelper.h
+//  libPhoneNumberShortNumber
 //
 //  Created by Paween Itthipalkul on 12/1/17.
 //  Copyright © 2017 Google LLC. All rights reserved.

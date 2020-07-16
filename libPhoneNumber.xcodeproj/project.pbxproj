@@ -137,7 +137,6 @@
 		8B1FEFA21EB7BFC600FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8B1FEFA31EB7BFC600FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		9407259424BE768A0011AE05 /* libPhoneNumberShortNumber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9407258B24BE768A0011AE05 /* libPhoneNumberShortNumber.framework */; };
-		9407259924BE768A0011AE05 /* libPhoneNumberShortNumberTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9407259824BE768A0011AE05 /* libPhoneNumberShortNumberTests.m */; };
 		9407259B24BE768A0011AE05 /* libPhoneNumberShortNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 9407258D24BE768A0011AE05 /* libPhoneNumberShortNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		940725A224BE769D0011AE05 /* libPhoneNumberiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34ACBB851B7122AC0064B3BD /* libPhoneNumberiOS.framework */; platformFilter = ios; };
 		940725A324BE769D0011AE05 /* libPhoneNumberiOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34ACBB851B7122AC0064B3BD /* libPhoneNumberiOS.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -273,7 +272,6 @@
 		9407258D24BE768A0011AE05 /* libPhoneNumberShortNumber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libPhoneNumberShortNumber.h; sourceTree = "<group>"; };
 		9407258E24BE768A0011AE05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9407259324BE768A0011AE05 /* libPhoneNumberShortNumberTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = libPhoneNumberShortNumberTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9407259824BE768A0011AE05 /* libPhoneNumberShortNumberTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = libPhoneNumberShortNumberTests.m; sourceTree = "<group>"; };
 		9407259A24BE768A0011AE05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		940725A724BE77420011AE05 /* NBShortNumberUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBShortNumberUtil.h; sourceTree = "<group>"; };
 		940725A824BE77420011AE05 /* NBShortNumberUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBShortNumberUtil.m; sourceTree = "<group>"; };
@@ -558,7 +556,6 @@
 		9407259724BE768A0011AE05 /* libPhoneNumberShortNumberTests */ = {
 			isa = PBXGroup;
 			children = (
-				9407259824BE768A0011AE05 /* libPhoneNumberShortNumberTests.m */,
 				9407259A24BE768A0011AE05 /* Info.plist */,
 				940725AB24BF63050011AE05 /* NBShortNumberInfoTest.m */,
 				940725B024BF7B040011AE05 /* NBShortNumberTestHelper.h */,
@@ -1268,7 +1265,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9407259924BE768A0011AE05 /* libPhoneNumberShortNumberTests.m in Sources */,
 				940725AC24BF63050011AE05 /* NBShortNumberInfoTest.m in Sources */,
 				940725B224BF7B040011AE05 /* NBShortNumberTestHelper.m in Sources */,
 			);

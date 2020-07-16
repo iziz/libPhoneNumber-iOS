@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NBPhoneMetaData *)shortNumberMetadataForRegion:(NSString *)regionCode;
 
-
 @end
 
 NS_ASSUME_NONNULL_END

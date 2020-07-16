@@ -7,8 +7,8 @@
 //
 
 #import "NBShortNumberMetadataHelper.h"
-#import "NBMetadataHelper.h"
 #import "NBGeneratedShortNumberMetadata.h"
+#import "NBMetadataHelper.h"
 #import "NBPhoneMetaData.h"
 
 static NSString *StringByTrimming(NSString *aString) {
@@ -23,44 +23,38 @@ static NSString *StringByTrimming(NSString *aString) {
   return [aString stringByTrimmingCharactersInSet:whitespaceCharSet];
 }
 
-
-
 @implementation NBShortNumberMetadataHelper {
-    NSCache<NSString *, NBPhoneMetaData *> *_shortNumberMetadataCache;
-    NBMetadataHelper *_helper;
+  NSCache<NSString *, NBPhoneMetaData *> *_shortNumberMetadataCache;
+  NBMetadataHelper *_helper;
 }
 
 - (instancetype)init {
   self = [super init];
   if (self != nil) {
-      _helper = [[NBMetadataHelper alloc] init];
+    _helper = [[NBMetadataHelper alloc] init];
     _shortNumberMetadataCache = [[NSCache alloc] init];
   }
   return self;
 }
 
 + (NSDictionary *)shortNumberDataMap {
-    static NSDictionary *shortNumberDataDictionary;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-      shortNumberDataDictionary =
-          [self jsonObjectFromZippedDataWithBytes:kShortNumberMetaData
-                                 compressedLength:kShortNumberMetaDataCompressedLength
-                                   expandedLength:kShortNumberMetaDataExpandedLength];
-    });
-    return shortNumberDataDictionary;
+  static NSDictionary *shortNumberDataDictionary;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    shortNumberDataDictionary =
+        [self jsonObjectFromZippedDataWithBytes:kShortNumberMetaData
+                               compressedLength:kShortNumberMetaDataCompressedLength
+                                 expandedLength:kShortNumberMetaDataExpandedLength];
+  });
+  return shortNumberDataDictionary;
 }
 
-- (NBPhoneMetaData *)shortNumberMetadataForRegion:(NSString *)regionCode
-{
-    NSLog(@"ENTERED HERE");
-    regionCode = StringByTrimming(regionCode);
-    if (regionCode.length == 0) {
-        return nil;
-    }
-    NSLog(@"NOW HERE");
-
-    regionCode = [regionCode uppercaseString];
+- (NBPhoneMetaData *)shortNumberMetadataForRegion:(NSString *)regionCode {
+  regionCode = StringByTrimming(regionCode);
+  if (regionCode.length == 0) {
+    return nil;
+  }
+  regionCode = [regionCode uppercaseString];
 
   NBPhoneMetaData *cachedMetadata = [_shortNumberMetadataCache objectForKey:regionCode];
   if (cachedMetadata != nil) {
@@ -69,8 +63,6 @@ static NSString *StringByTrimming(NSString *aString) {
 
   NSDictionary *dict = [[self class] shortNumberDataMap][@"countryToMetadata"];
   NSArray *entry = dict[regionCode];
-    NSLog(@"finally HERE");
-
   if (entry) {
     NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] initWithEntry:entry];
     [_shortNumberMetadataCache setObject:metadata forKey:regionCode];
@@ -79,7 +71,6 @@ static NSString *StringByTrimming(NSString *aString) {
 
   return nil;
 }
-         
 
 /**
  * Expand gzipped data into a JSON object.
@@ -89,12 +80,12 @@ static NSString *StringByTrimming(NSString *aString) {
  * @param expandedLength Length of the expanded bytes.
  * @return JSON dictionary.
  */
-+ (NSDictionary *)jsonObjectFromZippedDataWithBytes:(z_const Bytef [])bytes
++ (NSDictionary *)jsonObjectFromZippedDataWithBytes:(z_const Bytef[])bytes
                                    compressedLength:(NSUInteger)compressedLength
                                      expandedLength:(NSUInteger)expandedLength {
   // Data is a gzipped JSON file that is embedded in the binary.
   // See GeneratePhoneNumberHeader.sh and PhoneNumberMetaData.h for details.
-  NSMutableData* gunzippedData = [NSMutableData dataWithLength:expandedLength];
+  NSMutableData *gunzippedData = [NSMutableData dataWithLength:expandedLength];
 
   z_stream zStream;
   memset(&zStream, 0, sizeof(zStream));

@@ -1,27 +1,26 @@
 //
-//  NBPhoneNumberUtil+ShortNumberTestHelper.m
-//  libPhoneNumber
+//  NBShortNumberTestHelper.m
+//  libPhoneNumberShortNumber
 //
 //  Created by Paween Itthipalkul on 12/1/17.
 //  Copyright © 2017 Google LLC. All rights reserved.
 //
 #import "NBShortNumberTestHelper.h"
-#import "NBShortNumberMetadataHelper.h"
 #import "NBPhoneMetadata.h"
 #import "NBPhoneNumberDesc.h"
+#import "NBShortNumberMetadataHelper.h"
 #import "NBShortNumberUtil.h"
 
-
 @implementation NBShortNumberTestHelper {
-    NBShortNumberMetadataHelper *_helper;
+  NBShortNumberMetadataHelper *_helper;
 }
 
-- (instancetype) init {
-    self = [super init];
-    if (self != nil) {
-        _helper = [[NBShortNumberMetadataHelper alloc] init];
-    }
-    return self;
+- (instancetype)init {
+  self = [super init];
+  if (self != nil) {
+    _helper = [[NBShortNumberMetadataHelper alloc] init];
+  }
+  return self;
 }
 
 - (NSString *)exampleShortNumberForCost:(NBEShortNumberCost)cost regionCode:(NSString *)regionCode {

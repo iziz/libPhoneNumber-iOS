@@ -1,5 +1,5 @@
 //
-//  NBPhoneNumberUtil+ShortNumber.h
+//  NBShortNumberUtil.h
 //  libPhoneNumberiOS
 //
 //  Created by Paween Itthipalkul on 11/29/17.
@@ -20,6 +20,8 @@ typedef NS_ENUM(NSUInteger, NBEShortNumberCost) {
 };
 
 @interface NBShortNumberUtil : NSObject
+
+@property(nonatomic) NSDictionary<NSNumber *, NSArray<NSString *> *> *countryToRegionCodeMap;
 
 // Short number related methods
 /**
@@ -190,4 +192,3 @@ typedef NS_ENUM(NSUInteger, NBEShortNumberCost) {
 @end
 
 NS_ASSUME_NONNULL_END
-
