@@ -542,13 +542,11 @@
 		9407258C24BE768A0011AE05 /* libPhoneNumberShortNumber */ = {
 			isa = PBXGroup;
 			children = (
+				94F6014424C11F03006BC7EE /* Metadata */,
 				9407258D24BE768A0011AE05 /* libPhoneNumberShortNumber.h */,
 				9407258E24BE768A0011AE05 /* Info.plist */,
 				940725A724BE77420011AE05 /* NBShortNumberUtil.h */,
 				940725A824BE77420011AE05 /* NBShortNumberUtil.m */,
-				940725AE24BF79BE0011AE05 /* NBGeneratedShortNumberMetadata.h */,
-				940725B324BF90290011AE05 /* NBShortNumberMetadataHelper.h */,
-				940725B424BF90290011AE05 /* NBShortNumberMetadataHelper.m */,
 			);
 			path = libPhoneNumberShortNumber;
 			sourceTree = "<group>";
@@ -562,6 +560,16 @@
 				940725B124BF7B040011AE05 /* NBShortNumberTestHelper.m */,
 			);
 			path = libPhoneNumberShortNumberTests;
+			sourceTree = "<group>";
+		};
+		94F6014424C11F03006BC7EE /* Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				940725B424BF90290011AE05 /* NBShortNumberMetadataHelper.m */,
+				940725B324BF90290011AE05 /* NBShortNumberMetadataHelper.h */,
+				940725AE24BF79BE0011AE05 /* NBGeneratedShortNumberMetadata.h */,
+			);
+			path = Metadata;
 			sourceTree = "<group>";
 		};
 		FD12C2711A8759AF00B53856 /* Model */ = {

@@ -1,6 +1,6 @@
 /*****
  * Data Generated from GeneratePhoneNumberHeader.sh
- * Off of PhoneNumberMetaDataForTesting.json, PhoneNumberMetaData.json, and ShortNumberMetaData.json
+ * Off of PhoneNumberMetaDataForTesting.json and PhoneNumberMetaData.json
  */
 
 #include <zlib.h>
