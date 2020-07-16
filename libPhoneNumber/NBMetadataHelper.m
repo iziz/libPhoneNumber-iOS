@@ -15,12 +15,6 @@
 // Cached metadata
 @property (nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *metadataCache;
 
-#if SHORT_NUMBER_SUPPORT
-
-@property (nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *shortNumberMetadataCache;
-
-#endif //SHORT_NUMBER_SUPPORT
-
 @end
 
 static NSString *StringByTrimming(NSString *aString) {
@@ -41,9 +35,6 @@ static NSString *StringByTrimming(NSString *aString) {
   self = [super init];
   if (self != nil) {
     _metadataCache = [[NSCache alloc] init];
-#if SHORT_NUMBER_SUPPORT
-    _shortNumberMetadataCache = [[NSCache alloc] init];
-#endif //SHORT_NUMBER_SUPPORT
   }
   return self;
 }
@@ -181,48 +172,6 @@ static NSString *StringByTrimming(NSString *aString) {
   string = StringByTrimming(string);
   return string.length != 0;
 }
-
-//#if SHORT_NUMBER_SUPPORT
-//
-//+ (NSDictionary *)shortNumberDataMap {
-//    static NSDictionary *shortNumberDataDictionary;
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//      shortNumberDataDictionary =
-//          [self jsonObjectFromZippedDataWithBytes:kShortNumberMetaData
-//                                 compressedLength:kShortNumberMetaDataCompressedLength
-//                                   expandedLength:kShortNumberMetaDataExpandedLength];
-//    });
-//    return shortNumberDataDictionary;
-//}
-//
-//- (NBPhoneMetaData *)shortNumberMetadataForRegion:(NSString *)regionCode
-//{
-//    regionCode = StringByTrimming(regionCode);
-//    if (regionCode.length == 0) {
-//        return nil;
-//    }
-//
-//    regionCode = [regionCode uppercaseString];
-//
-//  NBPhoneMetaData *cachedMetadata = [_shortNumberMetadataCache objectForKey:regionCode];
-//  if (cachedMetadata != nil) {
-//    return cachedMetadata;
-//  }
-//
-//  NSDictionary *dict = [[self class] shortNumberDataMap][@"countryToMetadata"];
-//  NSArray *entry = dict[regionCode];
-//  if (entry) {
-//    NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] initWithEntry:entry];
-//    [_shortNumberMetadataCache setObject:metadata forKey:regionCode];
-//    return metadata;
-//  }
-//
-//  return nil;
-//}
-//#endif //SHORT_NUMBER_SUPPORT
-
-
 
 /**
  * Expand gzipped data into a JSON object.

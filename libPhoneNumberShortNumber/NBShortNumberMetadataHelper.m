@@ -39,8 +39,6 @@ static NSString *StringByTrimming(NSString *aString) {
   return self;
 }
 
-//#if SHORT_NUMBER_SUPPORT
-
 + (NSDictionary *)shortNumberDataMap {
     static NSDictionary *shortNumberDataDictionary;
     static dispatch_once_t onceToken;

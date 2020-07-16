@@ -22,7 +22,6 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 @implementation NBShortNumberUtil {
     NBShortNumberMetadataHelper *_helper;
     NBRegExMatcher *_matcher;
-    NSDictionary<NSNumber *, NSArray<NSString *> *> *_countryToRegionCodeMap;
     NBPhoneNumberUtil *_phoneUtil;
 }
 
@@ -68,6 +67,7 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 
 - (BOOL)isValidShortNumber:(NBPhoneNumber *)phoneNumber
                  forRegion:(NSString *)regionDialingFrom {
+    NSLog(@"ISVALIDSHORTNUMBER: %@, %@", phoneNumber, regionDialingFrom);
   if (![self doesPhoneNumber:phoneNumber matchesRegion:regionDialingFrom]) {
     return NO;
   }
@@ -88,7 +88,8 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 }
 
 - (BOOL)isValidShortNumber:(NBPhoneNumber *)phoneNumber {
-  NSArray<NSString *> *regionCodes = [_phoneUtil  getRegionCodesForCountryCode:phoneNumber.countryCode];
+  NSArray<NSString *> *regionCodes = [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
+    NSLog(@"REGION CODES: %@", regionCodes);
   NSString *regionCode = [self regionCodeForShortNumber:phoneNumber fromRegionList:regionCodes];
   if (regionCodes.count > 1 && regionCode != nil) {
     // If a matching region had been found for the phone number from among two or more regions,

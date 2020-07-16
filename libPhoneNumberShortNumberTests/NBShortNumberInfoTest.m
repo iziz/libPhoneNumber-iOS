@@ -63,11 +63,13 @@
 }
 
 - (void)testIsValidShortNumber {
+    NBShortNumberUtil *util = [[NBShortNumberUtil alloc] init];
 
   NBPhoneNumber *valid = [[NBPhoneNumber alloc] init];
   valid.countryCode = @33;
   valid.nationalNumber = @1010;
-  XCTAssertTrue([_shortNumberUtil isValidShortNumber:valid]);
+    NSLog(@"RESULT: %d", [util isValidShortNumber:valid]);
+  XCTAssertTrue([util isValidShortNumber:valid]);
 
   NBPhoneNumber *validWithRegion = [_phoneNumberUtil parse:@"1010" defaultRegion:@"FR" error:nil];
   XCTAssertNotNil(validWithRegion);
