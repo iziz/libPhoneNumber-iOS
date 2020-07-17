@@ -10,14 +10,52 @@ import SwiftUI
 import libPhoneNumber_iOS
 import libPhoneNumberGeocoding
 
+struct LocaleInfo {
+    let localeCode: String
+    let language: String
+}
+
 struct GeocodingSearchView: View {
     @State private var localeSelection = 0
     @State private var phoneNumber: String = ""
     @State private var regionDescription: String = ""
-
-    let languages = ["Default Device Language", "Arabic", "Belarusian", "Bulgarian", "Bosnian", "German", "Greek", "English", "Spanish", "Persian", "Finnish", "French", "Croatian", "Hungarian", "Armenian", "Indonesian", "Italian", "Hebrew", "Japanese", "Korean", "Dutch", "Polish", "Portuguese", "Romanian", "Russian", "Albanian", "Serbian", "Swedish", "Thai", "Turkish", "Ukrainian", "Vietnamese", "Chinese", "Chinese (Traditional)"]
-
-    let locales = ["Default Device Language", "ar", "be", "bg", "bs", "de", "el", "en", "es", "fa", "fi",  "fr", "hr", "hu", "hy", "id", "it", "iw", "ja", "ko", "nl", "pl", "pt", "ro", "ru", "sq", "sr", "sv", "th", "tr", "uk", "vi", "zh", "zh_Hant"]
+    
+    let locales: [LocaleInfo] = [
+        LocaleInfo(localeCode: "Default Device Language", language: "Default Device Language"),
+        LocaleInfo(localeCode: "ar", language: "Arabic"),
+        LocaleInfo(localeCode: "be", language: "Belarusian"),
+        LocaleInfo(localeCode: "bg", language: "Bulgarian"),
+        LocaleInfo(localeCode: "bs", language: "Bosnian"),
+        LocaleInfo(localeCode: "de", language: "German"),
+        LocaleInfo(localeCode: "el", language: "Greek"),
+        LocaleInfo(localeCode: "en", language: "English"),
+        LocaleInfo(localeCode: "es", language: "Spanish"),
+        LocaleInfo(localeCode: "fa", language: "Persian"),
+        LocaleInfo(localeCode: "fi", language: "Finnish"),
+        LocaleInfo(localeCode: "fr", language: "French"),
+        LocaleInfo(localeCode: "hr", language: "Croatian"),
+        LocaleInfo(localeCode: "hu", language: "Hungarian"),
+        LocaleInfo(localeCode: "hy", language: "Armenian"),
+        LocaleInfo(localeCode: "id", language: "Indonesian"),
+        LocaleInfo(localeCode: "it", language: "Italian"),
+        LocaleInfo(localeCode: "iw", language: "Hebrew"),
+        LocaleInfo(localeCode: "ja", language: "Japanese"),
+        LocaleInfo(localeCode: "ko", language: "Korean"),
+        LocaleInfo(localeCode: "nl", language: "Dutch"),
+        LocaleInfo(localeCode: "pl", language: "Polish"),
+        LocaleInfo(localeCode: "pt", language: "Portuguese"),
+        LocaleInfo(localeCode: "ro", language: "Romanian"),
+        LocaleInfo(localeCode: "ru", language: "Russian"),
+        LocaleInfo(localeCode: "sq", language: "Albanian"),
+        LocaleInfo(localeCode: "sr", language: "Serbian"),
+        LocaleInfo(localeCode: "sv", language: "Swedish"),
+        LocaleInfo(localeCode: "th", language: "Thai"),
+        LocaleInfo(localeCode: "tr", language: "Turkish"),
+        LocaleInfo(localeCode: "uk", language: "Ukrainian"),
+        LocaleInfo(localeCode: "vi", language: "Vietnamese"),
+        LocaleInfo(localeCode: "zh", language: "Chinese"),
+        LocaleInfo(localeCode: "zh_Hant", language: "Chinese (Traditional)")
+    ]
     
     private let geocoder = NBPhoneNumberOfflineGeocoder()
     private let phoneUtil = NBPhoneNumberUtil()
@@ -27,8 +65,8 @@ struct GeocodingSearchView: View {
             Form {
                 Section(header: Text("Locale Options")) {
                     Picker("Locale Options", selection: $localeSelection) {
-                        ForEach(0 ..< languages.count) { index in
-                            Text(self.languages[index])
+                        ForEach(0 ..< locales.count) { index in
+                            Text(self.locales[index].language)
                                 .tag(index)
                         }
                     }
@@ -49,7 +87,7 @@ struct GeocodingSearchView: View {
                 .bold()
         }
         .navigationBarTitle(Text("Search for Region Description"))
-                
+        
         
     }
 }
@@ -57,13 +95,11 @@ struct GeocodingSearchView: View {
 extension GeocodingSearchView {
     func searchPhoneNumber() -> String {
         do {
-            print(Locale.current.regionCode!)
             let parsedPhoneNumber: NBPhoneNumber = try phoneUtil.parse(phoneNumber, defaultRegion: Locale.current.regionCode!)
-            print(parsedPhoneNumber)
             if localeSelection == 0 {
                 return geocoder.description(for: parsedPhoneNumber) ?? "Unknown Region"
             } else {
-                return geocoder.description(for: parsedPhoneNumber, withLanguageCode: locales[localeSelection]) ?? "Unknown Region"
+                return geocoder.description(for: parsedPhoneNumber, withLanguageCode: self.locales[localeSelection].localeCode) ?? "Unknown Region"
             }
         } catch let error {
             print(error)

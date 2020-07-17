@@ -77,11 +77,10 @@ struct GeocodingTableView_Previews: PreviewProvider {
 extension GeocodingTableView {
     // Fetch Geocoding info for each number in phoneNumbers
     func makeGeocodingAPICalls() {
-        var parsedPhoneNumber: NBPhoneNumber
         for phoneNumber in phoneNumbers {
             do {
                 let startTimer = DispatchTime.now()
-                parsedPhoneNumber = try phoneUtil.parse(phoneNumber, defaultRegion: "US")
+                let parsedPhoneNumber = try phoneUtil.parse(phoneNumber, defaultRegion: "US")
                 regionDescriptions.append([phoneNumber, geocoder.description(for: parsedPhoneNumber)])
                 let endTimer = DispatchTime.now()
                 runtimeArray.append(CGFloat(endTimer.uptimeNanoseconds - startTimer.uptimeNanoseconds)/1000000.0)

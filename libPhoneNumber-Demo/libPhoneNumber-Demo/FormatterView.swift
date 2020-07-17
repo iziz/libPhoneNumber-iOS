@@ -29,11 +29,11 @@ struct FormatterView: View {
             }
         }
         .navigationBarTitle("As-You-Type Formatter")
-            .lineLimit(2)
-            .multilineTextAlignment(.center)
+        .lineLimit(2)
+        .multilineTextAlignment(.center)
     }
     
-    func formatPhoneNumber(phoneNumber: String) -> String{
+    func formatPhoneNumber(phoneNumber: String) -> String {
         self.formatter.clear()
         return formatter.inputString(phoneNumber)
     }

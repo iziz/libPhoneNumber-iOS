@@ -133,12 +133,6 @@
 		8B0FD3011E4A88AC0049DF81 /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */; };
 		8B0FD3021E4A88AC0049DF81 /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */; };
 		8B0FD3031E4A88AC0049DF81 /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */; };
-		8B1FEF981EB7BEFE00FBDE87 /* NBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1FEF971EB7BEFE00FBDE87 /* NBTextField.swift */; };
-		8B1FEF9B1EB7BF3200FBDE87 /* libPhoneNumberiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34ACBB851B7122AC0064B3BD /* libPhoneNumberiOS.framework */; };
-		8B1FEF9C1EB7BF6900FBDE87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6AE8F81BEE72B600263DE1 /* AppDelegate.swift */; };
-		8B1FEF9D1EB7BF6C00FBDE87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6AE8FA1BEE72B600263DE1 /* ViewController.swift */; };
-		8B1FEF9E1EB7BF7000FBDE87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6AE8FC1BEE72B600263DE1 /* Main.storyboard */; };
-		8B1FEF9F1EB7BF7200FBDE87 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6AE9011BEE72B600263DE1 /* LaunchScreen.storyboard */; };
 		8B1FEFA01EB7BFC500FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8B1FEFA11EB7BFC500FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8B1FEFA21EB7BFC600FBDE87 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -177,13 +171,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 0FC0D36324A29F510087AFCF;
 			remoteInfo = Geocoding;
-		};
-		8B1FEF991EB7BF2B00FBDE87 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FD7A0613167715A0004BBEB6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 34ACBB841B7122AC0064B3BD;
-			remoteInfo = libPhoneNumberiOS;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -242,7 +229,6 @@
 		8B0FD2F21E4A85A70049DF81 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		8B0FD2F91E4A88AC0049DF81 /* NSArray+NBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+NBAdditions.h"; sourceTree = "<group>"; };
 		8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+NBAdditions.m"; sourceTree = "<group>"; };
-		8B1FEF731EB7BE7C00FBDE87 /* SwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B1FEF971EB7BEFE00FBDE87 /* NBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NBTextField.swift; path = "libPhoneNumber-iOS/NBTextField.swift"; sourceTree = "<group>"; };
 		8BB73AA71E7C9C6700B0691B /* NBGeneratedPhoneNumberMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBGeneratedPhoneNumberMetaData.h; sourceTree = "<group>"; };
 		944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBGeocoderMetadataHelper.h; sourceTree = "<group>"; };
@@ -339,14 +325,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B0FD2F61E4A85AD0049DF81 /* libz.tbd in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8B1FEF701EB7BE7C00FBDE87 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B1FEF9B1EB7BF3200FBDE87 /* libPhoneNumberiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,7 +521,6 @@
 				1F31D54D1DDD47B900257818 /* libPhoneNumbertvOS.framework */,
 				14B7A2931DE9B65D0051AED7 /* libPhoneNumberiOSTests.xctest */,
 				7C72507C1E0EBE7D00F916ED /* libPhoneNumbermacOS.framework */,
-				8B1FEF731EB7BE7C00FBDE87 /* SwiftDemo.app */,
 				0FC0D36424A29F510087AFCF /* libPhoneNumberGeocoding.framework */,
 				0FC0D37624A2A05E0087AFCF /* libPhoneNumberGeocodingTests.xctest */,
 			);
@@ -826,24 +803,6 @@
 			productReference = 7C72507C1E0EBE7D00F916ED /* libPhoneNumbermacOS.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		8B1FEF721EB7BE7C00FBDE87 /* SwiftDemo */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8B1FEF821EB7BE7C00FBDE87 /* Build configuration list for PBXNativeTarget "SwiftDemo" */;
-			buildPhases = (
-				8B1FEF6F1EB7BE7C00FBDE87 /* Sources */,
-				8B1FEF701EB7BE7C00FBDE87 /* Frameworks */,
-				8B1FEF711EB7BE7C00FBDE87 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8B1FEF9A1EB7BF2B00FBDE87 /* PBXTargetDependency */,
-			);
-			name = SwiftDemo;
-			productName = SwiftDemo;
-			productReference = 8B1FEF731EB7BE7C00FBDE87 /* SwiftDemo.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -883,10 +842,6 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 					};
-					8B1FEF721EB7BE7C00FBDE87 = {
-						CreatedOnToolsVersion = 8.3.2;
-						ProvisioningStyle = Automatic;
-					};
 				};
 			};
 			buildConfigurationList = FD7A0616167715A0004BBEB6 /* Build configuration list for PBXProject "libPhoneNumber" */;
@@ -907,7 +862,6 @@
 				1F31D54C1DDD47B900257818 /* libPhoneNumbertvOS */,
 				7C72507B1E0EBE7D00F916ED /* libPhoneNumbermacOS */,
 				14B7A2921DE9B65D0051AED7 /* libPhoneNumberiOSTests */,
-				8B1FEF721EB7BE7C00FBDE87 /* SwiftDemo */,
 				0FC0D36324A29F510087AFCF /* libPhoneNumberGeocoding */,
 				0FC0D37524A2A05E0087AFCF /* libPhoneNumberGeocodingTests */,
 			);
@@ -964,15 +918,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8B1FEF711EB7BE7C00FBDE87 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B1FEF9E1EB7BF7000FBDE87 /* Main.storyboard in Resources */,
-				8B1FEF9F1EB7BF7200FBDE87 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1103,16 +1048,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8B1FEF6F1EB7BE7C00FBDE87 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B1FEF9D1EB7BF6C00FBDE87 /* ViewController.swift in Sources */,
-				8B1FEF9C1EB7BF6900FBDE87 /* AppDelegate.swift in Sources */,
-				8B1FEF981EB7BEFE00FBDE87 /* NBTextField.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1125,11 +1060,6 @@
 			isa = PBXTargetDependency;
 			target = 0FC0D36324A29F510087AFCF /* libPhoneNumberGeocoding */;
 			targetProxy = 0FC0D37C24A2A05E0087AFCF /* PBXContainerItemProxy */;
-		};
-		8B1FEF9A1EB7BF2B00FBDE87 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 34ACBB841B7122AC0064B3BD /* libPhoneNumberiOS */;
-			targetProxy = 8B1FEF991EB7BF2B00FBDE87 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1695,55 +1625,6 @@
 			};
 			name = Release;
 		};
-		8B1FEF831EB7BE7C00FBDE87 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "$(SRCROOT)/libPhoneNumber-SwiftDemo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.SwiftDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		8B1FEF841EB7BE7C00FBDE87 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "$(SRCROOT)/libPhoneNumber-SwiftDemo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.SwiftDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
 		FD7A064D167715A1004BBEB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1910,15 +1791,6 @@
 			buildConfigurations = (
 				7C7250811E0EBE7D00F916ED /* Debug */,
 				7C7250821E0EBE7D00F916ED /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8B1FEF821EB7BE7C00FBDE87 /* Build configuration list for PBXNativeTarget "SwiftDemo" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8B1FEF831EB7BE7C00FBDE87 /* Debug */,
-				8B1FEF841EB7BE7C00FBDE87 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

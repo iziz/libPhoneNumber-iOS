@@ -3,19 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		191319468D01233B7DD7EDB2 /* Pods_libPhoneNumber_Demo_libPhoneNumber_DemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F16B3C7B814B59B93E4D0951 /* Pods_libPhoneNumber_Demo_libPhoneNumber_DemoUITests.framework */; };
 		94AEB61D24C21FAD00204E11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB61C24C21FAD00204E11 /* AppDelegate.swift */; };
 		94AEB61F24C21FAD00204E11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB61E24C21FAD00204E11 /* SceneDelegate.swift */; };
-		94AEB62124C21FAD00204E11 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB62024C21FAD00204E11 /* ContentView.swift */; };
+		94AEB62124C21FAD00204E11 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB62024C21FAD00204E11 /* MenuView.swift */; };
 		94AEB62324C21FAE00204E11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94AEB62224C21FAE00204E11 /* Assets.xcassets */; };
 		94AEB62624C21FAE00204E11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94AEB62524C21FAE00204E11 /* Preview Assets.xcassets */; };
 		94AEB62924C21FAE00204E11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94AEB62724C21FAE00204E11 /* LaunchScreen.storyboard */; };
-		94AEB63424C21FAE00204E11 /* libPhoneNumber_DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB63324C21FAE00204E11 /* libPhoneNumber_DemoTests.swift */; };
-		94AEB63F24C21FAE00204E11 /* libPhoneNumber_DemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB63E24C21FAE00204E11 /* libPhoneNumber_DemoUITests.swift */; };
 		94AEB64D24C2200F00204E11 /* GeocodingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB64C24C2200F00204E11 /* GeocodingView.swift */; };
 		94AEB64F24C2202300204E11 /* GeocodingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB64E24C2202300204E11 /* GeocodingTableView.swift */; };
 		94AEB65124C2202F00204E11 /* GeocodingSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB65024C2202F00204E11 /* GeocodingSearchView.swift */; };
@@ -53,22 +51,19 @@
 		94AEB61924C21FAD00204E11 /* libPhoneNumber-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "libPhoneNumber-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94AEB61C24C21FAD00204E11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94AEB61E24C21FAD00204E11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		94AEB62024C21FAD00204E11 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		94AEB62024C21FAD00204E11 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		94AEB62224C21FAE00204E11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94AEB62524C21FAE00204E11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		94AEB62824C21FAE00204E11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		94AEB62A24C21FAE00204E11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94AEB62F24C21FAE00204E11 /* libPhoneNumber-DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "libPhoneNumber-DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		94AEB63324C21FAE00204E11 /* libPhoneNumber_DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = libPhoneNumber_DemoTests.swift; sourceTree = "<group>"; };
-		94AEB63524C21FAE00204E11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94AEB63A24C21FAE00204E11 /* libPhoneNumber-DemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "libPhoneNumber-DemoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		94AEB63E24C21FAE00204E11 /* libPhoneNumber_DemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = libPhoneNumber_DemoUITests.swift; sourceTree = "<group>"; };
-		94AEB64024C21FAE00204E11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94AEB64C24C2200F00204E11 /* GeocodingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingView.swift; sourceTree = "<group>"; };
 		94AEB64E24C2202300204E11 /* GeocodingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingTableView.swift; sourceTree = "<group>"; };
 		94AEB65024C2202F00204E11 /* GeocodingSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingSearchView.swift; sourceTree = "<group>"; };
 		94AEB65224C2203A00204E11 /* PhoneUtilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneUtilView.swift; sourceTree = "<group>"; };
 		94AEB65424C2204400204E11 /* FormatterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatterView.swift; sourceTree = "<group>"; };
+		94AEB65824C2517600204E11 /* libPhoneNumber-iOS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "libPhoneNumber-iOS.png"; sourceTree = "<group>"; };
 		F16B3C7B814B59B93E4D0951 /* Pods_libPhoneNumber_Demo_libPhoneNumber_DemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_libPhoneNumber_Demo_libPhoneNumber_DemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6BAA7C26BB7DAD929FDAFB6 /* Pods-libPhoneNumber-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-libPhoneNumber-Demo.debug.xcconfig"; path = "Target Support Files/Pods-libPhoneNumber-Demo/Pods-libPhoneNumber-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,7 +106,6 @@
 				1BC42744AECE9D0E119141CB /* Pods-libPhoneNumber-DemoTests.debug.xcconfig */,
 				6A969B1F8FAE80BF6F548BC8 /* Pods-libPhoneNumber-DemoTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -119,8 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				94AEB61B24C21FAD00204E11 /* libPhoneNumber-Demo */,
-				94AEB63224C21FAE00204E11 /* libPhoneNumber-DemoTests */,
-				94AEB63D24C21FAE00204E11 /* libPhoneNumber-DemoUITests */,
 				94AEB61A24C21FAD00204E11 /* Products */,
 				77BA5AB39B766D32240A7F29 /* Pods */,
 				ED9DDEF1C13FC357811889E5 /* Frameworks */,
@@ -142,8 +134,9 @@
 			children = (
 				94AEB61C24C21FAD00204E11 /* AppDelegate.swift */,
 				94AEB61E24C21FAD00204E11 /* SceneDelegate.swift */,
-				94AEB62024C21FAD00204E11 /* ContentView.swift */,
+				94AEB62024C21FAD00204E11 /* MenuView.swift */,
 				94AEB62224C21FAE00204E11 /* Assets.xcassets */,
+				94AEB65824C2517600204E11 /* libPhoneNumber-iOS.png */,
 				94AEB62724C21FAE00204E11 /* LaunchScreen.storyboard */,
 				94AEB62A24C21FAE00204E11 /* Info.plist */,
 				94AEB62424C21FAE00204E11 /* Preview Content */,
@@ -162,24 +155,6 @@
 				94AEB62524C21FAE00204E11 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		94AEB63224C21FAE00204E11 /* libPhoneNumber-DemoTests */ = {
-			isa = PBXGroup;
-			children = (
-				94AEB63324C21FAE00204E11 /* libPhoneNumber_DemoTests.swift */,
-				94AEB63524C21FAE00204E11 /* Info.plist */,
-			);
-			path = "libPhoneNumber-DemoTests";
-			sourceTree = "<group>";
-		};
-		94AEB63D24C21FAE00204E11 /* libPhoneNumber-DemoUITests */ = {
-			isa = PBXGroup;
-			children = (
-				94AEB63E24C21FAE00204E11 /* libPhoneNumber_DemoUITests.swift */,
-				94AEB64024C21FAE00204E11 /* Info.plist */,
-			);
-			path = "libPhoneNumber-DemoUITests";
 			sourceTree = "<group>";
 		};
 		ED9DDEF1C13FC357811889E5 /* Frameworks */ = {
@@ -438,7 +413,7 @@
 				94AEB61F24C21FAD00204E11 /* SceneDelegate.swift in Sources */,
 				94AEB65524C2204400204E11 /* FormatterView.swift in Sources */,
 				94AEB65124C2202F00204E11 /* GeocodingSearchView.swift in Sources */,
-				94AEB62124C21FAD00204E11 /* ContentView.swift in Sources */,
+				94AEB62124C21FAD00204E11 /* MenuView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,7 +421,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94AEB63424C21FAE00204E11 /* libPhoneNumber_DemoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,7 +428,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94AEB63F24C21FAE00204E11 /* libPhoneNumber_DemoUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
