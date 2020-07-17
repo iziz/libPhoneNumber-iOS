@@ -157,7 +157,7 @@ override func viewDidLoad() {
 
 ## Usage - **NBAsYouTypeFormatter**
 ```obj-c
-    NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+ NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
     NSLog(@"%@", [f inputDigit:@"6"]); // "6"
     NSLog(@"%@", [f inputDigit:@"5"]); // "65"
     NSLog(@"%@", [f inputDigit:@"0"]); // "650"
@@ -178,31 +178,41 @@ override func viewDidLoad() {
 
 ## Usage - **NBPhoneNumberOfflineGeocoder**
 ```obj-c
-    NBPhoneNumberOfflineGeocoder *geocoder = [[NBPhoneNumberOfflineGeocoder alloc] init];
- 
+NBPhoneNumberOfflineGeocoder *geocoder = [[NBPhoneNumberOfflineGeocoder alloc] init];
+    
     // unitedStatesPhoneNumber                   : +16509601234
     NSLog(@Valid US Number: "%@", [geocoder descriptionForNumber: unitedStatesPhoneNumber 
-                                            withLanguageCode: @"en"]); // "Mountain View, CA"
+                                               withLanguageCode: @"en"]);
     // Convenience Method
-    NSLog(@"%@", [geocoder descriptionForNumber: unitedStatesPhoneNumber]); // "Mountain View, CA"
+    NSLog(@"Convenience Method: %@", [geocoder descriptionForNumber: unitedStatesPhoneNumber]);
+       
     // United States Phone Number, with user located in Italy and device language set to Spanish
-    NSLog(@"%@", [geocoder descriptionForNumber: unitedStatesPhoneNumber 
-                               withLanguageCode: @"es" 
-                                 withUserRegion: @IT"]); // "Estados Unidos"
+    NSLog(@"Method using Spanish Language: %@", [geocoder descriptionForNumber: unitedStatesPhoneNumber 
+                                  withLanguageCode: @"es" 
+                                    withUserRegion: @"IT"]);
 
     // southKoreaPhoneNumber                     : +8222123456
     NSLog(@"South Korea Phone Number: %@", [geocoder descriptionForNumber: southKoreaPhoneNumber 
-                                                         withLanguageCode: @"en"]); // "Seoul"
+                                                            withLanguageCode: @"en"]);
     NSLog(@"South Korea Phone Number: %@", [geocoder descriptionForNumber: southKoreanPhoneNumber 
-                                                         withLanguageCode: @"ko"]); // "서울"
+                                                            withLanguageCode: @"ko"]);
 
     // invalidUSPhoneNumber                      : +1123456789
     NSLog(@"%@", [geocoder descriptionForNumber: invalidUSPhoneNumber 
-                               withLanguageCode: @"en"]); // nil
+                                  withLanguageCode: @"en"]);
+                                  
     // Non-geographical South Korea Phone Number: +82101234567
-    NSLog(@"%@", [geocoder descriptionForNumber: southKoreaMobilePhone]); // "South Korea"
-
-
+    NSLog(@"Non-geographical number: %@", [geocoder descriptionForNumber: southKoreaMobilePhone]);
+```
+##### Output
+```
+    Valid US Number: Mountain View, CA
+    Convenience Method: Mountain View, CA
+    Method using Spanish Language: Estados Unidos
+    South Korea Phone Number: Seoul
+    South Korea Phone Number: 서울
+    (null)
+    Non-geographical number: South Korea
 ```
 
 ##### Visit [libphonenumber](https://github.com/google/libphonenumber) for more information or mail (zen.isis@gmail.com)
