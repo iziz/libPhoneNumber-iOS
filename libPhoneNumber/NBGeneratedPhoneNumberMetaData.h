@@ -1,3 +1,4 @@
+
 /*****
  * Data Generated from GeneratePhoneNumberHeader.sh
  * Off of PhoneNumberMetaDataForTesting.json, PhoneNumberMetaData.json, and ShortNumberMetaData.json
@@ -13,9 +14,19 @@
 #  define z_const
 #endif
 
+#if SWIFT_PACKAGE
+#if __has_include(<XCTest/XCTest.h>)
+#define TESTING 1
+#endif // __has_include(<XCTest/XCTest.h>)
+#endif // SWIFT_PACKAGE
+
 #if TESTING==1
 
+#if SWIFT_PACKAGE // SWIFT_PACKAGE
+static z_const Bytef kPhoneNumberMetaData[] = {
+#else // SWIFT_PACKAGE
 z_const Bytef kPhoneNumberMetaData[] = {
+#endif // SWIFT_PACKAGE
   0x1f, 0x8b, 0x08, 0x08, 0x56, 0x80, 0xda, 0x5e, 0x00, 0x03, 0x50, 0x68,
   0x6f, 0x6e, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4d, 0x65, 0x74,
   0x61, 0x44, 0x61, 0x74, 0x61, 0x46, 0x6f, 0x72, 0x54, 0x65, 0x73, 0x74,
@@ -309,9 +320,13 @@ z_const Bytef kPhoneNumberMetaData[] = {
   0xe7, 0xc3, 0x88, 0xb2, 0x9b, 0x33, 0x0f, 0x93, 0x70, 0x5f, 0xe2, 0xc5,
   0x37, 0x37, 0x7f, 0x01, 0x5d, 0x61, 0x9e, 0x1d, 0xfd, 0x80, 0x00, 0x00
 };
+#if SWIFT_PACKAGE
+static z_const size_t kPhoneNumberMetaDataCompressedLength = sizeof(kPhoneNumberMetaData);
+static z_const size_t kPhoneNumberMetaDataExpandedLength = 33021;
+#else // SWIFT_PACKAGE
 z_const size_t kPhoneNumberMetaDataCompressedLength = sizeof(kPhoneNumberMetaData);
 z_const size_t kPhoneNumberMetaDataExpandedLength = 33021;
-
+#endif // SWIFT_PACKAGE
 #else  // TESTING == 1
 
 z_const Bytef kPhoneNumberMetaData[] = {

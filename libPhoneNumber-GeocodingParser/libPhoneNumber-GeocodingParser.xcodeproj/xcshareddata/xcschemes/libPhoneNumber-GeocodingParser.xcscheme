@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "942B2F3724AD065300D4594F"
+               BlueprintIdentifier = "9478476624BCD14D004F5637"
                BuildableName = "libPhoneNumber-GeocodingParser"
                BlueprintName = "libPhoneNumber-GeocodingParser"
                ReferencedContainer = "container:libPhoneNumber-GeocodingParser.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "942B2F3724AD065300D4594F"
+            BlueprintIdentifier = "9478476624BCD14D004F5637"
             BuildableName = "libPhoneNumber-GeocodingParser"
             BlueprintName = "libPhoneNumber-GeocodingParser"
             ReferencedContainer = "container:libPhoneNumber-GeocodingParser.xcodeproj">
@@ -71,7 +71,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "942B2F3724AD065300D4594F"
+            BlueprintIdentifier = "9478476624BCD14D004F5637"
             BuildableName = "libPhoneNumber-GeocodingParser"
             BlueprintName = "libPhoneNumber-GeocodingParser"
             ReferencedContainer = "container:libPhoneNumber-GeocodingParser.xcodeproj">
