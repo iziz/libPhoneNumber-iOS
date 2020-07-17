@@ -11,7 +11,7 @@ DESC
   s.authors      = { "rastaarh" => "rastaar@google.com", "paween" => "paween@google.com"}
   s.source       = { :git => "https://github.com/iziz/libPhoneNumber-iOS.git", :tag => s.version.to_s }
   s.libraries      = 'z'
-  s.ios.deployment_target = "6.0"
+  s.ios.deployment_target = "10.1"
   s.osx.deployment_target = "10.9"
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
