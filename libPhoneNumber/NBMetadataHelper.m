@@ -9,11 +9,11 @@
 #import "NBMetadataHelper.h"
 #import "NBGeneratedPhoneNumberMetaData.h"
 #import "NBPhoneMetaData.h"
-#import "NBGeneratedShortNumberMetadata.h"
+
 @interface NBMetadataHelper ()
 
 // Cached metadata
-@property (nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *metadataCache;
+@property(nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *metadataCache;
 
 @end
 
@@ -82,18 +82,18 @@ static NSString *StringByTrimming(NSString *aString) {
   NSMutableArray *resultMetadata = [[NSMutableArray alloc] initWithCapacity:countryCodes.count];
 
   for (NSString *countryCode in countryCodes) {
-    id countryDictionaryInstance =
-        [NSDictionary dictionaryWithObject:countryCode forKey:NSLocaleCountryCode];
+    id countryDictionaryInstance = [NSDictionary dictionaryWithObject:countryCode
+                                                               forKey:NSLocaleCountryCode];
     NSString *identifier = [NSLocale localeIdentifierFromComponents:countryDictionaryInstance];
-    NSString *country =
-        [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
+    NSString *country = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier
+                                                              value:identifier];
 
     NSMutableDictionary *countryMeta = [[NSMutableDictionary alloc] init];
     if (country) {
       [countryMeta setObject:country forKey:@"name"];
     } else {
-      NSString *systemCountry =
-          [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
+      NSString *systemCountry = [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier
+                                                                     value:identifier];
       if (systemCountry) {
         [countryMeta setObject:systemCountry forKey:@"name"];
       }
@@ -181,12 +181,12 @@ static NSString *StringByTrimming(NSString *aString) {
  * @param expandedLength Length of the expanded bytes.
  * @return JSON dictionary.
  */
-+ (NSDictionary *)jsonObjectFromZippedDataWithBytes:(z_const Bytef [])bytes
++ (NSDictionary *)jsonObjectFromZippedDataWithBytes:(z_const Bytef[])bytes
                                    compressedLength:(NSUInteger)compressedLength
                                      expandedLength:(NSUInteger)expandedLength {
   // Data is a gzipped JSON file that is embedded in the binary.
   // See GeneratePhoneNumberHeader.sh and PhoneNumberMetaData.h for details.
-  NSMutableData* gunzippedData = [NSMutableData dataWithLength:expandedLength];
+  NSMutableData *gunzippedData = [NSMutableData dataWithLength:expandedLength];
 
   z_stream zStream;
   memset(&zStream, 0, sizeof(zStream));
