@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		191319468D01233B7DD7EDB2 /* Pods_libPhoneNumber_Demo_libPhoneNumber_DemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F16B3C7B814B59B93E4D0951 /* Pods_libPhoneNumber_Demo_libPhoneNumber_DemoUITests.framework */; };
+		943E09BD24C60CFB00A80B5B /* ShortNumberUtilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943E09BC24C60CFB00A80B5B /* ShortNumberUtilView.swift */; };
+		943E09BF24C60D4500A80B5B /* Locales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943E09BE24C60D4500A80B5B /* Locales.swift */; };
 		94AEB61D24C21FAD00204E11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB61C24C21FAD00204E11 /* AppDelegate.swift */; };
 		94AEB61F24C21FAD00204E11 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB61E24C21FAD00204E11 /* SceneDelegate.swift */; };
 		94AEB62124C21FAD00204E11 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB62024C21FAD00204E11 /* MenuView.swift */; };
@@ -48,6 +50,8 @@
 		634BA8513696AC5501292664 /* Pods-libPhoneNumber-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-libPhoneNumber-Demo.release.xcconfig"; path = "Target Support Files/Pods-libPhoneNumber-Demo/Pods-libPhoneNumber-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		6A969B1F8FAE80BF6F548BC8 /* Pods-libPhoneNumber-DemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-libPhoneNumber-DemoTests.release.xcconfig"; path = "Target Support Files/Pods-libPhoneNumber-DemoTests/Pods-libPhoneNumber-DemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		80180D3E4EFC2D805D5F7607 /* Pods_libPhoneNumber_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_libPhoneNumber_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		943E09BC24C60CFB00A80B5B /* ShortNumberUtilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortNumberUtilView.swift; sourceTree = "<group>"; };
+		943E09BE24C60D4500A80B5B /* Locales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locales.swift; sourceTree = "<group>"; };
 		94AEB61924C21FAD00204E11 /* libPhoneNumber-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "libPhoneNumber-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94AEB61C24C21FAD00204E11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94AEB61E24C21FAD00204E11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +149,8 @@
 				94AEB65024C2202F00204E11 /* GeocodingSearchView.swift */,
 				94AEB65224C2203A00204E11 /* PhoneUtilView.swift */,
 				94AEB65424C2204400204E11 /* FormatterView.swift */,
+				943E09BC24C60CFB00A80B5B /* ShortNumberUtilView.swift */,
+				943E09BE24C60D4500A80B5B /* Locales.swift */,
 			);
 			path = "libPhoneNumber-Demo";
 			sourceTree = "<group>";
@@ -409,10 +415,12 @@
 				94AEB64D24C2200F00204E11 /* GeocodingView.swift in Sources */,
 				94AEB61D24C21FAD00204E11 /* AppDelegate.swift in Sources */,
 				94AEB65324C2203A00204E11 /* PhoneUtilView.swift in Sources */,
+				943E09BF24C60D4500A80B5B /* Locales.swift in Sources */,
 				94AEB64F24C2202300204E11 /* GeocodingTableView.swift in Sources */,
 				94AEB61F24C21FAD00204E11 /* SceneDelegate.swift in Sources */,
 				94AEB65524C2204400204E11 /* FormatterView.swift in Sources */,
 				94AEB65124C2202F00204E11 /* GeocodingSearchView.swift in Sources */,
+				943E09BD24C60CFB00A80B5B /* ShortNumberUtilView.swift in Sources */,
 				94AEB62124C21FAD00204E11 /* MenuView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

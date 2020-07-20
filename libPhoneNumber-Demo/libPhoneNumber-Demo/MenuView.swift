@@ -18,6 +18,9 @@ struct MenuView: View {
                 NavigationLink(destination: PhoneUtilView()) {
                     Text("Phone Number Parser")
                 }
+                NavigationLink(destination: ShortNumberUtilView()) {
+                    Text("Short Number Formatter")
+                }
                 NavigationLink(destination: FormatterView()) {
                     Text("Phone Number Formatter")
                 }

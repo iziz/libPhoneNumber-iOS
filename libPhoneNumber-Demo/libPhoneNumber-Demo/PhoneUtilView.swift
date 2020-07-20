@@ -18,10 +18,7 @@ struct PhoneUtilView: View {
     @State private var searchMade: Bool = false
     @State private var formatSelection = 0
     @State private var formattedPhoneNumber: String = ""
-    @State private var isShortNumber: Bool = false
     let phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
-    
-    let formatOptions = ["Select a phone number format", "E164", "INTERNATIONAL", "NATIONAL", "RFC3966"]
     
     var body: some View {
         VStack {
@@ -35,7 +32,7 @@ struct PhoneUtilView: View {
                 Section(header: Text("(Optional) Format Phone Number")) {
                     Picker("Locale Options", selection: $formatSelection) {
                         ForEach(0 ..< formatOptions.count) { index in
-                            Text(self.formatOptions[index])
+                            Text(formatOptions[index])
                                 .tag(index)
                         }
                     }
@@ -52,10 +49,6 @@ struct PhoneUtilView: View {
                     SuccessResultView
                 } else {
                     FailedResultView
-                }
-                
-                if isShortNumber {
-                    Text("Short Number Details")
                 }
             }
         }
