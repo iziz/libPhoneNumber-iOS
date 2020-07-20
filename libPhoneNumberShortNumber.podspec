@@ -18,5 +18,5 @@ DESC
   s.requires_arc = true
   s.private_header_files = 'libPhoneNumberShortNumber/NBGeneratedShortNumberMetadata.h'
   s.dependency 'libPhoneNumber-iOS'
-  s.source_files = 'libPhoneNumberShortNumber/NBShortNumberUtil.{h,m}', 'libPhoneNumberShortNumber/NBShortNumberMetadataHelper.{h,m}'
+  s.source_files = 'libPhoneNumberShortNumber/NBShortNumberUtil.{h,m}', 'libPhoneNumberShortNumber/NBShortNumberMetadataHelper.{h,m}', 'libPhoneNumberShortNumber/NBGeneratedShortNumberMetadata.h'
 end
