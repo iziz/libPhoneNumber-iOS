@@ -8,60 +8,106 @@
 
 #import <Foundation/Foundation.h>
 #import "NBGeocoderMetadataParser.h"
+#import "SSZipArchive.h"
 
 int main(int argc, const char *argv[]) {
   @autoreleasepool {
-    if (argc != 3) {
-      NSLog(@"The libPhoneNumber-iOS Geocoder Parser requires two input arguments to properly "
+    if (argc != 2) {
+      NSLog(@"The libPhoneNumber-iOS Geocoder Parser requires 1 input arguments to properly "
             @"function.");
-      NSLog(@"1. The complete folder path where the libPhoneNumber geocoding resource folder "
-            @"(found at: https://github.com/google/libphonenumber/tree/master/resources/geocoding) "
-            @"is stored on disk.");
-      NSLog(@"2. The complete directory path to the desired location to store the corresponding "
+      NSLog(@"1. The complete directory path to the desired location to store the corresponding "
             @"SQLite databases created.");
-      NSLog(@"Example arguments: Users/JohnDoe/Documents/geocoding Users/JohnDoe/Desktop");
+      NSLog(@"Example argument: Users/JohnDoe/Desktop");
     } else {
-      NSString *geocodingMetadataDirectory = @(argv[1]);
-      NSURL *databaseDesiredLocation = [NSURL fileURLWithPath:@(argv[2])];
-      NBGeocoderMetadataParser *metadataParser =
-          [[NBGeocoderMetadataParser alloc] initWithDestinationPath:[databaseDesiredLocation copy]];
+      // Download zip file from GitHub.
+      NSString *repositoryString = @"https://github.com/google/libphonenumber/archive/master.zip";
+      NSURL *databaseDesiredLocation = [NSURL fileURLWithPath:@(argv[1])];
+      NSURL *libPhoneNumberRepoURL = [NSURL URLWithString:repositoryString];
+
+      NSLog(@"Downloading geocoding metadata files from %@", repositoryString);
+      NSData *libPhoneNumberData = [NSData dataWithContentsOfURL:libPhoneNumberRepoURL];
+      NSLog(@"Downloaded geocoding metadata files.");
+
+      // Gather the documents directory path
+      NSString *temporaryDirectoryPath = NSTemporaryDirectory();
+      NSString *zipFilePath =
+          [temporaryDirectoryPath stringByAppendingPathComponent:@"/libPhoneNumber-iOS.zip"];
+      zipFilePath = [zipFilePath stringByStandardizingPath];
+      [libPhoneNumberData writeToFile:zipFilePath atomically:YES];
+      NSLog(@"Attempting to unzip downloaded metadata.");
+
+      // Unzip libphonenumber-master project using SSZipArchive library.
+      [SSZipArchive unzipFileAtPath:zipFilePath toDestination:temporaryDirectoryPath];
+      NSLog(@"Successfully unzipped metadata files.");
+
+      // Navigate through project to geocoding metadata resource files.
+      NSString *libPhoneNumberFolderPath =
+          [NSString stringWithFormat:@"%@/libphonenumber-master", temporaryDirectoryPath];
       NSError *error;
-      NSArray *languages =
-          [[NSFileManager defaultManager] contentsOfDirectoryAtPath:geocodingMetadataDirectory
+      NSArray *filesInDirectory =
+          [[NSFileManager defaultManager] contentsOfDirectoryAtPath:libPhoneNumberFolderPath
                                                               error:&error];
-      if (error != NULL) {
-        NSLog(@"Error occurred when trying to read directory: %@"
-              @"Error message: %@",
-              geocodingMetadataDirectory, [error localizedDescription]);
+      if (error != nil) {
+        NSLog(@"An error occurred when attempting to access files in repository. Error message: %@",
+              error.description);
         return 1;
       }
-      NSArray *textFilesAvailable;
-      NSString *languageFolderPath;
-      for (NSString *language in languages) {
-        NSLog(@"Creating SQLite database file for the language: %@", language);
-        languageFolderPath =
-            [NSString stringWithFormat:@"%@/%@", geocodingMetadataDirectory, language];
-        textFilesAvailable =
-            [[NSFileManager defaultManager] contentsOfDirectoryAtPath:languageFolderPath
+      if ([filesInDirectory containsObject:@"resources"]) {
+        NSString *resourcesFolderPath =
+            [NSString stringWithFormat:@"%@/resources", libPhoneNumberFolderPath];
+        filesInDirectory =
+            [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resourcesFolderPath
                                                                 error:&error];
         if (error != NULL) {
-          NSLog(@"Error occurred when trying to read files for the language directory: %@",
-                languageFolderPath);
-          error = NULL;
-          continue;
+          NSLog(@"An error occurred when attempting to access files in project's 'resources' "
+                @"folder. Error message: %@",
+                error.description);
+          return 1;
         }
-        for (NSString *filename in textFilesAvailable) {
-          NSString *extension = [[filename pathExtension] lowercaseString];
+        if ([filesInDirectory containsObject:@"geocoding"]) {
+          NSString *geocodingFolderPath =
+              [NSString stringWithFormat:@"%@/geocoding", resourcesFolderPath];
+          NSArray *languages =
+              [[NSFileManager defaultManager] contentsOfDirectoryAtPath:geocodingFolderPath
+                                                                  error:&error];
+          if (error != NULL) {
+            NSLog(@"An error occurred when attempting to access files in project's 'geocoding' "
+                  @"folder. Error message: %@",
+                  error.description);
+            return 1;
+          }
+          NBGeocoderMetadataParser *metadataParser = [[NBGeocoderMetadataParser alloc]
+              initWithDestinationPath:[databaseDesiredLocation copy]];
+            
+          NSArray *textFilesAvailable;
+          NSString *languageFolderPath;
+          for (NSString *language in languages) {
+            NSLog(@"Creating SQLite database file for the language: %@", language);
+            languageFolderPath =
+                [NSString stringWithFormat:@"%@/%@", geocodingFolderPath, language];
+            textFilesAvailable =
+                [[NSFileManager defaultManager] contentsOfDirectoryAtPath:languageFolderPath
+                                                                    error:&error];
+            if (error != NULL) {
+              NSLog(@"Error occurred when trying to read files for the language directory: %@",
+                    languageFolderPath);
+              error = NULL;
+              continue;
+            }
+            for (NSString *filename in textFilesAvailable) {
+              NSString *extension = [[filename pathExtension] lowercaseString];
 
-          if ([extension isEqualToString:@"txt"]) {
-            NSString *completeFilePath =
-                [NSString stringWithFormat:@"%@/%@", languageFolderPath, filename];
-            [metadataParser convertFileToSQLiteDatabase:completeFilePath
-                                           withFileName:filename
-                                           withLanguage:language];
+              if ([extension isEqualToString:@"txt"]) {
+                NSString *completeFilePath =
+                    [NSString stringWithFormat:@"%@/%@", languageFolderPath, filename];
+                [metadataParser convertFileToSQLiteDatabase:completeFilePath
+                                               withFileName:filename
+                                               withLanguage:language];
+              }
+            }
+            NSLog(@"Created SQLite database file for the language: %@", language);
           }
         }
-        NSLog(@"Created SQLite database file for the language: %@", language);
       }
     }
   }

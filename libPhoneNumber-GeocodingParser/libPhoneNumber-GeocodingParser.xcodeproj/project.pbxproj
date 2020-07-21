@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03F61FE8E5D02A111D19189A /* Pods_libPhoneNumber_GeocodingParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274A43AA1E4B89AED6EDD55D /* Pods_libPhoneNumber_GeocodingParser.framework */; };
 		9478476B24BCD14D004F5637 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9478476A24BCD14D004F5637 /* main.m */; };
 		9478477324BCD180004F5637 /* NBGeocoderMetadataParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9478477224BCD180004F5637 /* NBGeocoderMetadataParser.m */; };
 		9478477624BCD1AB004F5637 /* NBSQLiteDatabaseConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9478477524BCD1AB004F5637 /* NBSQLiteDatabaseConnection.m */; };
@@ -25,12 +26,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		274A43AA1E4B89AED6EDD55D /* Pods_libPhoneNumber_GeocodingParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_libPhoneNumber_GeocodingParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B6521D8B115B9E1AD7FC9CC /* Pods-libPhoneNumber-GeocodingParser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-libPhoneNumber-GeocodingParser.debug.xcconfig"; path = "Target Support Files/Pods-libPhoneNumber-GeocodingParser/Pods-libPhoneNumber-GeocodingParser.debug.xcconfig"; sourceTree = "<group>"; };
 		9478476724BCD14D004F5637 /* libPhoneNumber-GeocodingParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "libPhoneNumber-GeocodingParser"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9478476A24BCD14D004F5637 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9478477124BCD180004F5637 /* NBGeocoderMetadataParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBGeocoderMetadataParser.h; sourceTree = "<group>"; };
 		9478477224BCD180004F5637 /* NBGeocoderMetadataParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBGeocoderMetadataParser.m; sourceTree = "<group>"; };
 		9478477424BCD1AB004F5637 /* NBSQLiteDatabaseConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBSQLiteDatabaseConnection.h; sourceTree = "<group>"; };
 		9478477524BCD1AB004F5637 /* NBSQLiteDatabaseConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBSQLiteDatabaseConnection.m; sourceTree = "<group>"; };
+		FBEDA2E5A67BEB7FC5ABBF45 /* Pods-libPhoneNumber-GeocodingParser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-libPhoneNumber-GeocodingParser.release.xcconfig"; path = "Target Support Files/Pods-libPhoneNumber-GeocodingParser/Pods-libPhoneNumber-GeocodingParser.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,17 +42,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03F61FE8E5D02A111D19189A /* Pods_libPhoneNumber_GeocodingParser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0DF753BC556A937314315D63 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				274A43AA1E4B89AED6EDD55D /* Pods_libPhoneNumber_GeocodingParser.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		81942256806B519825D98257 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8B6521D8B115B9E1AD7FC9CC /* Pods-libPhoneNumber-GeocodingParser.debug.xcconfig */,
+				FBEDA2E5A67BEB7FC5ABBF45 /* Pods-libPhoneNumber-GeocodingParser.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		9478475E24BCD14D004F5637 = {
 			isa = PBXGroup;
 			children = (
 				9478476924BCD14D004F5637 /* libPhoneNumber-GeocodingParser */,
 				9478476824BCD14D004F5637 /* Products */,
+				81942256806B519825D98257 /* Pods */,
+				0DF753BC556A937314315D63 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,6 +104,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9478476E24BCD14D004F5637 /* Build configuration list for PBXNativeTarget "libPhoneNumber-GeocodingParser" */;
 			buildPhases = (
+				DCD5CE53EEBE38D73C1292DD /* [CP] Check Pods Manifest.lock */,
 				9478476324BCD14D004F5637 /* Sources */,
 				9478476424BCD14D004F5637 /* Frameworks */,
 				9478476524BCD14D004F5637 /* CopyFiles */,
@@ -123,6 +149,31 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DCD5CE53EEBE38D73C1292DD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-libPhoneNumber-GeocodingParser-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9478476324BCD14D004F5637 /* Sources */ = {
@@ -249,6 +300,7 @@
 		};
 		9478476F24BCD14D004F5637 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B6521D8B115B9E1AD7FC9CC /* Pods-libPhoneNumber-GeocodingParser.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 973LHT5R86;
@@ -259,6 +311,7 @@
 		};
 		9478477024BCD14D004F5637 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBEDA2E5A67BEB7FC5ABBF45 /* Pods-libPhoneNumber-GeocodingParser.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 973LHT5R86;
