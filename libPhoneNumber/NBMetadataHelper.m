@@ -13,13 +13,7 @@
 @interface NBMetadataHelper ()
 
 // Cached metadata
-@property (nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *metadataCache;
-
-#if SHORT_NUMBER_SUPPORT
-
-@property (nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *shortNumberMetadataCache;
-
-#endif //SHORT_NUMBER_SUPPORT
+@property(nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *metadataCache;
 
 @end
 
@@ -41,9 +35,6 @@ static NSString *StringByTrimming(NSString *aString) {
   self = [super init];
   if (self != nil) {
     _metadataCache = [[NSCache alloc] init];
-#if SHORT_NUMBER_SUPPORT
-    _shortNumberMetadataCache = [[NSCache alloc] init];
-#endif //SHORT_NUMBER_SUPPORT
   }
   return self;
 }
@@ -91,18 +82,18 @@ static NSString *StringByTrimming(NSString *aString) {
   NSMutableArray *resultMetadata = [[NSMutableArray alloc] initWithCapacity:countryCodes.count];
 
   for (NSString *countryCode in countryCodes) {
-    id countryDictionaryInstance =
-        [NSDictionary dictionaryWithObject:countryCode forKey:NSLocaleCountryCode];
+    id countryDictionaryInstance = [NSDictionary dictionaryWithObject:countryCode
+                                                               forKey:NSLocaleCountryCode];
     NSString *identifier = [NSLocale localeIdentifierFromComponents:countryDictionaryInstance];
-    NSString *country =
-        [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
+    NSString *country = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier
+                                                              value:identifier];
 
     NSMutableDictionary *countryMeta = [[NSMutableDictionary alloc] init];
     if (country) {
       [countryMeta setObject:country forKey:@"name"];
     } else {
-      NSString *systemCountry =
-          [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
+      NSString *systemCountry = [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier
+                                                                     value:identifier];
       if (systemCountry) {
         [countryMeta setObject:systemCountry forKey:@"name"];
       }
@@ -182,48 +173,6 @@ static NSString *StringByTrimming(NSString *aString) {
   return string.length != 0;
 }
 
-#if SHORT_NUMBER_SUPPORT
-
-+ (NSDictionary *)shortNumberDataMap {
-    static NSDictionary *shortNumberDataDictionary;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-      shortNumberDataDictionary =
-          [self jsonObjectFromZippedDataWithBytes:kShortNumberMetaData
-                                 compressedLength:kShortNumberMetaDataCompressedLength
-                                   expandedLength:kShortNumberMetaDataExpandedLength];
-    });
-    return shortNumberDataDictionary;
-}
-
-- (NBPhoneMetaData *)shortNumberMetadataForRegion:(NSString *)regionCode
-{
-    regionCode = StringByTrimming(regionCode);
-    if (regionCode.length == 0) {
-        return nil;
-    }
-
-    regionCode = [regionCode uppercaseString];
-
-  NBPhoneMetaData *cachedMetadata = [_shortNumberMetadataCache objectForKey:regionCode];
-  if (cachedMetadata != nil) {
-    return cachedMetadata;
-  }
-
-  NSDictionary *dict = [[self class] shortNumberDataMap][@"countryToMetadata"];
-  NSArray *entry = dict[regionCode];
-  if (entry) {
-    NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] initWithEntry:entry];
-    [_shortNumberMetadataCache setObject:metadata forKey:regionCode];
-    return metadata;
-  }
-
-  return nil;
-}
-
-#endif // SHORT_NUMBER_SUPPORT
-
-
 /**
  * Expand gzipped data into a JSON object.
 
@@ -232,12 +181,12 @@ static NSString *StringByTrimming(NSString *aString) {
  * @param expandedLength Length of the expanded bytes.
  * @return JSON dictionary.
  */
-+ (NSDictionary *)jsonObjectFromZippedDataWithBytes:(z_const Bytef [])bytes
++ (NSDictionary *)jsonObjectFromZippedDataWithBytes:(z_const Bytef[])bytes
                                    compressedLength:(NSUInteger)compressedLength
                                      expandedLength:(NSUInteger)expandedLength {
   // Data is a gzipped JSON file that is embedded in the binary.
   // See GeneratePhoneNumberHeader.sh and PhoneNumberMetaData.h for details.
-  NSMutableData* gunzippedData = [NSMutableData dataWithLength:expandedLength];
+  NSMutableData *gunzippedData = [NSMutableData dataWithLength:expandedLength];
 
   z_stream zStream;
   memset(&zStream, 0, sizeof(zStream));

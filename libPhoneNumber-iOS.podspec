@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumber-iOS"
-  s.version      = "0.9.16"
+  s.version      = "1.0.0"
   s.summary      = "iOS library for parsing, formatting, storing and validating international phone numbers from libphonenumber library."
   s.description  = <<-DESC
 libPhoneNumber for iOS
@@ -12,7 +12,7 @@ DESC
   s.source       = { :git => "https://github.com/iziz/libPhoneNumber-iOS.git", :tag => s.version.to_s }
   s.libraries 	 = 'z'
   s.ios.framework    = 'CoreTelephony'
-  s.ios.deployment_target = "6.0"
+  s.ios.deployment_target = "10.1"
   s.osx.deployment_target = "10.9"
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
