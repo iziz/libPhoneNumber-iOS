@@ -8,7 +8,7 @@ target 'libPhoneNumber-Demo' do
   # Pods for libPhoneNumber-Demo
   pod 'libPhoneNumber-iOS'
   pod 'libPhoneNumberGeocoding', :git => 'https://github.com/iziz/libPhoneNumber-iOS'
-  pod 'libPhoneNumberShortNumber', :git => 'https://github.com/rastaarh/libPhoneNumber-iOS', :branch => 'ShortNumber'
+  pod 'libPhoneNumberShortNumber', :git => 'https://github.com/iziz/libPhoneNumber-iOS'
   target 'libPhoneNumber-DemoTests' do
     inherit! :search_paths
     # Pods for testing
