@@ -6,7 +6,7 @@ target 'libPhoneNumber-Demo' do
   use_frameworks!
 
   # Pods for libPhoneNumber-Demo
-  pod 'libPhoneNumber-iOS'
+  pod 'libPhoneNumber-iOS', :git => 'https://github.com/iziz/libPhoneNumber-iOS'
   pod 'libPhoneNumberGeocoding', :git => 'https://github.com/iziz/libPhoneNumber-iOS'
   pod 'libPhoneNumberShortNumber', :git => 'https://github.com/iziz/libPhoneNumber-iOS'
   target 'libPhoneNumber-DemoTests' do
