@@ -36,7 +36,7 @@ pod 'libPhoneNumber-iOS', '~> 0.8'
 ```
 ##### Installing libPhoneNumber Geocoding Features
 ```
-pod 'libPhoneNumberGeocoding', :git => 'https://github.com/iziz/libPhoneNumber-iOS'
+pod 'libPhoneNumberGeocoding', :git => 'https://github.com/CocoaPods/Specs.git'
 ```
 
 #### Using [Carthage](https://github.com/Carthage/Carthage)
