@@ -1,29 +1,30 @@
 //
-//  NBPhoneNumberUtil+ShortNumberTestHelper.m
-//  libPhoneNumber
+//  NBShortNumberTestHelper.m
+//  libPhoneNumberShortNumber
 //
 //  Created by Paween Itthipalkul on 12/1/17.
 //  Copyright © 2017 Google LLC. All rights reserved.
 //
-
-#import "NBPhoneNumberUtil+ShortNumberTestHelper.h"
-
-#import "NBMetadataHelper.h"
+#import "NBShortNumberTestHelper.h"
 #import "NBPhoneMetadata.h"
 #import "NBPhoneNumberDesc.h"
+#import "NBShortNumberMetadataHelper.h"
+#import "NBShortNumberUtil.h"
 
-#if SHORT_NUMBER_SUPPORT
+@implementation NBShortNumberTestHelper {
+  NBShortNumberMetadataHelper *_helper;
+}
 
-@interface NBPhoneNumberUtil()
-
-@property (nonatomic, strong, readonly) NBMetadataHelper *helper;
-
-@end
-
-@implementation NBPhoneNumberUtil(ShortNumberTestHelper)
+- (instancetype)init {
+  self = [super init];
+  if (self != nil) {
+    _helper = [[NBShortNumberMetadataHelper alloc] init];
+  }
+  return self;
+}
 
 - (NSString *)exampleShortNumberForCost:(NBEShortNumberCost)cost regionCode:(NSString *)regionCode {
-  NBPhoneMetaData *metadata = [self.helper shortNumberMetadataForRegion:regionCode];
+  NBPhoneMetaData *metadata = [_helper shortNumberMetadataForRegion:regionCode];
   if (metadata == nil) {
     return @"";
   }
@@ -49,10 +50,8 @@
 }
 
 - (NSString *)exampleShortNumberWithRegionCode:(NSString *)regionCode {
-  NBPhoneMetaData *metadata = [self.helper shortNumberMetadataForRegion:regionCode];
+  NBPhoneMetaData *metadata = [_helper shortNumberMetadataForRegion:regionCode];
   return metadata.shortCode.exampleNumber ?: @"";
 }
 
 @end
-
-#endif // SHORT_NUMBER_SUPPORT
