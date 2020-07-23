@@ -6,9 +6,9 @@
 //  Copyright © 2020 Google LLC. All rights reserved.
 //
 
-import SwiftUI
 import libPhoneNumber_iOS
 import libPhoneNumberShortNumber
+import SwiftUI
 
 struct ShortNumberUtilView: View {
     @State private var phoneNumber: String = ""
@@ -16,10 +16,10 @@ struct ShortNumberUtilView: View {
     @State private var isEmergencyNumber: Bool = false
     @State private var estimatedCostOfCall: NBEShortNumberCost?
     @State private var searchMade: Bool = false
-    
+
     let phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
     let shortNumberUtil: NBShortNumberUtil = NBShortNumberUtil()
-    
+
     var body: some View {
         VStack {
             Form {
@@ -44,7 +44,7 @@ struct ShortNumberUtilView: View {
         }
         .navigationBarTitle(Text("Short Number Util Parser"))
     }
-    
+
     var SuccessResultView: some View {
         Form {
             Section(header: Text("Phone Number Validation")) {
@@ -57,7 +57,7 @@ struct ShortNumberUtilView: View {
                     Text(phoneNumber) + Text(" is not an emergency number")
                 }
             }
-            
+
             Section(header: Text("Expected Cost of Short Number")) {
                 if estimatedCostOfCall == NBEShortNumberCost(rawValue: 1) {
                     Text("Toll Free Number")
@@ -71,7 +71,7 @@ struct ShortNumberUtilView: View {
             }
         }
     }
-    
+
     var FailedResultView: some View {
         Form {
             Section(header: Text("Phone Number Validation")) {
@@ -85,11 +85,14 @@ extension ShortNumberUtilView {
     func parsePhoneNumber() {
         do {
             self.searchMade = true
-            let parsedPhoneNumber: NBPhoneNumber = try phoneUtil.parse(self.phoneNumber, defaultRegion: Locale.current.regionCode!)
-            self.isValidShortNumber = shortNumberUtil.isValidShortNumber(parsedPhoneNumber)
-            self.isEmergencyNumber = shortNumberUtil.isEmergencyNumber(phoneNumber, forRegion: Locale.current.regionCode!)
-            self.estimatedCostOfCall = shortNumberUtil.expectedCost(of: parsedPhoneNumber)
-        } catch let error {
+            let parsedPhoneNumber: NBPhoneNumber =
+                try phoneUtil.parse(self.phoneNumber, defaultRegion: Locale.current.regionCode!)
+            self.isValidShortNumber = self.shortNumberUtil.isValidShortNumber(parsedPhoneNumber)
+            self.isEmergencyNumber =
+                self.shortNumberUtil.isEmergencyNumber(self.phoneNumber,
+                                                       forRegion: Locale.current.regionCode!)
+            self.estimatedCostOfCall = self.shortNumberUtil.expectedCost(of: parsedPhoneNumber)
+        } catch {
             print(error)
         }
     }

@@ -7,12 +7,13 @@
 //
 
 import SwiftUI
+
 import libPhoneNumber_iOS
 
 struct FormatterView: View {
     @State var phoneNumber: String = ""
     let formatter: NBAsYouTypeFormatter = NBAsYouTypeFormatter(regionCode: Locale.current.regionCode)
-    
+
     var body: some View {
         VStack {
             Form {
@@ -32,9 +33,9 @@ struct FormatterView: View {
         .lineLimit(2)
         .multilineTextAlignment(.center)
     }
-    
+
     func formatPhoneNumber(phoneNumber: String) -> String {
-        self.formatter.clear()
+        formatter.clear()
         return formatter.inputString(phoneNumber)
     }
 }

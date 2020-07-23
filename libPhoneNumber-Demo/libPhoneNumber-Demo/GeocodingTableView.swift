@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+
 import libPhoneNumber_iOS
 import libPhoneNumberGeocoding
 
@@ -16,25 +17,26 @@ struct GeocodingTableView: View {
     var minRuntime: CGFloat = 0.00
     var totalRuntime: CGFloat = 0.00
     var averageRuntime: CGFloat = 0.00
-    
+
     init() {
-        for _ in 1...50 {
+        for _ in 1 ... 50 {
             makeGeocodingAPICalls()
         }
-        
+
         self.maxRuntime = runtimeArray.max() ?? 0.0
         self.minRuntime = runtimeArray.min() ?? 0.0
         self.totalRuntime = 0.00
-        for i in 0..<500 {
-            self.totalRuntime += runtimeArray[i]
-            runtimeArray[i] = runtimeArray[i]/maxRuntime
+        for i in 0 ..< 500 {
+            totalRuntime += runtimeArray[i]
+            runtimeArray[i] = runtimeArray[i] / maxRuntime
         }
         self.averageRuntime = totalRuntime / CGFloat(runtimeArray.count)
     }
+
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("This table makes 500 Geocoding API calls per page refresh.")) {
+                Section(header: Text("This table makes 500 Geocoding API calls")) {
                     List {
                         ForEach(regionDescriptions, id: \.self) { pair in
                             HStack {
@@ -50,7 +52,7 @@ struct GeocodingTableView: View {
                 Section(header: Text("Runtime Performance for Geocoding API Calls")) {
                     LineGraph(dataPoints: runtimeArray)
                         .stroke(Color.green, lineWidth: 2)
-                        .aspectRatio(16/9, contentMode: .fit)
+                        .aspectRatio(16 / 9, contentMode: .fit)
                         .border(Color.gray, width: 1)
                         .padding()
                 }
@@ -81,31 +83,33 @@ extension GeocodingTableView {
             do {
                 let startTimer = DispatchTime.now()
                 let parsedPhoneNumber = try phoneUtil.parse(phoneNumber, defaultRegion: "US")
-                regionDescriptions.append([phoneNumber, geocoder.description(for: parsedPhoneNumber)])
+                regionDescriptions.append([phoneNumber,
+                                           geocoder.description(for: parsedPhoneNumber)])
                 let endTimer = DispatchTime.now()
-                runtimeArray.append(CGFloat(endTimer.uptimeNanoseconds - startTimer.uptimeNanoseconds)/1000000.0)
-            } catch let error {
+                let runtimeData = CGFloat(endTimer.uptimeNanoseconds - startTimer.uptimeNanoseconds)
+                runtimeArray.append(runtimeData / 1000000.0)
+            } catch {
                 print(error)
             }
         }
     }
-    
+
     // Graph Design based from: https://www.objc.io/blog/2020/03/16/swiftui-line-graph-animation/
     struct LineGraph: Shape {
         var dataPoints: [CGFloat]
-        
+
         func path(in rect: CGRect) -> Path {
             func point(at ix: Int) -> CGPoint {
                 let point = dataPoints[ix]
                 let x = rect.width * CGFloat(ix) / CGFloat(dataPoints.count - 1)
-                let y = (1-point) * rect.height
+                let y = (1 - point) * rect.height
                 return CGPoint(x: x, y: y)
             }
-            
+
             return Path { p in
                 guard dataPoints.count > 1 else { return }
                 let start = dataPoints[0]
-                p.move(to: CGPoint(x: 0, y: (1-start) * rect.height))
+                p.move(to: CGPoint(x: 0, y: (1 - start) * rect.height))
                 for idx in dataPoints.indices {
                     p.addLine(to: point(at: idx))
                 }
@@ -114,7 +118,17 @@ extension GeocodingTableView {
     }
 }
 
-let phoneNumbers: [String] = ["19098611234", "14159601234", "12014321234", "12034811234", "12067061234", "12077711234", "12144681234", "12158231234", "12394351234", "12534591234"]
+let phoneNumbers: [String] = ["19098611234",
+                              "14159601234",
+                              "12014321234",
+                              "12034811234",
+                              "12067061234",
+                              "12077711234",
+                              "12144681234",
+                              "12158231234",
+                              "12394351234",
+                              "12534591234"]
+
 private var geocoder: NBPhoneNumberOfflineGeocoder = NBPhoneNumberOfflineGeocoder()
 private var phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
 var regionDescriptions: [[String?]] = []

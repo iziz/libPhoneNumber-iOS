@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+
 import libPhoneNumber_iOS
 import libPhoneNumberGeocoding
 
@@ -87,17 +88,20 @@ extension PhoneUtilView {
     func parsePhoneNumber() {
         do {
             self.searchMade = true
-            let parsedPhoneNumber: NBPhoneNumber = try phoneUtil.parse(phoneNumber, defaultRegion: Locale.current.regionCode!)
-            self.isValidNumber = phoneUtil.isValidNumber(parsedPhoneNumber)
+            let parsedPhoneNumber: NBPhoneNumber =
+                try phoneUtil.parse(self.phoneNumber, defaultRegion: Locale.current.regionCode!)
+            self.isValidNumber = self.phoneUtil.isValidNumber(parsedPhoneNumber)
             self.countryCode = parsedPhoneNumber.countryCode.stringValue
             self.nationalNumber = parsedPhoneNumber.nationalNumber.stringValue
-            if formatSelection != 0 {
-                self.formattedPhoneNumber = try phoneUtil.format(parsedPhoneNumber, numberFormat: NBEPhoneNumberFormat(rawValue: formatSelection-1)!)
+            if self.formatSelection != 0 {
+                self.formattedPhoneNumber = try
+                    self.phoneUtil.format(parsedPhoneNumber, numberFormat:
+                        NBEPhoneNumberFormat(rawValue: self.formatSelection - 1)!)
             } else {
                 self.formattedPhoneNumber = ""
             }
             
-        } catch let error {
+        } catch {
             print(error)
         }
     }
