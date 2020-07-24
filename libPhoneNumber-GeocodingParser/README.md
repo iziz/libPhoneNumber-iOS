@@ -17,8 +17,7 @@ Example: /Users/JohnDoe/Documents
 
 libPhoneNumber's geocoding metadata files are periodically updated by contributors. Please fetch the most recently
 updated geocoding data files by using this program and replace the current database files in 
-GeocodingMetadata.bundle, found in the libPhoneNumberGeocoding target 
-(https://github.com/iziz/libPhoneNumber-iOS/tree/geocodingFeatures/libPhoneNumberGeocoding/Metadata).
+GeocodingMetadata.bundle, found in the [libPhoneNumberGeocoding target](https://github.com/iziz/libPhoneNumber-iOS/tree/master/libPhoneNumberGeocoding/Metadata).
 
 Please contribute to libPhoneNumber-iOS library by creating a pull request to replace outdated databases with the
 up-to-date SQLite databases produced by this program. 
