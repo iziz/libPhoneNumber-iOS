@@ -15,7 +15,7 @@ Before running the application, you must install the Cocoapods that are defined 
 pod install
 ```
 
-## Run the project on libPhoneNumber-GeocodingParser.xcworkspace
+## Run the project on libPhoneNumber-Demo.xcworkspace
 
-1) Open the project using the Xcode Workspace file to access the complete project with its integrated Cocoapods.]
+1) Open the project using the Xcode Workspace file to access the complete project with its integrated Cocoapods.
 2) Build the libPhoneNumber-Demo and press Run. 
