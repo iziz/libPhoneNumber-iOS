@@ -37,8 +37,8 @@ import libPhoneNumberGeocoding
 #import "NBPhoneNumber.h"
 
 // CocoaPods (check your library path)
-#import "libPhoneNumber_iOS/NBPhoneNumberOfflineGeocoder.h"
-#import "libPhoneNumber_iOS/NBPhoneNumber.h"
+#import "libPhoneNumberGeocoding/NBPhoneNumberOfflineGeocoder.h"
+#import "libPhoneNumberGeocoding/NBPhoneNumber.h"
 
 // add more if you want...
 ```

@@ -38,8 +38,8 @@ import libPhoneNumberShortNumber
 #import "NBPhoneNumber.h"
 
 // CocoaPods (check your library path)
-#import "libPhoneNumber_iOS/NBShortNumberUtil.h"
-#import "libPhoneNumber_iOS/NBPhoneNumber.h"
+#import "libPhoneNumberShortNumber/NBShortNumberUtil.h"
+#import "libPhoneNumberShortNumber/NBPhoneNumber.h"
 
 // add more if you want...
 ```
