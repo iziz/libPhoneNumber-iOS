@@ -246,6 +246,7 @@
 				TargetAttributes = {
 					94AEB61824C21FAD00204E11 = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
 					};
 					94AEB62E24C21FAE00204E11 = {
 						CreatedOnToolsVersion = 11.5;
@@ -585,6 +586,7 @@
 			baseConfigurationReference = F6BAA7C26BB7DAD929FDAFB6 /* Pods-libPhoneNumber-Demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"libPhoneNumber-Demo/Preview Content\"";
 				DEVELOPMENT_TEAM = 973LHT5R86;
@@ -596,6 +598,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.libPhoneNumber-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "libPhoneNumber-Demo/libPhoneNumber-Demo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -606,6 +610,7 @@
 			baseConfigurationReference = 634BA8513696AC5501292664 /* Pods-libPhoneNumber-Demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"libPhoneNumber-Demo/Preview Content\"";
 				DEVELOPMENT_TEAM = 973LHT5R86;
@@ -617,6 +622,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.libPhoneNumber-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "libPhoneNumber-Demo/libPhoneNumber-Demo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
