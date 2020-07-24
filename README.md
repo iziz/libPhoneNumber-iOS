@@ -8,10 +8,8 @@
 
  - NBPhoneNumberUtil
  - NBAsYouTypeFormatter
- - NBTextField.swift (Swift 3)
- - NBPhoneNumberOfflineGeocoder
 
-> ARC only, or add the **"-fobjc-arc"** flag for non-ARC
+> ARC only
 
 ## Update Log
 [https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
@@ -176,43 +174,12 @@ override func viewDidLoad() {
     NSLog(@"%@", [f inputString:@"16502532222"]); // 1 650 253 2222
 ```
 
-## Usage - **NBPhoneNumberOfflineGeocoder**
-```obj-c
-NBPhoneNumberOfflineGeocoder *geocoder = [[NBPhoneNumberOfflineGeocoder alloc] init];
-    
-    // unitedStatesPhoneNumber                   : +16509601234
-    NSLog(@Valid US Number: "%@", [geocoder descriptionForNumber: unitedStatesPhoneNumber 
-                                               withLanguageCode: @"en"]);
-    // Convenience Method
-    NSLog(@"Convenience Method: %@", [geocoder descriptionForNumber: unitedStatesPhoneNumber]);
-       
-    // United States Phone Number, with user located in Italy and device language set to Spanish
-    NSLog(@"Method using Spanish Language: %@", [geocoder descriptionForNumber: unitedStatesPhoneNumber 
-                                  withLanguageCode: @"es" 
-                                    withUserRegion: @"IT"]);
+## libPhoneNumberGeocoding
 
-    // southKoreaPhoneNumber                     : +8222123456
-    NSLog(@"South Korea Phone Number: %@", [geocoder descriptionForNumber: southKoreaPhoneNumber 
-                                                            withLanguageCode: @"en"]);
-    NSLog(@"South Korea Phone Number: %@", [geocoder descriptionForNumber: southKoreanPhoneNumber 
-                                                            withLanguageCode: @"ko"]);
+For more information on libPhoneNumberGeocoding and its usage, please visit [libPhoneNumberGeocoding](https://github.com/iziz/libPhoneNumber-iOS/libPhoneNumberGeocoding/README.md) for more information.
 
-    // invalidUSPhoneNumber                      : +1123456789
-    NSLog(@"%@", [geocoder descriptionForNumber: invalidUSPhoneNumber 
-                                  withLanguageCode: @"en"]);
-                                  
-    // Non-geographical South Korea Phone Number: +82101234567
-    NSLog(@"Non-geographical number: %@", [geocoder descriptionForNumber: southKoreaMobilePhone]);
-```
-##### Output
-```
-    Valid US Number: Mountain View, CA
-    Convenience Method: Mountain View, CA
-    Method using Spanish Language: Estados Unidos
-    South Korea Phone Number: Seoul
-    South Korea Phone Number: 서울
-    (null)
-    Non-geographical number: South Korea
-```
+## libPhoneNumberShortNumber
+
+For more information on libPhoneNumberShortNumber and its usage, please visit [libPhoneNumberShortNumber](https://github.com/iziz/libPhoneNumber-iOS/libPhoneNumberShortNumber/README.md) for more information.
 
 ##### Visit [libphonenumber](https://github.com/google/libphonenumber) for more information or mail (zen.isis@gmail.com)
