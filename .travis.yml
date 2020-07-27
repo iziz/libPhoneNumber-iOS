@@ -7,6 +7,11 @@ script:
 - xcodebuild -project libPhoneNumber.xcodeproj -scheme libPhoneNumberiOSTests clean
 - xcodebuild -project libPhoneNumber.xcodeproj -scheme libPhoneNumberiOSTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES build-for-testing
 - xctool -project libPhoneNumber.xcodeproj -scheme libPhoneNumberiOSTests run-tests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
-- swift test -c release
+
+- xcodebuild -project libPhoneNumber.xcodeproj -scheme libPhoneNumberGeocodingTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES build-for-testing
+- xctool -project libPhoneNumber.xcodeproj -scheme libPhoneNumberGeocodingTests run-tests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+
+- xcodebuild -project libPhoneNumber.xcodeproj -scheme libPhoneNumberShortNumberTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES build-for-testing
+- xctool -project libPhoneNumber.xcodeproj -scheme libPhoneNumberShortNumberTests run-tests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
 
 after_success: slather 
