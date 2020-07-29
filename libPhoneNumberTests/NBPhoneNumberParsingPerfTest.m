@@ -16,10 +16,10 @@
 #import "NBPhoneNumberDesc.h"
 #import "NBPhoneNumberUtil.h"
 
-@interface NBExampleNumber: NSObject
+@interface NBExampleNumber : NSObject
 
-@property (nonatomic, strong) NSString *phoneNumber;
-@property (nonatomic, strong) NSString *baseRegionCode;
+@property(nonatomic, strong) NSString *phoneNumber;
+@property(nonatomic, strong) NSString *baseRegionCode;
 
 - (instancetype)initWithPhoneNumber:(NSString *)phoneNumber
                      baseRegionCode:(NSString *)baseRegionCode;
@@ -39,8 +39,7 @@
 }
 @end
 
-
-@interface NBPhoneNumberParsingPerfTest: XCTestCase
+@interface NBPhoneNumberParsingPerfTest : XCTestCase
 @end
 
 @implementation NBPhoneNumberParsingPerfTest
@@ -73,8 +72,8 @@
       NSString *intl = [util format:phoneNumber
                        numberFormat:NBEPhoneNumberFormatINTERNATIONAL
                               error:nil];
-      NBExampleNumber * intlSample = [[NBExampleNumber alloc] initWithPhoneNumber:intl
-                                                                   baseRegionCode:regionCode];
+      NBExampleNumber *intlSample = [[NBExampleNumber alloc] initWithPhoneNumber:intl
+                                                                  baseRegionCode:regionCode];
       [exampleNumbers addObject:intlSample];
     }
   }
@@ -92,6 +91,6 @@
   }];
 }
 
-#endif // PERF_TEST
+#endif  // PERF_TEST
 
 @end

@@ -15,7 +15,7 @@
 
 #if SHORT_NUMBER_SUPPORT
 
-@implementation NBPhoneNumberUtil(ShortNumberTest)
+@implementation NBPhoneNumberUtil (ShortNumberTest)
 
 - (NSString *)exampleShortNumberForCost:(NBEShortNumberCost)cost regionCode:(NSString *)regionCode {
   NBPhoneMetaData *metadata = [self.helper shortNumberMetadataForRegion:regionCode];
@@ -50,4 +50,4 @@
 
 @end
 
-#endif // SHORT_NUMBER_SUPPORT
+#endif  // SHORT_NUMBER_SUPPORT
