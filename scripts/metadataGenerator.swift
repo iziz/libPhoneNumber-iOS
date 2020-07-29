@@ -90,6 +90,7 @@ let shortNumberMetadata = URL(string: "https://raw.githubusercontent.com/googlei
 
 let currentDir = FileManager.default.currentDirectoryPath
 let baseURL = URL(fileURLWithPath: currentDir).appendingPathComponent("generatedJSON")
+try? FileManager.default.createDirectory(at: baseURL, withIntermediateDirectories: true)
 
 // Phone metadata.
 do {
