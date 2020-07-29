@@ -39,10 +39,10 @@
 /* 23 */ @property(nonatomic, strong) NSString *leadingDigits;
 /* 26 */ @property(nonatomic, assign) BOOL leadingZeroPossible;
 
-/* 29 */ @property (nonatomic, strong) NBPhoneNumberDesc *shortCode;
-/* 30 */ @property (nonatomic, strong) NBPhoneNumberDesc *standardRate;
-/* 31 */ @property (nonatomic, strong) NBPhoneNumberDesc *carrierSpecific;
-/* 33 */ @property (nonatomic, strong) NBPhoneNumberDesc *smsServices;
+/* 29 */ @property(nonatomic, strong) NBPhoneNumberDesc *shortCode;
+/* 30 */ @property(nonatomic, strong) NBPhoneNumberDesc *standardRate;
+/* 31 */ @property(nonatomic, strong) NBPhoneNumberDesc *carrierSpecific;
+/* 33 */ @property(nonatomic, strong) NBPhoneNumberDesc *smsServices;
 
 - (instancetype)initWithEntry:(NSArray *)entry;
 @end
