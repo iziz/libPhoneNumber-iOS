@@ -107,6 +107,11 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   self.aUtil = [[NBPhoneNumberUtil alloc] initWithMetadataHelper:self.helper];
 }
 
+- (void)testFoo {
+  NSData *data = [[NSData alloc] initWithBytes:(void *)kPhoneNumberMetaDataForTesting
+                                        length:kPhoneNumberMetaDataForTestingCompressedLength];
+}
+
 - (void)tearDown {
   [super tearDown];
 }

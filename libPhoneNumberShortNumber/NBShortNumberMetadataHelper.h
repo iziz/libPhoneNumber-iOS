@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @class NBPhoneMetaData;
+@class NBMetadataHelper;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NBShortNumberMetadataHelper : NSObject
+
+- (instancetype)initWithZippedData:(NSData *)data expandedLength:(NSUInteger)expandedLength metadataHelper:(NBMetadataHelper *)helper;
 
 /**
  * Returns the short number metadata for the given region code or {@code nil} if the region
