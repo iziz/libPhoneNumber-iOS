@@ -21,16 +21,20 @@
 static NSString *const INVALID_REGION_CODE = @"ZZ";
 
 - (instancetype)init {
-  return [self initWithMetadataHelperFactory:^NBGeocoderMetadataHelper *(
-                   NSNumber *_Nonnull countryCode, NSString *_Nonnull language) {
-    return [[NBGeocoderMetadataHelper alloc] initWithCountryCode:countryCode withLanguage:language];
-  }];
+  return [self
+      initWithMetadataHelperFactory:^NBGeocoderMetadataHelper *(NSNumber *_Nonnull countryCode,
+                                                                NSString *_Nonnull language) {
+        return [[NBGeocoderMetadataHelper alloc] initWithCountryCode:countryCode
+                                                        withLanguage:language];
+      }
+                    phoneNumberUtil:NBPhoneNumberUtil.sharedInstance];
 }
 
-- (instancetype)initWithMetadataHelperFactory:(NBGeocoderMetadataHelperFactory)factory {
+- (instancetype)initWithMetadataHelperFactory:(NBGeocoderMetadataHelperFactory)factory
+                              phoneNumberUtil:(NBPhoneNumberUtil *)phoneNumberUtil {
   self = [super init];
   if (self != nil) {
-    _phoneNumberUtil = NBPhoneNumberUtil.sharedInstance;
+    _phoneNumberUtil = phoneNumberUtil;
     _metadataHelpers = [[NSCache alloc] init];
     _metadataHelperFactory = [factory copy];
   }

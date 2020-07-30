@@ -10,11 +10,12 @@
 #import <libPhoneNumberGeocoding/NBGeocoderMetadataHelper.h>
 
 @class NBPhoneNumber;
+@class NBPhoneNumberUtil;
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NBGeocoderMetadataHelper *_Nonnull (^NBGeocoderMetadataHelperFactory)(
-    NSNumber *countryCode, NSString *language);
+typedef NBGeocoderMetadataHelper *_Nonnull (^NBGeocoderMetadataHelperFactory)(NSNumber *countryCode,
+                                                                              NSString *language);
 
 @interface NBPhoneNumberOfflineGeocoder : NSObject
 
@@ -25,11 +26,12 @@ typedef NBGeocoderMetadataHelper *_Nonnull (^NBGeocoderMetadataHelperFactory)(
  *
  * @param factory  a factory method, with countryCode and language parameters,
  * that returns an instance of NBGeocoderMetadataHelper
+ * @param phoneNumberUtil an instance of NBPhoneNumberUtil class.
  * @return an instance of NBPhoneNumberOfflineGeocoder that creates
  * NBGeocoderMetadataHelper instances using the factory method parameter
  */
-- (instancetype)initWithMetadataHelperFactory:
-    (NBGeocoderMetadataHelperFactory)factory;
+- (instancetype)initWithMetadataHelperFactory:(NBGeocoderMetadataHelperFactory)factory
+                              phoneNumberUtil:(NBPhoneNumberUtil *)phoneNumberUtil;
 
 /**
  * Returns an instance of NBPhoneNumberOfflineGeocoder that uses a default

@@ -25,10 +25,11 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
   NBPhoneNumberUtil *_phoneUtil;
 }
 
-- (instancetype)initWithMetadataHelper:(NBShortNumberMetadataHelper *)helper {
+- (instancetype)initWithMetadataHelper:(NBShortNumberMetadataHelper *)helper
+                       phoneNumberUtil:(NBPhoneNumberUtil *)phoneNumberUtil {
   self = [super init];
   if (self != nil) {
-    _phoneUtil = [[NBPhoneNumberUtil alloc] init];
+    _phoneUtil = phoneNumberUtil;
     _helper = helper;
     _matcher = [[NBRegExMatcher alloc] init];
   }
@@ -36,7 +37,8 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 }
 
 - (instancetype)init {
-  return [self initWithMetadataHelper:[[NBShortNumberMetadataHelper alloc] init]];
+  return [self initWithMetadataHelper:[[NBShortNumberMetadataHelper alloc] init]
+                      phoneNumberUtil:[[NBPhoneNumberUtil alloc] init]];
 }
 
 - (BOOL)isPossibleShortNumber:(NBPhoneNumber *)phoneNumber forRegion:(NSString *)regionDialingFrom {

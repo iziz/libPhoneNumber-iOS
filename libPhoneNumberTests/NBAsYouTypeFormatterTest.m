@@ -7,9 +7,10 @@
 
 #import <XCTest/XCTest.h>
 #import "NBAsYouTypeFormatter.h"
-#import "NBGeneratedPhoneNumberMetadataForTesting.h"
 #import "NBMetadataHelper.h"
 #import "NBPhoneNumberUtil.h"
+
+static size_t kPhoneNumberMetaDataForTestingExpandedLength = 33021;
 
 @interface NBAsYouTypeFormatterTest : XCTestCase
 @end
@@ -22,8 +23,9 @@
 - (void)setUp {
   [super setUp];
 
-  NSData *data = [[NSData alloc] initWithBytes:(Bytef *)kPhoneNumberMetaDataForTesting
-                                        length:kPhoneNumberMetaDataForTestingCompressedLength];
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSString *path = [bundle pathForResource:@"libPhoneNumberMetadataForTesting" ofType:nil];
+  NSData *data = [NSData dataWithContentsOfFile:path];
   _helper =
       [[NBMetadataHelper alloc] initWithZippedData:data
                                     expandedLength:kPhoneNumberMetaDataForTestingExpandedLength];

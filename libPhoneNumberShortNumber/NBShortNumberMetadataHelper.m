@@ -33,10 +33,12 @@ static NSString *StringByTrimming(NSString *aString) {
   return [self initWithZippedDataBytes:kShortNumberMetaData
                       compressedLength:kShortNumberMetaDataCompressedLength
                         expandedLength:kShortNumberMetaDataExpandedLength
-          metadataHelper:[[NBMetadataHelper alloc] init]];
+                        metadataHelper:[[NBMetadataHelper alloc] init]];
 }
 
-- (instancetype)initWithZippedData:(NSData *)data expandedLength:(NSUInteger)expandedLength metadataHelper:(NBMetadataHelper *)helper {
+- (instancetype)initWithZippedData:(NSData *)data
+                    expandedLength:(NSUInteger)expandedLength
+                    metadataHelper:(NBMetadataHelper *)helper {
   return [self initWithZippedDataBytes:(z_const Bytef *)data.bytes
                       compressedLength:data.length
                         expandedLength:expandedLength
@@ -54,8 +56,8 @@ static NSString *StringByTrimming(NSString *aString) {
     _shortNumberMetadataCache = [[NSCache alloc] init];
     _shortNumberDataMap =
         [NBShortNumberMetadataHelper jsonObjectFromZippedDataWithBytes:data
-                                           compressedLength:compressedLength
-                                             expandedLength:expandedLength];
+                                                      compressedLength:compressedLength
+                                                        expandedLength:expandedLength];
   }
 
   return self;

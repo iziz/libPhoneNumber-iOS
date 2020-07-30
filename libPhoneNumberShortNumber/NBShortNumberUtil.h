@@ -10,6 +10,7 @@
 
 @class NBPhoneNumber;
 @class NBShortNumberMetadataHelper;
+@class NBPhoneNumberUtil;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,7 +30,8 @@ typedef NS_ENUM(NSUInteger, NBEShortNumberCost) {
 
 /// Initialize short number util with a metadata helper.
 /// @param helper A metadata helper.
-- (instancetype)initWithMetadataHelper:(NBShortNumberMetadataHelper *)helper;
+- (instancetype)initWithMetadataHelper:(NBShortNumberMetadataHelper *)helper
+                       phoneNumberUtil:(NBPhoneNumberUtil *)phoneNumberUtil;
 
 /**
  * Check whether a short number is a possible number when dialed from the given region. This

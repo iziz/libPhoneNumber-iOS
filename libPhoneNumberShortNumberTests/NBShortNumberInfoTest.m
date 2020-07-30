@@ -8,13 +8,17 @@
 
 #import <XCTest/XCTest.h>
 
+#import "NBMetadataHelper.h"
 #import "NBPhoneMetaData.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
 #import "NBShortNumberUtil.h"
 
+#import "NBGeneratedShortNumberMetadata.h"
 #import "NBShortNumberMetadataHelper.h"
 #import "NBShortNumberTestHelper.h"
+
+static size_t kPhoneNumberMetaDataForTestingExpandedLength = 33021;
 
 @interface NBShortNumberInfoTest : XCTestCase
 
@@ -29,9 +33,19 @@
 - (void)setUp {
   [super setUp];
   if (self != nil) {
-    _shortNumberUtil = [[NBShortNumberUtil alloc] init];
-    _phoneNumberUtil = [[NBPhoneNumberUtil alloc] init];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+
+    NSString *metadataPath = [bundle pathForResource:@"libPhoneNumberMetadataForTesting"
+                                              ofType:nil];
+    NSData *metadataData = [NSData dataWithContentsOfFile:metadataPath];
+    NBMetadataHelper *helper =
+        [[NBMetadataHelper alloc] initWithZippedData:metadataData
+                                      expandedLength:kPhoneNumberMetaDataForTestingExpandedLength];
+    _phoneNumberUtil = [[NBPhoneNumberUtil alloc] initWithMetadataHelper:helper];
     _testHelper = [[NBShortNumberTestHelper alloc] init];
+    _shortNumberUtil =
+        [[NBShortNumberUtil alloc] initWithMetadataHelper:[[NBShortNumberMetadataHelper alloc] init]
+                                          phoneNumberUtil:_phoneNumberUtil];
   }
 }
 
