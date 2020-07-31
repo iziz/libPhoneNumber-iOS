@@ -26,27 +26,41 @@ static NSString *StringByTrimming(NSString *aString) {
 @implementation NBShortNumberMetadataHelper {
   NSCache<NSString *, NBPhoneMetaData *> *_shortNumberMetadataCache;
   NBMetadataHelper *_helper;
+  NSDictionary *_shortNumberDataMap;
 }
 
 - (instancetype)init {
+  return [self initWithZippedDataBytes:kShortNumberMetaData
+                      compressedLength:kShortNumberMetaDataCompressedLength
+                        expandedLength:kShortNumberMetaDataExpandedLength
+                        metadataHelper:[[NBMetadataHelper alloc] init]];
+}
+
+- (instancetype)initWithZippedData:(NSData *)data
+                    expandedLength:(NSUInteger)expandedLength
+                    metadataHelper:(NBMetadataHelper *)helper {
+  return [self initWithZippedDataBytes:(z_const Bytef *)data.bytes
+                      compressedLength:data.length
+                        expandedLength:expandedLength
+                        metadataHelper:helper];
+}
+
+- (instancetype)initWithZippedDataBytes:(z_const Bytef *)data
+                       compressedLength:(NSUInteger)compressedLength
+                         expandedLength:(NSUInteger)expandedLength
+                         metadataHelper:(NBMetadataHelper *)helper {
   self = [super init];
+
   if (self != nil) {
     _helper = [[NBMetadataHelper alloc] init];
     _shortNumberMetadataCache = [[NSCache alloc] init];
+    _shortNumberDataMap =
+        [NBShortNumberMetadataHelper jsonObjectFromZippedDataWithBytes:data
+                                                      compressedLength:compressedLength
+                                                        expandedLength:expandedLength];
   }
-  return self;
-}
 
-+ (NSDictionary *)shortNumberDataMap {
-  static NSDictionary *shortNumberDataDictionary;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    shortNumberDataDictionary =
-        [self jsonObjectFromZippedDataWithBytes:kShortNumberMetaData
-                               compressedLength:kShortNumberMetaDataCompressedLength
-                                 expandedLength:kShortNumberMetaDataExpandedLength];
-  });
-  return shortNumberDataDictionary;
+  return self;
 }
 
 - (NBPhoneMetaData *)shortNumberMetadataForRegion:(NSString *)regionCode {
@@ -61,7 +75,7 @@ static NSString *StringByTrimming(NSString *aString) {
     return cachedMetadata;
   }
 
-  NSDictionary *dict = [[self class] shortNumberDataMap][@"countryToMetadata"];
+  NSDictionary *dict = _shortNumberDataMap[@"countryToMetadata"];
   NSArray *entry = dict[regionCode];
   if (entry) {
     NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] initWithEntry:entry];

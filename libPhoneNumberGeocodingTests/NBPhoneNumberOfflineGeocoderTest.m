@@ -8,9 +8,12 @@
 
 #import <XCTest/XCTest.h>
 
+#import "NBMetadataHelper.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberOfflineGeocoder.h"
 #import "NBPhoneNumberUtil.h"
+
+static size_t kPhoneNumberMetaDataForTestingExpandedLength = 33021;
 
 @interface NBPhoneNumberOfflineGeocoderTest : XCTestCase
 
@@ -44,13 +47,22 @@
   NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
   NSURL *resourceURL = [[bundle resourceURL] URLByAppendingPathComponent:@"TestingSource.bundle"];
   NSBundle *testDatabaseBundle = [NSBundle bundleWithURL:resourceURL];
+
+  NSString *metadataPath = [bundle pathForResource:@"libPhoneNumberMetadataForTesting" ofType:nil];
+  NSData *metadataData = [NSData dataWithContentsOfFile:metadataPath];
+  NBMetadataHelper *helper =
+      [[NBMetadataHelper alloc] initWithZippedData:metadataData
+                                    expandedLength:kPhoneNumberMetaDataForTestingExpandedLength];
+  NBPhoneNumberUtil *phoneNumberUtil = [[NBPhoneNumberUtil alloc] initWithMetadataHelper:helper];
+
   self.geocoder = [[NBPhoneNumberOfflineGeocoder alloc]
       initWithMetadataHelperFactory:^NBGeocoderMetadataHelper *(NSNumber *_Nonnull countryCode,
                                                                 NSString *_Nonnull language) {
         return [[NBGeocoderMetadataHelper alloc] initWithCountryCode:countryCode
                                                         withLanguage:language
                                                           withBundle:testDatabaseBundle];
-      }];
+      }
+                    phoneNumberUtil:phoneNumberUtil];
 }
 
 - (NBPhoneNumber *)koreanPhoneNumber1 {

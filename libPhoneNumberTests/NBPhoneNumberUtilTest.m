@@ -9,11 +9,12 @@
 #import "NBMetadataHelper.h"
 #import "NBPhoneMetaData.h"
 
-#import "NBGeneratedPhoneNumberMetadataForTesting.h"
 #import "NBNumberFormat.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
 #import "NBPhoneNumberUtil.h"
+
+static size_t kPhoneNumberMetaDataForTestingExpandedLength = 33021;
 
 // Create an entry array for a phone number desc based on numberPattern
 static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPattern) {
@@ -99,12 +100,18 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
 
 - (void)setUp {
   [super setUp];
-  NSData *data = [[NSData alloc] initWithBytes:(void *)kPhoneNumberMetaDataForTesting
-                                        length:kPhoneNumberMetaDataForTestingCompressedLength];
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSString *path = [bundle pathForResource:@"libPhoneNumberMetadataForTesting" ofType:nil];
+  NSData *data = [NSData dataWithContentsOfFile:path];
   self.helper =
       [[NBMetadataHelper alloc] initWithZippedData:data
                                     expandedLength:kPhoneNumberMetaDataForTestingExpandedLength];
   self.aUtil = [[NBPhoneNumberUtil alloc] initWithMetadataHelper:self.helper];
+}
+
+- (void)testFoo {
+  NSData *data = [[NSData alloc] initWithBytes:(void *)kPhoneNumberMetaDataForTesting
+                                        length:kPhoneNumberMetaDataForTestingCompressedLength];
 }
 
 - (void)tearDown {

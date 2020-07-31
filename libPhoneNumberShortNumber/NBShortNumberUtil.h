@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @class NBPhoneNumber;
+@class NBShortNumberMetadataHelper;
+@class NBPhoneNumberUtil;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,7 +25,14 @@ typedef NS_ENUM(NSUInteger, NBEShortNumberCost) {
 
 @property(nonatomic) NSDictionary<NSNumber *, NSArray<NSString *> *> *countryToRegionCodeMap;
 
-// Short number related methods
+/// Initialize short number util with a default metadata helper.
+- (instancetype)init;
+
+/// Initialize short number util with a metadata helper.
+/// @param helper A metadata helper.
+- (instancetype)initWithMetadataHelper:(NBShortNumberMetadataHelper *)helper
+                       phoneNumberUtil:(NBPhoneNumberUtil *)phoneNumberUtil;
+
 /**
  * Check whether a short number is a possible number when dialed from the given region. This
  * provides a more lenient check than {@link #isValidShortNumberForRegion}.
