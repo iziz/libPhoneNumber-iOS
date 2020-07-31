@@ -15,14 +15,17 @@
 
 + (BOOL)hasValue:(NSString *)string;
 
-+ (NSDictionary *)CCode2CNMap;
+- (instancetype)initWithZippedData:(NSData *)data expandedLength:(NSUInteger)expandedLength;
 
-- (NSArray *)getAllMetadata;
+- (instancetype)init;
+
+- (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber;
+- (NSString *)countryCodeFromRegionCode:(NSString *)regionCode;
 
 - (NBPhoneMetaData *)getMetadataForNonGeographicalRegion:(NSNumber *)countryCallingCode;
 - (NBPhoneMetaData *)getMetadataForRegion:(NSString *)regionCode;
 
-+ (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber;
-+ (NSString *)countryCodeFromRegionCode:(NSString *)regionCode;
+- (NSDictionary *)countryCodeToCountryNumberDictionary;
+- (NSArray *)getAllMetadata;
 
 @end

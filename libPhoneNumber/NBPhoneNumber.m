@@ -98,8 +98,8 @@
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:
-                       @" - countryCode[%@], nationalNumber[%@], extension[%@], "
+  return [NSString
+      stringWithFormat:@" - countryCode[%@], nationalNumber[%@], extension[%@], "
                        @"italianLeadingZero[%@], numberOfLeadingZeros[%@], rawInput[%@] "
                        @"countryCodeSource[%@] preferredDomesticCarrierCode[%@]",
                        self.countryCode, self.nationalNumber, self.extension,

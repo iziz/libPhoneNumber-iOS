@@ -24,8 +24,8 @@
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:
-                       @"nationalNumberPattern[%@] possibleNumberPattern[%@] possibleLength[%@] "
+  return [NSString
+      stringWithFormat:@"nationalNumberPattern[%@] possibleNumberPattern[%@] possibleLength[%@] "
                        @"possibleLengthLocalOnly[%@] exampleNumber[%@]",
                        self.nationalNumberPattern, self.possibleNumberPattern, self.possibleLength,
                        self.possibleLengthLocalOnly, self.exampleNumber];

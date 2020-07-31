@@ -21,7 +21,7 @@
   return res;
 }
 
-    - (NSString *)nb_safeStringAtIndex : (NSUInteger)index {
+- (NSString *)nb_safeStringAtIndex:(NSUInteger)index {
   return [self nb_safeObjectAtIndex:index class:[NSString class]];
 }
 
