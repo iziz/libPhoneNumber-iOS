@@ -176,10 +176,10 @@ override func viewDidLoad() {
 
 ## libPhoneNumberGeocoding
 
-For more information on libPhoneNumberGeocoding and its usage, please visit [libPhoneNumberGeocoding](https://github.com/iziz/libPhoneNumber-iOS/libPhoneNumberGeocoding/README.md) for more information.
+For more information on libPhoneNumberGeocoding and its usage, please visit [libPhoneNumberGeocoding](https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberGeocoding/README.md) for more information.
 
 ## libPhoneNumberShortNumber
 
-For more information on libPhoneNumberShortNumber and its usage, please visit [libPhoneNumberShortNumber](https://github.com/iziz/libPhoneNumber-iOS/libPhoneNumberShortNumber/README.md) for more information.
+For more information on libPhoneNumberShortNumber and its usage, please visit [libPhoneNumberShortNumber](https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberShortNumber/README.md) for more information.
 
 ##### Visit [libphonenumber](https://github.com/google/libphonenumber) for more information or mail (zen.isis@gmail.com)
