@@ -1108,7 +1108,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.libPhoneNumber.iOS;
 				PRODUCT_NAME = libPhoneNumberiOS;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos watchsimulator watchos appletvos appletvsimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1159,7 +1158,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.ohtalk.libPhoneNumber.iOS;
 				PRODUCT_NAME = libPhoneNumberiOS;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos watchsimulator watchos appletvos appletvsimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 				VERSIONING_SYSTEM = "apple-generic";
