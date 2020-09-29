@@ -61,7 +61,6 @@
 		940725B624BF90290011AE05 /* NBShortNumberMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 940725B424BF90290011AE05 /* NBShortNumberMetadataHelper.m */; };
 		9439832824CB545000CF8CB4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9439832724CB545000CF8CB4 /* README.md */; };
 		9439832D24CB569100CF8CB4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9439832C24CB569100CF8CB4 /* README.md */; };
-		944B9B022497ED79007E17B5 /* NBGeocoderMetadataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		944B9B062497ED79007E17B5 /* NBGeocoderMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B9B012497ED79007E17B5 /* NBGeocoderMetadataHelper.m */; };
 		94C9AF0F24B3AAF900469F54 /* NBPhoneNumberOfflineGeocoderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C9AF0E24B3AAF900469F54 /* NBPhoneNumberOfflineGeocoderTest.m */; };
 		94C9AF5F24B3CE0D00469F54 /* TestingSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94C9AF5E24B3CE0D00469F54 /* TestingSource.bundle */; };
@@ -490,7 +489,6 @@
 				8B0FD2FB1E4A88AC0049DF81 /* NSArray+NBAdditions.h in Headers */,
 				34ACBBBC1B7125290064B3BD /* NBMetadataHelper.h in Headers */,
 				34ACBBB81B7124D10064B3BD /* NBNumberFormat.h in Headers */,
-				944B9B022497ED79007E17B5 /* NBGeocoderMetadataHelper.h in Headers */,
 				34ACBB8A1B7122AC0064B3BD /* libPhoneNumberiOS.h in Headers */,
 				34ACBBB71B7124BE0064B3BD /* NBPhoneNumber.h in Headers */,
 				34ACBBBB1B7124EF0064B3BD /* NBPhoneNumberUtil.h in Headers */,
