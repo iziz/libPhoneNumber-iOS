@@ -42,6 +42,7 @@
 		34ACBBBB1B7124EF0064B3BD /* NBPhoneNumberUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = FD8B84311934C35F00C350EB /* NBPhoneNumberUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34ACBBBC1B7125290064B3BD /* NBMetadataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FD12C2681A87401B00B53856 /* NBMetadataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34ACBBBD1B7125450064B3BD /* NBAsYouTypeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = FD8B84261934C35F00C350EB /* NBAsYouTypeFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		698F82912546226200CE67D8 /* NBGeocoderMetadataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 944B9B002497ED79007E17B5 /* NBGeocoderMetadataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B0FD2F31E4A85A70049DF81 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0FD2F21E4A85A70049DF81 /* libz.tbd */; };
 		8B0FD2F71E4A85AE0049DF81 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0FD2F21E4A85A70049DF81 /* libz.tbd */; };
 		8B0FD2FB1E4A88AC0049DF81 /* NSArray+NBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FD2F91E4A88AC0049DF81 /* NSArray+NBAdditions.h */; };
@@ -492,6 +493,7 @@
 				34ACBB8A1B7122AC0064B3BD /* libPhoneNumberiOS.h in Headers */,
 				34ACBBB71B7124BE0064B3BD /* NBPhoneNumber.h in Headers */,
 				34ACBBBB1B7124EF0064B3BD /* NBPhoneNumberUtil.h in Headers */,
+				698F82912546226200CE67D8 /* NBGeocoderMetadataHelper.h in Headers */,
 				0F2870A21FCF9368006230BF /* NBRegularExpressionCache.h in Headers */,
 				34ACBBB91B7124DB0064B3BD /* NBPhoneNumberDesc.h in Headers */,
 			);

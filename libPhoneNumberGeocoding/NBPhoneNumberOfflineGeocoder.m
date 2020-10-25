@@ -7,7 +7,7 @@
 //
 
 #import "NBPhoneNumberOfflineGeocoder.h"
-#import "Metadata/NBGeocoderMetadataHelper.h"
+#import "libPhoneNumberiOS/NBGeocoderMetadataHelper.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberUtil.h"
 
