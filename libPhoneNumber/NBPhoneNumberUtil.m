@@ -3496,15 +3496,24 @@ static CTTelephonyNetworkInfo *_telephonyNetworkInfo;
 }
 
 - (NSString *)countryCodeByCarrier {
-  NSString *isoCode = [[self.telephonyNetworkInfo subscriberCellularProvider] isoCountryCode];
+  NSDictionary *providers = [self.telephonyNetworkInfo serviceSubscriberCellularProviders];
+  NSMutableSet *isoCountryCodes = [NSMutableSet set];
 
-  // The 2nd part of the if is working around an iOS 7 bug
-  // If the SIM card is missing, iOS 7 returns an empty string instead of nil
-  if (isoCode.length == 0) {
-    isoCode = NB_UNKNOWN_REGION;
+  for (CTCarrier *carrier in [providers allValues]) {
+    NSString *isoCountryCode = [carrier isoCountryCode];
+      
+    if ([isoCountryCode length] > 0) {
+      [isoCountryCodes addObject:isoCountryCode];
+    }
   }
 
-  return isoCode;
+  // If all cellular providers have the same isoCountryCode, return it
+  if (isoCountryCodes.count == 1) {
+    return [isoCountryCodes anyObject];
+  }
+
+  // There are none or multiple carriers, can't determine which to use
+  return NB_UNKNOWN_REGION;
 }
 
 #endif
