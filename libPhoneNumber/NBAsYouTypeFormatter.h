@@ -8,11 +8,12 @@
 #import <Foundation/Foundation.h>
 
 @class NBAsYouTypeFormatter;
+@class NBMetadataHelper;
 
 @interface NBAsYouTypeFormatter : NSObject
 
 - (instancetype)initWithRegionCode:(NSString *)regionCode;
-- (instancetype)initWithRegionCode:(NSString *)regionCode bundle:(NSBundle *)bundle;
+- (instancetype)initWithRegionCode:(NSString *)regionCode metadataHelper:(NBMetadataHelper *)helper;
 
 - (NSString *)inputString:(NSString *)string;
 - (NSString *)inputStringAndRememberPosition:(NSString *)string;

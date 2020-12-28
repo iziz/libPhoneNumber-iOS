@@ -1,11 +1,17 @@
 language: objective-c
 
 before_install:
-- gem install slather -N 
+- gem install slather -N
 
 script:
-- xcodebuild -project libPhoneNumber.xcodeproj -scheme libPhoneNumberiOSTests clean
-- xcodebuild -project libPhoneNumber.xcodeproj -scheme libPhoneNumberiOSTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES build-for-testing
-- xctool -project libPhoneNumber.xcodeproj -scheme libPhoneNumberiOSTests run-tests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+- xcodebuild -project libPhoneNumber.xcodeproj -scheme libPhoneNumberiOS clean -sdk iphonesimulator
+- xcodebuild -project libPhoneNumber.xcodeproj -scheme libPhoneNumberiOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES build-for-testing
+- xctool -project libPhoneNumber.xcodeproj -scheme libPhoneNumberiOS run-tests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
 
-after_success: slather 
+- xcodebuild -project libPhoneNumber.xcodeproj -scheme libPhoneNumberGeocoding -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES build-for-testing
+- xctool -project libPhoneNumber.xcodeproj -scheme libPhoneNumberGeocoding run-tests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+
+- xcodebuild -project libPhoneNumber.xcodeproj -scheme libPhoneNumberShortNumber -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES build-for-testing
+- xctool -project libPhoneNumber.xcodeproj -scheme libPhoneNumberShortNumber run-tests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+
+after_success: slather

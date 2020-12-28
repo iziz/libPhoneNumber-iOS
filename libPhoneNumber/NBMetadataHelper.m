@@ -13,13 +13,8 @@
 @interface NBMetadataHelper ()
 
 // Cached metadata
-@property (nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *metadataCache;
-
-#if SHORT_NUMBER_SUPPORT
-
-@property (nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *shortNumberMetadataCache;
-
-#endif //SHORT_NUMBER_SUPPORT
+@property(nonatomic, strong) NSCache<NSString *, NBPhoneMetaData *> *metadataCache;
+@property(nonatomic, strong) NSCache<NSString *, id> *metadataMapCache;
 
 @end
 
@@ -35,16 +30,38 @@ static NSString *StringByTrimming(NSString *aString) {
   return [aString stringByTrimmingCharactersInSet:whitespaceCharSet];
 }
 
-@implementation NBMetadataHelper
+@implementation NBMetadataHelper {
+ @private
+  NSDictionary *_phoneNumberDataDictionary;
+  NSDictionary *_countryCodeToCountryNumberDictionary;
+}
 
 - (instancetype)init {
+  return [self initWithZippedDataBytes:kPhoneNumberMetaData
+                      compressedLength:kPhoneNumberMetaDataCompressedLength
+                        expandedLength:kPhoneNumberMetaDataExpandedLength];
+}
+
+- (instancetype)initWithZippedData:(NSData *)data expandedLength:(NSUInteger)expandedLength {
+  return [self initWithZippedDataBytes:(z_const Bytef *)data.bytes
+                      compressedLength:data.length
+                        expandedLength:expandedLength];
+}
+
+- (instancetype)initWithZippedDataBytes:(z_const Bytef *)data
+                       compressedLength:(NSUInteger)compressedLength
+                         expandedLength:(NSUInteger)expandedLength {
   self = [super init];
+
   if (self != nil) {
     _metadataCache = [[NSCache alloc] init];
-#if SHORT_NUMBER_SUPPORT
-    _shortNumberMetadataCache = [[NSCache alloc] init];
-#endif //SHORT_NUMBER_SUPPORT
+    _metadataMapCache = [[NSCache alloc] init];
+    _phoneNumberDataDictionary =
+        [NBMetadataHelper jsonObjectFromZippedDataWithBytes:data
+                                           compressedLength:compressedLength
+                                             expandedLength:expandedLength];
   }
+
   return self;
 }
 
@@ -54,36 +71,25 @@ static NSString *StringByTrimming(NSString *aString) {
  - Country Code   (CC) : ISO country codes (2 chars)
  Ref. site (countrycode.org)
  */
-+ (NSDictionary *)phoneNumberDataMap {
-  static NSDictionary *phoneNumberDataDictionary;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    phoneNumberDataDictionary =
-        [self jsonObjectFromZippedDataWithBytes:kPhoneNumberMetaData
-                               compressedLength:kPhoneNumberMetaDataCompressedLength
-                                 expandedLength:kPhoneNumberMetaDataExpandedLength];
-  });
-  return phoneNumberDataDictionary;
-}
 
-+ (NSDictionary *)CCode2CNMap {
-  static NSMutableDictionary *mapCCode2CN;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    NSDictionary *countryCodeToRegionCodeMap = [self CN2CCodeMap];
-    mapCCode2CN = [[NSMutableDictionary alloc] init];
+- (NSDictionary *)countryCodeToCountryNumberDictionary {
+  if (_countryCodeToCountryNumberDictionary == nil) {
+    NSDictionary *countryCodeToRegionCodeMap = [self countryCodeToRegionCodeDictionary];
+    NSMutableDictionary *map = [[NSMutableDictionary alloc] init];
     for (NSString *countryCode in countryCodeToRegionCodeMap) {
       NSArray *regionCodes = countryCodeToRegionCodeMap[countryCode];
       for (NSString *regionCode in regionCodes) {
-        mapCCode2CN[regionCode] = countryCode;
+        map[regionCode] = countryCode;
       }
     }
-  });
-  return mapCCode2CN;
+    _countryCodeToCountryNumberDictionary = [map copy];
+  }
+
+  return _countryCodeToCountryNumberDictionary;
 }
 
-+ (NSDictionary *)CN2CCodeMap {
-  return [self phoneNumberDataMap][@"countryCodeToRegionCodeMap"];
+- (NSDictionary *)countryCodeToRegionCodeDictionary {
+  return _phoneNumberDataDictionary[@"countryCodeToRegionCodeMap"];
 }
 
 - (NSArray *)getAllMetadata {
@@ -91,18 +97,18 @@ static NSString *StringByTrimming(NSString *aString) {
   NSMutableArray *resultMetadata = [[NSMutableArray alloc] initWithCapacity:countryCodes.count];
 
   for (NSString *countryCode in countryCodes) {
-    id countryDictionaryInstance =
-        [NSDictionary dictionaryWithObject:countryCode forKey:NSLocaleCountryCode];
+    id countryDictionaryInstance = [NSDictionary dictionaryWithObject:countryCode
+                                                               forKey:NSLocaleCountryCode];
     NSString *identifier = [NSLocale localeIdentifierFromComponents:countryDictionaryInstance];
-    NSString *country =
-        [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
+    NSString *country = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier
+                                                              value:identifier];
 
     NSMutableDictionary *countryMeta = [[NSMutableDictionary alloc] init];
     if (country) {
       [countryMeta setObject:country forKey:@"name"];
     } else {
-      NSString *systemCountry =
-          [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier value:identifier];
+      NSString *systemCountry = [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier
+                                                                     value:identifier];
       if (systemCountry) {
         [countryMeta setObject:systemCountry forKey:@"name"];
       }
@@ -123,8 +129,8 @@ static NSString *StringByTrimming(NSString *aString) {
   return resultMetadata;
 }
 
-+ (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber {
-  NSArray *res = [self CN2CCodeMap][[countryCodeNumber stringValue]];
+- (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber {
+  NSArray *res = [self countryCodeToRegionCodeDictionary][[countryCodeNumber stringValue]];
   if ([res isKindOfClass:[NSArray class]] && [res count] > 0) {
     return res;
   }
@@ -132,8 +138,8 @@ static NSString *StringByTrimming(NSString *aString) {
   return nil;
 }
 
-+ (NSString *)countryCodeFromRegionCode:(NSString *)regionCode {
-  return [self CCode2CNMap][regionCode];
+- (NSString *)countryCodeFromRegionCode:(NSString *)regionCode {
+  return [self countryCodeToCountryNumberDictionary][regionCode];
 }
 
 /**
@@ -156,7 +162,7 @@ static NSString *StringByTrimming(NSString *aString) {
     return cachedMetadata;
   }
 
-  NSDictionary *dict = [[self class] phoneNumberDataMap][@"countryToMetadata"];
+  NSDictionary *dict = _phoneNumberDataDictionary[@"countryToMetadata"];
   NSArray *entry = dict[regionCode];
   if (entry) {
     NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] initWithEntry:entry];
@@ -182,48 +188,6 @@ static NSString *StringByTrimming(NSString *aString) {
   return string.length != 0;
 }
 
-#if SHORT_NUMBER_SUPPORT
-
-+ (NSDictionary *)shortNumberDataMap {
-    static NSDictionary *shortNumberDataDictionary;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-      shortNumberDataDictionary =
-          [self jsonObjectFromZippedDataWithBytes:kShortNumberMetaData
-                                 compressedLength:kShortNumberMetaDataCompressedLength
-                                   expandedLength:kShortNumberMetaDataExpandedLength];
-    });
-    return shortNumberDataDictionary;
-}
-
-- (NBPhoneMetaData *)shortNumberMetadataForRegion:(NSString *)regionCode
-{
-    regionCode = StringByTrimming(regionCode);
-    if (regionCode.length == 0) {
-        return nil;
-    }
-
-    regionCode = [regionCode uppercaseString];
-
-  NBPhoneMetaData *cachedMetadata = [_shortNumberMetadataCache objectForKey:regionCode];
-  if (cachedMetadata != nil) {
-    return cachedMetadata;
-  }
-
-  NSDictionary *dict = [[self class] shortNumberDataMap][@"countryToMetadata"];
-  NSArray *entry = dict[regionCode];
-  if (entry) {
-    NBPhoneMetaData *metadata = [[NBPhoneMetaData alloc] initWithEntry:entry];
-    [_shortNumberMetadataCache setObject:metadata forKey:regionCode];
-    return metadata;
-  }
-
-  return nil;
-}
-
-#endif // SHORT_NUMBER_SUPPORT
-
-
 /**
  * Expand gzipped data into a JSON object.
 
@@ -232,12 +196,12 @@ static NSString *StringByTrimming(NSString *aString) {
  * @param expandedLength Length of the expanded bytes.
  * @return JSON dictionary.
  */
-+ (NSDictionary *)jsonObjectFromZippedDataWithBytes:(z_const Bytef [])bytes
++ (NSDictionary *)jsonObjectFromZippedDataWithBytes:(z_const Bytef *)bytes
                                    compressedLength:(NSUInteger)compressedLength
                                      expandedLength:(NSUInteger)expandedLength {
   // Data is a gzipped JSON file that is embedded in the binary.
   // See GeneratePhoneNumberHeader.sh and PhoneNumberMetaData.h for details.
-  NSMutableData* gunzippedData = [NSMutableData dataWithLength:expandedLength];
+  NSMutableData *gunzippedData = [NSMutableData dataWithLength:expandedLength];
 
   z_stream zStream;
   memset(&zStream, 0, sizeof(zStream));

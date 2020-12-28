@@ -8,9 +8,8 @@
 
  - NBPhoneNumberUtil
  - NBAsYouTypeFormatter
- - NBTextFiled.swift (Swift 3)
 
-> ARC only, or add the **"-fobjc-arc"** flag for non-ARC
+> ARC only
 
 ## Life360 Fork
 
@@ -67,7 +66,7 @@ https://rawgit.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers
 
 Please report, if the above results are different from this iOS library.
 Otherwise, please create issue to following link below to request additional telephone numbers formatting rule.
-https://github.com/googlei18n/libphonenumber/issues
+https://github.com/google/libphonenumber/issues
 
 Metadata in this library was generated from that. so, you should change it first. :)
 
@@ -77,6 +76,10 @@ Metadata in this library was generated from that. so, you should change it first
 ```
 source 'https://github.com/CocoaPods/Specs.git'
 pod 'libPhoneNumber-iOS', '~> 0.8'
+```
+##### Installing libPhoneNumber Geocoding Features
+```
+pod 'libPhoneNumberGeocoding', :git => 'https://github.com/CocoaPods/Specs.git'
 ```
 
 #### Using [Carthage](https://github.com/Carthage/Carthage)
@@ -159,7 +162,7 @@ import libPhoneNumberiOS
 ```
 
 ##### Case (2) with Bridging-Header
-```swift
+```obj-c
 // Manually added
 #import "NBPhoneNumberUtil.h"
 #import "NBPhoneNumber.h"
@@ -197,7 +200,7 @@ override func viewDidLoad() {
 
 ## Usage - **NBAsYouTypeFormatter**
 ```obj-c
-    NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+ NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
     NSLog(@"%@", [f inputDigit:@"6"]); // "6"
     NSLog(@"%@", [f inputDigit:@"5"]); // "65"
     NSLog(@"%@", [f inputDigit:@"0"]); // "650"
@@ -216,4 +219,12 @@ override func viewDidLoad() {
     NSLog(@"%@", [f inputString:@"16502532222"]); // 1 650 253 2222
 ```
 
-##### Visit [libphonenumber](https://github.com/googlei18n/libphonenumber) for more information or mail (zen.isis@gmail.com)
+## libPhoneNumberGeocoding
+
+For more information on libPhoneNumberGeocoding and its usage, please visit [libPhoneNumberGeocoding](https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberGeocoding/README.md) for more information.
+
+## libPhoneNumberShortNumber
+
+For more information on libPhoneNumberShortNumber and its usage, please visit [libPhoneNumberShortNumber](https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberShortNumber/README.md) for more information.
+
+##### Visit [libphonenumber](https://github.com/google/libphonenumber) for more information or mail (zen.isis@gmail.com)

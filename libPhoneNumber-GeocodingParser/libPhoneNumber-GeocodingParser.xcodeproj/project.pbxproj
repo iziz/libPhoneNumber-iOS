@@ -1,0 +1,383 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9439832424CA460700CF8CB4 /* SSZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9439832324CA460700CF8CB4 /* SSZipArchive.framework */; };
+		9439832524CA460700CF8CB4 /* SSZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9439832324CA460700CF8CB4 /* SSZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9478476B24BCD14D004F5637 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9478476A24BCD14D004F5637 /* main.m */; };
+		9478477324BCD180004F5637 /* NBGeocoderMetadataParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9478477224BCD180004F5637 /* NBGeocoderMetadataParser.m */; };
+		9478477624BCD1AB004F5637 /* NBSQLiteDatabaseConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9478477524BCD1AB004F5637 /* NBSQLiteDatabaseConnection.m */; };
+		9BBB13F5268ECEF110BFB4A3 /* Pods_libPhoneNumber_GeocodingParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB42456B7D37F6CA481559F0 /* Pods_libPhoneNumber_GeocodingParser.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9439832624CA460700CF8CB4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9439832524CA460700CF8CB4 /* SSZipArchive.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9478476524BCD14D004F5637 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1174FF265138ABDB2DE27F14 /* Pods-libPhoneNumber-GeocodingParser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-libPhoneNumber-GeocodingParser.debug.xcconfig"; path = "Target Support Files/Pods-libPhoneNumber-GeocodingParser/Pods-libPhoneNumber-GeocodingParser.debug.xcconfig"; sourceTree = "<group>"; };
+		8FD4ACC3A7C4DC8DBDA891B2 /* Pods-libPhoneNumber-GeocodingParser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-libPhoneNumber-GeocodingParser.release.xcconfig"; path = "Target Support Files/Pods-libPhoneNumber-GeocodingParser/Pods-libPhoneNumber-GeocodingParser.release.xcconfig"; sourceTree = "<group>"; };
+		9439832324CA460700CF8CB4 /* SSZipArchive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SSZipArchive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9478476724BCD14D004F5637 /* libPhoneNumber-GeocodingParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "libPhoneNumber-GeocodingParser"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9478476A24BCD14D004F5637 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9478477124BCD180004F5637 /* NBGeocoderMetadataParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBGeocoderMetadataParser.h; sourceTree = "<group>"; };
+		9478477224BCD180004F5637 /* NBGeocoderMetadataParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBGeocoderMetadataParser.m; sourceTree = "<group>"; };
+		9478477424BCD1AB004F5637 /* NBSQLiteDatabaseConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBSQLiteDatabaseConnection.h; sourceTree = "<group>"; };
+		9478477524BCD1AB004F5637 /* NBSQLiteDatabaseConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBSQLiteDatabaseConnection.m; sourceTree = "<group>"; };
+		AB42456B7D37F6CA481559F0 /* Pods_libPhoneNumber_GeocodingParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_libPhoneNumber_GeocodingParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9478476424BCD14D004F5637 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9BBB13F5268ECEF110BFB4A3 /* Pods_libPhoneNumber_GeocodingParser.framework in Frameworks */,
+				9439832424CA460700CF8CB4 /* SSZipArchive.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		019E1F2D6D2F2646AA0F7A07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9439832324CA460700CF8CB4 /* SSZipArchive.framework */,
+				AB42456B7D37F6CA481559F0 /* Pods_libPhoneNumber_GeocodingParser.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		81942256806B519825D98257 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1174FF265138ABDB2DE27F14 /* Pods-libPhoneNumber-GeocodingParser.debug.xcconfig */,
+				8FD4ACC3A7C4DC8DBDA891B2 /* Pods-libPhoneNumber-GeocodingParser.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		9478475E24BCD14D004F5637 = {
+			isa = PBXGroup;
+			children = (
+				9478476924BCD14D004F5637 /* libPhoneNumber-GeocodingParser */,
+				9478476824BCD14D004F5637 /* Products */,
+				81942256806B519825D98257 /* Pods */,
+				019E1F2D6D2F2646AA0F7A07 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		9478476824BCD14D004F5637 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9478476724BCD14D004F5637 /* libPhoneNumber-GeocodingParser */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9478476924BCD14D004F5637 /* libPhoneNumber-GeocodingParser */ = {
+			isa = PBXGroup;
+			children = (
+				9478476A24BCD14D004F5637 /* main.m */,
+				9478477124BCD180004F5637 /* NBGeocoderMetadataParser.h */,
+				9478477224BCD180004F5637 /* NBGeocoderMetadataParser.m */,
+				9478477424BCD1AB004F5637 /* NBSQLiteDatabaseConnection.h */,
+				9478477524BCD1AB004F5637 /* NBSQLiteDatabaseConnection.m */,
+			);
+			path = "libPhoneNumber-GeocodingParser";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9478476624BCD14D004F5637 /* libPhoneNumber-GeocodingParser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9478476E24BCD14D004F5637 /* Build configuration list for PBXNativeTarget "libPhoneNumber-GeocodingParser" */;
+			buildPhases = (
+				78E19583AC36ED362B40DB2E /* [CP] Check Pods Manifest.lock */,
+				9478476324BCD14D004F5637 /* Sources */,
+				9478476424BCD14D004F5637 /* Frameworks */,
+				9478476524BCD14D004F5637 /* CopyFiles */,
+				9439832224CA428D00CF8CB4 /* ShellScript */,
+				9439832624CA460700CF8CB4 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libPhoneNumber-GeocodingParser";
+			productName = "libPhoneNumber-GeocodingParser";
+			productReference = 9478476724BCD14D004F5637 /* libPhoneNumber-GeocodingParser */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9478475F24BCD14D004F5637 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = "Rastaar Haghi";
+				TargetAttributes = {
+					9478476624BCD14D004F5637 = {
+						CreatedOnToolsVersion = 11.5;
+					};
+				};
+			};
+			buildConfigurationList = 9478476224BCD14D004F5637 /* Build configuration list for PBXProject "libPhoneNumber-GeocodingParser" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9478475E24BCD14D004F5637;
+			productRefGroup = 9478476824BCD14D004F5637 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9478476624BCD14D004F5637 /* libPhoneNumber-GeocodingParser */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		78E19583AC36ED362B40DB2E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-libPhoneNumber-GeocodingParser-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9439832224CA428D00CF8CB4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9478476324BCD14D004F5637 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9478477624BCD1AB004F5637 /* NBSQLiteDatabaseConnection.m in Sources */,
+				9478476B24BCD14D004F5637 /* main.m in Sources */,
+				9478477324BCD180004F5637 /* NBGeocoderMetadataParser.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9478476C24BCD14D004F5637 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9478476D24BCD14D004F5637 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9478476F24BCD14D004F5637 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1174FF265138ABDB2DE27F14 /* Pods-libPhoneNumber-GeocodingParser.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 973LHT5R86;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9478477024BCD14D004F5637 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FD4ACC3A7C4DC8DBDA891B2 /* Pods-libPhoneNumber-GeocodingParser.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 973LHT5R86;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9478476224BCD14D004F5637 /* Build configuration list for PBXProject "libPhoneNumber-GeocodingParser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9478476C24BCD14D004F5637 /* Debug */,
+				9478476D24BCD14D004F5637 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9478476E24BCD14D004F5637 /* Build configuration list for PBXNativeTarget "libPhoneNumber-GeocodingParser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9478476F24BCD14D004F5637 /* Debug */,
+				9478477024BCD14D004F5637 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9478475F24BCD14D004F5637 /* Project object */;
+}

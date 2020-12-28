@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'libPhoneNumber-Demo' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for libPhoneNumber-Demo
+  pod 'libPhoneNumber-iOS', :git => 'https://github.com/iziz/libPhoneNumber-iOS'
+  pod 'libPhoneNumberGeocoding', :git => 'https://github.com/iziz/libPhoneNumber-iOS'
+  pod 'libPhoneNumberShortNumber', :git => 'https://github.com/iziz/libPhoneNumber-iOS'
+  target 'libPhoneNumber-DemoTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'libPhoneNumber-DemoUITests' do
+    # Pods for testing
+  end
+
+end

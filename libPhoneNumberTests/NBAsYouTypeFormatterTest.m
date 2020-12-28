@@ -8,14 +8,32 @@
 #import <XCTest/XCTest.h>
 #import "NBAsYouTypeFormatter.h"
 #import "NBMetadataHelper.h"
+#import "NBPhoneNumberUtil.h"
+
+static size_t kPhoneNumberMetaDataForTestingExpandedLength = 33021;
 
 @interface NBAsYouTypeFormatterTest : XCTestCase
 @end
 
-@implementation NBAsYouTypeFormatterTest
+@implementation NBAsYouTypeFormatterTest {
+ @private
+  NBMetadataHelper *_helper;
+}
+
+- (void)setUp {
+  [super setUp];
+
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSString *path = [bundle pathForResource:@"libPhoneNumberMetadataForTesting" ofType:nil];
+  NSData *data = [NSData dataWithContentsOfFile:path];
+  _helper =
+      [[NBMetadataHelper alloc] initWithZippedData:data
+                                    expandedLength:kPhoneNumberMetaDataForTestingExpandedLength];
+}
 
 - (void)testInvalidRegion {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:NB_UNKNOWN_REGION];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:NB_UNKNOWN_REGION
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
   XCTAssertEqualObjects(@"+4", [f inputDigit:@"4"]);
   XCTAssertEqualObjects(@"+48 ", [f inputDigit:@"8"]);
@@ -37,7 +55,8 @@
 }
 
 - (void)testInvalidPlusSign {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:NB_UNKNOWN_REGION];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:NB_UNKNOWN_REGION
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
   XCTAssertEqualObjects(@"+4", [f inputDigit:@"4"]);
   XCTAssertEqualObjects(@"+48 ", [f inputDigit:@"8"]);
@@ -69,7 +88,8 @@
   // See http://code.google.com/p/libphonenumber/issues/detail?id=36
   // The bug occurred last time for countries which have two formatting rules
   // with exactly the same leading digits pattern but differ in length.
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:NB_UNKNOWN_REGION];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:NB_UNKNOWN_REGION
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
   XCTAssertEqualObjects(@"+8", [f inputDigit:@"8"]);
   XCTAssertEqualObjects(@"+81 ", [f inputDigit:@"1"]);
@@ -89,7 +109,8 @@
 }
 
 - (void)testCountryWithSpaceInNationalPrefixFormattingRule {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"BY"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"BY"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"8", [f inputDigit:@"8"]);
   XCTAssertEqualObjects(@"88", [f inputDigit:@"8"]);
   XCTAssertEqualObjects(@"881", [f inputDigit:@"1"]);
@@ -104,7 +125,8 @@
 }
 
 - (void)testCountryWithSpaceInNationalPrefixFormattingRuleAndLongNdd {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"BY"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"BY"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"9", [f inputDigit:@"9"]);
   XCTAssertEqualObjects(@"99", [f inputDigit:@"9"]);
   XCTAssertEqualObjects(@"999", [f inputDigit:@"9"]);
@@ -118,7 +140,8 @@
 }
 
 - (void)testAYTFUS {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"6", [f inputDigit:@"6"]);
   XCTAssertEqualObjects(@"65", [f inputDigit:@"5"]);
   XCTAssertEqualObjects(@"650", [f inputDigit:@"0"]);
@@ -212,7 +235,8 @@
 }
 
 - (void)testAYTFUSFullWidthCharacters {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"\uFF16", [f inputDigit:@"\uFF16"]);
   XCTAssertEqualObjects(@"\uFF16\uFF15", [f inputDigit:@"\uFF15"]);
   XCTAssertEqualObjects(@"650", [f inputDigit:@"\uFF10"]);
@@ -226,7 +250,8 @@
 }
 
 - (void)testAYTFUSMobileShortCode {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"*", [f inputDigit:@"*"]);
   XCTAssertEqualObjects(@"*1", [f inputDigit:@"1"]);
   XCTAssertEqualObjects(@"*12", [f inputDigit:@"2"]);
@@ -235,7 +260,8 @@
 }
 
 - (void)testAYTFUSVanityNumber {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"8", [f inputDigit:@"8"]);
   XCTAssertEqualObjects(@"80", [f inputDigit:@"0"]);
   XCTAssertEqualObjects(@"800", [f inputDigit:@"0"]);
@@ -251,7 +277,8 @@
 }
 
 - (void)testAYTFAndRememberPositionUS {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"1", [f inputDigitAndRememberPosition:@"1"]);
   XCTAssertEqual(1, [f getRememberedPosition]);
   XCTAssertEqualObjects(@"16", [f inputDigit:@"6"]);
@@ -387,7 +414,8 @@
 }
 
 - (void)testAYTFGBFixedLine {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"GB"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"GB"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"0", [f inputDigit:@"0"]);
   XCTAssertEqualObjects(@"02", [f inputDigit:@"2"]);
   XCTAssertEqualObjects(@"020", [f inputDigit:@"0"]);
@@ -404,7 +432,8 @@
 }
 
 - (void)testAYTFGBTollFree {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"GB"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"GB"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"0", [f inputDigit:@"0"]);
   XCTAssertEqualObjects(@"08", [f inputDigit:@"8"]);
   XCTAssertEqualObjects(@"080", [f inputDigit:@"0"]);
@@ -419,7 +448,8 @@
 }
 
 - (void)testAYTFGBPremiumRate {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"GB"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"GB"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"0", [f inputDigit:@"0"]);
   XCTAssertEqualObjects(@"09", [f inputDigit:@"9"]);
   XCTAssertEqualObjects(@"090", [f inputDigit:@"0"]);
@@ -434,7 +464,8 @@
 }
 
 - (void)testAYTFNZMobile {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"NZ"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"NZ"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"0", [f inputDigit:@"0"]);
   XCTAssertEqualObjects(@"02", [f inputDigit:@"2"]);
   XCTAssertEqualObjects(@"021", [f inputDigit:@"1"]);
@@ -449,7 +480,8 @@
 }
 
 - (void)testAYTFDE {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"DE"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"DE"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"0", [f inputDigit:@"0"]);
   XCTAssertEqualObjects(@"03", [f inputDigit:@"3"]);
   XCTAssertEqualObjects(@"030", [f inputDigit:@"0"]);
@@ -500,7 +532,8 @@
 }
 
 - (void)testAYTFAR {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"AR"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"AR"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"0", [f inputDigit:@"0"]);
   XCTAssertEqualObjects(@"01", [f inputDigit:@"1"]);
   XCTAssertEqualObjects(@"011", [f inputDigit:@"1"]);
@@ -515,7 +548,8 @@
 }
 
 - (void)testAYTFARMobile {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"AR"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"AR"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
   XCTAssertEqualObjects(@"+5", [f inputDigit:@"5"]);
   XCTAssertEqualObjects(@"+54 ", [f inputDigit:@"4"]);
@@ -534,7 +568,8 @@
 
 - (void)testAYTFKR {
   // +82 51 234 5678
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"KR"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"KR"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
   XCTAssertEqualObjects(@"+8", [f inputDigit:@"8"]);
   XCTAssertEqualObjects(@"+82 ", [f inputDigit:@"2"]);
@@ -623,7 +658,8 @@
 }
 
 - (void)testAYTF_MX {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"MX"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"MX"
+                                                              metadataHelper:_helper];
 
   // +52 800 123 4567
   XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
@@ -708,7 +744,8 @@
 }
 
 - (void)testAYTF_International_Toll_Free {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"
+                                                              metadataHelper:_helper];
   // +800 1234 5678
   XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
   XCTAssertEqualObjects(@"+8", [f inputDigit:@"8"]);
@@ -727,7 +764,8 @@
 
 - (void)testAYTFMultipleLeadingDigitPatterns {
   // +81 50 2345 6789
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"JP"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"JP"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
   XCTAssertEqualObjects(@"+8", [f inputDigit:@"8"]);
   XCTAssertEqualObjects(@"+81 ", [f inputDigit:@"1"]);
@@ -783,7 +821,8 @@
 }
 
 - (void)testAYTFLongIDD_AU {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"AU"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"AU"
+                                                              metadataHelper:_helper];
   // 0011 1 650 253 2250
   XCTAssertEqualObjects(@"0", [f inputDigit:@"0"]);
   XCTAssertEqualObjects(@"00", [f inputDigit:@"0"]);
@@ -840,7 +879,8 @@
 }
 
 - (void)testAYTFLongIDD_KR {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"KR"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"KR"
+                                                              metadataHelper:_helper];
   // 00300 1 650 253 2222
   XCTAssertEqualObjects(@"0", [f inputDigit:@"0"]);
   XCTAssertEqualObjects(@"00", [f inputDigit:@"0"]);
@@ -861,7 +901,8 @@
 }
 
 - (void)testAYTFLongNDD_KR {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"KR"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"KR"
+                                                              metadataHelper:_helper];
   // 08811-9876-7890
   XCTAssertEqualObjects(@"0", [f inputDigit:@"0"]);
   XCTAssertEqualObjects(@"08", [f inputDigit:@"8"]);
@@ -897,7 +938,8 @@
 }
 
 - (void)testAYTFLongNDD_SG {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"SG"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"SG"
+                                                              metadataHelper:_helper];
   // 777777 9876 7890
   XCTAssertEqualObjects(@"7", [f inputDigit:@"7"]);
   XCTAssertEqualObjects(@"77", [f inputDigit:@"7"]);
@@ -917,7 +959,8 @@
 
 - (void)testAYTFShortNumberFormattingFix_AU {
   // For Australia, the national prefix is not optional when formatting.
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"AU"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"AU"
+                                                              metadataHelper:_helper];
 
   // 1234567890 - For leading digit 1, the national prefix formatting rule has
   // first group only.
@@ -993,7 +1036,8 @@
 - (void)testAYTFShortNumberFormattingFix_KR {
   // For Korea, the national prefix is not optional when formatting, and the
   // national prefix formatting rule doesn't consist of only the first group.
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"KR"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"KR"
+                                                              metadataHelper:_helper];
 
   // 111
   XCTAssertEqualObjects(@"1", [f inputDigit:@"1"]);
@@ -1035,7 +1079,8 @@
 
 - (void)testAYTFShortNumberFormattingFix_MX {
   // For Mexico, the national prefix is optional when formatting.
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"MX"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"MX"
+                                                              metadataHelper:_helper];
 
   // 911
   XCTAssertEqualObjects(@"9", [f inputDigit:@"9"]);
@@ -1074,7 +1119,8 @@
 }
 
 - (void)testAYTFNoNationalPrefix {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"IT"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"IT"
+                                                              metadataHelper:_helper];
   XCTAssertEqualObjects(@"3", [f inputDigit:@"3"]);
   XCTAssertEqualObjects(@"33", [f inputDigit:@"3"]);
   XCTAssertEqualObjects(@"333", [f inputDigit:@"3"]);
@@ -1085,7 +1131,8 @@
 
 - (void)testAYTFShortNumberFormattingFix_US {
   // For the US, an initial 1 is treated specially.
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"
+                                                              metadataHelper:_helper];
 
   // 101 - Test that the initial 1 is not treated as a national prefix.
   XCTAssertEqualObjects(@"1", [f inputDigit:@"1"]);
@@ -1106,7 +1153,8 @@
 }
 
 - (void)testAYTFDescription {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"
+                                                              metadataHelper:_helper];
 
   [f inputDigit:@"1"];
   [f inputDigit:@"6"];
@@ -1159,7 +1207,8 @@
 }
 
 - (void)testAYTFNumberPatternsBecomingInvalidShouldNotResultInDigitLoss {
-  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"CN"];
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"CN"
+                                                              metadataHelper:_helper];
 
   XCTAssertEqualObjects(@"+", [f inputDigit:@"+"]);
   XCTAssertEqualObjects(@"+8", [f inputDigit:@"8"]);
