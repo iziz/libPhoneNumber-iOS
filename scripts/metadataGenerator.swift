@@ -84,9 +84,9 @@ let requires = """
 context.evaluateScript(requires)
 
 // Load metadata file from GitHub.
-let phoneMetadata = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/metadata.js")!
-let phoneMetadataForTesting = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/metadatafortesting.js")!
-let shortNumberMetadata = URL(string: "https://raw.githubusercontent.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/shortnumbermetadata.js")!
+let phoneMetadata = URL(string: "https://raw.githubusercontent.com/google/libphonenumber/master/javascript/i18n/phonenumbers/metadata.js")!
+let phoneMetadataForTesting = URL(string: "https://raw.githubusercontent.com/google/libphonenumber/master/javascript/i18n/phonenumbers/metadatafortesting.js")!
+let shortNumberMetadata = URL(string: "https://raw.githubusercontent.com/google/libphonenumber/master/javascript/i18n/phonenumbers/shortnumbermetadata.js")!
 
 let currentDir = FileManager.default.currentDirectoryPath
 let baseURL = URL(fileURLWithPath: currentDir).appendingPathComponent("generatedJSON")
