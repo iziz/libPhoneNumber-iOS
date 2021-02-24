@@ -24,7 +24,7 @@ gzip -c "../generatedJSON/PhoneNumberMetaDataForTesting.json" > "$TEMPDIR/PhoneN
 gzip -c "../generatedJSON/PhoneNumberMetaData.json" > "$TEMPDIR/PhoneNumberMetaData.zip"
 gzip -c "../generatedJSON/ShortNumberMetaData.json" > "$TEMPDIR/ShortNumberMetaData.zip"
 
-cat > "NBGeneratedPhoneNumberMetaData.h" <<'EOF'
+cat > "NBGeneratedPhoneNumberMetaData.m" <<'EOF'
 /*****
  * Data Generated from GeneratePhoneNumberHeader.sh
  * Off of PhoneNumberMetaDataForTesting.json, PhoneNumberMetaData.json, and ShortNumberMetaData.json
@@ -45,49 +45,49 @@ cat > "NBGeneratedPhoneNumberMetaData.h" <<'EOF'
 z_const Bytef kPhoneNumberMetaData[] = {
 EOF
 
-cat "$TEMPDIR/PhoneNumberMetaDataForTesting.zip" | xxd -i  >> "NBGeneratedPhoneNumberMetaData.h"
+cat "$TEMPDIR/PhoneNumberMetaDataForTesting.zip" | xxd -i  >> "NBGeneratedPhoneNumberMetaData.m"
 
-cat >> "NBGeneratedPhoneNumberMetaData.h" <<'EOF'
+cat >> "NBGeneratedPhoneNumberMetaData.m" <<'EOF'
 };
 z_const size_t kPhoneNumberMetaDataCompressedLength = sizeof(kPhoneNumberMetaData);
 EOF
 LIB_SIZE=$(stat -f%z "../generatedJSON/PhoneNumberMetaDataForTesting.json")
-echo "z_const size_t kPhoneNumberMetaDataExpandedLength = $LIB_SIZE;" >> "NBGeneratedPhoneNumberMetaData.h"
+echo "z_const size_t kPhoneNumberMetaDataExpandedLength = $LIB_SIZE;" >> "NBGeneratedPhoneNumberMetaData.m"
 
-cat >> "NBGeneratedPhoneNumberMetaData.h" <<'EOF'
+cat >> "NBGeneratedPhoneNumberMetaData.m" <<'EOF'
 
 #else  // TESTING == 1
 
 z_const Bytef kPhoneNumberMetaData[] = {
 EOF
 
-cat "$TEMPDIR/PhoneNumberMetaData.zip" | xxd -i  >> "NBGeneratedPhoneNumberMetaData.h"
+cat "$TEMPDIR/PhoneNumberMetaData.zip" | xxd -i  >> "NBGeneratedPhoneNumberMetaData.m"
 
-cat >> "NBGeneratedPhoneNumberMetaData.h" <<'EOF'
+cat >> "NBGeneratedPhoneNumberMetaData.m" <<'EOF'
 };
 z_const size_t kPhoneNumberMetaDataCompressedLength = sizeof(kPhoneNumberMetaData);
 EOF
 LIB_SIZE=$(stat -f%z "../generatedJSON/PhoneNumberMetaData.json")
-echo "z_const size_t kPhoneNumberMetaDataExpandedLength = $LIB_SIZE;" >> "NBGeneratedPhoneNumberMetaData.h"
-echo "#endif  // TESTING" >> "NBGeneratedPhoneNumberMetaData.h"
+echo "z_const size_t kPhoneNumberMetaDataExpandedLength = $LIB_SIZE;" >> "NBGeneratedPhoneNumberMetaData.m"
+echo "#endif  // TESTING" >> "NBGeneratedPhoneNumberMetaData.m"
 
 # ShortNumberMetadata
-cat >> "NBGeneratedPhoneNumberMetaData.h" <<'EOF'
+cat >> "NBGeneratedPhoneNumberMetaData.m" <<'EOF'
 
 #if SHORT_NUMBER_SUPPORT
 
 z_const Bytef kShortNumberMetaData[] = {
 EOF
 
-cat "$TEMPDIR/ShortNumberMetaData.zip" | xxd -i  >> "NBGeneratedPhoneNumberMetaData.h"
+cat "$TEMPDIR/ShortNumberMetaData.zip" | xxd -i  >> "NBGeneratedPhoneNumberMetaData.m"
 
-cat >> "NBGeneratedPhoneNumberMetaData.h" <<'EOF'
+cat >> "NBGeneratedPhoneNumberMetaData.m" <<'EOF'
 };
 z_const size_t kShortNumberMetaDataCompressedLength = sizeof(kShortNumberMetaData);
 EOF
 LIB_SIZE=$(stat -f%z "../generatedJSON/ShortNumberMetaData.json")
-echo "z_const size_t kShortNumberMetaDataExpandedLength = $LIB_SIZE;" >> "NBGeneratedPhoneNumberMetaData.h"
-echo "#endif  // SHORT_NUMBER_SUPPORT" >> "NBGeneratedPhoneNumberMetaData.h"
+echo "z_const size_t kShortNumberMetaDataExpandedLength = $LIB_SIZE;" >> "NBGeneratedPhoneNumberMetaData.m"
+echo "#endif  // SHORT_NUMBER_SUPPORT" >> "NBGeneratedPhoneNumberMetaData.m"
 
 rm "$TEMPDIR/PhoneNumberMetaDataForTesting.zip"
 rm "$TEMPDIR/PhoneNumberMetaData.zip"
