@@ -130,7 +130,7 @@ do {
   context.evaluateScript(metadata)
   let result = context.evaluateScript(
     "JSON.stringify(i18n.phonenumbers.shortnumbermetadata)")!.toString()!
-  let url = baseURL.appendingPathComponent("ShortNumberMetadata.json")
+  let url = baseURL.appendingPathComponent("ShortNumberMetaData.json")
   try result.write(
     to: url,
     atomically: true,
