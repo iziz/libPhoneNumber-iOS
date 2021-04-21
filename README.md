@@ -25,7 +25,7 @@ https://github.com/google/libphonenumber/issues
 
 Metadata in this library was generated from that. so, you should change it first. :)
 
-## Install 
+## Install
 
 #### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
 ```
@@ -65,7 +65,7 @@ See sample test code from
 
 ## Usage - **NBPhoneNumberUtil**
 ```obj-c
- NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+ NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
  NSError *anError = nil;
  NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303"
                               defaultRegion:@"AT" error:&anError];
@@ -139,7 +139,9 @@ import libPhoneNumber_iOS
 override func viewDidLoad() {
     super.viewDidLoad()
 
-    let phoneUtil = NBPhoneNumberUtil()
+    guard let phoneUtil = NBPhoneNumberUtil.sharedInstance() else {
+        return
+    }
 
     do {
         let phoneNumber: NBPhoneNumber = try phoneUtil.parse("01065431234", defaultRegion: "KR")
