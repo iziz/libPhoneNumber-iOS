@@ -12,7 +12,7 @@
 #import "NBNumberFormat.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
-#import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumberUtility.h"
 
 // Create an entry array for a phone number desc based on numberPattern
 static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPattern) {
@@ -20,7 +20,7 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   return @[ [NSNull null], [NSNull null], numberPattern ];
 }
 
-@interface NBPhoneNumberUtil (FOR_UNIT_TEST)
+@interface NBPhoneNumberUtility (FOR_UNIT_TEST)
 
 - (BOOL)canBeInternationallyDialled:(NBPhoneNumber *)number;
 - (BOOL)truncateTooLongNumber:(NBPhoneNumber *)number;
@@ -58,7 +58,7 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
 @end
 
 @interface NBPhoneNumberUtilTest : XCTestCase
-@property(nonatomic, strong) NBPhoneNumberUtil *aUtil;
+@property(nonatomic, strong) NBPhoneNumberUtility *aUtil;
 @property(nonatomic, strong) NBMetadataHelper *helper;
 
 @property(nonatomic, readonly, copy) NBPhoneNumber *alphaNumbericNumber;
@@ -97,7 +97,7 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
 
 - (void)setUp {
   [super setUp];
-  self.aUtil = [[NBPhoneNumberUtil alloc] init];
+  self.aUtil = [[NBPhoneNumberUtility alloc] init];
   self.helper = [[NBMetadataHelper alloc] init];
 }
 

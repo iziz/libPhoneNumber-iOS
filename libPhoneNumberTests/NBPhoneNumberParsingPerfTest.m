@@ -14,7 +14,7 @@
 #import "NBNumberFormat.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
-#import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumberUtility.h"
 
 @interface NBExampleNumber: NSObject
 
@@ -52,7 +52,7 @@
 
   NSMutableArray<NBExampleNumber *> *exampleNumbers = [[NSMutableArray alloc] init];
 
-  NBPhoneNumberUtil *util = [NBPhoneNumberUtil sharedInstance];
+  NBPhoneNumberUtility *util = [NBPhoneNumberUtility sharedInstance];
 
   for (NSString *regionCode in regionCodes) {
     NBPhoneNumber *phoneNumber = [util getExampleNumber:regionCode error:nil];

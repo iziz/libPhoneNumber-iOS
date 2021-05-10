@@ -9,12 +9,12 @@
 #import "NBRegExMatcher.h"
 #import "NBPhoneNumberDesc.h"
 #import "NBRegularExpressionCache.h"
-#import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumberUtility.h"
 
 // Expose this method to get a modified RegEx to cover the entire RegEx.
 // Though all RegEx methods and functionalities should be moved to either this class, or a separate
-// class rather than in NBPhoneNumberUtil.
-@interface NBPhoneNumberUtil()
+// class rather than in NBPhoneNumberUtility.
+@interface NBPhoneNumberUtility()
 - (NSRegularExpression *)entireRegularExpressionWithPattern:(NSString *)regexPattern
                                                     options:(NSRegularExpressionOptions)options
                                                       error:(NSError **)error;
@@ -35,7 +35,7 @@
   }
 
   NSRegularExpression *regEx =
-      [[NBPhoneNumberUtil sharedInstance] entireRegularExpressionWithPattern:nationalNumberPattern
+      [[NBPhoneNumberUtility sharedInstance] entireRegularExpressionWithPattern:nationalNumberPattern
                                                                      options:kNilOptions
                                                                        error:nil];
 

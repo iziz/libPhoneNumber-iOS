@@ -30,7 +30,7 @@
 }
 
 - (void)testForGetSupportedRegions {
-  NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
+  NBPhoneNumberUtility *phoneUtil = [NBPhoneNumberUtility sharedInstance];
   NSLog(@"%@", [phoneUtil getSupportedRegions]);
 }
 
@@ -69,7 +69,7 @@
 
   // Unit test for isValidNumber is failing some valid numbers. #7
 
-  NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
+  NBPhoneNumberUtility *phoneUtil = [NBPhoneNumberUtility sharedInstance];
 
   {
     NSError *error = nil;
@@ -215,7 +215,7 @@
 }
 
 - (void)testForMultithread {
-  NBPhoneNumberUtil *aUtil = [NBPhoneNumberUtil sharedInstance];
+  NBPhoneNumberUtility *aUtil = [NBPhoneNumberUtility sharedInstance];
   NSString *testRegion = [self randomRegion];
 
   if (!testRegion) {
@@ -269,7 +269,7 @@
 }
 
 - (NSString *)getPhoneNumberFormatted:(NSString *)phoneNumber {
-  NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
+  NBPhoneNumberUtility *phoneUtil = [NBPhoneNumberUtility sharedInstance];
   NSString *retValue;
   NBPhoneNumber *phoneNumberFormatted =
       [phoneUtil parseWithPhoneCarrierRegion:phoneNumber error:nil];
@@ -280,7 +280,7 @@
 
 // FIXME: This unit test ALWAYS FAIL ... until google libPhoneNumber fix this issue
 - (void)testAustriaNationalNumberParsing {
-  NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
+  NBPhoneNumberUtility *phoneUtil = [NBPhoneNumberUtility sharedInstance];
 
   NSError *anError = nil;
 
@@ -297,7 +297,7 @@
 }
 
 - (void)testForiOS7 {
-  NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
+  NBPhoneNumberUtility *phoneUtil = [NBPhoneNumberUtility sharedInstance];
 
   NSError *anError = nil;
   NBPhoneNumber *myNumber = [phoneUtil parse:@"0174 2340XXX" defaultRegion:@"DE" error:&anError];

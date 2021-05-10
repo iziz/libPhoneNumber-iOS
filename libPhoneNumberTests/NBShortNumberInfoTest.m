@@ -12,8 +12,8 @@
 #import "NBPhoneMetaData.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
-#import "NBPhoneNumberUtil+ShortNumber.h"
-#import "NBPhoneNumberUtil+ShortNumberTest.h"
+#import "NBPhoneNumberUtility+ShortNumber.h"
+#import "NBPhoneNumberUtility+ShortNumberTest.h"
 
 #if SHORT_NUMBER_SUPPORT
 
@@ -33,7 +33,7 @@
 }
 
 - (void)testIsPossibleShortNumber {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   NBPhoneNumber *possibleNumber = [[NBPhoneNumber alloc] init];
   possibleNumber.countryCode = @33;
@@ -54,7 +54,7 @@
 }
 
 - (void)testIsValidShortNumber {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   NBPhoneNumber *valid = [[NBPhoneNumber alloc] init];
   valid.countryCode = @33;
@@ -82,7 +82,7 @@
 }
 
 - (void)testIsCarrierSpecific {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   NBPhoneNumber *carrierSpecificNumber = [[NBPhoneNumber alloc] init];
   carrierSpecificNumber.countryCode = @1;
@@ -110,7 +110,7 @@
 }
 
 - (void)testExpectedCost {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   // Premium rate.
   NSString *premiumRateSample = [util exampleShortNumberForCost:NBEShortNumberCostPremiumRate
@@ -185,7 +185,7 @@
 }
 
 - (void)testExpectedCostForSharedCountryCallingCode {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   NSString *ambiguousPremiumRateString = @"1234";
   NBPhoneNumber *ambiguousPremiumRateNumber = [[NBPhoneNumber alloc] init];
@@ -260,7 +260,7 @@
 }
 
 - (void)testGetExampleShortNumber {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertEqualObjects(@"8711", [util exampleShortNumberWithRegionCode:@"AM"]);
   XCTAssertEqualObjects(@"1010", [util exampleShortNumberWithRegionCode:@"FR"]);
@@ -268,7 +268,7 @@
 }
 
 - (void)testGetExampleShortNumberForCost {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertEqualObjects(@"3010", [util exampleShortNumberForCost:NBEShortNumberCostTollFree
                                                       regionCode:@"FR"]);
@@ -281,7 +281,7 @@
 }
 
 - (void)testConnectsToEmergencyNumber_US {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"911" forRegion:@"US"]);
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"112" forRegion:@"US"]);
@@ -289,7 +289,7 @@
 }
 
 - (void)testConnectsToEmergencyNumberLongNumber_US {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"9116666666" forRegion:@"US"]);
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"1126666666" forRegion:@"US"]);
@@ -297,7 +297,7 @@
 }
 
 - (void)testConnectsToEmergencyNumberWithFormatting_US {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"9-1-1" forRegion:@"US"]);
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"1-1-2" forRegion:@"US"]);
@@ -305,7 +305,7 @@
 }
 
 - (void)testConnectsToEmergencyNumberWithPlusSign_US {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertFalse([util connectsToEmergencyNumberFromString:@"+911" forRegion:@"US"]);
   XCTAssertFalse([util connectsToEmergencyNumberFromString:@"\uFF0B911" forRegion:@"US"]);
@@ -315,7 +315,7 @@
 }
 
 - (void)testConnectsToEmergencyNumber_BR {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"911" forRegion:@"BR"]);
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"190" forRegion:@"BR"]);
@@ -323,7 +323,7 @@
 }
 
 - (void)testConnectsToEmergencyNumberLongNumber_BR {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   // Brazilian emergency numbers don't work when additional digits are appended.
   XCTAssertFalse([util connectsToEmergencyNumberFromString:@"9111" forRegion:@"BR"]);
@@ -332,14 +332,14 @@
 }
 
 - (void)testConnectsToEmergencyNumber_CL {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"131" forRegion:@"CL"]);
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"133" forRegion:@"CL"]);
 }
 
 - (void)testConnectsToEmergencyNumberLongNumber_CL {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   // Chilean emergency numbers don't work when additional digits are appended.
   XCTAssertFalse([util connectsToEmergencyNumberFromString:@"1313" forRegion:@"CL"]);
@@ -347,7 +347,7 @@
 }
 
 - (void)testConnectsToEmergencyNumber_AO {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   // Angola doesn't have any metadata for emergency numbers.
   XCTAssertFalse([util connectsToEmergencyNumberFromString:@"911" forRegion:@"AO"]);
@@ -356,7 +356,7 @@
 }
 
 - (void)testConnectsToEmergencyNumber_ZW {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   // Zimbabwe doesn't have any metadata.
   XCTAssertFalse([util connectsToEmergencyNumberFromString:@"911" forRegion:@"ZW"]);
@@ -365,7 +365,7 @@
 }
 
 - (void)testIsEmergencyNumber_US {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertTrue([util isEmergencyNumber:@"911" forRegion:@"US"]);
   XCTAssertTrue([util isEmergencyNumber:@"112" forRegion:@"US"]);
@@ -373,7 +373,7 @@
 }
 
 - (void)testIsEmergencyNumberLongNumber_US {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertFalse([util isEmergencyNumber:@"9116666666" forRegion:@"US"]);
   XCTAssertFalse([util isEmergencyNumber:@"1126666666" forRegion:@"US"]);
@@ -381,7 +381,7 @@
 }
 
 - (void)testIsEmergencyNumberWithFormatting_US {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertTrue([util isEmergencyNumber:@"9-1-1" forRegion:@"US"]);
   XCTAssertTrue([util isEmergencyNumber:@"*911" forRegion:@"US"]);
@@ -392,7 +392,7 @@
 }
 
 - (void)testIsEmergencyNumberWithPlusSign_US {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertFalse([util isEmergencyNumber:@"+911" forRegion:@"US"]);
   XCTAssertFalse([util isEmergencyNumber:@"\uFF0B911" forRegion:@"US"]);
@@ -402,7 +402,7 @@
 }
 
 - (void)testIsEmergencyNumber_BR {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"911" forRegion:@"BR"]);
   XCTAssertTrue([util connectsToEmergencyNumberFromString:@"190" forRegion:@"BR"]);
@@ -410,7 +410,7 @@
 }
 
 - (void)testIsEmergencyNumberLongNumber_BR {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   // Brazilian emergency numbers don't work when additional digits are appended.
   XCTAssertFalse([util connectsToEmergencyNumberFromString:@"9111" forRegion:@"BR"]);
@@ -419,7 +419,7 @@
 }
 
 - (void)testIsEmergencyNumber_AO {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   // Angola doesn't have any metadata for emergency numbers.
   XCTAssertFalse([util connectsToEmergencyNumberFromString:@"911" forRegion:@"AO"]);
@@ -428,7 +428,7 @@
 }
 
 - (void)testIsEmergencyNumber_ZW {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   // Zimbabwe doesn't have any metadata.
   XCTAssertFalse([util connectsToEmergencyNumberFromString:@"911" forRegion:@"ZW"]);
@@ -437,7 +437,7 @@
 }
 
 - (void)testEmergencyNumberForSharedCountryCallingCode {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   // Test the emergency number 112, which is valid in both Australia and the Christmas Islands.
   NBPhoneNumber *auEmergencyNumber = [util parse:@"112" defaultRegion:@"AU" error:nil];
@@ -462,7 +462,7 @@
 - (void)testOverlappingNANPANumber {
   // 211 is an emergency number in Barbados, while it is a toll-free information line in Canada
   // and the USA.
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   NBPhoneNumber *bb211 = [util parse:@"211" defaultRegion:@"BB" error:nil];
   NBPhoneNumber *us211 = [util parse:@"211" defaultRegion:@"US" error:nil];
@@ -480,7 +480,7 @@
 }
 
 - (void)testCountryCallingCodeIsNotIgnored {
-  NBPhoneNumberUtil *util = [[NBPhoneNumberUtil alloc] init];
+  NBPhoneNumberUtility *util = [[NBPhoneNumberUtility alloc] init];
 
   // +46 is the country calling code for Sweden (SE), and 40404 is a valid short number in the US.
   NBPhoneNumber *seNumber = [util parse:@"+4640404" defaultRegion:@"SE" error:nil];

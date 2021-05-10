@@ -1,5 +1,5 @@
 //
-//  NBPhoneNumberUtil+ShortNumber.h
+//  NBPhoneNumberUtility+ShortNumber.h
 //  libPhoneNumberiOS
 //
 //  Created by Paween Itthipalkul on 11/29/17.
@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumberUtility.h"
 
 @class NBPhoneNumber;
 
@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, NBEShortNumberCost) {
   NBEShortNumberCostPremiumRate = 3,
 };
 
-@interface NBPhoneNumberUtil (ShortNumber)
+@interface NBPhoneNumberUtility (ShortNumber)
 
 // Short number related methods
 /**

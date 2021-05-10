@@ -21,7 +21,7 @@ FOUNDATION_EXPORT const unsigned char libPhoneNumber_watchOSVersionString[];
 
 // Features
 #import "NBAsYouTypeFormatter.h"
-#import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumberUtility.h"
 
 // Metadata
 #import "NBMetadataCore.h"

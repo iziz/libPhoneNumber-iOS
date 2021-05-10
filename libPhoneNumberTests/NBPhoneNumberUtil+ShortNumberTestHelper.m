@@ -1,12 +1,12 @@
 //
-//  NBPhoneNumberUtil+ShortNumberTestHelper.m
+//  NBPhoneNumberUtility+ShortNumberTestHelper.m
 //  libPhoneNumber
 //
 //  Created by Paween Itthipalkul on 12/1/17.
 //  Copyright © 2017 Google LLC. All rights reserved.
 //
 
-#import "NBPhoneNumberUtil+ShortNumberTestHelper.h"
+#import "NBPhoneNumberUtility+ShortNumberTestHelper.h"
 
 #import "NBMetadataHelper.h"
 #import "NBPhoneMetadata.h"
@@ -14,13 +14,13 @@
 
 #if SHORT_NUMBER_SUPPORT
 
-@interface NBPhoneNumberUtil()
+@interface NBPhoneNumberUtility()
 
 @property (nonatomic, strong, readonly) NBMetadataHelper *helper;
 
 @end
 
-@implementation NBPhoneNumberUtil(ShortNumberTestHelper)
+@implementation NBPhoneNumberUtility(ShortNumberTestHelper)
 
 - (NSString *)exampleShortNumberForCost:(NBEShortNumberCost)cost regionCode:(NSString *)regionCode {
   NBPhoneMetaData *metadata = [self.helper shortNumberMetadataForRegion:regionCode];

@@ -1,5 +1,5 @@
 //
-//  NBPhoneNumberUtil.h
+//  NBPhoneNumberUtility.h
 //  libPhoneNumber
 //
 //  Created by tabby on 2015. 2. 8..
@@ -11,9 +11,9 @@
 
 @class NBPhoneMetaData, NBPhoneNumber;
 
-@interface NBPhoneNumberUtil : NSObject
+@interface NBPhoneNumberUtility : NSObject
 
-+ (NBPhoneNumberUtil *)sharedInstance;
++ (NBPhoneNumberUtility *)sharedInstance;
 
 // regular expressions
 - (NSArray *)matchesByRegex:(NSString *)sourceString regex:(NSString *)pattern;

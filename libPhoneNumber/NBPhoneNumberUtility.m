@@ -1,12 +1,12 @@
 //
-//  NBPhoneNumberUtil.m
+//  NBPhoneNumberUtility.m
 //  libPhoneNumber
 //
 //  Created by tabby on 2015. 2. 8..
 //  Copyright (c) 2015년 ohtalk.me. All rights reserved.
 //
 
-#import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumberUtility.h"
 #import <math.h>
 #import "NBMetadataHelper.h"
 #import "NBNumberFormat.h"
@@ -36,9 +36,9 @@ static BOOL isNan(NSString *sourceString) {
   return !([sourceString rangeOfCharacterFromSet:nonDecimalCharacterSet].location == NSNotFound);
 }
 
-#pragma mark - NBPhoneNumberUtil interface -
+#pragma mark - NBPhoneNumberUtility interface -
 
-@interface NBPhoneNumberUtil ()
+@interface NBPhoneNumberUtility ()
 
 @property(nonatomic, strong) NSLock *entireStringCacheLock;
 @property(nonatomic, strong) NSMutableDictionary *entireStringRegexCache;
@@ -58,7 +58,7 @@ static BOOL isNan(NSString *sourceString) {
 
 @end
 
-@implementation NBPhoneNumberUtil
+@implementation NBPhoneNumberUtility
 
 #pragma mark - Static Int variables -
 const static NSUInteger NANPA_COUNTRY_CODE_ = 1;
@@ -110,8 +110,8 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
 #pragma mark - Deprecated methods
 
-+ (NBPhoneNumberUtil *)sharedInstance {
-  static NBPhoneNumberUtil *sharedOnceInstance = nil;
++ (NBPhoneNumberUtility *)sharedInstance {
+  static NBPhoneNumberUtility *sharedOnceInstance = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     sharedOnceInstance = [[self alloc] init];

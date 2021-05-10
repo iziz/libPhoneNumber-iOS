@@ -1,12 +1,12 @@
 //
-//  NBPhoneNumberUtil+ShortNumber.m
+//  NBPhoneNumberUtility+ShortNumber.m
 //  libPhoneNumberiOS
 //
 //  Created by Paween Itthipalkul on 11/29/17.
 //  Copyright © 2017 Google LLC. All rights reserved.
 //
 
-#import "NBPhoneNumberUtil+ShortNumber.h"
+#import "NBPhoneNumberUtility+ShortNumber.h"
 
 #import <Foundation/Foundation.h>
 
@@ -21,7 +21,7 @@
 
 static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 
-@interface NBPhoneNumberUtil()
+@interface NBPhoneNumberUtility()
 
 @property(nonatomic, strong, readonly) NBMetadataHelper *helper;
 @property(nonatomic, strong, readonly) NBRegExMatcher *matcher;
@@ -30,7 +30,7 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 
 @end
 
-@implementation NBPhoneNumberUtil (ShortNumber)
+@implementation NBPhoneNumberUtility (ShortNumber)
 
 - (BOOL)isPossibleShortNumber:(NBPhoneNumber *)phoneNumber forRegion:(NSString *)regionDialingFrom {
   if (![self doesPhoneNumber:phoneNumber matchesRegion:regionDialingFrom]) {
@@ -312,7 +312,7 @@ static NSString * const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
   }
 
   NSString *normalizedNumber = [self normalizeDigitsOnly:possibleNumber];
-  NSSet<NSString *> *exactRegions = [NBPhoneNumberUtil regionsWhereEmergencyNumbersMustBeExact];
+  NSSet<NSString *> *exactRegions = [NBPhoneNumberUtility regionsWhereEmergencyNumbersMustBeExact];
 
   BOOL allowsPrefixMatchForRegion = allowsPrefixMatch && ![exactRegions containsObject:regionCode];
 

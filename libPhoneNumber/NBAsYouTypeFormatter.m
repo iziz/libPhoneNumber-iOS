@@ -12,7 +12,7 @@
 
 #import "NBNumberFormat.h"
 #import "NBPhoneMetaData.h"
-#import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumberUtility.h"
 #import "NSArray+NBAdditions.h"
 
 /**
@@ -46,7 +46,7 @@ static const NSUInteger NBMinLeadingDigitsLength = 3;
 @property(nonatomic, strong, readwrite) NSRegularExpression *ELIGIBLE_FORMAT_PATTERN_;
 @property(nonatomic, assign, readwrite) BOOL ableToFormat_, inputHasFormatting_, isCompleteNumber_,
     isExpectingCountryCallingCode_, shouldAddSpaceAfterNationalPrefix_;
-@property(nonatomic, strong, readwrite) NBPhoneNumberUtil *phoneUtil_;
+@property(nonatomic, strong, readwrite) NBPhoneNumberUtility *phoneUtil_;
 @property(nonatomic, assign, readwrite) NSUInteger lastMatchPosition_, originalPosition_,
     positionToRemember_;
 @property(nonatomic, strong, readwrite) NSMutableArray *possibleFormats_;
@@ -273,7 +273,7 @@ static const NSUInteger NBMinLeadingDigitsLength = 3;
      * @private
      * @type {i18n.phonenumbers.PhoneNumberUtil}
      */
-    self.phoneUtil_ = [NBPhoneNumberUtil sharedInstance];
+    self.phoneUtil_ = [NBPhoneNumberUtility sharedInstance];
     self.defaultCountry_ = regionCode;
     self.currentMetaData_ = [self getMetadataForRegion_:self.defaultCountry_];
     /**

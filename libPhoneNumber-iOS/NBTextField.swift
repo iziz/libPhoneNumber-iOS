@@ -13,7 +13,7 @@ open class NBTextField: UITextField
 {
     // MARK: Options/Variables for phone number formatting
     
-    let phoneNumberUtility: NBPhoneNumberUtil = NBPhoneNumberUtil()
+    let phoneNumberUtility: NBPhoneNumberUtility = NBPhoneNumberUtility()
     var phoneNumberFormatter: NBAsYouTypeFormatter?
     
     var shouldCheckValidationForInputText: Bool = true
