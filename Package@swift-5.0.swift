@@ -25,7 +25,7 @@ let package = Package(
                 .headerSearchPath("Internal")
             ],
             linkerSettings: [
-                .linkedFramework("CoreTelephony"),
+                .linkedFramework("CoreTelephony", .when(platforms: [.iOS])),
             ]
         ),
         .testTarget(
