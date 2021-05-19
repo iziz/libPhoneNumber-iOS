@@ -4,12 +4,6 @@ import PackageDescription
 
 let package = Package(
     name: "libPhoneNumber",
-    platforms: [
-        .macOS(.v10_10),
-        .iOS(.v9),
-        .tvOS(.v9),
-        .watchOS(.v2)
-    ],
     products: [
         .library(
             name: "libPhoneNumber",
@@ -23,9 +17,6 @@ let package = Package(
             publicHeadersPath: ".",
             cSettings: [
                 .headerSearchPath("Internal")
-            ],
-            linkerSettings: [
-                .linkedFramework("CoreTelephony"),
             ]
         ),
         .testTarget(
