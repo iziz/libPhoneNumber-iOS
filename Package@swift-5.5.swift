@@ -1,9 +1,16 @@
-// swift-tools-version:4.1
+// swift-tools-version:5.5
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 
 let package = Package(
     name: "libPhoneNumber",
+    platforms: [
+        .macOS(.v10_10),
+        .macCatalyst(.v13),
+        .iOS(.v9),
+        .tvOS(.v9),
+        .watchOS(.v2)
+    ],
     products: [
         .library(
             name: "libPhoneNumber",
@@ -18,6 +25,9 @@ let package = Package(
             publicHeadersPath: ".",
             cSettings: [
                 .headerSearchPath("Internal")
+            ],
+            linkerSettings: [
+                .linkedFramework("CoreTelephony", .when(platforms: [.iOS, .macOS, .macCatalyst])),
             ]
         ),
         .testTarget(

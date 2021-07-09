@@ -20,12 +20,13 @@ let package = Package(
         .target(
             name: "libPhoneNumber",
             path: "libPhoneNumber",
+            exclude: ["GeneratePhoneNumberHeader.sh", "NBPhoneNumberMetadata.plist", "Info.plist"],
             publicHeadersPath: ".",
             cSettings: [
                 .headerSearchPath("Internal")
             ],
             linkerSettings: [
-                .linkedFramework("CoreTelephony"),
+                .linkedFramework("CoreTelephony", .when(platforms: [.iOS, .macOS])),
             ]
         ),
         .testTarget(
