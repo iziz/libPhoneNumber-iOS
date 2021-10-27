@@ -10,6 +10,13 @@
 #import "NBGeneratedPhoneNumberMetaData.h"
 #import "NBPhoneMetaData.h"
 
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#ifdef DEBUG
+static const NSUInteger ddLogLevel = DDLogLevelAll;
+#else
+static const NSUInteger ddLogLevel = DDLogLevelInfo;
+#endif
+
 @interface NBMetadataHelper ()
 
 // Cached metadata
@@ -55,15 +62,84 @@ static NSString *StringByTrimming(NSString *aString) {
  Ref. site (countrycode.org)
  */
 + (NSDictionary *)phoneNumberDataMap {
-  static NSDictionary *phoneNumberDataDictionary;
+  static NSDictionary *result;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    phoneNumberDataDictionary =
-        [self jsonObjectFromZippedDataWithBytes:kPhoneNumberMetaData
-                               compressedLength:kPhoneNumberMetaDataCompressedLength
-                                 expandedLength:kPhoneNumberMetaDataExpandedLength];
+      @autoreleasepool {
+          result = [self jsonObjectFromZippedDataWithBytes:kPhoneNumberMetaData
+                                          compressedLength:kPhoneNumberMetaDataCompressedLength
+                                            expandedLength:kPhoneNumberMetaDataExpandedLength];
+
+          // The jsonMap is large and held in memory.
+          // It's contents are deeply nested and very repetitive.
+          // We can greatly reduce the memory used by jsonMap
+          // by traversing its contents and de-duplicating repeated values.
+          result = [self deduplicateJsonMap:result];
+      }
   });
-  return phoneNumberDataDictionary;
+  return result;
+}
+
++ (NSDictionary<NSObject *, NSObject *> *)deduplicateJsonMap:(NSDictionary<NSObject *, NSObject *> *)inputMap {
+    NSMutableDictionary<NSObject *, NSObject *> *valueMap = [NSMutableDictionary new];
+    NSObject *result = [self deduplicateJsonValue:inputMap valueMap:valueMap];
+    [valueMap removeAllObjects];
+    return (NSDictionary<NSObject *, NSObject *> *) result;
+}
+
++ (NSObject *)deduplicateJsonValue:(NSObject *)jsonValue
+                          valueMap:(NSMutableDictionary<NSObject *, NSObject *> *)valueMap {
+    
+    NSNumber *valueKey = [NSNumber numberWithUnsignedLong:jsonValue.hash];
+    NSObject *_Nullable existingValue = valueMap[valueKey];
+    if (existingValue && [jsonValue isEqual:existingValue]) {
+        return existingValue;
+    } else {
+        valueMap[valueKey] = jsonValue;
+    }
+
+    if ([jsonValue isKindOfClass:NSArray.class]) {
+        return [self deduplicateJsonArray:(NSArray<NSObject *> *) jsonValue
+                                 valueMap:valueMap];
+    } else if ([jsonValue isKindOfClass:NSDictionary.class]) {
+        return [self deduplicateJsonDictionary:(NSDictionary<NSObject *, NSObject *> *) jsonValue
+                                      valueMap:valueMap];
+    } else if ([jsonValue isKindOfClass:NSString.class] ||
+               [jsonValue isKindOfClass:NSNumber.class] ||
+               [jsonValue isKindOfClass:NSData.class] ||
+               [jsonValue isKindOfClass:NSNull.class]) {
+        return jsonValue;
+    } else {
+        DDLogWarn(@"Unexpected value: %@, %@", jsonValue.class, jsonValue);
+        return jsonValue;
+    }
+}
+
++ (NSArray<NSObject *> *)deduplicateJsonArray:(NSArray<NSObject *> *)jsonArray
+                                     valueMap:(NSMutableDictionary<NSObject *, NSObject *> *)valueMap {
+    NSMutableArray<NSObject *> *result = [NSMutableArray new];
+    for (NSObject *jsonValue in jsonArray) {
+        [result addObject:[self deduplicateJsonValue:jsonValue
+                                            valueMap:valueMap]];
+    }
+    return result;
+}
+
++ (NSDictionary<NSObject *, NSObject *> *)deduplicateJsonDictionary:(NSDictionary<NSObject *, NSObject *> *)jsonDictionary
+                                                           valueMap:(NSMutableDictionary<NSObject *, NSObject *> *)valueMap {
+    NSMutableDictionary<NSObject *, NSObject *> *result = [NSMutableDictionary new];
+    
+    for (NSObject *jsonKey in jsonDictionary) {
+        NSObject *_Nullable jsonValue = (NSObject *) jsonDictionary[jsonKey];
+        if (jsonValue == nil) {
+            DDLogWarn(@"Missing value for key: %@", jsonKey);
+            continue;
+        }
+        result[(id<NSCopying>) jsonKey] = [self deduplicateJsonValue:jsonValue
+                                                            valueMap:valueMap];
+    }
+
+    return result;
 }
 
 + (NSDictionary *)CCode2CNMap {
@@ -261,6 +337,8 @@ static NSString *StringByTrimming(NSString *aString) {
                                                                error:&error];
   NSAssert(error == nil, @"Unable to convert JSON - %@", error);
 
+  gunzippedData.length = 0;
+    
   return jsonObject;
 }
 
