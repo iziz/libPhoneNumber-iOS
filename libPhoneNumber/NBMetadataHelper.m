@@ -81,29 +81,27 @@ static NSString *StringByTrimming(NSString *aString) {
 }
 
 + (NSDictionary<NSObject *, NSObject *> *)deduplicateJsonMap:(NSDictionary<NSObject *, NSObject *> *)inputMap {
-    NSMutableDictionary<NSObject *, NSObject *> *valueMap = [NSMutableDictionary new];
-    NSObject *result = [self deduplicateJsonValue:inputMap valueMap:valueMap];
-    [valueMap removeAllObjects];
+    NSMutableSet<NSObject *> *valueSet = [NSMutableSet new];
+    NSObject *result = [self deduplicateJsonValue:inputMap valueSet:valueSet];
     return (NSDictionary<NSObject *, NSObject *> *) result;
 }
 
-+ (NSObject *)deduplicateJsonValue:(NSObject *)jsonValue
-                          valueMap:(NSMutableDictionary<NSObject *, NSObject *> *)valueMap {
++ (NSObject *)deduplicateJsonValue:(NSObject *)jsonValue valueSet:(NSMutableSet<NSObject *> *)valueSet {
     
-    NSNumber *valueKey = [NSNumber numberWithUnsignedLong:jsonValue.hash];
-    NSObject *_Nullable existingValue = valueMap[valueKey];
-    if (existingValue && [jsonValue isEqual:existingValue]) {
+    NSObject *_Nullable existingValue = [valueSet member:jsonValue];
+    if (existingValue != nil) {
+        assert([existingValue isKindOfClass:jsonValue.class]);
         return existingValue;
     } else {
-        valueMap[valueKey] = jsonValue;
+        [valueSet addObject:jsonValue];
     }
 
     if ([jsonValue isKindOfClass:NSArray.class]) {
         return [self deduplicateJsonArray:(NSArray<NSObject *> *) jsonValue
-                                 valueMap:valueMap];
+                                 valueSet:valueSet];
     } else if ([jsonValue isKindOfClass:NSDictionary.class]) {
         return [self deduplicateJsonDictionary:(NSDictionary<NSObject *, NSObject *> *) jsonValue
-                                      valueMap:valueMap];
+                                      valueSet:valueSet];
     } else if ([jsonValue isKindOfClass:NSString.class] ||
                [jsonValue isKindOfClass:NSNumber.class] ||
                [jsonValue isKindOfClass:NSData.class] ||
@@ -116,29 +114,22 @@ static NSString *StringByTrimming(NSString *aString) {
 }
 
 + (NSArray<NSObject *> *)deduplicateJsonArray:(NSArray<NSObject *> *)jsonArray
-                                     valueMap:(NSMutableDictionary<NSObject *, NSObject *> *)valueMap {
+                                     valueSet:(NSMutableSet<NSObject *> *)valueSet {
     NSMutableArray<NSObject *> *result = [NSMutableArray new];
     for (NSObject *jsonValue in jsonArray) {
-        [result addObject:[self deduplicateJsonValue:jsonValue
-                                            valueMap:valueMap]];
+        [result addObject:[self deduplicateJsonValue:jsonValue valueSet:valueSet]];
     }
     return result;
 }
 
 + (NSDictionary<NSObject *, NSObject *> *)deduplicateJsonDictionary:(NSDictionary<NSObject *, NSObject *> *)jsonDictionary
-                                                           valueMap:(NSMutableDictionary<NSObject *, NSObject *> *)valueMap {
+                                                           valueSet:(NSMutableSet<NSObject *> *)valueSet {
     NSMutableDictionary<NSObject *, NSObject *> *result = [NSMutableDictionary new];
-    
-    for (NSObject *jsonKey in jsonDictionary) {
-        NSObject *_Nullable jsonValue = (NSObject *) jsonDictionary[jsonKey];
-        if (jsonValue == nil) {
-            DDLogWarn(@"Missing value for key: %@", jsonKey);
-            continue;
-        }
-        result[(id<NSCopying>) jsonKey] = [self deduplicateJsonValue:jsonValue
-                                                            valueMap:valueMap];
-    }
-
+    [jsonDictionary enumerateKeysAndObjectsUsingBlock:^(NSObject * _Nonnull jsonKey,
+                                                        NSObject * _Nonnull jsonValue,
+                                                        BOOL * _Nonnull stop) {
+        result[(id<NSCopying>) jsonKey] = [self deduplicateJsonValue:jsonValue valueSet:valueSet];
+    }];
     return result;
 }
 
