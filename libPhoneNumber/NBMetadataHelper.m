@@ -328,8 +328,6 @@ static NSString *StringByTrimming(NSString *aString) {
                                                                error:&error];
   NSAssert(error == nil, @"Unable to convert JSON - %@", error);
 
-  gunzippedData.length = 0;
-    
   return jsonObject;
 }
 
