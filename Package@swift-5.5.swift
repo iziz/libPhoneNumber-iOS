@@ -15,6 +15,10 @@ let package = Package(
         .library(
             name: "libPhoneNumber",
             targets: ["libPhoneNumber"]
+        ),
+        .library(
+            name: "libPhoneNumberShortNumber",
+            targets: ["libPhoneNumberShortNumber"]
         )
     ],
     targets: [
@@ -28,6 +32,16 @@ let package = Package(
             ],
             linkerSettings: [
                 .linkedFramework("CoreTelephony", .when(platforms: [.iOS, .macOS, .macCatalyst])),
+            ]
+        ),
+        .target(
+            name: "libPhoneNumberShortNumber",
+            path: "libPhoneNumberShortNumber",
+            exclude: ["README.md", "Info.plist"],
+            publicHeadersPath: ".",
+            cSettings: [
+                .headerSearchPath("../libPhoneNumber"),
+                .headerSearchPath("../libPhoneNumber/Internal")
             ]
         ),
         .testTarget(

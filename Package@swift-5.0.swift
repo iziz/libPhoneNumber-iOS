@@ -29,6 +29,16 @@ let package = Package(
                 .linkedFramework("CoreTelephony", .when(platforms: [.iOS, .macOS])),
             ]
         ),
+        .target(
+            name: "libPhoneNumberShortNumber",
+            path: "libPhoneNumberShortNumber",
+            exclude: ["README.md", "Info.plist"],
+            publicHeadersPath: ".",
+            cSettings: [
+                .headerSearchPath("../libPhoneNumber"),
+                .headerSearchPath("../libPhoneNumber/Internal")
+            ]
+        ),
         .testTarget(
             name: "libPhoneNumberTests",
             dependencies: ["libPhoneNumber"],
