@@ -16,5 +16,5 @@ FOUNDATION_EXPORT const unsigned char libPhoneNumberShortNumberVersionString[];
 
 // In this header, you should import all the public headers of your framework
 // using statements like #import <libPhoneNumberShortNumber/PublicHeader.h>
-#import "BShortNumberMetadataHelper.h"
+#import "NBShortNumberMetadataHelper.h"
 #import "NBShortNumberUtil.h"
