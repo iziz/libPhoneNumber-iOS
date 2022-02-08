@@ -74,7 +74,7 @@ static NSString *StringByTrimming(NSString *aString) {
           if (fileContent != nil) {
               NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:fileContent];
               unarchiver.requiresSecureCoding = YES;
-              result = (NSDictionary *)[unarchiver decodeObjectOfClasses:@[NSArray.class, NSDictionary.class, NSNull.class] forKey:NSKeyedArchiveRootObjectKey];
+              result = (NSDictionary *)[unarchiver decodeObjectOfClasses:@[NSArray.class, NSDictionary.class, NSNull.class, NSString.class, NSNumber.class] forKey:NSKeyedArchiveRootObjectKey];
           }
           if (result == nil) {
               result = [self jsonObjectFromZippedDataWithBytes:kPhoneNumberMetaData
