@@ -68,13 +68,14 @@ static NSString *StringByTrimming(NSString *aString) {
       @autoreleasepool {
           // deduplicating the result is *very* expensive. The result should be persisted because it does not change.
           NSString *dir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-          NSString *filename = [NSString stringWithFormat:@"phoneNumberDataMap.%i.%i.plist", kPhoneNumberMetaDataCompressedLength, kPhoneNumberMetaDataExpandedLength];
+          NSString *filename = [NSString stringWithFormat:@"phoneNumberDataMap.%ul.%ul.plist", kPhoneNumberMetaDataCompressedLength, kPhoneNumberMetaDataExpandedLength];
           NSString *path = [dir stringByAppendingPathComponent:filename];
           NSData *fileContent = [NSData dataWithContentsOfFile:path];
           if (fileContent != nil) {
               NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:fileContent];
               unarchiver.requiresSecureCoding = YES;
-              result = (NSDictionary *)[unarchiver decodeObjectOfClasses:@[NSArray.class, NSDictionary.class, NSNull.class, NSString.class, NSNumber.class] forKey:NSKeyedArchiveRootObjectKey];
+              NSSet *allowedClasses = @[NSArray.class, NSDictionary.class, NSNull.class, NSString.class, NSNumber.class];
+              result = (NSDictionary *)[unarchiver decodeObjectOfClasses:allowedClasses forKey:NSKeyedArchiveRootObjectKey];
           }
           if (result == nil) {
               result = [self jsonObjectFromZippedDataWithBytes:kPhoneNumberMetaData
