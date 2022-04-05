@@ -3496,15 +3496,27 @@ static CTTelephonyNetworkInfo *_telephonyNetworkInfo;
 }
 
 - (NSString *)countryCodeByCarrier {
-  NSString *isoCode = [[self.telephonyNetworkInfo subscriberCellularProvider] isoCountryCode];
-
-  // The 2nd part of the if is working around an iOS 7 bug
-  // If the SIM card is missing, iOS 7 returns an empty string instead of nil
-  if (isoCode.length == 0) {
-    isoCode = NB_UNKNOWN_REGION;
-  }
-
-  return isoCode;
+    if (@available(iOS 12.0, *)) {
+        
+        NSDictionary<NSString *, CTCarrier *> *serviceSubscriberCellularProviders = _telephonyNetworkInfo.serviceSubscriberCellularProviders;
+        CTCarrier *carrier = serviceSubscriberCellularProviders.allValues.firstObject;
+        
+        if (carrier == nil) {
+            return NB_UNKNOWN_REGION;
+        } else {
+            return carrier.isoCountryCode;
+        }
+    } else {
+        NSString *isoCode = [[self.telephonyNetworkInfo subscriberCellularProvider] isoCountryCode];
+        
+        // The 2nd part of the if is working around an iOS 7 bug
+        // If the SIM card is missing, iOS 7 returns an empty string instead of nil
+        if (isoCode.length == 0) {
+            isoCode = NB_UNKNOWN_REGION;
+        }
+        
+        return isoCode;
+    }
 }
 
 #endif
