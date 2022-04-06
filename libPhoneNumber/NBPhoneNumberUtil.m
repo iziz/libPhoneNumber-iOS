@@ -3500,7 +3500,7 @@ static CTTelephonyNetworkInfo *_telephonyNetworkInfo;
     NSDictionary<NSString *, CTCarrier *> *serviceSubscriberCellularProviders = [self.telephonyNetworkInfo serviceSubscriberCellularProviders];
     CTCarrier *carrier = serviceSubscriberCellularProviders.allValues.firstObject;
     
-    if (nil==carrier) {
+    if (carrier == nil) {
         return NB_UNKNOWN_REGION;
     }
     
