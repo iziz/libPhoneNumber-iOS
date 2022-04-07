@@ -7,9 +7,13 @@
 //
 
 #import "NBShortNumberMetadataHelper.h"
-#import "NBGeneratedShortNumberMetadata.h"
 #import "NBMetadataHelper.h"
 #import "NBPhoneMetaData.h"
+#import <zlib.h>
+
+extern z_const Bytef kShortNumberMetaData[];
+extern size_t kShortNumberMetaDataCompressedLength;
+extern size_t kShortNumberMetaDataExpandedLength;
 
 static NSString *StringByTrimming(NSString *aString) {
   static dispatch_once_t onceToken;
