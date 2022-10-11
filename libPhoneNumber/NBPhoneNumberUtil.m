@@ -3496,15 +3496,23 @@ static CTTelephonyNetworkInfo *_telephonyNetworkInfo;
 }
 
 - (NSString *)countryCodeByCarrier {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 120000
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_12_0
     NSDictionary<NSString *, CTCarrier *> *serviceSubscriberCellularProviders = [self.telephonyNetworkInfo serviceSubscriberCellularProviders];
-    CTCarrier *carrier = serviceSubscriberCellularProviders.allValues.firstObject;
+    NSMutableSet *isoCountryCodes = [NSMutableSet set];
     
-    if (carrier == nil) {
-        return NB_UNKNOWN_REGION;
+    for (CTCarrier *carrier in [serviceSubscriberCellularProviders allValues]) {
+        NSString *isoCountryCode = [carrier isoCountryCode];
+        
+        if (isoCountryCode != nil) {
+            [isoCountryCodes addObject: isoCountryCode];
+        }
     }
-    
-    return carrier.isoCountryCode;
+    // If all cellular providers have the same isoCountryCode, return it
+    if (isoCountryCodes.count == 1) {
+        return [isoCountryCodes anyObject];
+    }
+    // There are none or multiple carriers, can't determine which to use
+    return NB_UNKNOWN_REGION;
 #else
     NSString *isoCode = [[self.telephonyNetworkInfo subscriberCellularProvider] isoCountryCode];
     
