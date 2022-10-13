@@ -176,6 +176,10 @@ override func viewDidLoad() {
     NSLog(@"%@", [f inputString:@"16502532222"]); // 1 650 253 2222
 ```
 
+## How to Update Defintions
+
+To update the definitions first run `./scripts/metadataGenerator.swift` to fetch the newest defintions from [google/libphonenumber](https://github.com/google/libphonenumber) and then `./libPhoneNumber/GeneratePhoneNumberHeader.sh` to generate the header files for the new definitions.
+
 ## libPhoneNumberGeocoding
 
 For more information on libPhoneNumberGeocoding and its usage, please visit [libPhoneNumberGeocoding](https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberGeocoding/README.md) for more information.
