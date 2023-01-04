@@ -14,7 +14,6 @@
 #import "NBPhoneNumberDesc.h"
 #import "NBShortNumberUtil.h"
 
-#import "NBGeneratedShortNumberMetadata.h"
 #import "NBShortNumberMetadataHelper.h"
 #import "NBShortNumberTestHelper.h"
 
