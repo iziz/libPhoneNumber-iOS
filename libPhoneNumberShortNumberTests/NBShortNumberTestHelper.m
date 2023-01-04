@@ -6,7 +6,7 @@
 //  Copyright © 2017 Google LLC. All rights reserved.
 //
 #import "NBShortNumberTestHelper.h"
-#import "NBPhoneMetadata.h"
+#import "NBPhoneMetaData.h"
 #import "NBPhoneNumberDesc.h"
 #import "NBShortNumberMetadataHelper.h"
 #import "NBShortNumberUtil.h"
