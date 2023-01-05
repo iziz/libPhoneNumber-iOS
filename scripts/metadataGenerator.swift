@@ -68,9 +68,6 @@ let googleClosure = URL(
   string: "http://cdn.rawgit.com/google/closure-library/master/closure/goog/base.js")!
 loadJS(from: googleClosure, to: context)
 
-let jQuery = URL(string: "http://code.jquery.com/jquery-1.8.3.min.js")!
-loadJS(from: jQuery, to: context)
-
 // Evaluate requires.
 let requires = """
   goog.require('goog.proto2.Message');
