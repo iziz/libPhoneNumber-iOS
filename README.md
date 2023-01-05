@@ -25,6 +25,16 @@ https://github.com/google/libphonenumber/issues
 
 Metadata in this library was generated from that. so, you should change it first. :)
 
+## Generating Phone Number Metadata
+
+```bash
+$ swift scripts/metadataGenerator.swift
+$ sh libPhoneNumber/GeneratePhoneNumberHeader.sh
+```
+
+The first command will fetch the most recent metadata from Google's libphonenumber.
+The second command will embed that JSON in the library so that it's available to Swift/Objective-C.
+
 ## Install
 
 #### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
