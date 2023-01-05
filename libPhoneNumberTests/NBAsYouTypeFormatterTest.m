@@ -10,7 +10,7 @@
 #import "NBMetadataHelper.h"
 #import "NBPhoneNumberUtil.h"
 
-static size_t kPhoneNumberMetaDataForTestingExpandedLength = 33021;
+#import "NBTestingMetaData.h"
 
 @interface NBAsYouTypeFormatterTest : XCTestCase
 @end

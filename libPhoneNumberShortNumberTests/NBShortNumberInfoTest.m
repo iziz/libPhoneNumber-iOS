@@ -16,8 +16,7 @@
 
 #import "NBShortNumberMetadataHelper.h"
 #import "NBShortNumberTestHelper.h"
-
-static size_t kPhoneNumberMetaDataForTestingExpandedLength = 33021;
+#import "NBTestingMetaData.h"
 
 @interface NBShortNumberInfoTest : XCTestCase
 
