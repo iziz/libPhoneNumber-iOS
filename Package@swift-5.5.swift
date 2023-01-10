@@ -7,9 +7,9 @@ let package = Package(
     platforms: [
         .macOS(.v10_10),
         .macCatalyst(.v13),
-        .iOS(.v9),
-        .tvOS(.v9),
-        .watchOS(.v2)
+        .iOS(.v11),
+        .tvOS(.v11),
+        .watchOS(.v4)
     ],
     products: [
         .library(
@@ -21,7 +21,7 @@ let package = Package(
         .target(
             name: "libPhoneNumber",
             path: "libPhoneNumber",
-            exclude: ["GeneratePhoneNumberHeader.sh", "NBPhoneNumberMetadata.plist", "Info.plist"],
+            exclude: ["GeneratePhoneNumberHeader.sh", "Info.plist"],
             publicHeadersPath: ".",
             cSettings: [
                 .headerSearchPath("Internal")
@@ -37,10 +37,7 @@ let package = Package(
             sources: [
                 "NBAsYouTypeFormatterTest.m",
                 "NBPhoneNumberParsingPerfTest.m",
-                "NBPhoneNumberUtil+ShortNumberTestHelper.h",
-                "NBPhoneNumberUtil+ShortNumberTestHelper.m",
                 "NBPhoneNumberUtilTest.m",
-                "NBShortNumberInfoTest.m"
             ]
         )
     ]
