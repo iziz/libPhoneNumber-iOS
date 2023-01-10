@@ -16,6 +16,8 @@
 + (NBPhoneNumberUtil *)sharedInstance;
 - (instancetype)initWithMetadataHelper:(NBMetadataHelper *)helper;
 
+- (instancetype)init NS_UNAVAILABLE;
+
 @property(nonatomic, strong, readonly) NSDictionary *DIGIT_MAPPINGS;
 
 // regular expressions

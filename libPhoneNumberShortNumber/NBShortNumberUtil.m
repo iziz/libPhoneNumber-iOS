@@ -38,7 +38,7 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 
 - (instancetype)init {
   return [self initWithMetadataHelper:[[NBShortNumberMetadataHelper alloc] init]
-                      phoneNumberUtil:[[NBPhoneNumberUtil alloc] init]];
+                      phoneNumberUtil:[NBPhoneNumberUtil sharedInstance]];
 }
 
 - (BOOL)isPossibleShortNumber:(NBPhoneNumber *)phoneNumber forRegion:(NSString *)regionDialingFrom {
