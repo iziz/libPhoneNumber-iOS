@@ -14,7 +14,7 @@
 #import "NBPhoneNumberDesc.h"
 #import "NBPhoneNumberUtil.h"
 
-static size_t kPhoneNumberMetaDataForTestingExpandedLength = 33021;
+#import "NBTestingMetaData.h"
 
 // Create an entry array for a phone number desc based on numberPattern
 static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPattern) {

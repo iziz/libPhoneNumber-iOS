@@ -185,6 +185,8 @@
 		94C9AF5924B3C40C00469F54 /* libPhoneNumberGeocoding.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = libPhoneNumberGeocoding.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		94C9AF5E24B3CE0D00469F54 /* TestingSource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TestingSource.bundle; sourceTree = "<group>"; };
 		A81D6A281BECC43A00F68F34 /* NBPhoneNumberDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NBPhoneNumberDefines.m; sourceTree = "<group>"; };
+		CA2A40602966543D00DBCD69 /* NBTestingMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTestingMetaData.h; sourceTree = "<group>"; };
+		CA2A4061296654E500DBCD69 /* NBTestingMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTestingMetaData.h; sourceTree = "<group>"; };
 		FD12C2681A87401B00B53856 /* NBMetadataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBMetadataHelper.h; sourceTree = "<group>"; };
 		FD12C2691A87401B00B53856 /* NBMetadataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBMetadataHelper.m; sourceTree = "<group>"; };
 		FD7A0620167715A0004BBEB6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -318,6 +320,7 @@
 				1485C52B1E06F4930092F541 /* Info.plist */,
 				1485C5231E06F4890092F541 /* NBAsYouTypeFormatterTest.m */,
 				1485C5251E06F4890092F541 /* NBPhoneNumberUtilTest.m */,
+				CA2A4061296654E500DBCD69 /* NBTestingMetaData.h */,
 			);
 			name = libPhoneNumber.tests;
 			path = libPhoneNumberTests;
@@ -360,6 +363,7 @@
 				940725AB24BF63050011AE05 /* NBShortNumberInfoTest.m */,
 				940725B024BF7B040011AE05 /* NBShortNumberTestHelper.h */,
 				940725B124BF7B040011AE05 /* NBShortNumberTestHelper.m */,
+				CA2A40602966543D00DBCD69 /* NBTestingMetaData.h */,
 			);
 			path = libPhoneNumberShortNumberTests;
 			sourceTree = "<group>";
