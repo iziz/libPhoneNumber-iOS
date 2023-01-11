@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <libPhoneNumberGeocoding/NBGeocoderMetadataHelper.h>
 
+@class NBGeocoderMetadataHelper;
 @class NBPhoneNumber;
 @class NBPhoneNumberUtil;
 
