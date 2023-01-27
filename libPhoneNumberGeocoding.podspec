@@ -10,14 +10,14 @@ DESC
   s.license      = 'Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)'
   s.authors      = { "rastaarh" => "rastaar@google.com", "paween" => "paween@google.com", "aalexli" => "aalexli@google.com" }
   s.source       = { :git => "https://github.com/iziz/libPhoneNumber-iOS.git", :tag => s.version.to_s }
-  s.libraries      = 'z'
+  s.libraries      = 'sqlite3'
   s.ios.deployment_target = "11.0"
   s.osx.deployment_target = "10.9"
   s.watchos.deployment_target = "4.0"
   s.tvos.deployment_target = "11.0"
   s.requires_arc = true
   s.resources = "libPhoneNumberGeocoding/Metadata/*.bundle"
-  s.private_header_files = 'libPhoneNumber/NBGeneratedPhoneNumberMetaData.h'
+  s.private_header_files = 'libPhoneNumberGeocoding/Metadata/NBGeocoderMetadataHelper.h'
   s.dependency 'libPhoneNumber-iOS'
   s.source_files = 'libPhoneNumberGeocoding/NBPhoneNumberOfflineGeocoder.{h,m}', 'libPhoneNumberGeocoding/Metadata/NBGeocoderMetadataHelper.{h,m}'
 end
