@@ -46,7 +46,7 @@ import libPhoneNumberShortNumber
 
 ## Usage - **NBShortNumberUtil**
 ```obj-c
-NBShortNumberUtil *shortNumberUtil = [[NBShortNumberUtil alloc] init];
+NBShortNumberUtil *shortNumberUtil = [NBShortNumberUtil sharedInstance];
     
     // possibleNumber                  : +33123456
     NSLog(@"Is possible short number: %d",

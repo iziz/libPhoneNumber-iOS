@@ -25,8 +25,10 @@ typedef NS_ENUM(NSUInteger, NBEShortNumberCost) {
 
 @property(nonatomic) NSDictionary<NSNumber *, NSArray<NSString *> *> *countryToRegionCodeMap;
 
-/// Initialize short number util with a default metadata helper.
-- (instancetype)init;
+/// Short number util singleton with a default metadata helper.
++ (NBShortNumberUtil *)sharedInstance;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 /// Initialize short number util with a metadata helper.
 /// @param helper A metadata helper.
