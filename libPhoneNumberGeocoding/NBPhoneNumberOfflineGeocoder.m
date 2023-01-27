@@ -6,8 +6,8 @@
 //  Copyright © 2020 Google LLC. All rights reserved.
 //
 
+#import "Metadata/NBGeocoderMetadataHelper.h"
 #import "NBPhoneNumberOfflineGeocoder.h"
-#import "libPhoneNumberiOS/NBGeocoderMetadataHelper.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberUtil.h"
 

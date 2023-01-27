@@ -25,7 +25,6 @@ FOUNDATION_EXPORT const unsigned char libPhoneNumber_iOSVersionString[];
 
 // Metadata
 #import "NBMetadataHelper.h"
-#import "NBGeocoderMetadataHelper.h"
 
 // Model
 #import "NBNumberFormat.h"
