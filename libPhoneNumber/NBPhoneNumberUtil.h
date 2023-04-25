@@ -39,9 +39,7 @@
 
 - (NSString *)extractPossibleNumber:(NSString *)phoneNumber;
 - (NSNumber *)extractCountryCode:(NSString *)fullNumber nationalNumber:(NSString **)nationalNumber;
-#if !TARGET_OS_TV
 - (NSString *)countryCodeByCarrier;
-#endif
 
 - (NSString *)getNddPrefixForRegion:(NSString *)regionCode stripNonDigits:(BOOL)stripNonDigits;
 - (NSString *)getNationalSignificantNumber:(NBPhoneNumber *)phoneNumber;

@@ -3447,30 +3447,26 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 }
 
 /**
- * Parses a string using the phone's carrier region (when available, ZZ otherwise).
- * This uses the country the sim card in the phone is registered with.
+ * Parses a string using the phone's carrier region (when available, uses system locale otherwise).
+ * This uses the country the SIM card in the phone is registered with.
  * For example if you have an AT&T sim card but are in Europe, this will parse the
  * number using +1 (AT&T is a US Carrier) as the default country code.
- * This also works for CDMA phones which don't have a sim card.
+ * This also works for multi-SIM phones, using the SIM region of default voice line.
  */
 - (NBPhoneNumber *)parseWithPhoneCarrierRegion:(NSString *)numberToParse error:(NSError **)error {
   numberToParse = NormalizeNonBreakingSpace(numberToParse);
 
-  NSString *defaultRegion = nil;
-#if !TARGET_OS_TV
-  defaultRegion = [self countryCodeByCarrier];
-#else
-  defaultRegion = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
-#endif
-
+  NSString *defaultRegion = [self countryCodeByCarrier];
   return [self parse:numberToParse defaultRegion:defaultRegion error:error];
 }
 
-#if !TARGET_OS_TV
 - (NSString *)countryCodeByCarrier {
+#if !TARGET_OS_TV
   return [[CNContactsUserDefaults sharedDefaults].countryCode uppercaseString];
-}
+#else
+  return [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
 #endif
+}
 
 /**
  * Parses a string and returns it in proto buffer format. This method differs
