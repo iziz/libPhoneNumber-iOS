@@ -58,7 +58,7 @@ And set the **Embedded Content Contains Swift** to "Yes" in your build settings.
 
 #### Setting up manually
  Add source files to your projects from libPhoneNumber
-    - Add "CoreTelephony.framework"
+    - Add "Contacts.framework"
 
 See sample test code from
 > [libPhoneNumber-iOS/libPhoneNumberTests/ ... Test.m] (https://github.com/iziz/libPhoneNumber-iOS/tree/master/libPhoneNumberTests)

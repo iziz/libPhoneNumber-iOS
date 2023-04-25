@@ -16,9 +16,8 @@
 #import "NBPhoneNumberDesc.h"
 #import "NBRegExMatcher.h"
 
-#if TARGET_OS_IOS
-#import <CoreTelephony/CTCarrier.h>
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#if __has_include(<Contacts/Contacts.h>)
+#import "Contacts/Contacts.h"
 #endif
 
 static NSString *NormalizeNonBreakingSpace(NSString *aString) {
@@ -51,10 +50,6 @@ static BOOL isNan(NSString *sourceString) {
 
 @property(nonatomic, strong, readwrite) NBMetadataHelper *helper;
 @property(nonatomic, strong, readwrite) NBRegExMatcher *matcher;
-
-#if TARGET_OS_IOS
-@property(nonatomic, readonly) CTTelephonyNetworkInfo *telephonyNetworkInfo;
-#endif
 
 @end
 
@@ -3462,51 +3457,19 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   numberToParse = NormalizeNonBreakingSpace(numberToParse);
 
   NSString *defaultRegion = nil;
-#if TARGET_OS_IOS
+#if !TARGET_OS_TV
   defaultRegion = [self countryCodeByCarrier];
 #else
   defaultRegion = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
 #endif
-  if ([NB_UNKNOWN_REGION isEqualToString:defaultRegion]) {
-    // get region from device as a failover (e.g. iPad)
-    NSLocale *currentLocale = [NSLocale currentLocale];
-    defaultRegion = [currentLocale objectForKey:NSLocaleCountryCode];
-  }
 
   return [self parse:numberToParse defaultRegion:defaultRegion error:error];
 }
 
-#if TARGET_OS_IOS
-
-static CTTelephonyNetworkInfo *_telephonyNetworkInfo;
-
-- (CTTelephonyNetworkInfo *)telephonyNetworkInfo {
-  // cache telephony network info;
-  // CTTelephonyNetworkInfo objects are unnecessarily created for every call to
-  // parseWithPhoneCarrierRegion:error: when in reality this information not change while an app
-  // lives in memory real-world performance test while parsing 93 phone numbers: before change:
-  // 126ms after change:    32ms using static instance prevents deallocation crashes due to ios bug
-
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    _telephonyNetworkInfo = [[CTTelephonyNetworkInfo alloc] init];
-  });
-
-  return _telephonyNetworkInfo;
-}
-
+#if !TARGET_OS_TV
 - (NSString *)countryCodeByCarrier {
-  NSString *isoCode = [[self.telephonyNetworkInfo subscriberCellularProvider] isoCountryCode];
-
-  // The 2nd part of the if is working around an iOS 7 bug
-  // If the SIM card is missing, iOS 7 returns an empty string instead of nil
-  if (isoCode.length == 0) {
-    isoCode = NB_UNKNOWN_REGION;
-  }
-
-  return isoCode;
+  return [[CNContactsUserDefaults sharedDefaults].countryCode uppercaseString];
 }
-
 #endif
 
 /**

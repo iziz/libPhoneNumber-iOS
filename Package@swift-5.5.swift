@@ -27,7 +27,7 @@ let package = Package(
                 .headerSearchPath("Internal")
             ],
             linkerSettings: [
-                .linkedFramework("CoreTelephony", .when(platforms: [.iOS, .macOS, .macCatalyst])),
+                .linkedFramework("Contacts", .when(platforms: [.iOS, .macOS, .macCatalyst, .watchOS])),
             ]
         ),
         .testTarget(
