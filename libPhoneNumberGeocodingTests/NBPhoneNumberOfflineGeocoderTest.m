@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 
 #import "NBGeocoderMetadataHelper.h"
-#import "NBMetadataHelper.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberOfflineGeocoder.h"
 #import "NBPhoneNumberUtil.h"

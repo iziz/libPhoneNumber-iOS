@@ -47,7 +47,8 @@
 #if PERF_TEST
 
 - (void)testParsing {
-  NSArray *regionCodes = [[NBMetadataHelper CCode2CNMap] allKeys];
+  NSArray *regionCodes =
+    [[[[NBMetadataHelper alloc] init] countryCodeToCountryNumberDictionary] allKeys];
 
   NSMutableArray<NBExampleNumber *> *exampleNumbers = [[NSMutableArray alloc] init];
 
@@ -87,6 +88,17 @@
       [util parseAndKeepRawInput:example.phoneNumber
                    defaultRegion:example.baseRegionCode
                            error:nil];
+    }
+  }];
+}
+
+- (void)testParsingWithDefaultRegion {
+  NBPhoneNumberUtil *util = [NBPhoneNumberUtil sharedInstance];
+
+  NSString *exampleNumber = @"+5491187654321";
+  [self measureBlock:^{
+    for (int i = 0; i < 10000; i++) {
+      [util parseWithPhoneCarrierRegion:exampleNumber error: nil];
     }
   }];
 }
