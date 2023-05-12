@@ -65,7 +65,7 @@ typedef NS_ENUM(NSUInteger, NBEShortNumberCost) {
  * @param regionDialingFrom the region from which the number is dialed
  * @return whether the short number matches a valid pattern
  */
-- (BOOL)isValidShortNumber:(NBPhoneNumber *)phoneNumber forRegion:(NSString *)regionDialingFrom;
+- (BOOL)isValidShortNumber:(NBPhoneNumber * _Nonnull)phoneNumber forRegion:(NSString * _Nonnull)regionDialingFrom;
 
 /**
  * Tests whether a short number matches a valid pattern. If a country calling code is shared by
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSUInteger, NBEShortNumberCost) {
  * @param phoneNumber the short number for which we want to test the validity
  * @return whether the short number matches a valid pattern
  */
-- (BOOL)isValidShortNumber:(NBPhoneNumber *)phoneNumber;
+- (BOOL)isValidShortNumber:(NBPhoneNumber * _Nonnull)phoneNumber;
 
 /**
  * Gets the expected cost category of a short number when dialed from a region (however, nothing
