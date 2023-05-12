@@ -63,7 +63,7 @@ static NSString *StringByTrimming(NSString *aString) {
   return self;
 }
 
-- (NBPhoneMetaData *)shortNumberMetadataForRegion:(NSString *)regionCode {
+- (NBPhoneMetaData * _Nullable)shortNumberMetadataForRegion:(NSString * _Nonnull)regionCode {
   regionCode = StringByTrimming(regionCode);
   if (regionCode.length == 0) {
     return nil;

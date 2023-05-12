@@ -73,7 +73,7 @@ static NSString *const preparedStatement = @"WITH recursive count(x)"
   return [self initWithCountryCode:countryCode withLanguage:languageCode withBundle:databaseBundle];
 }
 
-- (NSString *)searchPhoneNumber:(NBPhoneNumber *)phoneNumber {
+- (NSString * _Nullable)searchPhoneNumber:(NBPhoneNumber *)phoneNumber {
   @synchronized(self) {
     if (![phoneNumber.countryCode isEqualToNumber:_countryCode]) {
       _countryCode = phoneNumber.countryCode;
