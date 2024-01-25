@@ -187,6 +187,11 @@
         [phoneUtil format:phoneJP numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:nil]);
   NSLog(@"- isValidNumber %@", [phoneUtil isValidNumber:phoneJP] ? @"Y" : @"N");
   NSLog(@"- isPossibleNumber %@", [phoneUtil isPossibleNumber:phoneJP] ? @"Y" : @"N");
+
+  // Maryland Test
+  NBPhoneNumber *phoneMaryland = [phoneUtil parse:@"227-203-4183" defaultRegion:@"US" error:nil];
+  NSLog(@"- isValidNumber %@", [phoneUtil isValidNumber:phoneMaryland] ? @"Y" : @"N");
+  NSLog(@"- isPossibleNumber %@", [phoneUtil isPossibleNumber:phoneMaryland] ? @"Y" : @"N");
 }
 
 - (NSString *)stringWithRandomNumber {
