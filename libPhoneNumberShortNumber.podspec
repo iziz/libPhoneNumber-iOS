@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumberShortNumber"
-  s.version      = "1.0.0"
+  s.version      = "1.2.0"
   s.summary      = "Short Number Support for libPhoneNumber-iOS"
   s.description  = <<-DESC
 libPhoneNumberShortNumber for iOS
