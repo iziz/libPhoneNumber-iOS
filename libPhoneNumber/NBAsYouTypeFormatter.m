@@ -810,10 +810,12 @@ static const NSUInteger NBMinLeadingDigitsLength = 3;
     NSString *prefixBeforeNationalNumberStr = [self.prefixBeforeNationalNumber_ copy];
     NSRange lastRange = [prefixBeforeNationalNumberStr rangeOfString:self.nationalPrefixExtracted_
                                                              options:NSBackwardsSearch];
-    /** @type {number} */
-    NSUInteger indexOfPreviousNdd = lastRange.location;
-    self.prefixBeforeNationalNumber_ = [[prefixBeforeNationalNumberStr
-        substringWithRange:NSMakeRange(0, indexOfPreviousNdd)] mutableCopy];
+    if (lastRange.length > 0) {
+      /** @type {number} */
+      NSUInteger indexOfPreviousNdd = lastRange.location;
+      self.prefixBeforeNationalNumber_ = [[prefixBeforeNationalNumberStr
+                                           substringWithRange:NSMakeRange(0, indexOfPreviousNdd)] mutableCopy];
+    }
   }
 
   return self.nationalPrefixExtracted_ != [self removeNationalPrefixFromNationalNumber_];
