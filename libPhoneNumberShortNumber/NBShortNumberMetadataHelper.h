@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param regionCode regionCode
  * @return {i18n.phonenumbers.PhoneMetadata}
  */
-- (NBPhoneMetaData *)shortNumberMetadataForRegion:(NSString *)regionCode;
+- (NBPhoneMetaData * _Nullable)shortNumberMetadataForRegion:(NSString * _Nonnull)regionCode;
 
 @end
 

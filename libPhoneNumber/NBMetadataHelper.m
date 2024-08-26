@@ -149,7 +149,7 @@ static NSString *StringByTrimming(NSString *aString) {
  * @param {?string} regionCode
  * @return {i18n.phonenumbers.PhoneMetadata}
  */
-- (NBPhoneMetaData *)getMetadataForRegion:(NSString *)regionCode {
+- (NBPhoneMetaData * _Nullable)getMetadataForRegion:(NSString * _Nonnull)regionCode {
   regionCode = StringByTrimming(regionCode);
   if (regionCode.length == 0) {
     return nil;
@@ -178,12 +178,12 @@ static NSString *StringByTrimming(NSString *aString) {
  * @param countryCallingCode countryCallingCode
  * @return {i18n.phonenumbers.PhoneMetadata}
  */
-- (NBPhoneMetaData *)getMetadataForNonGeographicalRegion:(NSNumber *)countryCallingCode {
+- (NBPhoneMetaData * _Nullable)getMetadataForNonGeographicalRegion:(NSNumber * _Nonnull)countryCallingCode {
   NSString *countryCallingCodeStr = countryCallingCode.stringValue;
   return [self getMetadataForRegion:countryCallingCodeStr];
 }
 
-+ (BOOL)hasValue:(NSString *)string {
++ (BOOL)hasValue:(NSString * _Nonnull)string {
   string = StringByTrimming(string);
   return string.length != 0;
 }

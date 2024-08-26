@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @return a text description for the given language code for the given phone number, or nil if
  *     there were no search results found for the given phone number.
  */
-- (NSString *)searchPhoneNumber:(NBPhoneNumber *)phoneNumber;
+- (NSString * _Nullable)searchPhoneNumber:(NBPhoneNumber *)phoneNumber;
 
 @end
 

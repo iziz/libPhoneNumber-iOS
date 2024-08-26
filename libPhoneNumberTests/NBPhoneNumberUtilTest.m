@@ -2121,12 +2121,12 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   number = [[NBPhoneNumber alloc] init];
   phoneNumber = @"2345-6789";
   numberToFill = @"";
-  XCTAssertEqual(@0, [_aUtil maybeExtractCountryCode:phoneNumber
-                                            metadata:metadata
-                                      nationalNumber:&numberToFill
-                                        keepRawInput:YES
-                                         phoneNumber:&number
-                                               error:nil]);
+  XCTAssertEqualObjects(@0, [_aUtil maybeExtractCountryCode:phoneNumber
+                                                   metadata:metadata
+                                             nationalNumber:&numberToFill
+                                               keepRawInput:YES
+                                                phoneNumber:&number
+                                                      error:nil]);
   XCTAssertEqual(NBECountryCodeSourceFROM_DEFAULT_COUNTRY, [number.countryCodeSource integerValue],
                  @"Did not figure out CountryCodeSource correctly");
 
@@ -2200,12 +2200,12 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   numberToFill = @"";
   {
     NSError *anError = nil;
-    XCTAssertEqual(@0, [_aUtil maybeExtractCountryCode:phoneNumber
-                                              metadata:metadata
-                                        nationalNumber:&numberToFill
-                                          keepRawInput:YES
-                                           phoneNumber:&number
-                                                 error:&anError]);
+    XCTAssertEqualObjects(@0, [_aUtil maybeExtractCountryCode:phoneNumber
+                                                     metadata:metadata
+                                               nationalNumber:&numberToFill
+                                                 keepRawInput:YES
+                                                  phoneNumber:&number
+                                                        error:&anError]);
     XCTAssertEqual(NBECountryCodeSourceFROM_DEFAULT_COUNTRY,
                    [number.countryCodeSource integerValue]);
   }

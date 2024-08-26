@@ -79,7 +79,7 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
   return NO;
 }
 
-- (BOOL)isValidShortNumber:(NBPhoneNumber *)phoneNumber forRegion:(NSString *)regionDialingFrom {
+- (BOOL)isValidShortNumber:(NBPhoneNumber * _Nonnull)phoneNumber forRegion:(NSString * _Nonnull)regionDialingFrom {
   if (![self doesPhoneNumber:phoneNumber matchesRegion:regionDialingFrom]) {
     return NO;
   }
@@ -99,7 +99,7 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
   return [self matchesPossibleNumber:shortNumber andNationalNumber:shortNumberDesc];
 }
 
-- (BOOL)isValidShortNumber:(NBPhoneNumber *)phoneNumber {
+- (BOOL)isValidShortNumber:(NBPhoneNumber * _Nonnull)phoneNumber {
   NSArray<NSString *> *regionCodes =
       [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
   NSString *regionCode = [self regionCodeForShortNumber:phoneNumber fromRegionList:regionCodes];
@@ -109,7 +109,7 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
     return YES;
   }
 
-  return [self isValidShortNumber:phoneNumber forRegion:regionCode];
+  return [self isValidShortNumber:phoneNumber forRegion:regionCode ?: @""];
 }
 
 - (NBEShortNumberCost)expectedCostOfPhoneNumber:(NBPhoneNumber *)phoneNumber
@@ -228,7 +228,7 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 
 // In these countries, if extra digits are added to an emergency number, it no longer connects
 // to the emergency service.
-- (NSSet<NSString *> *)regionsWhereEmergencyNumbersMustBeExact {
+- (NSSet<NSString *> * _Nonnull)regionsWhereEmergencyNumbersMustBeExact {
   static NSSet<NSString *> *regions;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
@@ -241,7 +241,7 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
  * Helper method to check that the country calling code of the number matches the region it's
  * being dialed from.
  */
-- (BOOL)doesPhoneNumber:(NBPhoneNumber *)phoneNumber matchesRegion:(NSString *)regionCode {
+- (BOOL)doesPhoneNumber:(NBPhoneNumber * _Nonnull)phoneNumber matchesRegion:(NSString * _Nonnull)regionCode {
   NSArray<NSString *> *regionCodes =
       [_phoneUtil getRegionCodesForCountryCode:phoneNumber.countryCode];
   return [regionCodes containsObject:regionCode];
@@ -258,7 +258,7 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
  * @param number  the phone number for which the national significant number is needed
  * @return  the national significant number of the PhoneNumber object passed in
  */
-+ (NSString *)nationalSignificantNumberFromPhoneNumber:(NBPhoneNumber *)phoneNumber {
++ (NSString * _Nonnull)nationalSignificantNumberFromPhoneNumber:(NBPhoneNumber * _Nonnull)phoneNumber {
   // If leading zero(s) have been set, we prefix this now. Note this is not a national prefix.
   NSMutableString *nationalNumber = [[NSMutableString alloc] init];
   if (phoneNumber.italianLeadingZero) {
@@ -281,8 +281,8 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
 // Helper method to get the region code for a given phone number, from a list of possible region
 // codes. If the list contains more than one region, the first region for which the number is
 // valid is returned.
-- (NSString *)regionCodeForShortNumber:(NBPhoneNumber *)number
-                        fromRegionList:(NSArray<NSString *> *)regionCodes {
+- (NSString * _Nullable)regionCodeForShortNumber:(NBPhoneNumber * _Nonnull)number
+                                  fromRegionList:(NSArray<NSString *> * _Nonnull)regionCodes {
   if (regionCodes.count == 0) {
     return nil;
   } else if (regionCodes.count == 1) {
