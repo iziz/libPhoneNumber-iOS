@@ -3055,7 +3055,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  *     only populated when keepCountryCodeSource is NO.
  * @return {number} the country calling code extracted or 0 if none could be
  *     extracted.
- * @throws {i18n.phonenumbers.Error}
+ * @throws {i18n.phonenumbers.Error} if country code is invalid
  */
 - (NSNumber * _Nonnull)maybeExtractCountryCode:(NSString * _Nonnull)number
                                       metadata:(NBPhoneMetaData * _Nullable)defaultRegionMetadata
