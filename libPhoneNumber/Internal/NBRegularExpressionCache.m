@@ -46,7 +46,7 @@
     NSRegularExpression *regEx = [[NSRegularExpression alloc] initWithPattern:pattern
                                                                       options:kNilOptions
                                                                         error:&regExError];
-    if (regEx == nil && error != nil) {
+    if (regEx == nil) {
       if (error != NULL) {
         *error = regExError;
       }
