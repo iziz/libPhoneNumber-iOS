@@ -12,6 +12,7 @@
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberOfflineGeocoder.h"
 #import "NBPhoneNumberUtil.h"
+#import "NSBundle+Extensions.h"
 
 @interface NBPhoneNumberOfflineGeocoderTest : XCTestCase
 
@@ -42,9 +43,8 @@
 - (void)setUp {
   [super setUp];
   // For testing purposes, this set-up will pass in a testing database.
-  NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
-  NSURL *resourceURL = [[bundle resourceURL] URLByAppendingPathComponent:@"TestingSource.bundle"];
-  NSBundle *testDatabaseBundle = [NSBundle bundleWithURL:resourceURL];
+  NSString* path = [NSBundle pathForFirstResourceNamed:@"TestingSource" ofType:@"bundle"];
+  NSBundle *testDatabaseBundle = [NSBundle bundleWithPath:path];
 
   NBPhoneNumberUtil *phoneNumberUtil = [NBPhoneNumberUtil sharedInstance];
 
