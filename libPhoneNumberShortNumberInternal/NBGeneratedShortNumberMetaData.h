@@ -1,6 +1,6 @@
 /*****
  * Data Generated from GeneratePhoneNumberHeader.sh
- * Off of PhoneNumberMetaData.json
+ * Off of ShortNumberMetaData.json
  */
 
 #include <zlib.h>
@@ -13,6 +13,6 @@
 #  define z_const
 #endif
 
-extern z_const Bytef kPhoneNumberMetaData[];
-extern z_const size_t kPhoneNumberMetaDataCompressedLength;
-extern z_const size_t kPhoneNumberMetaDataExpandedLength;
+extern z_const Bytef kShortNumberMetaData[];
+extern z_const size_t kShortNumberMetaDataCompressedLength;
+extern z_const size_t kShortNumberMetaDataExpandedLength;

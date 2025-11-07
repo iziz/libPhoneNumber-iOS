@@ -15,6 +15,7 @@
 #import "NBPhoneNumberUtil.h"
 
 #import "NBTestingMetaData.h"
+#import "NSBundle+Extensions.h"
 
 // Create an entry array for a phone number desc based on numberPattern
 static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPattern) {
@@ -100,8 +101,8 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
 
 - (void)setUp {
   [super setUp];
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  NSString *path = [bundle pathForResource:@"libPhoneNumberMetadataForTesting" ofType:nil];
+  
+  NSString* path = [NSBundle pathForFirstResourceNamed:@"libPhoneNumberMetaDataForTesting" ofType:@"zip"];
   NSData *data = [NSData dataWithContentsOfFile:path];
   self.helper =
       [[NBMetadataHelper alloc] initWithZippedData:data

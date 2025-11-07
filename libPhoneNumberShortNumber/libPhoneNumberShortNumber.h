@@ -18,4 +18,3 @@ FOUNDATION_EXPORT const unsigned char libPhoneNumberShortNumberVersionString[];
 // using statements like #import <libPhoneNumberShortNumber/PublicHeader.h>
 #import <libPhoneNumberShortNumber/NBShortNumberMetadataHelper.h>
 #import <libPhoneNumberShortNumber/NBShortNumberUtil.h>
-#import <libPhoneNumberIOS/NBMetadataHelper.h>
