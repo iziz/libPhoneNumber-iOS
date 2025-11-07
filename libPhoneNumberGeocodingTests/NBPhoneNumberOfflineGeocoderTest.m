@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "NBGeocoderMetadataHelper.h"
+#import "NBGeocoderMetaDataHelper.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberOfflineGeocoder.h"
 #import "NBPhoneNumberUtil.h"
@@ -49,9 +49,9 @@
   NBPhoneNumberUtil *phoneNumberUtil = [NBPhoneNumberUtil sharedInstance];
 
   self.geocoder = [[NBPhoneNumberOfflineGeocoder alloc]
-      initWithMetadataHelperFactory:^NBGeocoderMetadataHelper *(NSNumber *_Nonnull countryCode,
+      initWithMetaDataHelperFactory:^NBGeocoderMetaDataHelper *(NSNumber *_Nonnull countryCode,
                                                                 NSString *_Nonnull language) {
-        return [[NBGeocoderMetadataHelper alloc] initWithCountryCode:countryCode
+        return [[NBGeocoderMetaDataHelper alloc] initWithCountryCode:countryCode
                                                         withLanguage:language
                                                           withBundle:testDatabaseBundle];
       }

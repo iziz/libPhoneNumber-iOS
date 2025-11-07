@@ -1,5 +1,5 @@
 //
-//  NBGeocoderMetadataHelper.m
+//  NBGeocoderMetaDataHelper.m
 //  libPhoneNumberiOS
 //
 //  Created by Rastaar Haghi on 6/12/20.
@@ -8,10 +8,10 @@
 
 #import <sqlite3.h>
 
-#import "NBGeocoderMetadataHelper.h"
+#import "NBGeocoderMetaDataHelper.h"
 #import "NBPhoneNumber.h"
 
-@implementation NBGeocoderMetadataHelper {
+@implementation NBGeocoderMetaDataHelper {
  @private
   sqlite3 *_database;
   sqlite3_stmt *_selectStatement;
@@ -68,7 +68,7 @@ static NSString *const preparedStatement = @"WITH recursive count(x)"
 - (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)languageCode {
   NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
   NSURL *resourceURL =
-      [[bundle resourceURL] URLByAppendingPathComponent:@"GeocodingMetadata.bundle"];
+      [[bundle resourceURL] URLByAppendingPathComponent:@"GeocodingMetaData.bundle"];
   NSBundle *databaseBundle = [NSBundle bundleWithURL:resourceURL];
   return [self initWithCountryCode:countryCode withLanguage:languageCode withBundle:databaseBundle];
 }
