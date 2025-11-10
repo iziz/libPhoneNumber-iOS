@@ -8,7 +8,12 @@
 
 import SwiftUI
 import libPhoneNumberGeocoding
+
+#if canImport(libPhoneNumber)
+import libPhoneNumber
+#elseif canImport(libPhoneNumber_iOS)
 import libPhoneNumber_iOS
+#endif
 
 struct PhoneUtilView: View {
   @State private var countryCode: String = ""
@@ -18,7 +23,6 @@ struct PhoneUtilView: View {
   @State private var searchMade: Bool = false
   @State private var formatSelection = 0
   @State private var formattedPhoneNumber: String = ""
-  let phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
 
   var body: some View {
     VStack {
@@ -31,7 +35,7 @@ struct PhoneUtilView: View {
 
         Section(header: Text("(Optional) Format Phone Number")) {
           Picker("Locale Options", selection: $formatSelection) {
-            ForEach(0..<formatOptions.count) { index in
+            ForEach(formatOptions.indices, id: \.self) { index in
               Text(formatOptions[index])
                 .tag(index)
             }
@@ -90,13 +94,13 @@ extension PhoneUtilView {
     do {
       self.searchMade = true
       let parsedPhoneNumber: NBPhoneNumber =
-        try phoneUtil.parse(self.phoneNumber, defaultRegion: Locale.current.regionCode!)
-      self.isValidNumber = self.phoneUtil.isValidNumber(parsedPhoneNumber)
+        try NBPhoneNumberUtil.sharedInstance().parse(self.phoneNumber, defaultRegion: Locale.current.regionCode!)
+      self.isValidNumber = NBPhoneNumberUtil.sharedInstance().isValidNumber(parsedPhoneNumber)
       self.countryCode = parsedPhoneNumber.countryCode.stringValue
       self.nationalNumber = parsedPhoneNumber.nationalNumber.stringValue
       if self.formatSelection != 0 {
         self.formattedPhoneNumber = try
-          self.phoneUtil.format(
+          NBPhoneNumberUtil.sharedInstance().format(
             parsedPhoneNumber,
             numberFormat:
               NBEPhoneNumberFormat(rawValue: self.formatSelection - 1)!)

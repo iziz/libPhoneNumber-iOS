@@ -7,7 +7,12 @@
 //
 
 import SwiftUI
+
+#if canImport(libPhoneNumber)
+import libPhoneNumber
+#elseif canImport(libPhoneNumber_iOS)
 import libPhoneNumber_iOS
+#endif
 
 struct FormatterView: View {
   @State var phoneNumber: String = ""
