@@ -1,5 +1,5 @@
 //
-//  Geocoding.h
+//  libPhoneNumberGeocoding.h
 //  Geocoding
 //
 //  Created by Frank Itthipalkul on 6/23/20.
@@ -17,5 +17,5 @@ FOUNDATION_EXPORT const unsigned char GeocodingVersionString[];
 // In this header, you should import all the public headers of your framework
 // using statements like #import <Geocoding/PublicHeader.h>
 
-#import <libPhoneNumberGeocoding/NBGeocoderMetadataHelper.h>
-#import <libPhoneNumberGeocoding/NBPhoneNumberOfflineGeocoder.h>
+#import "NBGeocoderMetaDataHelper.h"
+#import "NBPhoneNumberOfflineGeocoder.h"

@@ -14,7 +14,7 @@
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDefines.h"
 #import "NBPhoneNumberDesc.h"
-#import "NBRegExMatcher.h"
+#import <NBRegExMatcher.h>
 
 #if __has_include(<Contacts/Contacts.h>)
 #import "Contacts/Contacts.h"

@@ -15,6 +15,14 @@ let package = Package(
         .library(
             name: "libPhoneNumber",
             targets: ["libPhoneNumber"],
+        ),
+        .library(
+            name: "libPhoneNumberGeocoding",
+            targets: ["libPhoneNumberGeocoding"]
+        ),
+        .library(
+            name: "libPhoneNumberShortNumber",
+            targets: ["libPhoneNumberShortNumber"]
         )
     ],
     targets: [
@@ -27,7 +35,13 @@ let package = Package(
             publicHeadersPath: ".",
         ),
         .target(
+            name: "libPhoneNumberInternal",
+            path: "libPhoneNumberInternal",
+            publicHeadersPath: ".",
+        ),
+        .target(
             name: "libPhoneNumber",
+            dependencies: ["libPhoneNumberInternal"],
             path: "libPhoneNumber",
             exclude: ["Info.plist"],
             publicHeadersPath: ".",
@@ -45,6 +59,66 @@ let package = Package(
                 "libPhoneNumberTestsCommon",
             ],
             path: "libPhoneNumberTests",
-        )
+        ),
+        .target(
+            name: "libPhoneNumberGeocodingMetaData",
+            path: "libPhoneNumberGeocodingMetaData",
+            resources: [
+                .copy("GeocodingMetaData.bundle")
+            ],
+            publicHeadersPath: ".",
+        ),
+        .target(
+            name: "libPhoneNumberGeocoding",
+            dependencies: [
+                "libPhoneNumber",
+                "libPhoneNumberGeocodingMetaData",
+            ],
+            path: "libPhoneNumberGeocoding",
+            exclude: [
+                "README.md",
+                "Info.plist",
+            ],
+            publicHeadersPath: ".",
+        ),
+        .testTarget(
+            name: "libPhoneNumberGeocodingTests",
+            dependencies: [
+                "libPhoneNumberGeocoding",
+                "libPhoneNumberTestsCommon",
+            ],
+            path: "libPhoneNumberGeocodingTests",
+            resources: [
+                .copy("TestingSource.bundle")
+            ]
+        ),
+        .target(
+            name: "libPhoneNumberShortNumberInternal",
+            dependencies: [
+                "libPhoneNumber",
+            ],
+            path: "libPhoneNumberShortNumberInternal",
+            publicHeadersPath: ".",
+        ),
+        .target(
+            name: "libPhoneNumberShortNumber",
+            dependencies: [
+                "libPhoneNumberShortNumberInternal",
+            ],
+            path: "libPhoneNumberShortNumber",
+            exclude: [
+                "README.md",
+                "Info.plist",
+            ],
+            publicHeadersPath: ".",
+        ),
+        .testTarget(
+            name: "libPhoneNumberShortNumberTests",
+            dependencies: [
+                "libPhoneNumberShortNumber",
+                "libPhoneNumberTestsCommon",
+            ],
+            path: "libPhoneNumberShortNumberTests",
+        ),
     ]
 )

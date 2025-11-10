@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "815C4BDB-0588-41AF-B5E6-02ED291715F8",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "libPhoneNumberTests",
+        "name" : "libPhoneNumberTests"
+      }
+    }
+  ],
+  "version" : 1
+}

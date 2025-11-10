@@ -6,7 +6,7 @@
 //  Copyright © 2020 Google LLC. All rights reserved.
 //
 
-#import "Metadata/NBGeocoderMetadataHelper.h"
+#import "NBGeocoderMetaDataHelper.h"
 #import "NBPhoneNumberOfflineGeocoder.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberUtil.h"
@@ -14,23 +14,23 @@
 @implementation NBPhoneNumberOfflineGeocoder {
  @private
   NBPhoneNumberUtil *_phoneNumberUtil;
-  NSCache<NSString *, NBGeocoderMetadataHelper *> *_metadataHelpers;
-  NBGeocoderMetadataHelperFactory _metadataHelperFactory;
+  NSCache<NSString *, NBGeocoderMetaDataHelper *> *_metadataHelpers;
+  NBGeocoderMetaDataHelperFactory _metadataHelperFactory;
 }
 
 static NSString *const INVALID_REGION_CODE = @"ZZ";
 
 - (instancetype)init {
   return [self
-      initWithMetadataHelperFactory:^NBGeocoderMetadataHelper *(NSNumber *_Nonnull countryCode,
+      initWithMetaDataHelperFactory:^NBGeocoderMetaDataHelper *(NSNumber *_Nonnull countryCode,
                                                                 NSString *_Nonnull language) {
-        return [[NBGeocoderMetadataHelper alloc] initWithCountryCode:countryCode
+        return [[NBGeocoderMetaDataHelper alloc] initWithCountryCode:countryCode
                                                         withLanguage:language];
       }
                     phoneNumberUtil:NBPhoneNumberUtil.sharedInstance];
 }
 
-- (instancetype)initWithMetadataHelperFactory:(NBGeocoderMetadataHelperFactory)factory
+- (instancetype)initWithMetaDataHelperFactory:(NBGeocoderMetaDataHelperFactory)factory
                               phoneNumberUtil:(NBPhoneNumberUtil *)phoneNumberUtil {
   self = [super init];
   if (self != nil) {

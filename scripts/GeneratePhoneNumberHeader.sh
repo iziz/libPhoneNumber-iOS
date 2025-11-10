@@ -19,9 +19,9 @@ cd "${BASH_SOURCE%/*}" || exit
 
 echo "----------------------------------------------"
 
-readonly CORE_METADATA_HEADER="../libPhoneNumber/NBGeneratedPhoneNumberMetaData.h"
+readonly CORE_METADATA_HEADER="../libPhoneNumberInternal/NBGeneratedPhoneNumberMetaData.h"
 readonly CORE_METADATA_IMPL="../libPhoneNumber/NBGeneratedPhoneNumberMetaData.m"
-readonly SHORT_NUMBER_METADATA_HEADER="../libPhoneNumberShortNumber/NBGeneratedShortNumberMetaData.h"
+readonly SHORT_NUMBER_METADATA_HEADER="../libPhoneNumberShortNumberInternal/NBGeneratedShortNumberMetaData.h"
 readonly SHORT_NUMBER_METADATA_IMPL="../libPhoneNumberShortNumber/NBGeneratedShortNumberMetaData.m"
 
 readonly TEST_METADATA_ZIP="../libPhoneNumberTestsCommon/libPhoneNumberMetaDataForTesting.zip"

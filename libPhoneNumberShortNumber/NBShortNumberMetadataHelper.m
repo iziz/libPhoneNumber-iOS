@@ -7,7 +7,7 @@
 //
 
 #import "NBShortNumberMetadataHelper.h"
-#import "NBGeneratedShortNumberMetadata.h"
+#import "NBGeneratedShortNumberMetaData.h"
 #import "NBMetadataHelper.h"
 #import "NBPhoneMetaData.h"
 

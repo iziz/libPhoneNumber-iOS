@@ -1,0 +1,26 @@
+{
+  "configurations" : [
+    {
+      "id" : "96F5CCB0-B4CD-4575-9027-153C7B2B6498",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "libPhoneNumberGeocodingTests",
+        "name" : "libPhoneNumberGeocodingTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "B7A44DCB-ACC9-4889-B687-F16C19F926BD",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "libPhoneNumberShortNumberTests",
+        "name" : "libPhoneNumberShortNumberTests"
+      }
+    }
+  ],
+  "version" : 1
+}
