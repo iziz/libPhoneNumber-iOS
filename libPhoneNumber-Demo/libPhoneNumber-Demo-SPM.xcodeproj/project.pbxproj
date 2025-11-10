@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,13 +19,14 @@
 		94AEB65124C2202F00204E11 /* GeocodingSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB65024C2202F00204E11 /* GeocodingSearchView.swift */; };
 		94AEB65324C2203A00204E11 /* PhoneUtilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB65224C2203A00204E11 /* PhoneUtilView.swift */; };
 		94AEB65524C2204400204E11 /* FormatterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEB65424C2204400204E11 /* FormatterView.swift */; };
-		B37E3260609107A4EDA30CCB /* Pods_libPhoneNumber_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80180D3E4EFC2D805D5F7607 /* Pods_libPhoneNumber_Demo.framework */; };
-		BB8BCDE72EC26F6A0088985B /* libPhoneNumber-iOS.png in Resources */ = {isa = PBXBuildFile; fileRef = 94AEB65824C2517600204E11 /* libPhoneNumber-iOS.png */; };
+		BB3F7C702EBD441E0091CF5B /* libPhoneNumber in Frameworks */ = {isa = PBXBuildFile; productRef = BB3F7C6F2EBD441E0091CF5B /* libPhoneNumber */; };
+		BB3F7C722EBD441E0091CF5B /* libPhoneNumberGeocoding in Frameworks */ = {isa = PBXBuildFile; productRef = BB3F7C712EBD441E0091CF5B /* libPhoneNumberGeocoding */; };
+		BB3F7C742EBD441E0091CF5B /* libPhoneNumberShortNumber in Frameworks */ = {isa = PBXBuildFile; productRef = BB3F7C732EBD441E0091CF5B /* libPhoneNumberShortNumber */; };
+		BB8BCDEA2EC2731E0088985B /* libPhoneNumber-iOS.png in Resources */ = {isa = PBXBuildFile; fileRef = 94AEB65824C2517600204E11 /* libPhoneNumber-iOS.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5A43A8FB43AB1E232CA2F800 /* Pods_libPhoneNumber_DemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_libPhoneNumber_DemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		634BA8513696AC5501292664 /* Pods-libPhoneNumber-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-libPhoneNumber-Demo.release.xcconfig"; path = "Target Support Files/Pods-libPhoneNumber-Demo/Pods-libPhoneNumber-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		80180D3E4EFC2D805D5F7607 /* Pods_libPhoneNumber_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_libPhoneNumber_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		943E09BC24C60CFB00A80B5B /* ShortNumberUtilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortNumberUtilView.swift; sourceTree = "<group>"; };
 		943E09BE24C60D4500A80B5B /* Locales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locales.swift; sourceTree = "<group>"; };
@@ -34,7 +35,6 @@
 		94AEB61E24C21FAD00204E11 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		94AEB62024C21FAD00204E11 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		94AEB62224C21FAE00204E11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		94AEB62524C21FAE00204E11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		94AEB62824C21FAE00204E11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		94AEB62A24C21FAE00204E11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94AEB64C24C2200F00204E11 /* GeocodingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingView.swift; sourceTree = "<group>"; };
@@ -43,10 +43,10 @@
 		94AEB65224C2203A00204E11 /* PhoneUtilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneUtilView.swift; sourceTree = "<group>"; };
 		94AEB65424C2204400204E11 /* FormatterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatterView.swift; sourceTree = "<group>"; };
 		94AEB65824C2517600204E11 /* libPhoneNumber-iOS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "libPhoneNumber-iOS.png"; sourceTree = "<group>"; };
-		BB9B60402EBE8D8200C48233 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		BB9B60412EBE8D8200C48233 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		BB8BCDE82EC272FF0088985B /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		BB8BCDE92EC272FF0088985B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		BB8BCDEB2EC273680088985B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F16B3C7B814B59B93E4D0951 /* Pods_libPhoneNumber_Demo_libPhoneNumber_DemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_libPhoneNumber_Demo_libPhoneNumber_DemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F6BAA7C26BB7DAD929FDAFB6 /* Pods-libPhoneNumber-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-libPhoneNumber-Demo.debug.xcconfig"; path = "Target Support Files/Pods-libPhoneNumber-Demo/Pods-libPhoneNumber-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,31 +54,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B37E3260609107A4EDA30CCB /* Pods_libPhoneNumber_Demo.framework in Frameworks */,
+				BB3F7C702EBD441E0091CF5B /* libPhoneNumber in Frameworks */,
+				BB3F7C722EBD441E0091CF5B /* libPhoneNumberGeocoding in Frameworks */,
+				BB3F7C742EBD441E0091CF5B /* libPhoneNumberShortNumber in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		77BA5AB39B766D32240A7F29 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F6BAA7C26BB7DAD929FDAFB6 /* Pods-libPhoneNumber-Demo.debug.xcconfig */,
-				634BA8513696AC5501292664 /* Pods-libPhoneNumber-Demo.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		94AEB61024C21FAD00204E11 = {
 			isa = PBXGroup;
 			children = (
 				ED9DDEF1C13FC357811889E5 /* Frameworks */,
 				94AEB61B24C21FAD00204E11 /* libPhoneNumber-Demo */,
-				77BA5AB39B766D32240A7F29 /* Pods */,
 				94AEB61A24C21FAD00204E11 /* Products */,
-				BB9B60402EBE8D8200C48233 /* Podfile */,
-				BB9B60412EBE8D8200C48233 /* README.md */,
+				BB8BCDE82EC272FF0088985B /* Podfile */,
+				BB8BCDE92EC272FF0088985B /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -94,7 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				94AEB62224C21FAE00204E11 /* Assets.xcassets */,
-				94AEB62424C21FAE00204E11 /* Preview Content */,
+				BB8BCDEC2EC273680088985B /* Preview Content */,
 				94AEB61C24C21FAD00204E11 /* AppDelegate.swift */,
 				94AEB65424C2204400204E11 /* FormatterView.swift */,
 				94AEB65024C2202F00204E11 /* GeocodingSearchView.swift */,
@@ -112,10 +104,10 @@
 			path = "libPhoneNumber-Demo";
 			sourceTree = "<group>";
 		};
-		94AEB62424C21FAE00204E11 /* Preview Content */ = {
+		BB8BCDEC2EC273680088985B /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				94AEB62524C21FAE00204E11 /* Preview Assets.xcassets */,
+				BB8BCDEB2EC273680088985B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -137,15 +129,16 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94AEB64324C21FAE00204E11 /* Build configuration list for PBXNativeTarget "libPhoneNumber-Demo" */;
 			buildPhases = (
-				5A51BA45E84AA1A11A702F51 /* [CP] Check Pods Manifest.lock */,
 				94AEB61524C21FAD00204E11 /* Sources */,
 				94AEB61624C21FAD00204E11 /* Frameworks */,
 				94AEB61724C21FAD00204E11 /* Resources */,
-				8C0398239958786255CDDC91 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BB3F7C762EBD44B70091CF5B /* PBXTargetDependency */,
+				BB3F7C782EBD44B70091CF5B /* PBXTargetDependency */,
+				BB3F7C7A2EBD44B70091CF5B /* PBXTargetDependency */,
 			);
 			name = "libPhoneNumber-Demo";
 			productName = "libPhoneNumber-Demo";
@@ -168,7 +161,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 94AEB61424C21FAD00204E11 /* Build configuration list for PBXProject "libPhoneNumber-Demo" */;
+			buildConfigurationList = 94AEB61424C21FAD00204E11 /* Build configuration list for PBXProject "libPhoneNumber-Demo-SPM" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -177,6 +170,9 @@
 				Base,
 			);
 			mainGroup = 94AEB61024C21FAD00204E11;
+			packageReferences = (
+				BB3F7C6E2EBD441E0091CF5B /* XCLocalSwiftPackageReference "../../libPhoneNumber-iOS" */,
+			);
 			productRefGroup = 94AEB61A24C21FAD00204E11 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -193,57 +189,11 @@
 			files = (
 				94AEB62324C21FAE00204E11 /* Assets.xcassets in Resources */,
 				94AEB62924C21FAE00204E11 /* LaunchScreen.storyboard in Resources */,
-				BB8BCDE72EC26F6A0088985B /* libPhoneNumber-iOS.png in Resources */,
+				BB8BCDEA2EC2731E0088985B /* libPhoneNumber-iOS.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		5A51BA45E84AA1A11A702F51 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-libPhoneNumber-Demo-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8C0398239958786255CDDC91 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-libPhoneNumber-Demo/Pods-libPhoneNumber-Demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-libPhoneNumber-Demo/Pods-libPhoneNumber-Demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-libPhoneNumber-Demo/Pods-libPhoneNumber-Demo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		94AEB61524C21FAD00204E11 /* Sources */ = {
@@ -264,6 +214,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BB3F7C762EBD44B70091CF5B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = BB3F7C752EBD44B70091CF5B /* libPhoneNumber */;
+		};
+		BB3F7C782EBD44B70091CF5B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = BB3F7C772EBD44B70091CF5B /* libPhoneNumberGeocoding */;
+		};
+		BB3F7C7A2EBD44B70091CF5B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = BB3F7C792EBD44B70091CF5B /* libPhoneNumberShortNumber */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		94AEB62724C21FAE00204E11 /* LaunchScreen.storyboard */ = {
@@ -296,7 +261,6 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
@@ -353,7 +317,6 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
@@ -387,7 +350,6 @@
 		};
 		94AEB64424C21FAE00204E11 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F6BAA7C26BB7DAD929FDAFB6 /* Pods-libPhoneNumber-Demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -396,6 +358,8 @@
 				DEVELOPMENT_TEAM = 973LHT5R86;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "libPhoneNumber-Demo/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "libPhoneNumber-Demo";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -410,7 +374,6 @@
 		};
 		94AEB64524C21FAE00204E11 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 634BA8513696AC5501292664 /* Pods-libPhoneNumber-Demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -419,6 +382,8 @@
 				DEVELOPMENT_TEAM = 973LHT5R86;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "libPhoneNumber-Demo/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "libPhoneNumber-Demo";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -433,7 +398,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		94AEB61424C21FAD00204E11 /* Build configuration list for PBXProject "libPhoneNumber-Demo" */ = {
+		94AEB61424C21FAD00204E11 /* Build configuration list for PBXProject "libPhoneNumber-Demo-SPM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				94AEB64124C21FAE00204E11 /* Debug */,
@@ -452,6 +417,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		BB3F7C6E2EBD441E0091CF5B /* XCLocalSwiftPackageReference "../../libPhoneNumber-iOS" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../libPhoneNumber-iOS";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BB3F7C6F2EBD441E0091CF5B /* libPhoneNumber */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = libPhoneNumber;
+		};
+		BB3F7C712EBD441E0091CF5B /* libPhoneNumberGeocoding */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = libPhoneNumberGeocoding;
+		};
+		BB3F7C732EBD441E0091CF5B /* libPhoneNumberShortNumber */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = libPhoneNumberShortNumber;
+		};
+		BB3F7C752EBD44B70091CF5B /* libPhoneNumber */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BB3F7C6E2EBD441E0091CF5B /* XCLocalSwiftPackageReference "../../libPhoneNumber-iOS" */;
+			productName = libPhoneNumber;
+		};
+		BB3F7C772EBD44B70091CF5B /* libPhoneNumberGeocoding */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BB3F7C6E2EBD441E0091CF5B /* XCLocalSwiftPackageReference "../../libPhoneNumber-iOS" */;
+			productName = libPhoneNumberGeocoding;
+		};
+		BB3F7C792EBD44B70091CF5B /* libPhoneNumberShortNumber */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BB3F7C6E2EBD441E0091CF5B /* XCLocalSwiftPackageReference "../../libPhoneNumber-iOS" */;
+			productName = libPhoneNumberShortNumber;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 94AEB61124C21FAD00204E11 /* Project object */;
 }

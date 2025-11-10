@@ -8,7 +8,12 @@
 
 import SwiftUI
 import libPhoneNumberGeocoding
+
+#if canImport(libPhoneNumber)
+import libPhoneNumber
+#elseif canImport(libPhoneNumber_iOS)
 import libPhoneNumber_iOS
+#endif
 
 struct GeocodingTableView: View {
   // Keep track of runtime statistics
@@ -81,7 +86,7 @@ extension GeocodingTableView {
     for phoneNumber in phoneNumbers {
       do {
         let startTimer = DispatchTime.now()
-        let parsedPhoneNumber = try phoneUtil.parse(phoneNumber, defaultRegion: "US")
+        let parsedPhoneNumber = try NBPhoneNumberUtil.sharedInstance().parse(phoneNumber, defaultRegion: "US")
         regionDescriptions.append([
           phoneNumber,
           geocoder.description(for: parsedPhoneNumber),
@@ -133,6 +138,5 @@ let phoneNumbers: [String] = [
 ]
 
 private var geocoder: NBPhoneNumberOfflineGeocoder = NBPhoneNumberOfflineGeocoder()
-private var phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
 var regionDescriptions: [[String?]] = []
 var runtimeArray: [CGFloat] = []

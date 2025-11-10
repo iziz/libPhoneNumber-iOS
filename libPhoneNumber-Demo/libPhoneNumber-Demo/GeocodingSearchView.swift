@@ -8,22 +8,26 @@
 
 import SwiftUI
 import libPhoneNumberGeocoding
+
+#if canImport(libPhoneNumber)
+import libPhoneNumber
+#elseif canImport(libPhoneNumber_iOS)
 import libPhoneNumber_iOS
+#endif
 
 struct GeocodingSearchView: View {
   @State private var localeSelection = 0
   @State private var phoneNumber: String = ""
   @State private var regionDescription: String = ""
 
-  private let geocoder = NBPhoneNumberOfflineGeocoder()
-  private let phoneUtil = NBPhoneNumberUtil()
+  private let geocoder: NBPhoneNumberOfflineGeocoder = NBPhoneNumberOfflineGeocoder()
 
   var body: some View {
     VStack {
       Form {
         Section(header: Text("Locale Options")) {
           Picker("Locale Options", selection: $localeSelection) {
-            ForEach(0..<locales.count) { index in
+            ForEach(locales.indices, id: \.self) { index in
               Text(locales[index].language)
                 .tag(index)
             }
@@ -54,7 +58,7 @@ extension GeocodingSearchView {
   func searchPhoneNumber() -> String {
     do {
       let parsedPhoneNumber: NBPhoneNumber =
-        try phoneUtil.parse(phoneNumber, defaultRegion: Locale.current.regionCode!)
+        try NBPhoneNumberUtil.sharedInstance().parse(phoneNumber, defaultRegion: Locale.current.regionCode!)
       if localeSelection == 0 {
         return geocoder.description(for: parsedPhoneNumber) ?? "Unknown Region"
       } else {
