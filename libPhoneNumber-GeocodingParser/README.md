@@ -13,11 +13,11 @@ This program has 1 required input arguments for ```main.m```:
 1) The local system directory path to the desired destination to save the SQLite database files.
 Example: /Users/JohnDoe/Documents
 
-## Updating libPhoneNumber-iOS GeocodingMetadata.bundle 
+## Updating libPhoneNumber-iOS GeocodingMetaData.bundle 
 
 libPhoneNumber's geocoding metadata files are periodically updated by contributors. Please fetch the most recently
 updated geocoding data files by using this program and replace the current database files in 
-GeocodingMetadata.bundle, found in the [libPhoneNumberGeocoding target](https://github.com/iziz/libPhoneNumber-iOS/tree/master/libPhoneNumberGeocoding/Metadata).
+GeocodingMetaData.bundle, found in the [libPhoneNumberGeocoding target](https://github.com/iziz/libPhoneNumber-iOS/tree/master/libPhoneNumberGeocodingMetadata).
 
 Please contribute to libPhoneNumber-iOS library by creating a pull request to replace outdated databases with the
 up-to-date SQLite databases produced by this program. 
