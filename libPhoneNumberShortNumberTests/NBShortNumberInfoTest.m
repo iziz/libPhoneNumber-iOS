@@ -326,7 +326,7 @@
   XCTAssertEqualObjects(@"611",
                         [_testHelper exampleShortNumberForCost:NBEShortNumberCostStandardRate
                                                     regionCode:@"FR"]);
-  XCTAssertEqualObjects(@"3200",
+  XCTAssertEqualObjects(@"1000",
                         [_testHelper exampleShortNumberForCost:NBEShortNumberCostPremiumRate
                                                     regionCode:@"FR"]);
   XCTAssertEqualObjects(@"", [_testHelper exampleShortNumberForCost:NBEShortNumberCostUnknown
