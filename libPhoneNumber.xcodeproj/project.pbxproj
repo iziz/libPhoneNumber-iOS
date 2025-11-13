@@ -185,6 +185,7 @@
 		94C9AF0E24B3AAF900469F54 /* NBPhoneNumberOfflineGeocoderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPhoneNumberOfflineGeocoderTest.m; sourceTree = "<group>"; };
 		94C9AF5924B3C40C00469F54 /* libPhoneNumberGeocoding.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = libPhoneNumberGeocoding.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A81D6A281BECC43A00F68F34 /* NBPhoneNumberDefines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NBPhoneNumberDefines.m; sourceTree = "<group>"; };
+		BB0EF26E2EC6803A0089BD92 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BB23C3B42EB9627A00A94F44 /* PhoneNumberMetaData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PhoneNumberMetaData.json; sourceTree = "<group>"; };
 		BB23C3B52EB9627A00A94F44 /* PhoneNumberMetaDataForTesting.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PhoneNumberMetaDataForTesting.json; sourceTree = "<group>"; };
 		BB23C3B62EB9627A00A94F44 /* ShortNumberMetadata.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ShortNumberMetadata.json; sourceTree = "<group>"; };
@@ -450,6 +451,7 @@
 				94C9AF5924B3C40C00469F54 /* libPhoneNumberGeocoding.podspec */,
 				94AEB65924C2547000204E11 /* libPhoneNumberShortNumber.podspec */,
 				BB23C3B82EB9628D00A94F44 /* Package.swift */,
+				BB0EF26E2EC6803A0089BD92 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};

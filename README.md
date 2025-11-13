@@ -185,3 +185,64 @@ For more information on libPhoneNumberGeocoding and its usage, please visit [lib
 For more information on libPhoneNumberShortNumber and its usage, please visit [libPhoneNumberShortNumber](https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberShortNumber/README.md) for more information.
 
 ##### Visit [libphonenumber](https://github.com/google/libphonenumber) for more information or mail (zen.isis@gmail.com)
+
+## Updating libPhoneNumber MetaData
+
+We are dependent on the community to help keep this library up-to-date with the latest libPhoneNumber MetaData from Google.
+
+When new versions of libPhoneNumber MetaData are released from Google, please feel free to work to update this repo with a pull request.
+Make sure to follow the steps below to update the main MetaData & the Geocoding MetaData (even if you don't consume all of the functionality).
+
+To see the current version of MetaData used by this library, check the commit comments and/or release notes. To correlate the version of metadata go to Google's [libphonenumber repo](https://github.com/google/libphonenumber).
+
+
+### Update Main MetaData
+1. `cd` into the `scripts` directory
+2. Run `metadataGenerator.swift` passing in the desired version number
+
+   ```
+   ./metadataGenerator.swift 1.2.3
+   ```
+
+3. Run `GeneratePhoneNumberMetaDataFiles.sh` to update the generated files
+4. Update the `generatedJSON` files to be "pretty printed" so that consumers can easily compare commits to see differences (add the `-p` argument)
+
+   ```
+   ./metadataGenerator.swift 1.2.3 -p
+   ```
+> NOTE: Don't want to generate the phone number MetaData off of the pretty-printed files because that takes up A LOT more space
+
+
+### Update Geocoding MetaData
+1. Open the libPhoneNumber-GeocodingParser project in Xcode
+2. Edit the libPhoneNumber-GeocodingParser Scheme
+3. In the `Run` section go to the `Arguments` tab
+4. Edit the version argument to be the desired version number
+5. Add an argument specifying the output directory (ex. `/Users/john.doe/geocoding`)
+6. Run the libPhoneNumber-GeocodingParser program in Xcode (`Cmd+R`) on your machine
+7. Wait a few minutes for the program to complete (the console will say when the program is done)
+8. Copy the `*.db` files from your specified output directory to `libPhoneNumberGeocodingMetaData/GeocodingMetaData.bundle`
+
+
+### Validating Updates
+1. Open the libPhoneNumber project in Xcode
+2. Run the tests for each library of the project:
+ * libPhoneNumber
+ * libPhoneNumberGeocoding
+ * libPhoneNumberShortNumber
+
+3. Open the `Package.swift` SPM project in Xcode
+4. Run the tests for the package - `libPhoneNumber-Package` (runs the tests for each of the package targets in one run)
+
+#### Optional Validation: Cocoapods
+1. `cd` into the `libPhoneNumber-Demo` directory
+2. Verify the `Podfile` is pointing to the local copies of the pods (using `:path => '../'`)
+2. Run `pod install`
+3. Open the `libPhoneNumber-Demo` project in Xcode
+4. Run the demo project validating phonenumber formatting works as expected
+
+
+#### Optional Validation: Swift Package Manager
+1. Open the `libPhoneNumber-Demo-SPM` project in Xcode
+2. Verify the `libPhoneNumber` package is using the `local` version
+2. Run the demo project validating phonenumber formatting works as expected
