@@ -14,9 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithDestinationPath:(NSURL *)desiredDatabaseLocation;
 
-- (void)convertFileToSQLiteDatabase:(NSString *)metaData
-                       withFileName:(NSString *)textFile
-                       withLanguage:(NSString *)language;
+- (void)convertFileToSQLiteDatabase:(NSString *)completeTextFilePath
+                       withFileName:(NSString *)textFileName
+                       withLanguage:(NSString *)languageCode
+                      loggingIndent:(NSString *)indent;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#  GeneratePhoneNumberHeader.sh
+#  GeneratePhoneNumberMetaDataFiles.sh
 #  libPhoneNumber
 #
 #  Created by Dave MacLachlan on 2/7/17.

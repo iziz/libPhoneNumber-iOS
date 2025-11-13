@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithCountryCode:(NSString *)countryCode
                        withLanguage:(NSString *)language
                 withDestinationPath:(NSURL *)destinationPath;
+
 - (void)addEntryToDB:(NSString *)phoneNumber
      withDescription:(NSString *)description
      withCountryCode:(NSString *)countryCode;
