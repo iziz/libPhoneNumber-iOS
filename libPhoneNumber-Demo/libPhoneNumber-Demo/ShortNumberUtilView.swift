@@ -8,7 +8,12 @@
 
 import SwiftUI
 import libPhoneNumberShortNumber
+
+#if canImport(libPhoneNumber)
+import libPhoneNumber
+#elseif canImport(libPhoneNumber_iOS)
 import libPhoneNumber_iOS
+#endif
 
 struct ShortNumberUtilView: View {
   @State private var phoneNumber: String = ""
@@ -16,9 +21,6 @@ struct ShortNumberUtilView: View {
   @State private var isEmergencyNumber: Bool = false
   @State private var estimatedCostOfCall: NBEShortNumberCost?
   @State private var searchMade: Bool = false
-
-  let phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
-  let shortNumberUtil: NBShortNumberUtil = NBShortNumberUtil()
 
   var body: some View {
     VStack {
@@ -88,13 +90,13 @@ extension ShortNumberUtilView {
     do {
       self.searchMade = true
       let parsedPhoneNumber: NBPhoneNumber =
-        try phoneUtil.parse(self.phoneNumber, defaultRegion: Locale.current.regionCode!)
-      self.isValidShortNumber = self.shortNumberUtil.isValidShortNumber(parsedPhoneNumber)
+        try NBPhoneNumberUtil.sharedInstance().parse(self.phoneNumber, defaultRegion: Locale.current.regionCode!)
+      self.isValidShortNumber = NBShortNumberUtil.sharedInstance().isValidShortNumber(parsedPhoneNumber)
       self.isEmergencyNumber =
-        self.shortNumberUtil.isEmergencyNumber(
+        NBShortNumberUtil.sharedInstance().isEmergencyNumber(
           self.phoneNumber,
           forRegion: Locale.current.regionCode!)
-      self.estimatedCostOfCall = self.shortNumberUtil.expectedCost(of: parsedPhoneNumber)
+      self.estimatedCostOfCall = NBShortNumberUtil.sharedInstance().expectedCost(of: parsedPhoneNumber)
     } catch {
       print(error)
     }
