@@ -8,29 +8,29 @@
 
 #import <Foundation/Foundation.h>
 
-@class NBGeocoderMetadataHelper;
+@class NBGeocoderMetaDataHelper;
 @class NBPhoneNumber;
 @class NBPhoneNumberUtil;
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NBGeocoderMetadataHelper *_Nonnull (^NBGeocoderMetadataHelperFactory)(NSNumber *countryCode,
+typedef NBGeocoderMetaDataHelper *_Nonnull (^NBGeocoderMetaDataHelperFactory)(NSNumber *countryCode,
                                                                               NSString *language);
 
 @interface NBPhoneNumberOfflineGeocoder : NSObject
 
 /**
  * Returns an instance of NBPhoneNumberOfflineGeocoder that uses a desired and
- * predefined NBGeocoderMetadataHelperFactory method to use whenever this class
- * creates an object of type NBGeocoderMetadataHelper
+ * predefined NBGeocoderMetaDataHelperFactory method to use whenever this class
+ * creates an object of type NBGeocoderMetaDataHelper
  *
  * @param factory  a factory method, with countryCode and language parameters,
- * that returns an instance of NBGeocoderMetadataHelper
+ * that returns an instance of NBGeocoderMetaDataHelper
  * @param phoneNumberUtil an instance of NBPhoneNumberUtil class.
  * @return an instance of NBPhoneNumberOfflineGeocoder that creates
- * NBGeocoderMetadataHelper instances using the factory method parameter
+ * NBGeocoderMetaDataHelper instances using the factory method parameter
  */
-- (instancetype)initWithMetadataHelperFactory:(NBGeocoderMetadataHelperFactory)factory
+- (instancetype)initWithMetaDataHelperFactory:(NBGeocoderMetaDataHelperFactory)factory
                               phoneNumberUtil:(NBPhoneNumberUtil *)phoneNumberUtil;
 
 /**
@@ -40,7 +40,7 @@ typedef NBGeocoderMetadataHelper *_Nonnull (^NBGeocoderMetadataHelperFactory)(NS
  * lifecycle of current application.
  *
  *  @return an instance of NBPhoneNumberOfflineGeocoder that creates
- * NBGeocoderMetadataHelper instances using a default factory method
+ * NBGeocoderMetaDataHelper instances using a default factory method
  */
 + (NBPhoneNumberOfflineGeocoder *)sharedInstance;
 

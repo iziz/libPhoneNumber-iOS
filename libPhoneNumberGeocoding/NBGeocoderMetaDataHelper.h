@@ -1,5 +1,5 @@
 //
-//  NBGeocoderMetadataHelper.h
+//  NBGeocoderMetaDataHelper.h
 //  libPhoneNumberiOS
 //
 //  Created by Rastaar Haghi on 6/12/20.
@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NBGeocoderMetadataHelper : NSObject
+@interface NBGeocoderMetaDataHelper : NSObject
 
 /**
  * Initializer method that creates a SQLite3 connection to the correct database (based on
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param countryCode a valid country code for which we want to set up a prepared statement to
  *  access a SQLite table with that country code.
  * @param languageCode  the language code for which the description should be written
- * @return a NBGeocoderMetadataHelper instance variable with an initial country code and language
+ * @return a NBGeocoderMetaDataHelper instance variable with an initial country code and language
  *     code set to the parameters, countryCode and  languageCode, or nil if the NSObject couldn't be
  *     initialized or there was no database URL found for the provided language code.
  */

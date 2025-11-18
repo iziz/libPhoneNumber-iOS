@@ -1,6 +1,6 @@
 //
-//  libPhoneNumber-iOS.h
-//  libPhoneNumber-iOS
+//  libPhoneNumber.h
+//  libPhoneNumber
 //
 //  Created by Roy Marmelstein on 04/08/2015.
 //  Copyright (c) 2015 ohtalk.me. All rights reserved.
@@ -31,3 +31,5 @@ FOUNDATION_EXPORT const unsigned char libPhoneNumber_iOSVersionString[];
 #import "NBPhoneMetaData.h"
 #import "NBPhoneNumber.h"
 #import "NBPhoneNumberDesc.h"
+
+#import "NSArray+NBAdditions.h"
