@@ -8,33 +8,37 @@
 
 #import "NBGeocoderMetadataParser.h"
 
-@implementation NBGeocoderMetadataParser {
-  NSURL *_destinationPath;
-}
+@interface NBGeocoderMetadataParser()
+
+@property (nonatomic, strong) NSURL* destinationPath;
+
+@end
+
+@implementation NBGeocoderMetadataParser
 
 - (instancetype)initWithDestinationPath:(NSURL *)destinationPath {
   self = [super init];
   if (self != nil) {
-    _destinationPath = destinationPath;
+    self.destinationPath = destinationPath;
   }
   return self;
 }
 
 - (void)convertFileToSQLiteDatabase:(NSString *)completeTextFilePath
                        withFileName:(NSString *)textFileName
-                       withLanguage:(NSString *)languageCode {
+                       withLanguage:(NSString *)languageCode
+                      loggingIndent:(NSString *)indent {
   NSString *fileContentString = [[NSString alloc] initWithContentsOfFile:completeTextFilePath
                                                                 encoding:NSUTF8StringEncoding
                                                                    error:nil];
   NSArray<NSString *> *countryCodes = [textFileName componentsSeparatedByString:@"."];
 
   NSString *countryCode = countryCodes[0];
-  NSLog(@"Creating a SQL table for the country code: %@, in the language: %@", countryCode,
-        languageCode);
+  NSLog(@"%@Creating a SQL table for the country code: %@, in the language: %@", (indent!=nil) ? indent : @"", countryCode, languageCode);
   NBSQLiteDatabaseConnection *databaseConnection =
       [[NBSQLiteDatabaseConnection alloc] initWithCountryCode:countryCode
                                                  withLanguage:languageCode
-                                          withDestinationPath:_destinationPath];
+                                          withDestinationPath:self.destinationPath];
 
   // Split into phone number prefix and region description.
   NSCharacterSet *separator = [NSCharacterSet newlineCharacterSet];
