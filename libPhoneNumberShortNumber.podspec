@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumberShortNumber"
-  s.version      = "1.2.0"
+  s.version      = "1.3.0"
   s.summary      = "Short Number Support for libPhoneNumber-iOS"
   s.description  = "libPhoneNumberShortNumber for iOS. iOS library for implementing libPhoneNumber features on short numbers."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumberGeocoding"
-  s.version      = "1.2.0"
+  s.version      = "1.3.0"
   s.summary      = "Geocoding Features for libPhoneNumber-iOS"
   s.description  = "libPhoneNumberGeocoding for iOS. iOS library for gathering region descriptions for any phone number. This library stores geocoding metadata on disk space."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
