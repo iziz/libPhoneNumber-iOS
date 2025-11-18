@@ -44,6 +44,9 @@ let package = Package(
             dependencies: ["libPhoneNumberInternal"],
             path: "libPhoneNumber",
             exclude: ["Info.plist"],
+            resources: [
+                .process("PrivacyInfo.xcprivacy")
+            ],
             publicHeadersPath: ".",
             cSettings: [
                 .headerSearchPath("Internal")

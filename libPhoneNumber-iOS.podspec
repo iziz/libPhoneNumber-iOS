@@ -33,4 +33,9 @@ Pod::Spec.new do |s|
                     'libPhoneNumberInternal/**/*.{h,m}',
                     'libPhoneNumber/**/*.{h,m}',
                    ]
+
+  s.resources   = [
+                    'libPhoneNumber/PrivacyInfo.xcprivacy'
+                  ]
+
 end
