@@ -17,6 +17,7 @@
 #import "NBShortNumberMetadataHelper.h"
 #import "NBShortNumberTestHelper.h"
 #import "NBTestingMetaData.h"
+#import "NSBundle+Extensions.h"
 
 @interface NBShortNumberInfoTest : XCTestCase
 
@@ -31,10 +32,8 @@
 - (void)setUp {
   [super setUp];
   if (self != nil) {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-
-    NSString *metadataPath = [bundle pathForResource:@"libPhoneNumberMetadataForTesting"
-                                              ofType:nil];
+    NSString* metadataPath = [NSBundle pathForFirstResourceNamed:@"libPhoneNumberMetaDataForTesting" ofType:@"zip"];
+    
     NSData *metadataData = [NSData dataWithContentsOfFile:metadataPath];
     NBMetadataHelper *helper =
         [[NBMetadataHelper alloc] initWithZippedData:metadataData
@@ -327,7 +326,7 @@
   XCTAssertEqualObjects(@"611",
                         [_testHelper exampleShortNumberForCost:NBEShortNumberCostStandardRate
                                                     regionCode:@"FR"]);
-  XCTAssertEqualObjects(@"36665",
+  XCTAssertEqualObjects(@"3200",
                         [_testHelper exampleShortNumberForCost:NBEShortNumberCostPremiumRate
                                                     regionCode:@"FR"]);
   XCTAssertEqualObjects(@"", [_testHelper exampleShortNumberForCost:NBEShortNumberCostUnknown

@@ -11,6 +11,7 @@
 #import "NBPhoneNumberUtil.h"
 
 #import "NBTestingMetaData.h"
+#import "NSBundle+Extensions.h"
 
 @interface NBAsYouTypeFormatterTest : XCTestCase
 @end
@@ -23,8 +24,7 @@
 - (void)setUp {
   [super setUp];
 
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-  NSString *path = [bundle pathForResource:@"libPhoneNumberMetadataForTesting" ofType:nil];
+  NSString* path = [NSBundle pathForFirstResourceNamed:@"libPhoneNumberMetaDataForTesting" ofType:@"zip"];
   NSData *data = [NSData dataWithContentsOfFile:path];
   _helper =
       [[NBMetadataHelper alloc] initWithZippedData:data
