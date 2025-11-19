@@ -7,7 +7,8 @@ Pod::Spec.new do |s|
   s.license      = 'Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)'
   s.authors      = {
                     "rastaarh" => "rastaar@google.com",
-                    "paween" => "paween@google.com"
+                    "paween" => "paween@google.com",
+                    "Kris Kline" => "kris.kline@oracle.com"
                    }
   
   s.source       = {
@@ -26,8 +27,8 @@ Pod::Spec.new do |s|
   
   s.private_header_files = 'libPhoneNumberShortNumberInternal/**/*.h'
 
-  s.dependency 'libPhoneNumber-iOS'
-  
+  s.dependency 'libPhoneNumber-iOS', '~> 1.2.0'
+
   s.source_files = [
                     'libPhoneNumberShortNumberInternal/**/*.{h,m}',
                     'libPhoneNumberShortNumber/**/*.{h,m}',

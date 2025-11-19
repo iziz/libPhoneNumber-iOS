@@ -7,7 +7,8 @@ Pod::Spec.new do |s|
   s.license      = 'Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)'
   s.authors      = {
                       "iziz" => "zen.isis@gmail.com",
-                      "hyukhur" => "hyukhur@gmail.com"
+                      "hyukhur" => "hyukhur@gmail.com",
+                      "Kris Kline" => "kris.kline@oracle.com"
                    }
   
   s.source       = {

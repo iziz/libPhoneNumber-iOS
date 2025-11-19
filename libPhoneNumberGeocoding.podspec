@@ -8,7 +8,8 @@ Pod::Spec.new do |s|
   s.authors      = {
                     "rastaarh" => "rastaar@google.com",
                     "paween" => "paween@google.com",
-                    "aalexli" => "aalexli@google.com"
+                    "aalexli" => "aalexli@google.com",
+                    "Kris Kline" => "kris.kline@oracle.com"
                    }
   
   s.source       = {
@@ -27,7 +28,7 @@ Pod::Spec.new do |s|
   
   s.resources    = "libPhoneNumberGeocodingMetaData/*.bundle"
 
-  s.dependency 'libPhoneNumber-iOS'
+  s.dependency 'libPhoneNumber-iOS', '~> 1.2.0'
   
   s.source_files = [
                     'libPhoneNumberGeocoding/**/*.{h,m}',
