@@ -65,6 +65,7 @@
 		BB6A71222EBD30C700292CA8 /* NBRegExMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6A71202EBD30C700292CA8 /* NBRegExMatcher.m */; };
 		BB6A71232EBD30C700292CA8 /* NBRegularExpressionCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6A71212EBD30C700292CA8 /* NBRegularExpressionCache.m */; };
 		BB6A712B2EBD31B900292CA8 /* NSBundle+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF66CAD2EBC0783005E3382 /* NSBundle+Extensions.m */; };
+		BB7C5B772ECCF9B3003D736D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BB7C5B762ECCF95F003D736D /* PrivacyInfo.xcprivacy */; };
 		BB9B60292EBE81E000C48233 /* NBGeocoderMetaDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9B60262EBE81E000C48233 /* NBGeocoderMetaDataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB9B602B2EBE81E000C48233 /* NBGeocoderMetaDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9B60272EBE81E000C48233 /* NBGeocoderMetaDataHelper.m */; };
 		BB9B602F2EBE835F00C48233 /* libPhoneNumber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34ACBB851B7122AC0064B3BD /* libPhoneNumber.framework */; platformFilter = ios; };
@@ -162,7 +163,7 @@
 		1485C52B1E06F4930092F541 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = libPhoneNumberTests/Info.plist; sourceTree = SOURCE_ROOT; };
 		14B7A2931DE9B65D0051AED7 /* libPhoneNumberTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = libPhoneNumberTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		34ACBB851B7122AC0064B3BD /* libPhoneNumber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libPhoneNumber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D43EF831740825100C24FF3 /* libPhoneNumber-iOS.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = "libPhoneNumber-iOS.podspec"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		4D43EF831740825100C24FF3 /* libPhoneNumber-iOS.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = "libPhoneNumber-iOS.podspec"; sourceTree = SOURCE_ROOT; };
 		8B0FD2F21E4A85A70049DF81 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		8B0FD2F91E4A88AC0049DF81 /* NSArray+NBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+NBAdditions.h"; sourceTree = "<group>"; };
 		8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+NBAdditions.m"; sourceTree = "<group>"; };
@@ -202,6 +203,7 @@
 		BB6A71152EBD306400292CA8 /* NBRegularExpressionCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBRegularExpressionCache.h; sourceTree = "<group>"; };
 		BB6A71202EBD30C700292CA8 /* NBRegExMatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBRegExMatcher.m; sourceTree = "<group>"; };
 		BB6A71212EBD30C700292CA8 /* NBRegularExpressionCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBRegularExpressionCache.m; sourceTree = "<group>"; };
+		BB7C5B762ECCF95F003D736D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BB9B60262EBE81E000C48233 /* NBGeocoderMetaDataHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBGeocoderMetaDataHelper.h; sourceTree = "<group>"; };
 		BB9B60272EBE81E000C48233 /* NBGeocoderMetaDataHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBGeocoderMetaDataHelper.m; sourceTree = "<group>"; };
 		BB9B60342EBE843700C48233 /* NBGeneratedPhoneNumberMetaData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBGeneratedPhoneNumberMetaData.h; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 				BB6A71212EBD30C700292CA8 /* NBRegularExpressionCache.m */,
 				8B0FD2F91E4A88AC0049DF81 /* NSArray+NBAdditions.h */,
 				8B0FD2FA1E4A88AC0049DF81 /* NSArray+NBAdditions.m */,
+				BB7C5B762ECCF95F003D736D /* PrivacyInfo.xcprivacy */,
 			);
 			path = libPhoneNumber;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB7C5B772ECCF9B3003D736D /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1409,14 +1413,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TVOS_DEPLOYMENT_TARGET = 11.0;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 				USER_HEADER_SEARCH_PATHS = "${SHARED_DERIVED_FILE_DIR}";
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
@@ -1463,14 +1467,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.3.0;
 				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TVOS_DEPLOYMENT_TARGET = 11.0;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 				USER_HEADER_SEARCH_PATHS = "${SHARED_DERIVED_FILE_DIR}";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";

@@ -7,7 +7,8 @@ Pod::Spec.new do |s|
   s.license      = 'Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)'
   s.authors      = {
                       "iziz" => "zen.isis@gmail.com",
-                      "hyukhur" => "hyukhur@gmail.com"
+                      "hyukhur" => "hyukhur@gmail.com",
+                      "Kris Kline" => "kris.kline@oracle.com"
                    }
   
   s.source       = {
@@ -19,9 +20,9 @@ Pod::Spec.new do |s|
   s.ios.framework    = 'Contacts'
   
   s.ios.deployment_target = "12.0"
-  s.osx.deployment_target = "10.11"
+  s.osx.deployment_target = "10.13"
   s.watchos.deployment_target = "4.0"
-  s.tvos.deployment_target = "11.0"
+  s.tvos.deployment_target = "12.0"
   
   s.requires_arc = true
 
@@ -33,4 +34,9 @@ Pod::Spec.new do |s|
                     'libPhoneNumberInternal/**/*.{h,m}',
                     'libPhoneNumber/**/*.{h,m}',
                    ]
+
+  s.resources   = [
+                    'libPhoneNumber/PrivacyInfo.xcprivacy'
+                  ]
+
 end
