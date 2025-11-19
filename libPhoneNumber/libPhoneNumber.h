@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 ohtalk.me. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 //! Project version number for libPhoneNumber-iOS.
 FOUNDATION_EXPORT double libPhoneNumber_iOSVersionNumber;
 

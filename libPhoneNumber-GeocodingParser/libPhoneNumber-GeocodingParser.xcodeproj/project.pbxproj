@@ -49,7 +49,7 @@
 		9478477224BCD180004F5637 /* NBGeocoderMetadataParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBGeocoderMetadataParser.m; sourceTree = "<group>"; };
 		9478477424BCD1AB004F5637 /* NBSQLiteDatabaseConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBSQLiteDatabaseConnection.h; sourceTree = "<group>"; };
 		9478477524BCD1AB004F5637 /* NBSQLiteDatabaseConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBSQLiteDatabaseConnection.m; sourceTree = "<group>"; };
-		BB0B52E42EBEA4B00041D30F /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		BB0B52E42EBEA4B00041D30F /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB0B52E52EBEA4B00041D30F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BB8BCDED2EC279F70088985B /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		BB9ED4EB2EC52CBF0071DCC6 /* NSString+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Extensions.h"; sourceTree = "<group>"; };
