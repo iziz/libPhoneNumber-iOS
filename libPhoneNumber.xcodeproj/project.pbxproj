@@ -213,6 +213,8 @@
 		BB9B60432EBE9A0500C48233 /* _HeaderOnlyShim.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = _HeaderOnlyShim.c; sourceTree = "<group>"; };
 		BB9B60442EBE9A0500C48233 /* GeocodingMetaData.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GeocodingMetaData.bundle; sourceTree = "<group>"; };
 		BB9B60492EBE9A7800C48233 /* libPhoneNumber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libPhoneNumber.h; sourceTree = "<group>"; };
+		BBCABBF32EE0E61E0011A4C7 /* updateProjectVersions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = updateProjectVersions.swift; sourceTree = "<group>"; };
+		BBCABBF52EE0F6E90011A4C7 /* versionCommitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = versionCommitter.swift; sourceTree = "<group>"; };
 		BBF66CA82EBBF9B9005E3382 /* NBGeneratedPhoneNumberMetaData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBGeneratedPhoneNumberMetaData.m; sourceTree = "<group>"; };
 		BBF66CAA2EBBF9E2005E3382 /* NBGeneratedShortNumberMetaData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBGeneratedShortNumberMetaData.m; sourceTree = "<group>"; };
 		BBF66CAC2EBC0783005E3382 /* NSBundle+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Extensions.h"; sourceTree = "<group>"; };
@@ -371,6 +373,8 @@
 			children = (
 				BB23C3BB2EB9628D00A94F44 /* GeneratePhoneNumberMetaDataFiles.sh */,
 				BB23C3BC2EB9628D00A94F44 /* metadataGenerator.swift */,
+				BBCABBF32EE0E61E0011A4C7 /* updateProjectVersions.swift */,
+				BBCABBF52EE0F6E90011A4C7 /* versionCommitter.swift */,
 			);
 			path = scripts;
 			sourceTree = "<group>";

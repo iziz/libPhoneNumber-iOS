@@ -237,12 +237,37 @@ To see the current version of MetaData used by this library, check the commit co
 #### Optional Validation: Cocoapods
 1. `cd` into the `libPhoneNumber-Demo` directory
 2. Verify the `Podfile` is pointing to the local copies of the pods (using `:path => '../'`)
-2. Run `pod install`
-3. Open the `libPhoneNumber-Demo` project in Xcode
-4. Run the demo project validating phonenumber formatting works as expected
+3. Run `pod install`
+4. Open the `libPhoneNumber-Demo` project in Xcode
+5. Run the demo project validating phonenumber formatting works as expected
 
 
 #### Optional Validation: Swift Package Manager
 1. Open the `libPhoneNumber-Demo-SPM` project in Xcode
 2. Verify the `libPhoneNumber` package is using the `local` version
-2. Run the demo project validating phonenumber formatting works as expected
+3. Run the demo project validating phonenumber formatting works as expected
+4. Change the `libPhoneNumber` to use the `remote` version (will need to point at the branch)
+5. Build the demo project validating everything builds successfully
+  * Can also run the demo, but validating successful build will probably provide all the necessary value
+
+### Creating A New Version
+
+1. Determine what the next version should be based on whether the release is:
+  * JUST Bug fixes - increase the 3rd digit - 1.2.0 --> 1.2.1
+  * Updated Metadata or added functionality - increase the "minor version" - 1.1.0 --> 1.2.0
+  * Major changes, possibly non-passive - increase the "major version" - 1.5.0 --> 2.0.0
+
+2. Use the script (in the `scripts` folder) - `versionCommitter.swift`.
+
+  Pass the new version into the script and push it to the proper remote repo to create a pull request
+
+        scripts/versionCommitter.swift 2.2.4 --push --remote myOrigin
+
+3. Create a pull request for the created branch (ex: `Version-2.2.4`)
+4. Create a draft release in github describing the changes
+4. Try to get at lest 2 approvals on the pull request
+5. Lint the cocoapod
+
+        pod lib lint libPhoneNumber-iOS.podspec
+
+7. Push the podspec        pod trunk push libPhoneNumber-iOS.podspec
