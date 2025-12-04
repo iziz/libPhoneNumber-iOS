@@ -270,4 +270,6 @@ To see the current version of MetaData used by this library, check the commit co
 
         pod lib lint libPhoneNumber-iOS.podspec
 
-7. Push the podspec        pod trunk push libPhoneNumber-iOS.podspec
+7. Push the podspec
+
+        pod trunk push libPhoneNumber-iOS.podspec
