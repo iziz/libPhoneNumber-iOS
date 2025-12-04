@@ -263,13 +263,14 @@ To see the current version of MetaData used by this library, check the commit co
 
         scripts/versionCommitter.swift 2.2.4 --push --remote myOrigin
 
-3. Create a pull request for the created branch (ex: `Version-2.2.4`)
-4. Create a draft release in github describing the changes
-4. Try to get at lest 2 approvals on the pull request
-5. Lint the cocoapod
+3. Lint the cocoapod
 
         pod lib lint libPhoneNumber-iOS.podspec
 
-7. Push the podspec
+4. Create a pull request for the created branch (ex: `Version-2.2.4`)
+5. Create a draft release in github describing the changes
+6. Try to get at least 2 approvals on the pull request
+7. Pull in pull request onto master
+8. Push the podspec
 
         pod trunk push libPhoneNumber-iOS.podspec
