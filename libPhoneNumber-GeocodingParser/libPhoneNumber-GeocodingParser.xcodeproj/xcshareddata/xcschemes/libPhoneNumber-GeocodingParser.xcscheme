@@ -52,7 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "9.0.18"
+            argument = "9.0.25"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

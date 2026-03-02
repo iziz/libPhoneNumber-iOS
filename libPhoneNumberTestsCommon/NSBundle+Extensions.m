@@ -47,11 +47,14 @@
     NSArray<NSString *> *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:parentBundlePath error:nil];
     
     for (NSString *item in contents) {
-        // Check if the item has a .bundle extension
-        if ([item.pathExtension isEqualToString:@"bundle"]) {
-            NSString *bundlePath = [parentBundlePath stringByAppendingPathComponent:item];
-            NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-            if (bundle) {
+        BOOL isDirectory = NO;
+        NSString *fullPath = [parentBundlePath stringByAppendingPathComponent:item];
+
+        // Check if the item has a .bundle extension or a directory (which can be treated as a bundle)
+        if ([item.pathExtension isEqualToString:@"bundle"] ||
+            ([[NSFileManager defaultManager] fileExistsAtPath:fullPath isDirectory:&isDirectory] && isDirectory)) {
+            NSBundle *bundle = [NSBundle bundleWithPath:fullPath];
+            if (bundle != nil) {
                 [foundBundles addObject:bundle];
             }
         }
