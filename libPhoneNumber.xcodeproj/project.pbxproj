@@ -196,6 +196,9 @@
 		BB3F7C672EBD34DB0091CF5B /* _HeaderOnlyShim.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = _HeaderOnlyShim.c; sourceTree = "<group>"; };
 		BB3F7C682EBD34DB0091CF5B /* NBGeneratedShortNumberMetaData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBGeneratedShortNumberMetaData.h; sourceTree = "<group>"; };
 		BB3F7C692EBD34DB0091CF5B /* NBShortNumberMetadataHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBShortNumberMetadataHelper.h; sourceTree = "<group>"; };
+		BB4248A42F6C8AB300A7438E /* libPhoneNumberTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = libPhoneNumberTests.xctestplan; sourceTree = "<group>"; };
+		BB4248A52F6C8AEE00A7438E /* libPhoneNumberShortNumberTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = libPhoneNumberShortNumberTests.xctestplan; sourceTree = "<group>"; };
+		BB4248A72F6C8B5600A7438E /* libPhoneNumberGeocodingTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = libPhoneNumberGeocodingTests.xctestplan; sourceTree = "<group>"; };
 		BB6A710C2EBD02F500292CA8 /* libPhoneNumberMetaDataForTesting.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = libPhoneNumberMetaDataForTesting.zip; sourceTree = "<group>"; };
 		BB6A710D2EBD02F500292CA8 /* NBTestingMetaData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBTestingMetaData.h; sourceTree = "<group>"; };
 		BB6A71132EBD306400292CA8 /* _HeaderOnlyShim.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = _HeaderOnlyShim.c; sourceTree = "<group>"; };
@@ -315,6 +318,7 @@
 			isa = PBXGroup;
 			children = (
 				0FC0D37A24A2A05E0087AFCF /* Info.plist */,
+				BB4248A72F6C8B5600A7438E /* libPhoneNumberGeocodingTests.xctestplan */,
 				94C9AF0E24B3AAF900469F54 /* NBPhoneNumberOfflineGeocoderTest.m */,
 				CA55ED88296F51E0005E98A1 /* TestingSource.bundle */,
 			);
@@ -325,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				1485C52B1E06F4930092F541 /* Info.plist */,
+				BB4248A42F6C8AB300A7438E /* libPhoneNumberTests.xctestplan */,
 				1485C5231E06F4890092F541 /* NBAsYouTypeFormatterTest.m */,
 				0FAE11902037959800193503 /* NBPhoneNumberParsingPerfTest.m */,
 				1485C5251E06F4890092F541 /* NBPhoneNumberUtilTest.m */,
@@ -351,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				9407259A24BE768A0011AE05 /* Info.plist */,
+				BB4248A52F6C8AEE00A7438E /* libPhoneNumberShortNumberTests.xctestplan */,
 				940725AB24BF63050011AE05 /* NBShortNumberInfoTest.m */,
 				940725B024BF7B040011AE05 /* NBShortNumberTestHelper.h */,
 				940725B124BF7B040011AE05 /* NBShortNumberTestHelper.m */,
