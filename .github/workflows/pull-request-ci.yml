@@ -29,13 +29,23 @@ jobs:
           SCHEME: ${{ matrix.scheme }}
         run: |
           set -eo pipefail
+          mkdir -p TestResults
 
           xcodebuild \
             -project libPhoneNumber.xcodeproj \
             -scheme "$SCHEME" \
             -destination 'platform=iOS Simulator,OS=latest,name=iPhone 17' \
+            -resultBundlePath "TestResults/${SCHEME}.xcresult" \
+            -enableCodeCoverage YES \
             CODE_SIGNING_ALLOWED=NO \
             test
+
+      - name: Upload unit test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: project-unit-tests-${{ matrix.scheme }}
+          path: TestResults/${{ matrix.scheme }}.xcresult
 
   podspec-lint:
     name: Podspec Lint (${{ matrix.podspec }})
