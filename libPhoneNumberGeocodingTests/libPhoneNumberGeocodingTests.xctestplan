@@ -9,15 +9,23 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : false,
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:libPhoneNumber.xcodeproj",
+          "identifier" : "0FC0D36324A29F510087AFCF",
+          "name" : "libPhoneNumberGeocoding"
+        }
+      ]
+    },
     "testExecutionOrdering" : "random"
   },
   "testTargets" : [
     {
       "parallelizable" : false,
       "target" : {
-        "containerPath" : "container:",
-        "identifier" : "libPhoneNumberGeocodingTests",
+        "containerPath" : "container:libPhoneNumber.xcodeproj",
+        "identifier" : "0FC0D37524A2A05E0087AFCF",
         "name" : "libPhoneNumberGeocodingTests"
       }
     }

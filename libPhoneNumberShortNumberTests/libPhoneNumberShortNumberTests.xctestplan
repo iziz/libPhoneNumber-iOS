@@ -9,14 +9,23 @@
     }
   ],
   "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:libPhoneNumber.xcodeproj",
+          "identifier" : "9407258A24BE768A0011AE05",
+          "name" : "libPhoneNumberShortNumber"
+        }
+      ]
+    },
     "testExecutionOrdering" : "random"
   },
   "testTargets" : [
     {
       "parallelizable" : false,
       "target" : {
-        "containerPath" : "container:",
-        "identifier" : "libPhoneNumberShortNumberTests",
+        "containerPath" : "container:libPhoneNumber.xcodeproj",
+        "identifier" : "9407259224BE768A0011AE05",
         "name" : "libPhoneNumberShortNumberTests"
       }
     }
