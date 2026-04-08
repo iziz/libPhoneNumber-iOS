@@ -254,47 +254,36 @@ jobs:
             exit 0
           fi
 
-          comment_body_file="$(mktemp)"
-          {
-            echo '<!-- combined-code-coverage -->'
-            echo
-            cat "$summary_file"
-          } > "$comment_body_file"
-
-          comments_json="$(mktemp)"
-          curl -fsSL \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" \
-            > "$comments_json"
-
           comment_id="$(
-            python3 - "$comments_json" <<'PY'
-            import json
-            import sys
+            curl -fsSL \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" |
+              python3 -c '
+                import json
+                import sys
 
-            marker = "<!-- combined-code-coverage -->"
-            with open(sys.argv[1]) as handle:
-                comments = json.load(handle)
+                marker = "<!-- combined-code-coverage -->"
+                comments = json.load(sys.stdin)
 
-            for comment in comments:
-                if marker in comment.get("body", ""):
-                    print(comment["id"])
-                    break
-            PY
+                for comment in comments:
+                    if marker in comment.get("body", ""):
+                        print(comment["id"])
+                        break
+                '
           )"
 
-          payload_file="$(mktemp)"
-          python3 - "$comment_body_file" "$payload_file" <<'PY'
-          import json
-          import sys
+          payload="$(
+            python3 -c '
+              import json
+              import sys
 
-          with open(sys.argv[1]) as handle:
-              body = handle.read()
+              with open(sys.argv[1]) as handle:
+                  body = "<!-- combined-code-coverage -->\n\n" + handle.read()
 
-          with open(sys.argv[2], "w") as handle:
-              json.dump({"body": body}, handle)
-          PY
+              print(json.dumps({"body": body}))
+              ' "$summary_file"
+          )"
 
           if [ -n "$comment_id" ]; then
             echo "Updating existing coverage PR comment: $comment_id"
@@ -303,7 +292,7 @@ jobs:
               -H "Authorization: Bearer $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github+json" \
               -H "Content-Type: application/json" \
-              --data @"$payload_file" \
+              --data "$payload" \
               "https://api.github.com/repos/$REPOSITORY/issues/comments/$comment_id" \
               > /dev/null
           else
@@ -313,7 +302,7 @@ jobs:
               -H "Authorization: Bearer $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github+json" \
               -H "Content-Type: application/json" \
-              --data @"$payload_file" \
+              --data "$payload" \
               "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" \
               > /dev/null
           fi
