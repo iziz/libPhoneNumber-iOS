@@ -29,6 +29,16 @@ jobs:
         run: |
           set -eo pipefail
 
+          echo "macOS version:"
+          sw_vers
+          echo "xcodebuild path: $(xcode-select -p)"
+          echo "xcodebuild version:"
+          xcodebuild -version
+          echo "xcrun path: $(command -v xcrun)"
+          echo "simctl path: $(xcrun --find simctl)"
+          echo "Available runtimes:"
+          xcrun simctl list runtimes
+
           destination_id="$(
             xcrun simctl list devices --json |
               python3 -c '
@@ -36,26 +46,50 @@ jobs:
                 import re
                 import sys
 
+                devices = json.load(sys.stdin).get("devices", {})
+                print(f"Discovered {len(devices)} simulator runtime groups", file=sys.stderr)
+
                 matches = []
-                for runtime, entries in json.load(sys.stdin).get("devices", {}).items():
+                for runtime, entries in devices.items():
+                    print(f"Inspecting runtime: {runtime} ({len(entries)} devices)", file=sys.stderr)
                     runtime_match = re.match(r"com\\.apple\\.CoreSimulator\\.SimRuntime\\.iOS-(\\d+)-(\\d+)", runtime)
                     if not runtime_match:
+                        print("  Skipping non-iOS runtime", file=sys.stderr)
                         continue
 
                     os_version = tuple(int(part) for part in runtime_match.groups())
                     for entry in entries:
                         name = (entry.get("name") or "").strip()
                         model_match = re.match(r"iPhone\\s+(\\d+)\\b", name)
-                        if entry.get("isAvailable") and entry.get("udid") and model_match:
+                        is_available = entry.get("isAvailable")
+                        udid = entry.get("udid")
+
+                        if is_available and udid and model_match:
+                            print(
+                                f"  Candidate: name={name!r} os={os_version} model={model_match.group(1)} udid={udid}",
+                                file=sys.stderr,
+                            )
                             matches.append((os_version, int(model_match.group(1)), entry["udid"]))
+                        else:
+                            print(
+                                f"  Ignoring device: name={name!r} available={is_available} "
+                                f"has_udid={bool(udid)} matches_iPhone={bool(model_match)}",
+                                file=sys.stderr,
+                            )
 
                 if not matches:
                     raise SystemExit("No iPhone simulator destinations found")
 
-                print(max(matches)[2])
+                selected = max(matches)
+                print(
+                    f"Selected destination: os={selected[0]} model={selected[1]} udid={selected[2]}",
+                    file=sys.stderr,
+                )
+                print(selected[2])
                 '
           )"
 
+          echo "Resolved destination id: $destination_id"
           echo "destination=id=$destination_id" >> "$GITHUB_OUTPUT"
 
       - name: Run unit tests
