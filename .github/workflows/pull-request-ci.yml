@@ -43,24 +43,24 @@ jobs:
 
                 matches = []
                 for runtime, entries in json.load(sys.stdin).get("devices", {}).items():
-                    runtime_match = re.match(r"com\.apple\.CoreSimulator\.SimRuntime\.iOS-(\d+)-(\d+)", runtime)
-                    if not runtime_match:
-                        continue
+                  runtime_match = re.match(r"com\.apple\.CoreSimulator\.SimRuntime\.iOS-(\d+)-(\d+)", runtime)
+                  if not runtime_match:
+                    continue
 
-                    print(f"Runtime: {runtime} ({len(entries)} devices)", file=sys.stderr)
+                  print(f"Runtime: {runtime} ({len(entries)} devices)", file=sys.stderr)
 
-                    os_version = tuple(int(part) for part in runtime_match.groups())
-                    for entry in entries:
-                        name = (entry["name"] or "").strip()
-                        model_match = re.match(r"iPhone\s+(\d+)\b", name)
-                        udid = entry["udid"]
-                        if entry["isAvailable"] and udid and model_match:
-                          matches.append((os_version, int(model_match.group(1)), name, udid))
-                          the_os = f"{os_version[0]}.{os_version[1]}"
-                          print(f"  {name} (iOS {the_os}) [{udid}]", file=sys.stderr)
+                  os_version = tuple(int(part) for part in runtime_match.groups())
+                  for entry in entries:
+                    name = (entry["name"] or "").strip()
+                    model_match = re.match(r"iPhone\s+(\d+)\b", name)
+                    udid = entry["udid"]
+                    if entry["isAvailable"] and udid and model_match:
+                      matches.append((os_version, int(model_match.group(1)), name, udid))
+                      the_os = f"{os_version[0]}.{os_version[1]}"
+                      print(f"  {name} (iOS {the_os}) [{udid}]", file=sys.stderr)
 
                 if not matches:
-                    raise SystemExit("No iPhone simulator destinations found")
+                  raise SystemExit("No iPhone simulator destinations found")
 
                 selected = max(matches); name = selected[2]; the_os = f"{selected[0][0]}.{selected[0][1]}"
                 print(f"Selected Simulator: {name} (iOS {the_os}) [{selected[3]}]", file=sys.stderr)
@@ -242,18 +242,18 @@ jobs:
               -H "Authorization: Bearer $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github+json" \
               "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" |
-                python3 -c '
-                import json
-                import sys
+              python3 -c '
+              import json
+              import sys
 
-                marker = "<!-- combined-code-coverage -->"
-                comments = json.load(sys.stdin)
+              marker = "<!-- combined-code-coverage -->"
+              comments = json.load(sys.stdin)
 
-                for comment in comments:
-                  if marker in comment.get("body", ""):
-                    print(comment["id"])
-                    break
-                '
+              for comment in comments:
+                if marker in comment.get("body", ""):
+                  print(comment["id"])
+                  break
+              '
           )"
 
           payload="$(
