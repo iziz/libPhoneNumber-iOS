@@ -145,17 +145,29 @@ jobs:
           set -eo pipefail
           shopt -s nullglob
 
+          mkdir -p CoverageData
           coverage_files=(CoverageData/*.xccov.json)
+          summary_file="CoverageData/combined-coverage-summary.md"
 
-          echo "### Combined Code Coverage" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Coverage data directory contents:"
+          ls -la CoverageData || true
+          echo "Coverage JSON files found: ${#coverage_files[@]}"
+          for coverage_file in "${coverage_files[@]}"; do
+            echo "Coverage artifact: $coverage_file"
+            wc -c "$coverage_file"
+          done
 
           if [ ${#coverage_files[@]} -eq 0 ]; then
-            echo "Combined coverage unavailable because no coverage data artifacts were downloaded." >> "$GITHUB_STEP_SUMMARY"
+            {
+              echo "### Combined Code Coverage"
+              echo
+              echo "Combined coverage unavailable because no coverage data artifacts were downloaded."
+            } > "$summary_file"
+            cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
 
-          python3 - "${coverage_files[@]}" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          python3 - "${coverage_files[@]}" > "$summary_file" <<'PY'
           import json
           import os
           import sys
@@ -164,6 +176,7 @@ jobs:
           per_scheme = []
 
           for path in sys.argv[1:]:
+              print(f"Parsing coverage file: {path}", file=sys.stderr)
               with open(path) as handle:
                   report = json.load(handle)
 
@@ -187,6 +200,10 @@ jobs:
               scheme_name = os.path.basename(path).replace(".xccov.json", "")
               coverage_percent = (covered_lines / executable_lines * 100) if executable_lines else 0.0
               per_scheme.append((scheme_name, coverage_percent, covered_lines, executable_lines))
+              print(
+                  f"Scheme {scheme_name}: covered={covered_lines} executable={executable_lines} coverage={coverage_percent:.2f}%",
+                  file=sys.stderr,
+              )
 
           combined_executable_lines = sum(len(lines) for lines in combined.values())
           combined_covered_lines = sum(
@@ -198,6 +215,13 @@ jobs:
               else 0.0
           )
 
+          print(
+              f"Combined coverage: covered={combined_covered_lines} executable={combined_executable_lines} coverage={combined_coverage_percent:.2f}%",
+              file=sys.stderr,
+          )
+
+          print("### Combined Code Coverage")
+          print()
           print("| Scope | Coverage | Covered Lines | Executable Lines |")
           print("| --- | ---: | ---: | ---: |")
           for scheme_name, coverage_percent, covered_lines, executable_lines in sorted(per_scheme):
@@ -209,6 +233,89 @@ jobs:
               f"{combined_covered_lines} | {combined_executable_lines} |"
           )
           PY
+
+          echo "Combined coverage summary:"
+          cat "$summary_file"
+          cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish combined coverage comment to pull request
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -eo pipefail
+
+          summary_file="CoverageData/combined-coverage-summary.md"
+          if [ ! -f "$summary_file" ]; then
+            echo "No combined coverage summary file was generated; skipping PR comment."
+            exit 0
+          fi
+
+          comment_body_file="$(mktemp)"
+          {
+            echo '<!-- combined-code-coverage -->'
+            echo
+            cat "$summary_file"
+          } > "$comment_body_file"
+
+          comments_json="$(mktemp)"
+          curl -fsSL \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" \
+            > "$comments_json"
+
+          comment_id="$(
+            python3 - "$comments_json" <<'PY'
+            import json
+            import sys
+
+            marker = "<!-- combined-code-coverage -->"
+            with open(sys.argv[1]) as handle:
+                comments = json.load(handle)
+
+            for comment in comments:
+                if marker in comment.get("body", ""):
+                    print(comment["id"])
+                    break
+            PY
+          )"
+
+          payload_file="$(mktemp)"
+          python3 - "$comment_body_file" "$payload_file" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1]) as handle:
+              body = handle.read()
+
+          with open(sys.argv[2], "w") as handle:
+              json.dump({"body": body}, handle)
+          PY
+
+          if [ -n "$comment_id" ]; then
+            echo "Updating existing coverage PR comment: $comment_id"
+            curl -fsSL \
+              -X PATCH \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              --data @"$payload_file" \
+              "https://api.github.com/repos/$REPOSITORY/issues/comments/$comment_id" \
+              > /dev/null
+          else
+            echo "Creating new coverage PR comment"
+            curl -fsSL \
+              -X POST \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              --data @"$payload_file" \
+              "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" \
+              > /dev/null
+          fi
 
   podspec-lint:
     name: Podspec Lint (${{ matrix.podspec }})
