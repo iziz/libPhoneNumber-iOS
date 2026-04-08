@@ -24,6 +24,40 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Resolve iPhone simulator destination
+        id: destination
+        run: |
+          set -eo pipefail
+
+          destination_id="$(
+            xcrun simctl list devices --json |
+              python3 -c '
+import json
+import re
+import sys
+
+matches = []
+for runtime, entries in json.load(sys.stdin).get("devices", {}).items():
+    runtime_match = re.match(r"com\\.apple\\.CoreSimulator\\.SimRuntime\\.iOS-(\\d+)-(\\d+)", runtime)
+    if not runtime_match:
+        continue
+
+    os_version = tuple(int(part) for part in runtime_match.groups())
+    for entry in entries:
+        name = (entry.get("name") or "").strip()
+        model_match = re.match(r"iPhone\\s+(\\d+)\\b", name)
+        if entry.get("isAvailable") and entry.get("udid") and model_match:
+            matches.append((os_version, int(model_match.group(1)), entry["udid"]))
+
+if not matches:
+    raise SystemExit("No iPhone simulator destinations found")
+
+print(max(matches)[2])
+'
+          )"
+
+          echo "destination=id=$destination_id" >> "$GITHUB_OUTPUT"
+
       - name: Run unit tests
         env:
           SCHEME: ${{ matrix.scheme }}
@@ -34,7 +68,7 @@ jobs:
           xcodebuild \
             -project libPhoneNumber.xcodeproj \
             -scheme "$SCHEME" \
-            -destination 'platform=iOS Simulator,OS=latest,name=iPhone 17' \
+            -destination "${{ steps.destination.outputs.destination }}" \
             -resultBundlePath "TestResults/${SCHEME}.xcresult" \
             -enableCodeCoverage YES \
             CODE_SIGNING_ALLOWED=NO \
@@ -44,7 +78,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: project-unit-tests-${{ matrix.scheme }}
+          name: project-unit-tests-${{ matrix.scheme }}.xcresult
           path: TestResults/${{ matrix.scheme }}.xcresult
 
   podspec-lint:
