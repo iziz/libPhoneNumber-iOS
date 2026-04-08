@@ -56,7 +56,7 @@ jobs:
                     raise SystemExit("No iPhone simulator destinations found")
 
                 selected = max(matches)
-                print(f"Selected: {selected[2]} - {selected[0][0]}.{selected[0][1]} (selected[3])", file=sys.stderr)
+                print(f"Selected: {selected[2]} - {selected[0][0]}.{selected[0][1]} ({selected[3]})", file=sys.stderr)
                 print(selected[3])
                 '
           )"
