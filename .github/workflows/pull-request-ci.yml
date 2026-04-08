@@ -203,19 +203,29 @@ jobs:
             else 0.0
           )
 
+          def status_emoji(coverage_percent):
+            if coverage_percent < 60.0:
+              return "❌"
+            if coverage_percent < 75.0:
+              return "⚠️"
+            return "✅"
+
           with open(sys.argv[-1], "w") as handle:
             print("### Combined Code Coverage", file=handle)
             print(file=handle)
-            print("| Scope | Coverage | Covered Lines | Executable Lines |", file=handle)
-            print("| --- | ---: | ---: | ---: |", file=handle)
+            print("| Scope | Coverage | Status |", file=handle)
+            print("| --- | ---: | --- |", file=handle)
             for scheme_name, coverage_percent, covered_lines, executable_lines in sorted(per_scheme):
               print(
-                f"| {scheme_name} | {coverage_percent:.2f}% | {covered_lines} | {executable_lines} |",
+                f"| {scheme_name} | {coverage_percent:.2f}% | {status_emoji(coverage_percent)} |",
                 file=handle,
               )
             print(
-              f"| Combined | {combined_coverage_percent:.2f}% | "
-              f"{combined_covered_lines} | {combined_executable_lines} |",
+              "| **----------** | **----------:** | **---** |",
+              file=handle,
+            )
+            print(
+              f"| **Combined** | **{combined_coverage_percent:.2f}%** | **{status_emoji(combined_coverage_percent)}** |",
               file=handle,
             )
           ' "${coverage_files[@]}" "$summary_file"
