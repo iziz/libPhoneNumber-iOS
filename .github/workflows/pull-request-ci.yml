@@ -49,7 +49,7 @@ jobs:
                         name = (entry.get("name") or "").strip()
                         model_match = re.match(r"iPhone\s+(\d+)\b", name)
                         if entry.get("isAvailable") and entry.get("udid") and model_match:
-                            matches.append((os_version, int(model_match.group(1)), model, entry["udid"]))
+                            matches.append((os_version, int(model_match.group(1)), name, entry["udid"]))
                             print(f"  {name} - {os_version[0]}.{os_version[1]} ({udid})", file=sys.stderr)
 
                 if not matches:
