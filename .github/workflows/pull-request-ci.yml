@@ -211,21 +211,20 @@ jobs:
             return "✅"
 
           with open(sys.argv[-1], "w") as handle:
-            print("### Combined Code Coverage", file=handle)
+            print("### Code Coverage", file=handle)
             print(file=handle)
             print("| Scope | Coverage | Status |", file=handle)
-            print("| --- | ---: | --- |", file=handle)
+            print("| --- | :---: | :---: |", file=handle)
             for scheme_name, coverage_percent, covered_lines, executable_lines in sorted(per_scheme):
               print(
                 f"| {scheme_name} | {coverage_percent:.2f}% | {status_emoji(coverage_percent)} |",
                 file=handle,
               )
+            indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+            combined_percent = f"combined_coverage_percent:.2f"
+            combined_emoji = status_emoji(combined_coverage_percent)
             print(
-              "| **----------** | **----------:** | **---** |",
-              file=handle,
-            )
-            print(
-              f"| **Combined** | **{combined_coverage_percent:.2f}%** | **{status_emoji(combined_coverage_percent)}** |",
+              f"| {indent} **Combined** | **{combined_percent}%** | **{combined_emoji}** |",
               file=handle,
             )
           ' "${coverage_files[@]}" "$summary_file"
