@@ -1,6 +1,7 @@
 [![CocoaPods](https://img.shields.io/cocoapods/p/libPhoneNumber-iOS.svg?style=flat)](http://cocoapods.org/?q=libPhoneNumber-iOS)
 [![CocoaPods](https://img.shields.io/cocoapods/v/libPhoneNumber-iOS.svg?style=flat)](http://cocoapods.org/?q=libPhoneNumber-iOS)
-[![Pull Request CI](https://github.com/iziz/libPhoneNumber-iOS/actions/workflows/pull-request-ci.yml/badge.svg?branch=master)](https://github.com/iziz/libPhoneNumber-iOS/actions/workflows/pull-request-ci.yml)
+[![Main CI](https://github.com/iziz/libPhoneNumber-iOS/actions/workflows/main-ci.yml/badge.svg?branch=master)](https://github.com/iziz/libPhoneNumber-iOS/actions/workflows/main-ci.yml)
+[![Coverage](https://img.shields.io/endpoint?url=https://iziz.github.io/libPhoneNumber-iOS/badges/coverage.json)](https://github.com/iziz/libPhoneNumber-iOS/actions/workflows/main-ci.yml)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 # **libPhoneNumber for iOS**

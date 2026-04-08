@@ -1,0 +1,309 @@
+name: CI Core
+
+on:
+  workflow_call:
+    inputs:
+      publish_pr_comment:
+        description: Publish the combined coverage summary as a PR comment.
+        required: false
+        default: false
+        type: boolean
+    outputs:
+      combined_coverage_percent:
+        description: Combined unit test coverage percent across all schemes.
+        value: ${{ jobs.coverage-summary.outputs.combined_coverage_percent }}
+
+jobs:
+  unit-tests:
+    name: Unit Tests (${{ matrix.scheme }})
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        scheme:
+          - libPhoneNumber
+          - libPhoneNumberGeocoding
+          - libPhoneNumberShortNumber
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Resolve iPhone simulator destination
+        id: destination
+        run: |
+          set -eo pipefail
+
+          destination_id="$(
+            xcrun simctl list devices --json |
+              python3 -c '
+                import json
+                import re
+                import sys
+
+                matches = []
+                for runtime, entries in json.load(sys.stdin).get("devices", {}).items():
+                  runtime_match = re.match(r"com\.apple\.CoreSimulator\.SimRuntime\.iOS-(\d+)-(\d+)", runtime)
+                  if not runtime_match:
+                    continue
+
+                  print(f"Runtime: {runtime} ({len(entries)} devices)", file=sys.stderr)
+
+                  os_version = tuple(int(part) for part in runtime_match.groups())
+                  for entry in entries:
+                    name = (entry["name"] or "").strip()
+                    model_match = re.match(r"iPhone\s+(\d+)\b", name)
+                    udid = entry["udid"]
+                    if entry["isAvailable"] and udid and model_match:
+                      matches.append((os_version, int(model_match.group(1)), name, udid))
+                      the_os = f"{os_version[0]}.{os_version[1]}"
+                      print(f"  {name} (iOS {the_os}) [{udid}]", file=sys.stderr)
+
+                if not matches:
+                  raise SystemExit("No iPhone simulator destinations found")
+
+                selected = max(matches); name = selected[2]; the_os = f"{selected[0][0]}.{selected[0][1]}"
+                print(f"Selected Simulator: {name} (iOS {the_os}) [{selected[3]}]", file=sys.stderr)
+                print(selected[3])
+                '
+          )"
+
+          echo "destination=id=$destination_id,arch=arm64" >> "$GITHUB_OUTPUT"
+
+      - name: Run unit tests
+        env:
+          SCHEME: ${{ matrix.scheme }}
+        run: |
+          set -eo pipefail
+          mkdir -p TestResults
+
+          xcodebuild \
+            -project libPhoneNumber.xcodeproj \
+            -scheme "$SCHEME" \
+            -destination "${{ steps.destination.outputs.destination }}" \
+            -resultBundlePath "TestResults/${SCHEME}.xcresult" \
+            -enableCodeCoverage YES \
+            CODE_SIGNING_ALLOWED=NO \
+            test
+
+      - name: Upload unit test results
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: project-unit-tests-${{ matrix.scheme }}.xcresult
+          path: TestResults/${{ matrix.scheme }}.xcresult
+
+  coverage-summary:
+    name: Combined Code Coverage
+    runs-on: macos-latest
+    needs: unit-tests
+    if: always()
+    outputs:
+      combined_coverage_percent: ${{ steps.coverage.outputs.combined_coverage_percent }}
+
+    steps:
+      - name: Download unit test results
+        continue-on-error: true
+        uses: actions/download-artifact@v7
+        with:
+          pattern: project-unit-tests-*.xcresult
+          path: CoverageResults
+
+      - name: Publish combined coverage summary
+        id: coverage
+        run: |
+          set -eo pipefail
+          summary_file="CoverageResults/combined-coverage-summary.md"
+
+          mkdir -p CoverageResults
+          result_bundles=()
+          while IFS= read -r -d '' result_bundle; do
+            result_bundles+=("$result_bundle")
+          done < <(find CoverageResults -type d -name '*.xcresult' -print0)
+
+          if [ ${#result_bundles[@]} -eq 0 ]; then
+            {
+              echo "### Combined Code Coverage"
+              echo
+              echo "Combined coverage unavailable because no unit test result bundles were downloaded."
+            } > "$summary_file"
+            echo "combined_coverage_percent=" >> "$GITHUB_OUTPUT"
+            cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          python3 -c '
+          import json
+          import os
+          import subprocess
+          import sys
+
+          combined = {}
+          per_scheme = []
+
+          for path in sys.argv[1:-1]:
+            print(f"Processing result bundle: {path}", file=sys.stderr)
+            report = json.loads(
+              subprocess.check_output(
+                ["xcrun", "xccov", "view", "--archive", "--json", path],
+                text=True,
+              )
+            )
+
+            covered_lines = 0
+            executable_lines = 0
+            for file_path, entries in report.items():
+              combined_lines = combined.setdefault(file_path, {})
+              for entry in entries:
+                line_number = entry["line"]
+                if line_number is None or not entry["isExecutable"]:
+                  continue
+
+                is_covered = entry.get("executionCount", 0) > 0
+                executable_lines += 1
+                if is_covered:
+                  covered_lines += 1
+
+                combined_lines[line_number] = combined_lines.get(line_number, False) or is_covered
+
+            scheme_name = os.path.basename(path).replace(".xcresult", "")
+            coverage_percent = (covered_lines / executable_lines * 100) if executable_lines else 0.0
+            per_scheme.append((scheme_name, coverage_percent, covered_lines, executable_lines))
+
+          combined_executable_lines = sum(len(lines) for lines in combined.values())
+          combined_covered_lines = sum(
+            1 for lines in combined.values() for is_covered in lines.values() if is_covered
+          )
+          combined_coverage_percent = (
+            combined_covered_lines / combined_executable_lines * 100
+            if combined_executable_lines
+            else 0.0
+          )
+
+          def status_emoji(coverage_percent):
+            if coverage_percent < 60.0:
+              return "❌"
+            if coverage_percent < 75.0:
+              return "⚠️"
+            return "✅"
+
+          with open(sys.argv[-1], "w") as handle:
+            print("### Code Coverage", file=handle)
+            print(file=handle)
+            print("| Scope | Coverage | Status |", file=handle)
+            print("| --- | :---: | :---: |", file=handle)
+            for scheme_name, coverage_percent, covered_lines, executable_lines in sorted(per_scheme):
+              emoji = status_emoji(coverage_percent)
+              print(
+                f"| {scheme_name} | {coverage_percent:.2f}% | {emoji} |",
+                file=handle,
+              )
+              print(f"{scheme_name} - {coverage_percent:.2f}% {emoji}", file=sys.stderr)
+            indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+            combined_percent = f"{combined_coverage_percent:.2f}"
+            combined_emoji = status_emoji(combined_coverage_percent)
+            print(
+              f"| {indent} **Combined** | **{combined_percent}%** | **{combined_emoji}** |",
+              file=handle,
+            )
+            print(f"  Combined - {combined_percent}% {combined_emoji}", file=sys.stderr)
+
+          with open(os.environ["GITHUB_OUTPUT"], "a") as handle:
+            print(f"combined_coverage_percent={combined_coverage_percent:.2f}", file=handle)
+          ' "${result_bundles[@]}" "$summary_file"
+
+          echo "Combined coverage summary:"
+          cat "$summary_file"
+          cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish combined coverage comment to pull request
+        if: inputs.publish_pr_comment
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -eo pipefail
+
+          summary_file="CoverageResults/combined-coverage-summary.md"
+          if [ ! -f "$summary_file" ]; then
+            echo "No combined coverage summary file was generated; skipping PR comment."
+            exit 0
+          fi
+
+          comment_id="$(
+            curl -fsSL \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" |
+            python3 -c '
+          import json
+          import sys
+
+          marker = "<!-- combined-code-coverage -->"
+          comments = json.load(sys.stdin)
+
+          for comment in comments:
+            if marker in comment.get("body", ""):
+              print(comment["id"])
+              break
+            '
+          )"
+
+          payload="$(
+            python3 -c '
+          import json
+          import sys
+
+          with open(sys.argv[1]) as handle:
+            body = "<!-- combined-code-coverage -->\n\n" + handle.read()
+
+          print(json.dumps({"body": body}))
+            ' "$summary_file"
+          )"
+
+          if [ -n "$comment_id" ]; then
+            echo "Updating existing coverage PR comment: $comment_id"
+            curl -fsSL \
+              -X PATCH \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              --data "$payload" \
+              "https://api.github.com/repos/$REPOSITORY/issues/comments/$comment_id" \
+              > /dev/null
+          else
+            echo "Creating new coverage PR comment"
+            curl -fsSL \
+              -X POST \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              --data "$payload" \
+              "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" \
+              > /dev/null
+          fi
+
+  podspec-lint:
+    name: Podspec Lint (${{ matrix.podspec }})
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        podspec:
+          - libPhoneNumber-iOS.podspec
+          - libPhoneNumberGeocoding.podspec
+          - libPhoneNumberShortNumber.podspec
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Ensure CocoaPods is installed
+        run: |
+          if ! command -v pod >/dev/null; then
+            gem install cocoapods
+          fi
+
+      - name: Lint podspec
+        run: pod lib lint "${{ matrix.podspec }}" --verbose
