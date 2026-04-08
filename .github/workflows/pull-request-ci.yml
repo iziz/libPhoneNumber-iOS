@@ -237,27 +237,14 @@ jobs:
             exit 0
           fi
 
-          testing_test="$(
-            echo "How are you" |
-            python3 -c '
-          import re
-          import sys
-          value = sys.stdin.read()
-          print(f"I am a test, testing things - {value}", file=sys.stderr)
-          print(f"Output testing - {value}")
-            '
-          )"
-
-          echo "Output: $testing_test"
-
           comment_id="$(
             curl -fsSL \
             -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" |
             python3 -c '
-          import sys
           import json
+          import sys
 
           marker = "<!-- combined-code-coverage -->"
           comments = json.load(sys.stdin)
@@ -266,18 +253,18 @@ jobs:
             if marker in comment.get("body", ""):
               print(comment["id"])
               break
-          '
+            '
           )"
 
           payload="$(
             python3 -c '
-            import json
-            import sys
+          import json
+          import sys
 
-            with open(sys.argv[1]) as handle:
-              body = "<!-- combined-code-coverage -->\n\n" + handle.read()
+          with open(sys.argv[1]) as handle:
+            body = "<!-- combined-code-coverage -->\n\n" + handle.read()
 
-            print(json.dumps({"body": body}))
+          print(json.dumps({"body": body}))
             ' "$summary_file"
           )"
 
