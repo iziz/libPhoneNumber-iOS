@@ -61,7 +61,7 @@ jobs:
                 '
           )"
 
-          echo "destination=id=$destination_id" >> "$GITHUB_OUTPUT"
+          echo "destination=id=$destination_id,arch=arm64" >> "$GITHUB_OUTPUT"
 
       - name: Run unit tests
         env:
