@@ -242,18 +242,18 @@ jobs:
               -H "Authorization: Bearer $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github+json" \
               "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" |
-              python3 -c '
-              import json
-              import sys
+            python3 -c '
+            import sys
+            import json
 
-              marker = "<!-- combined-code-coverage -->"
-              comments = json.load(sys.stdin)
+            marker = "<!-- combined-code-coverage -->"
+            comments = json.load(sys.stdin)
 
-              for comment in comments:
-                if marker in comment.get("body", ""):
-                  print(comment["id"])
-                  break
-              '
+            for comment in comments:
+              if marker in comment.get("body", ""):
+                print(comment["id"])
+                break
+            '
           )"
 
           payload="$(
