@@ -86,39 +86,6 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             test
 
-      - name: Export code coverage data
-        if: always()
-        env:
-          SCHEME: ${{ matrix.scheme }}
-        run: |
-          set -eo pipefail
-
-          result_bundle="TestResults/${SCHEME}.xcresult"
-          coverage_json="TestResults/${SCHEME}.xccov.json"
-
-          echo "### Code Coverage" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-
-          if [ ! -d "$result_bundle" ]; then
-            echo "Coverage report unavailable because \`$result_bundle\` was not created." >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-
-          if ! xcrun xccov view --archive --json "$result_bundle" > "$coverage_json"; then
-            echo "Coverage report unavailable because \`xccov\` could not parse \`$result_bundle\`." >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-
-          echo "Exported line-level coverage data for \`$SCHEME\`." >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Upload code coverage data
-        if: always()
-        uses: actions/upload-artifact@v6
-        with:
-          name: unit-test-coverage-${{ matrix.scheme }}
-          path: TestResults/${{ matrix.scheme }}.xccov.json
-          if-no-files-found: ignore
-
       - name: Upload unit test results
         if: always()
         uses: actions/upload-artifact@v6
@@ -128,33 +95,31 @@ jobs:
 
   coverage-summary:
     name: Combined Code Coverage
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     needs: unit-tests
     if: always()
 
     steps:
-      - name: Download code coverage data
+      - name: Download unit test results
         continue-on-error: true
         uses: actions/download-artifact@v7
         with:
-          pattern: unit-test-coverage-*
-          path: CoverageData
-          merge-multiple: true
+          pattern: project-unit-tests-*.xcresult
+          path: CoverageResults
 
       - name: Publish combined coverage summary
         run: |
           set -eo pipefail
-          shopt -s nullglob
+          summary_file="CoverageResults/combined-coverage-summary.md"
 
-          mkdir -p CoverageData
-          coverage_files=(CoverageData/*.xccov.json)
-          summary_file="CoverageData/combined-coverage-summary.md"
+          mkdir -p CoverageResults
+          mapfile -d '' result_bundles < <(find CoverageResults -type d -name '*.xcresult' -print0 | sort -z)
 
-          if [ ${#coverage_files[@]} -eq 0 ]; then
+          if [ ${#result_bundles[@]} -eq 0 ]; then
             {
               echo "### Combined Code Coverage"
               echo
-              echo "Combined coverage unavailable because no coverage data artifacts were downloaded."
+              echo "Combined coverage unavailable because no unit test result bundles were downloaded."
             } > "$summary_file"
             cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
             exit 0
@@ -163,15 +128,20 @@ jobs:
           python3 -c '
           import json
           import os
+          import subprocess
           import sys
 
           combined = {}
           per_scheme = []
 
           for path in sys.argv[1:-1]:
-            print(f"Processing coverage file: {path}", file=sys.stderr)
-            with open(path) as handle:
-              report = json.load(handle)
+            print(f"Processing result bundle: {path}", file=sys.stderr)
+            report = json.loads(
+              subprocess.check_output(
+                ["xcrun", "xccov", "view", "--archive", "--json", path],
+                text=True,
+              )
+            )
 
             covered_lines = 0
             executable_lines = 0
@@ -189,7 +159,7 @@ jobs:
 
                 combined_lines[line_number] = combined_lines.get(line_number, False) or is_covered
 
-            scheme_name = os.path.basename(path).replace(".xccov.json", "")
+            scheme_name = os.path.basename(path).replace(".xcresult", "")
             coverage_percent = (covered_lines / executable_lines * 100) if executable_lines else 0.0
             per_scheme.append((scheme_name, coverage_percent, covered_lines, executable_lines))
 
@@ -221,7 +191,7 @@ jobs:
                 file=handle,
               )
             indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-            combined_percent = f"combined_coverage_percent:.2f"
+            combined_percent = f"{combined_coverage_percent:.2f}"
             combined_emoji = status_emoji(combined_coverage_percent)
             print(
               f"| {indent} **Combined** | **{combined_percent}%** | **{combined_emoji}** |",
@@ -240,7 +210,7 @@ jobs:
         run: |
           set -eo pipefail
 
-          summary_file="CoverageData/combined-coverage-summary.md"
+          summary_file="CoverageResults/combined-coverage-summary.md"
           if [ ! -f "$summary_file" ]; then
             echo "No combined coverage summary file was generated; skipping PR comment."
             exit 0
