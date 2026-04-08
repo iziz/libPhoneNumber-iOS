@@ -52,7 +52,7 @@ jobs:
                 matches = []
                 for runtime, entries in devices.items():
                     print(f"Inspecting runtime: {runtime} ({len(entries)} devices)", file=sys.stderr)
-                    runtime_match = re.match(r"com\\.apple\\.CoreSimulator\\.SimRuntime\\.iOS-(\\d+)-(\\d+)", runtime)
+                    runtime_match = re.match(r"com\.apple\.CoreSimulator\.SimRuntime\.iOS-(\d+)-(\d+)", runtime)
                     if not runtime_match:
                         print("  Skipping non-iOS runtime", file=sys.stderr)
                         continue
@@ -60,7 +60,7 @@ jobs:
                     os_version = tuple(int(part) for part in runtime_match.groups())
                     for entry in entries:
                         name = (entry.get("name") or "").strip()
-                        model_match = re.match(r"iPhone\\s+(\\d+)\\b", name)
+                        model_match = re.match(r"iPhone\s+(\d+)\b", name)
                         is_available = entry.get("isAvailable")
                         udid = entry.get("udid")
 
