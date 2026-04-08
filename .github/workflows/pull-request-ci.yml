@@ -240,14 +240,15 @@ jobs:
           testing_test="$(
             echo "How are you" |
             python3 -c '
-            import re
-            import sys
-
-            print(f"I am a test, testing things - {sys.stdin}", file=sys.stderr)
+          import re
+          import sys
+          value = sys.stdin.read()
+          print(f"I am a test, testing things - {value}", file=sys.stderr)
+          print(f"Output testing - {value}")
             '
           )"
 
-          echo "$testing_test"
+          echo "Output: $testing_test"
 
           comment_id="$(
             curl -fsSL \
