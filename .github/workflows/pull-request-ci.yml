@@ -150,14 +150,6 @@ jobs:
           coverage_files=(CoverageData/*.xccov.json)
           summary_file="CoverageData/combined-coverage-summary.md"
 
-          echo "Coverage data directory contents:"
-          ls -la CoverageData || true
-          echo "Coverage JSON files found: ${#coverage_files[@]}"
-          for coverage_file in "${coverage_files[@]}"; do
-            echo "Coverage artifact: $coverage_file"
-            wc -c "$coverage_file"
-          done
-
           if [ ${#coverage_files[@]} -eq 0 ]; then
             {
               echo "### Combined Code Coverage"
@@ -168,75 +160,66 @@ jobs:
             exit 0
           fi
 
-          python3 - "${coverage_files[@]}" > "$summary_file" <<'PY'
-          import json
-          import os
-          import sys
+          python3 -c '
+            import json
+            import os
+            import sys
 
-          combined = {}
-          per_scheme = []
+            combined = {}
+            per_scheme = []
 
-          for path in sys.argv[1:]:
-              print(f"Parsing coverage file: {path}", file=sys.stderr)
-              with open(path) as handle:
-                  report = json.load(handle)
+            for path in sys.argv[1:-1]:
+                print(f"Processing coverage file: {path}", file=sys.stderr)
+                with open(path) as handle:
+                    report = json.load(handle)
 
-              covered_lines = 0
-              executable_lines = 0
-              for file_path, entries in report.items():
-                  combined_lines = combined.setdefault(file_path, {})
-                  for entry in entries:
-                      line_number = entry["line"]
-                      if line_number is None or not entry["isExecutable"]:
-                          continue
+                covered_lines = 0
+                executable_lines = 0
+                for file_path, entries in report.items():
+                    combined_lines = combined.setdefault(file_path, {})
+                    for entry in entries:
+                        line_number = entry["line"]
+                        if line_number is None or not entry["isExecutable"]:
+                            continue
 
-                      is_covered = entry.get("executionCount", 0) > 0
-                      executable_lines += 1
-                      if is_covered:
-                          covered_lines += 1
+                        is_covered = entry.get("executionCount", 0) > 0
+                        executable_lines += 1
+                        if is_covered:
+                            covered_lines += 1
 
-                      previous = combined_lines.get(line_number, False)
-                      combined_lines[line_number] = previous or is_covered
+                        combined_lines[line_number] = combined_lines.get(line_number, False) or is_covered
 
-              scheme_name = os.path.basename(path).replace(".xccov.json", "")
-              coverage_percent = (covered_lines / executable_lines * 100) if executable_lines else 0.0
-              per_scheme.append((scheme_name, coverage_percent, covered_lines, executable_lines))
-              print(
-                  f"Scheme {scheme_name}: covered={covered_lines} executable={executable_lines} coverage={coverage_percent:.2f}%",
-                  file=sys.stderr,
-              )
+                scheme_name = os.path.basename(path).replace(".xccov.json", "")
+                coverage_percent = (covered_lines / executable_lines * 100) if executable_lines else 0.0
+                per_scheme.append((scheme_name, coverage_percent, covered_lines, executable_lines))
 
-          combined_executable_lines = sum(len(lines) for lines in combined.values())
-          combined_covered_lines = sum(
-              1 for lines in combined.values() for is_covered in lines.values() if is_covered
-          )
-          combined_coverage_percent = (
-              combined_covered_lines / combined_executable_lines * 100
-              if combined_executable_lines
-              else 0.0
-          )
+            combined_executable_lines = sum(len(lines) for lines in combined.values())
+            combined_covered_lines = sum(
+                1 for lines in combined.values() for is_covered in lines.values() if is_covered
+            )
+            combined_coverage_percent = (
+                combined_covered_lines / combined_executable_lines * 100
+                if combined_executable_lines
+                else 0.0
+            )
 
-          print(
-              f"Combined coverage: covered={combined_covered_lines} executable={combined_executable_lines} coverage={combined_coverage_percent:.2f}%",
-              file=sys.stderr,
-          )
+            with open(sys.argv[-1], "w") as handle:
+                print("### Combined Code Coverage", file=handle)
+                print(file=handle)
+                print("| Scope | Coverage | Covered Lines | Executable Lines |", file=handle)
+                print("| --- | ---: | ---: | ---: |", file=handle)
+                for scheme_name, coverage_percent, covered_lines, executable_lines in sorted(per_scheme):
+                    print(
+                        f"| {scheme_name} | {coverage_percent:.2f}% | {covered_lines} | {executable_lines} |",
+                        file=handle,
+                    )
+                print(
+                    f"| Combined | {combined_coverage_percent:.2f}% | "
+                    f"{combined_covered_lines} | {combined_executable_lines} |",
+                    file=handle,
+                )
+            ' "${coverage_files[@]}" "$summary_file"
 
-          print("### Combined Code Coverage")
-          print()
-          print("| Scope | Coverage | Covered Lines | Executable Lines |")
-          print("| --- | ---: | ---: | ---: |")
-          for scheme_name, coverage_percent, covered_lines, executable_lines in sorted(per_scheme):
-              print(
-                  f"| {scheme_name} | {coverage_percent:.2f}% | {covered_lines} | {executable_lines} |"
-              )
-          print(
-              f"| Combined | {combined_coverage_percent:.2f}% | "
-              f"{combined_covered_lines} | {combined_executable_lines} |"
-          )
-          PY
-
-          echo "Combined coverage summary:"
-          cat "$summary_file"
           cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Publish combined coverage comment to pull request
