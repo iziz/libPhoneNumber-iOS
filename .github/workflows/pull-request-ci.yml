@@ -113,7 +113,10 @@ jobs:
           summary_file="CoverageResults/combined-coverage-summary.md"
 
           mkdir -p CoverageResults
-          mapfile -d '' result_bundles < <(find CoverageResults -type d -name '*.xcresult' -print0 | sort -z)
+          result_bundles=()
+          while IFS= read -r -d '' result_bundle; do
+            result_bundles+=("$result_bundle")
+          done < <(find CoverageResults -type d -name '*.xcresult' -print0)
 
           if [ ${#result_bundles[@]} -eq 0 ]; then
             {
@@ -197,7 +200,7 @@ jobs:
               f"| {indent} **Combined** | **{combined_percent}%** | **{combined_emoji}** |",
               file=handle,
             )
-          ' "${coverage_files[@]}" "$summary_file"
+          ' "${result_bundles[@]}" "$summary_file"
 
           cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
 
