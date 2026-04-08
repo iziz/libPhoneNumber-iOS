@@ -50,13 +50,13 @@ jobs:
                         model_match = re.match(r"iPhone\s+(\d+)\b", name)
                         if entry.get("isAvailable") and entry.get("udid") and model_match:
                             matches.append((os_version, int(model_match.group(1)), name, entry["udid"]))
-                            print(f"  {name} - {os_version[0]}.{os_version[1]} ({entry["udid"]})", file=sys.stderr)
+                            print(f"  {name} (iOS {os_version[0]}.{os_version[1]}) [{entry["udid"]}]", file=sys.stderr)
 
                 if not matches:
                     raise SystemExit("No iPhone simulator destinations found")
 
-                selected = max(matches)
-                print(f"Selected: {selected[2]} - {selected[0][0]}.{selected[0][1]} ({selected[3]})", file=sys.stderr)
+                selected = max(matches); name=selected[2]; theOS=""+selected[0][0]+"."+selected[0][1]
+                print(f"Selected Simulator: {name} (iOS {theOS}) [{selected[3]}]", file=sys.stderr)
                 print(selected[3])
                 '
           )"
@@ -79,12 +79,130 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             test
 
+      - name: Export code coverage data
+        if: always()
+        env:
+          SCHEME: ${{ matrix.scheme }}
+        run: |
+          set -eo pipefail
+
+          result_bundle="TestResults/${SCHEME}.xcresult"
+          coverage_json="TestResults/${SCHEME}.xccov.json"
+
+          echo "### Code Coverage" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ ! -d "$result_bundle" ]; then
+            echo "Coverage report unavailable because \`$result_bundle\` was not created." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          if ! xcrun xccov view --archive --json "$result_bundle" > "$coverage_json"; then
+            echo "Coverage report unavailable because \`xccov\` could not parse \`$result_bundle\`." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          echo "Exported line-level coverage data for \`$SCHEME\`." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload code coverage data
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: unit-test-coverage-${{ matrix.scheme }}
+          path: TestResults/${{ matrix.scheme }}.xccov.json
+          if-no-files-found: ignore
+
       - name: Upload unit test results
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: project-unit-tests-${{ matrix.scheme }}.xcresult
           path: TestResults/${{ matrix.scheme }}.xcresult
+
+  coverage-summary:
+    name: Combined Code Coverage
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    if: always()
+
+    steps:
+      - name: Download code coverage data
+        continue-on-error: true
+        uses: actions/download-artifact@v5
+        with:
+          pattern: unit-test-coverage-*
+          path: CoverageData
+          merge-multiple: true
+
+      - name: Publish combined coverage summary
+        run: |
+          set -eo pipefail
+          shopt -s nullglob
+
+          coverage_files=(CoverageData/*.xccov.json)
+
+          echo "### Combined Code Coverage" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ ${#coverage_files[@]} -eq 0 ]; then
+            echo "Combined coverage unavailable because no coverage data artifacts were downloaded." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          python3 - "${coverage_files[@]}" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json
+          import os
+          import sys
+
+          combined = {}
+          per_scheme = []
+
+          for path in sys.argv[1:]:
+              with open(path) as handle:
+                  report = json.load(handle)
+
+              covered_lines = 0
+              executable_lines = 0
+              for file_path, entries in report.items():
+                  combined_lines = combined.setdefault(file_path, {})
+                  for entry in entries:
+                      line_number = entry.get("line")
+                      if line_number is None or not entry.get("isExecutable"):
+                          continue
+
+                      is_covered = entry.get("executionCount", 0) > 0
+                      executable_lines += 1
+                      if is_covered:
+                          covered_lines += 1
+
+                      previous = combined_lines.get(line_number, False)
+                      combined_lines[line_number] = previous or is_covered
+
+              scheme_name = os.path.basename(path).replace(".xccov.json", "")
+              coverage_percent = (covered_lines / executable_lines * 100) if executable_lines else 0.0
+              per_scheme.append((scheme_name, coverage_percent, covered_lines, executable_lines))
+
+          combined_executable_lines = sum(len(lines) for lines in combined.values())
+          combined_covered_lines = sum(
+              1 for lines in combined.values() for is_covered in lines.values() if is_covered
+          )
+          combined_coverage_percent = (
+              combined_covered_lines / combined_executable_lines * 100
+              if combined_executable_lines
+              else 0.0
+          )
+
+          print("| Scope | Coverage | Covered Lines | Executable Lines |")
+          print("| --- | ---: | ---: | ---: |")
+          for scheme_name, coverage_percent, covered_lines, executable_lines in sorted(per_scheme):
+              print(
+                  f"| {scheme_name} | {coverage_percent:.2f}% | {covered_lines} | {executable_lines} |"
+              )
+          print(
+              f"| Combined | {combined_coverage_percent:.2f}% | "
+              f"{combined_covered_lines} | {combined_executable_lines} |"
+          )
+          PY
 
   podspec-lint:
     name: Podspec Lint (${{ matrix.podspec }})
