@@ -4,6 +4,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
 concurrency:
   group: pull-request-ci-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -50,14 +55,14 @@ jobs:
                         model_match = re.match(r"iPhone\s+(\d+)\b", name)
                         if entry.get("isAvailable") and entry.get("udid") and model_match:
                             matches.append((os_version, int(model_match.group(1)), name, entry["udid"]))
-                            theOS=f"{os_version[0]}.{os_version[1]}"
-                            print(f"  {name} (iOS {theOS}) [{entry["udid"]}]", file=sys.stderr)
+                            the_os = f"{os_version[0]}.{os_version[1]}"
+                            print(f"  {name} (iOS {the_os}) [{entry['udid']}]", file=sys.stderr)
 
                 if not matches:
                     raise SystemExit("No iPhone simulator destinations found")
 
-                selected = max(matches); name=selected[2]; theOS=f"{selected[0][0]}.{selected[0][1]}"
-                print(f"Selected Simulator: {name} (iOS {theOS}) [{selected[3]}]", file=sys.stderr)
+                selected = max(matches); name = selected[2]; the_os = f"{selected[0][0]}.{selected[0][1]}"
+                print(f"Selected Simulator: {name} (iOS {the_os}) [{selected[3]}]", file=sys.stderr)
                 print(selected[3])
                 '
           )"
@@ -129,7 +134,7 @@ jobs:
     steps:
       - name: Download code coverage data
         continue-on-error: true
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v7
         with:
           pattern: unit-test-coverage-*
           path: CoverageData
