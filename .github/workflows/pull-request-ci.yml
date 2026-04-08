@@ -120,7 +120,7 @@ jobs:
 
           if [ ${#result_bundles[@]} -eq 0 ]; then
             {
-              echo "### Combined Code Coverage"
+              echo "### Code Coverage"
               echo
               echo "Combined coverage unavailable because no unit test result bundles were downloaded."
             } > "$summary_file"
@@ -189,10 +189,12 @@ jobs:
             print("| Scope | Coverage | Status |", file=handle)
             print("| --- | :---: | :---: |", file=handle)
             for scheme_name, coverage_percent, covered_lines, executable_lines in sorted(per_scheme):
+              emoji = status_emoji(coverage_percent)
               print(
-                f"| {scheme_name} | {coverage_percent:.2f}% | {status_emoji(coverage_percent)} |",
+                f"| {scheme_name} | {coverage_percent:.2f}% | {emoji} |",
                 file=handle,
               )
+              print(f"{scheme_name} - {coverage_percent:.2f}% {emoji}", file=sys.stderr)
             indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
             combined_percent = f"{combined_coverage_percent:.2f}"
             combined_emoji = status_emoji(combined_coverage_percent)
@@ -200,6 +202,7 @@ jobs:
               f"| {indent} **Combined** | **{combined_percent}%** | **{combined_emoji}** |",
               file=handle,
             )
+            print(f"  Combined - {combined_percent}% {combined_emoji}", file=sys.stderr)
           ' "${result_bundles[@]}" "$summary_file"
 
           cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
