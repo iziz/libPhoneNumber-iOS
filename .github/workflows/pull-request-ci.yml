@@ -51,12 +51,13 @@ jobs:
 
                     os_version = tuple(int(part) for part in runtime_match.groups())
                     for entry in entries:
-                        name = (entry.get("name") or "").strip()
+                        name = (entry["name"] or "").strip()
                         model_match = re.match(r"iPhone\s+(\d+)\b", name)
-                        if entry.get("isAvailable") and entry.get("udid") and model_match:
-                            matches.append((os_version, int(model_match.group(1)), name, entry["udid"]))
-                            the_os = f"{os_version[0]}.{os_version[1]}"
-                            print(f"  {name} (iOS {the_os}) [{entry['udid']}]", file=sys.stderr)
+                        udid = entry["udid"]
+                        if entry["isAvailable"] and udid and model_match:
+                          matches.append((os_version, int(model_match.group(1)), name, udid))
+                          the_os = f"{os_version[0]}.{os_version[1]}"
+                          print(f"  {name} (iOS {the_os}) [{udid}]", file=sys.stderr)
 
                 if not matches:
                     raise SystemExit("No iPhone simulator destinations found")
@@ -185,8 +186,8 @@ jobs:
               for file_path, entries in report.items():
                   combined_lines = combined.setdefault(file_path, {})
                   for entry in entries:
-                      line_number = entry.get("line")
-                      if line_number is None or not entry.get("isExecutable"):
+                      line_number = entry["line"]
+                      if line_number is None or not entry["isExecutable"]:
                           continue
 
                       is_covered = entry.get("executionCount", 0) > 0
