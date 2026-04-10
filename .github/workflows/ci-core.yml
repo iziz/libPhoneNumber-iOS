@@ -194,7 +194,9 @@ jobs:
               return "⚠️"
             return "✅"
 
-          with open(sys.argv[-1], "w") as handle:
+          summary_path = sys.argv[-1]
+
+          with open(summary_path, "w") as handle:
             print("### Code Coverage", file=handle)
             print(file=handle)
             print("| Scope | Coverage | Status |", file=handle)
