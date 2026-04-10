@@ -39,32 +39,39 @@ jobs:
               python3 -c '
                 import json
                 import re
+                import random
                 import sys
 
-                matches = []
+                latest_os_version = None
+                candidates = []
                 for runtime, entries in json.load(sys.stdin).get("devices", {}).items():
                   runtime_match = re.match(r"com\.apple\.CoreSimulator\.SimRuntime\.iOS-(\d+)-(\d+)", runtime)
                   if not runtime_match:
                     continue
 
-                  print(f"Runtime: {runtime} ({len(entries)} devices)", file=sys.stderr)
-
                   os_version = tuple(int(part) for part in runtime_match.groups())
+                  if latest_os_version is None or os_version > latest_os_version:
+                    latest_os_version = os_version
+                    candidates = []
+                  elif os_version < latest_os_version:
+                    continue
+
+                  print(f"Runtime: {runtime} ({len(entries)} devices)", file=sys.stderr)
                   for entry in entries:
                     name = (entry["name"] or "").strip()
-                    model_match = re.match(r"iPhone\s+(\d+)\b", name)
                     udid = entry["udid"]
-                    if entry["isAvailable"] and udid and model_match:
-                      matches.append((os_version, int(model_match.group(1)), name, udid))
+                    if entry["isAvailable"] and udid and name.startswith("iPhone"):
+                      candidates.append((name, udid))
                       the_os = f"{os_version[0]}.{os_version[1]}"
                       print(f"  {name} (iOS {the_os}) [{udid}]", file=sys.stderr)
 
-                if not matches:
+                if not candidates:
                   raise SystemExit("No iPhone simulator destinations found")
 
-                selected = max(matches); name = selected[2]; the_os = f"{selected[0][0]}.{selected[0][1]}"
-                print(f"Selected Simulator: {name} (iOS {the_os}) [{selected[3]}]", file=sys.stderr)
-                print(selected[3])
+                selected = random.choice(candidates)
+                the_os = f"{latest_os_version[0]}.{latest_os_version[1]}"
+                print(f"Selected Simulator: {selected[0]} (iOS {the_os}) [{selected[1]}]", file=sys.stderr)
+                print(selected[1])
                 '
           )"
 
@@ -212,8 +219,6 @@ jobs:
             print(f"combined_coverage_percent={combined_coverage_percent:.2f}", file=handle)
           ' "${result_bundles[@]}" "$summary_file"
 
-          echo "Combined coverage summary:"
-          cat "$summary_file"
           cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Publish combined coverage comment to pull request
