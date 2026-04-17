@@ -99,7 +99,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: project-unit-tests-${{ matrix.scheme }}.xcresult
+          name: project-unit-tests-${{ matrix.scheme }}
           path: TestResults/*.xcresult
 
   coverage-summary:
@@ -115,8 +115,8 @@ jobs:
         continue-on-error: true
         uses: actions/download-artifact@v7
         with:
-          pattern: project-unit-tests-*.xcresult
-          path: CoverageResults
+          pattern: project-unit-tests-*
+          path: CoverageResults/xcresults
 
       - name: Publish combined coverage summary
         id: coverage
@@ -125,69 +125,109 @@ jobs:
           summary_file="CoverageResults/combined-coverage-summary.md"
 
           mkdir -p CoverageResults
-          result_bundles=()
-          while IFS= read -r -d '' result_bundle; do
-            result_bundles+=("$result_bundle")
-          done < <(find CoverageResults -type d -name '*.xcresult' -print0)
-
-          if [ ${#result_bundles[@]} -eq 0 ]; then
-            {
-              echo "### Combined Code Coverage"
-              echo
-              echo "Combined coverage unavailable because no unit test result bundles were downloaded."
-            } > "$summary_file"
-            echo "combined_coverage_percent=" >> "$GITHUB_OUTPUT"
-            cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-
           python3 -c '
           import json
           import os
           import subprocess
           import sys
 
-          combined = {}
-          per_scheme = []
+          ARTIFACT_PREFIX = "project-unit-tests-"
+          XCRESULT_SUFFIX = ".xcresult"
 
-          for path in sys.argv[1:-1]:
-            print(f"Processing result bundle: {path}", file=sys.stderr)
-            report = json.loads(
-              subprocess.check_output(
-                ["xcrun", "xccov", "view", "--archive", "--json", path],
-                text=True,
+          artifacts_root = sys.argv[1]
+          summary_path = sys.argv[2]
+
+          def append_output(coverage_percent):
+            with open(os.environ["GITHUB_OUTPUT"], "a") as handle:
+              print(f"combined_coverage_percent={coverage_percent}", file=handle)
+
+          def write_unavailable_summary(message):
+            with open(summary_path, "w") as handle:
+              print("### Combined Code Coverage", file=handle)
+              print(file=handle)
+              print(message, file=handle)
+
+          def find_scheme_result_bundles(search_root):
+            scheme_result_bundles = {}
+
+            if not os.path.isdir(search_root):
+              return scheme_result_bundles
+
+            for artifact_name in sorted(os.listdir(search_root)):
+              artifact_path = os.path.join(search_root, artifact_name)
+              if not os.path.isdir(artifact_path):
+                continue
+              if not artifact_name.startswith(ARTIFACT_PREFIX):
+                continue
+
+              scheme_name = artifact_name[len(ARTIFACT_PREFIX):]
+              result_bundles = sorted(
+                os.path.join(artifact_path, entry_name)
+                for entry_name in os.listdir(artifact_path)
+                if entry_name.endswith(XCRESULT_SUFFIX)
               )
-            )
 
-            covered_lines = 0
-            executable_lines = 0
+              if len(result_bundles) <= 0:
+                print(f"{scheme_name}: no downloaded .xcresult bundles found", file=sys.stderr)
+                continue
+
+              scheme_result_bundles[scheme_name] = result_bundles
+
+            return scheme_result_bundles
+
+          def merge_report(target, report):
             for file_path, entries in report.items():
-              combined_lines = combined.setdefault(file_path, {})
+              combined_lines = target.setdefault(file_path, {})
               for entry in entries:
                 line_number = entry["line"]
                 if line_number is None or not entry["isExecutable"]:
                   continue
 
                 is_covered = entry.get("executionCount", 0) > 0
-                executable_lines += 1
-                if is_covered:
-                  covered_lines += 1
-
                 combined_lines[line_number] = combined_lines.get(line_number, False) or is_covered
 
-            scheme_name = os.path.basename(path).replace(".xcresult", "")
-            coverage_percent = (covered_lines / executable_lines * 100) if executable_lines else 0.0
+          def summarize_lines(line_map):
+            executable_lines = sum(len(lines) for lines in line_map.values())
+            covered_lines = sum(
+              1 for lines in line_map.values() for is_covered in lines.values() if is_covered
+            )
+            coverage_percent = (
+              covered_lines / executable_lines * 100
+              if executable_lines
+              else 0.0
+            )
+            return covered_lines, executable_lines, coverage_percent
+
+          scheme_result_bundles = find_scheme_result_bundles(artifacts_root)
+          combined = {}
+          per_scheme = []
+
+          if len(scheme_result_bundles) <= 0:
+            write_unavailable_summary(
+              "Combined coverage unavailable because no unit test result bundles were downloaded."
+            )
+            append_output("")
+            raise SystemExit(0)
+
+          for scheme_name, scheme_bundle_paths in sorted(scheme_result_bundles.items()):
+            scheme_lines = {}
+
+            for path in scheme_bundle_paths:
+              print(f"Processing result bundle for {scheme_name}: {path}", file=sys.stderr)
+              report = json.loads(
+                subprocess.check_output(
+                  ["xcrun", "xccov", "view", "--archive", "--json", path],
+                  text=True,
+                )
+              )
+
+              merge_report(scheme_lines, report)
+              merge_report(combined, report)
+
+            covered_lines, executable_lines, coverage_percent = summarize_lines(scheme_lines)
             per_scheme.append((scheme_name, coverage_percent, covered_lines, executable_lines))
 
-          combined_executable_lines = sum(len(lines) for lines in combined.values())
-          combined_covered_lines = sum(
-            1 for lines in combined.values() for is_covered in lines.values() if is_covered
-          )
-          combined_coverage_percent = (
-            combined_covered_lines / combined_executable_lines * 100
-            if combined_executable_lines
-            else 0.0
-          )
+          combined_covered_lines, combined_executable_lines, combined_coverage_percent = summarize_lines(combined)
 
           def status_emoji(coverage_percent):
             if coverage_percent < 60.0:
@@ -195,8 +235,6 @@ jobs:
             if coverage_percent < 75.0:
               return "⚠️"
             return "✅"
-
-          summary_path = sys.argv[-1]
 
           with open(summary_path, "w") as handle:
             print("### Code Coverage", file=handle)
@@ -219,9 +257,8 @@ jobs:
             )
             print(f"  Combined - {combined_percent}% {combined_emoji}", file=sys.stderr)
 
-          with open(os.environ["GITHUB_OUTPUT"], "a") as handle:
-            print(f"combined_coverage_percent={combined_coverage_percent:.2f}", file=handle)
-          ' "${result_bundles[@]}" "$summary_file"
+          append_output(f"{combined_coverage_percent:.2f}")
+          ' "CoverageResults/xcresults" "$summary_file"
 
           cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
 
