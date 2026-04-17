@@ -225,71 +225,11 @@ jobs:
 
       - name: Publish combined coverage comment to pull request
         if: inputs.publish_pr_comment
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          REPOSITORY: ${{ github.repository }}
-        run: |
-          set -eo pipefail
-
-          summary_file="CoverageResults/combined-coverage-summary.md"
-          if [ ! -f "$summary_file" ]; then
-            echo "No combined coverage summary file was generated; skipping PR comment."
-            exit 0
-          fi
-
-          comment_id="$(
-            curl -fsSL \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" |
-            python3 -c '
-          import json
-          import sys
-
-          marker = "<!-- combined-code-coverage -->"
-          comments = json.load(sys.stdin)
-
-          for comment in comments:
-            if marker in comment.get("body", ""):
-              print(comment["id"])
-              break
-            '
-          )"
-
-          payload="$(
-            python3 -c '
-          import json
-          import sys
-
-          with open(sys.argv[1]) as handle:
-            body = "<!-- combined-code-coverage -->\n\n" + handle.read()
-
-          print(json.dumps({"body": body}))
-            ' "$summary_file"
-          )"
-
-          if [ -n "$comment_id" ]; then
-            echo "Updating existing coverage PR comment: $comment_id"
-            curl -fsSL \
-              -X PATCH \
-              -H "Authorization: Bearer $GITHUB_TOKEN" \
-              -H "Accept: application/vnd.github+json" \
-              -H "Content-Type: application/json" \
-              --data "$payload" \
-              "https://api.github.com/repos/$REPOSITORY/issues/comments/$comment_id" \
-              > /dev/null
-          else
-            echo "Creating new coverage PR comment"
-            curl -fsSL \
-              -X POST \
-              -H "Authorization: Bearer $GITHUB_TOKEN" \
-              -H "Accept: application/vnd.github+json" \
-              -H "Content-Type: application/json" \
-              --data "$payload" \
-              "https://api.github.com/repos/$REPOSITORY/issues/$PR_NUMBER/comments" \
-              > /dev/null
-          fi
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: combined-code-coverage
+          path: CoverageResults/combined-coverage-summary.md
+          skip_unchanged: true
 
   podspec-lint:
     name: Podspec Lint (${{ matrix.podspec }})
@@ -306,11 +246,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
 
-      - name: Ensure CocoaPods is installed
-        run: |
-          if ! command -v pod >/dev/null; then
-            gem install cocoapods
-          fi
+      - name: Set up CocoaPods
+        uses: maxim-lobanov/setup-cocoapods@v1
+        with:
+          version: latest
 
       - name: Lint podspec
         run: pod lib lint "${{ matrix.podspec }}" --verbose
