@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 
-SCRIPT_VERSION: str = "0.2.0"
+SCRIPT_VERSION: str = "0.3.0"
 """The current version of the script"""
 
 
@@ -59,6 +59,10 @@ VARIANT_SCORES: tuple[tuple[str, int], ...] = (
     ("se", 10),
 )
 """Relative ranking for Apple simulator model variants"""
+
+
+OUTPUT_MARKER: str = "__SIMCTL_PICK_A_TRICORDER__"
+"""The multiline GitHub Actions output marker"""
 
 
 @dataclass(frozen=True)
@@ -107,7 +111,8 @@ def setupArgumentParser() -> argparse.ArgumentParser:
                         dest='deviceTypes')
     parser.add_argument("--selection-mode", metavar="random-compatible",
                         help="How to choose the simulator(s) - random-compatible, random-latest-compatible, model-type, latest-model",
-                        dest='selectionMode', default="random-compatible")
+                        dest='selectionMode', default="random-compatible",
+                        choices=SUPPORTED_SELECTION_MODES)
     parser.add_argument("--model-preferences", metavar="iphone=Pro Max;ipad=Pro",
                         help="Semicolon-separated model keywords per device type",
                         dest='modelPreferences', default="")
@@ -154,7 +159,7 @@ def parseCommaSeparatedList(value: str) -> list[str]:
         The normalized list of values
     """
 
-    return [part.strip().lower() for part in value.split(",") if part.strip()]
+    return [part.strip().lower() for part in value.split(",") if len(part.strip()) > 0]
 
 
 def parseRequestedVersion(value: str) -> Optional[tuple[int, ...]]:
@@ -198,7 +203,7 @@ def parseModelPreferences(value: str) -> dict[str, list[str]]:
     """
 
     preferences: dict[str, list[str]] = {}
-    if not value or len(value.strip()) <= 0:
+    if value is None or len(value.strip()) <= 0:
         return preferences
 
     for segment in value.split(";"):
@@ -219,7 +224,7 @@ def parseModelPreferences(value: str) -> dict[str, list[str]]:
             raise ValueError(f"Unsupported device type in model preferences: {deviceType}")
 
         preferences[normalizedDeviceType] = [
-            keyword.strip().lower() for keyword in keywordsString.split(",") if keyword.strip()
+            keyword.strip().lower() for keyword in keywordsString.split(",") if len(keyword.strip()) > 0
         ]
 
     return preferences
@@ -354,9 +359,9 @@ def matchesRequestedVersion(candidateVersion: tuple[int, ...], requestedVersion:
     return candidateVersion[:len(requestedVersion)] == requestedVersion
 
 
-def determineVariantScore(name: str) -> int:
+def determineVariantDetails(name: str) -> tuple[str, int] | None:
     """
-    Determines the relative ranking score for a simulator model variant
+    Determines the detected model variant keyword and score
 
     Parameters
     ----------
@@ -365,17 +370,17 @@ def determineVariantScore(name: str) -> int:
 
     Returns
     -------
-    int
-        The relative model variant score
+    tuple[str, int] | None
+        The detected variant keyword and score, or None if no variant matched
     """
 
     normalizedName = name.lower()
 
     for keyword, score in VARIANT_SCORES:
         if keyword in normalizedName:
-            return score
+            return (keyword, score)
 
-    return 25
+    return None
 
 
 def determineModelType(name: str) -> str:
@@ -393,13 +398,8 @@ def determineModelType(name: str) -> str:
         The detected model type, or an empty string if none is present
     """
 
-    normalizedName = name.lower()
-
-    for keyword, _score in VARIANT_SCORES:
-        if keyword in normalizedName:
-            return keyword.title()
-
-    return ""
+    variantDetails = determineVariantDetails(name)
+    return variantDetails[0].title() if variantDetails is not None else ""
 
 
 def createSafeName(name: str, osVersion: str) -> str:
@@ -437,10 +437,11 @@ def determineModelRank(candidate: Candidate) -> tuple[tuple[int, ...], int, tupl
         The rank tuple used for deterministic sorting and comparisons
     """
 
+    variantDetails = determineVariantDetails(candidate.name)
     numericParts = tuple(int(part) for part in re.findall(r"\d+", candidate.name))
     return (
         candidate.osVersion,
-        determineVariantScore(candidate.name),
+        variantDetails[1] if variantDetails is not None else 25,
         numericParts,
         candidate.name,
     )
@@ -592,11 +593,7 @@ def filterCandidatesForRequestedOs(candidates: list[Candidate], requestedVersion
         The filtered candidates for the requested or latest OS version
     """
 
-    matchingCandidates = [
-        candidate
-        for candidate in candidates
-        if matchesRequestedVersion(candidate.osVersion, requestedVersion)
-    ]
+    matchingCandidates = [candidate for candidate in candidates if matchesRequestedVersion(candidate.osVersion, requestedVersion)]
 
     if requestedVersion is not None:
         print(
@@ -652,15 +649,13 @@ def buildCandidatePool(deviceType: str,
     if selectionMode == "random-compatible":
         return versionFilteredCandidates
 
-    if selectionMode == "random-latest-compatible":
-        return filterToLatestModel(versionFilteredCandidates)
-
     if selectionMode == "model-type":
-        return filterToLatestModel(
-            filterToModelPreferences(versionFilteredCandidates, modelPreferences)
+        versionFilteredCandidates = filterToModelPreferences(
+            versionFilteredCandidates,
+            modelPreferences,
         )
 
-    if selectionMode == "latest-model":
+    if selectionMode in {"random-latest-compatible", "model-type", "latest-model"}:
         return filterToLatestModel(versionFilteredCandidates)
 
     raise ValueError(f"Unsupported selection mode: {selectionMode}")
@@ -737,14 +732,13 @@ def validateScriptArguments(scriptArgs: argparse.Namespace) -> list[str]:
     if len(requestedDeviceTypes) <= 0:
         raise ValueError("At least one device type must be provided")
 
-    for deviceType in requestedDeviceTypes:
-        if deviceType not in SUPPORTED_DEVICE_TYPES:
-            raise ValueError(f"Unsupported device type specified: {deviceType}")
-
-    if scriptArgs.selectionMode not in SUPPORTED_SELECTION_MODES:
+    unsupportedDeviceTypes = [
+        deviceType for deviceType in requestedDeviceTypes
+        if deviceType not in SUPPORTED_DEVICE_TYPES
+    ]
+    if unsupportedDeviceTypes:
         raise ValueError(
-            f"Unsupported selection mode specified: {scriptArgs.selectionMode}. "
-            f"Expected one of {', '.join(SUPPORTED_SELECTION_MODES)}"
+            f"Unsupported device type specified: {', '.join(unsupportedDeviceTypes)}"
         )
 
     return requestedDeviceTypes
@@ -857,10 +851,10 @@ def writeGithubMultilineOutput(name: str, values: list[str]):
         return
 
     with open(outputFile, "a", encoding="utf-8") as file:
-        print(f"{name}<<__PICK_MY_XCODE_TRICORDER__", file=file)
+        print(f"{name}<<{OUTPUT_MARKER}", file=file)
         for value in values:
             print(value, file=file)
-        print("__PICK_MY_XCODE_TRICORDER__", file=file)
+        print(OUTPUT_MARKER, file=file)
 
 
 def publishOutputs(selectedCandidates: list[Candidate]):

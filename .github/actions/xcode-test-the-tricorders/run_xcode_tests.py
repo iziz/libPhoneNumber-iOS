@@ -7,8 +7,8 @@
 #  Created by Kodex on 4/17/26.
 #
 # This script runs xcodebuild tests against one or more simulator destinations
-# selected by simctl-pick-a-tricorder and publishes the generated xcresult
-# bundle paths for downstream GitHub Actions steps.
+# selected upstream and publishes the generated xcresult bundle paths for
+# downstream GitHub Actions steps.
 
 import argparse
 import json
@@ -18,7 +18,7 @@ import subprocess
 import sys
 
 
-SCRIPT_VERSION: str = "0.1.0"
+SCRIPT_VERSION: str = "0.2.1"
 """The current version of the script"""
 
 
@@ -29,9 +29,13 @@ SUPPORTED_XCODE_CONTAINERS: dict[str, str] = {
 """Supported Xcode container extensions mapped to xcodebuild argument types"""
 
 
+OUTPUT_MARKER: str = "__XCODE_TEST_THE_TRICORDERS__"
+"""The multiline GitHub Actions output marker"""
+
+
 def setupArgumentParser() -> argparse.ArgumentParser:
     """
-    Sets up the Arugment Parser
+    Sets up the argument parser
 
     Returns
     -------
@@ -41,7 +45,7 @@ def setupArgumentParser() -> argparse.ArgumentParser:
 
     parser: argparse.ArgumentParser = argparse.ArgumentParser(description="""
                 This script runs xcodebuild tests against simulator destinations
-                selected by simctl-pick-a-tricorder.""")
+                selected by an upstream simulator-selection step.""")
 
     parser.add_argument("--version", "-v", action="version",
                         version="%(prog)s " + SCRIPT_VERSION)
@@ -49,28 +53,29 @@ def setupArgumentParser() -> argparse.ArgumentParser:
                         help="show this help message and exit")
     parser.add_argument("--scheme", metavar="SchemeName", required=True,
                         help="The Xcode scheme to run tests for",
-                        dest='scheme')
+                        dest='scheme', type=parseNonEmptyArgument)
     parser.add_argument("--xcode-container", metavar="Project.xcodeproj", required=True,
                         help="The path to the Xcode project or workspace",
-                        dest='xcodeContainer')
+                        dest='xcodeContainer', type=parseNonEmptyArgument)
     parser.add_argument("--destination-ids", metavar="DESTINATION_IDS", required=True,
                         help="Newline-separated simulator destination UDIDs",
-                        dest='destinationIds')
+                        dest='destinationIds', type=parseNonEmptyArgument)
     parser.add_argument("--simulator-jsons", metavar="SIMULATOR_JSONS", required=True,
-                        help="JSON array of simulator objects from simctl-pick-a-tricorder",
-                        dest='simulatorJsons')
+                        help="JSON array of simulator objects from the picker action",
+                        dest='simulatorJsons', type=parseNonEmptyArgument)
     parser.add_argument("--result-bundle-directory", metavar="TestResults",
                         help="The directory where xcresult bundles should be written",
-                        dest='resultBundleDirectory', default="TestResults")
+                        dest='resultBundleDirectory', default="TestResults",
+                        type=parseNonEmptyArgument)
     parser.add_argument("--destination-arch", metavar="arm64", required=True,
                         help="The destination architecture to use with xcodebuild",
-                        dest='destinationArch')
+                        dest='destinationArch', type=parseNonEmptyArgument)
     parser.add_argument("--enable-code-coverage", metavar="YES", required=True,
                         help="The value to pass to -enableCodeCoverage",
-                        dest='enableCodeCoverage')
+                        dest='enableCodeCoverage', type=parseYesNoArgument)
     parser.add_argument("--code-signing-allowed", metavar="NO", required=True,
                         help="The value to pass through CODE_SIGNING_ALLOWED",
-                        dest='codeSigningAllowed')
+                        dest='codeSigningAllowed', type=parseYesNoArgument)
     parser.add_argument("--xcodebuild-extra-args", metavar="--test-iterations 2",
                         help="Optional extra xcodebuild arguments",
                         dest='xcodebuildExtraArgs', default="")
@@ -84,26 +89,48 @@ def printScriptStart():
     print(f"Starting {os.path.basename(__file__)} v{SCRIPT_VERSION}", file=sys.stderr)
 
 
-def validateScriptArguments(scriptArgs: argparse.Namespace):
+def parseNonEmptyArgument(value: str) -> str:
     """
-    Validates the parsed script arguments
+    Parses and validates a non-empty string argument
 
     Parameters
     ----------
-    scriptArgs
-        The parsed script arguments
+    value
+        The raw argument value
+
+    Returns
+    -------
+    str
+        The normalized non-empty argument value
     """
 
-    if len(scriptArgs.scheme.strip()) <= 0:
-        raise ValueError("An Xcode scheme must be provided")
+    normalizedValue = value.strip()
+    if len(normalizedValue) <= 0:
+        raise ValueError("Argument value must not be empty")
 
-    if len(scriptArgs.xcodeContainer.strip()) <= 0:
-        raise ValueError("An Xcode container path must be provided")
+    return normalizedValue
 
-    if len(scriptArgs.resultBundleDirectory.strip()) <= 0:
-        raise ValueError("A result bundle directory must be provided")
 
-    determineXcodeContainerType(scriptArgs.xcodeContainer)
+def parseYesNoArgument(value: str) -> str:
+    """
+    Parses and validates a YES or NO argument value
+
+    Parameters
+    ----------
+    value
+        The raw argument value
+
+    Returns
+    -------
+    str
+        The normalized YES or NO value
+    """
+
+    normalizedValue = parseNonEmptyArgument(value).upper()
+    if normalizedValue not in {"YES", "NO"}:
+        raise ValueError(f"Unsupported YES/NO value specified: {value}")
+
+    return normalizedValue
 
 
 def determineXcodeContainerType(xcodeContainer: str) -> str:
@@ -123,7 +150,6 @@ def determineXcodeContainerType(xcodeContainer: str) -> str:
 
     _root, extension = os.path.splitext(xcodeContainer.strip())
     containerType = SUPPORTED_XCODE_CONTAINERS.get(extension.lower())
-
     if containerType is None:
         raise ValueError(
             f"Unsupported Xcode container specified: {xcodeContainer}. "
@@ -148,7 +174,7 @@ def parseDestinationIds(value: str) -> list[str]:
         The parsed destination IDs
     """
 
-    return [part.strip() for part in value.splitlines() if part.strip()]
+    return [part.strip() for part in value.splitlines() if len(part.strip()) > 0]
 
 
 def parseSimulatorJsons(value: str) -> list[dict[str, str]]:
@@ -175,37 +201,42 @@ def parseSimulatorJsons(value: str) -> list[dict[str, str]]:
         if not isinstance(simulator, dict):
             raise ValueError("Simulator JSON payload entries must be objects")
 
+        safeName = str(simulator.get("safe_name") or "").strip()
+        if len(safeName) <= 0:
+            raise ValueError("Simulator output is missing a safe_name value")
+
         normalizedSimulators.append({
             "name": str(simulator.get("name") or "").strip(),
             "os": str(simulator.get("os") or "").strip(),
-            "safe_name": str(simulator.get("safe_name") or "").strip(),
+            "safe_name": safeName,
         })
 
     return normalizedSimulators
 
 
-def determineResultBundlePath(resultBundleDirectory: str,
-                              scheme: str,
-                              safeName: str) -> str:
+def validateScriptArguments(scriptArgs: argparse.Namespace) -> tuple[list[str], list[dict[str, str]]]:
     """
-    Determines the xcresult bundle path for the specified simulator
+    Validates the parsed script arguments
 
     Parameters
     ----------
-    resultBundleDirectory
-        The directory where xcresult bundles should be written
-    scheme
-        The Xcode scheme being tested
-    safeName
-        The filesystem-safe simulator identifier
+    scriptArgs
+        The parsed script arguments
 
     Returns
     -------
-    str
-        The full xcresult bundle path
+    tuple[list[str], list[dict[str, str]]]
+        The parsed destination IDs and simulator objects
     """
 
-    return os.path.join(resultBundleDirectory, f"{scheme}-{safeName}.xcresult")
+    determineXcodeContainerType(scriptArgs.xcodeContainer)
+
+    destinationIds = parseDestinationIds(scriptArgs.destinationIds)
+    simulators = parseSimulatorJsons(scriptArgs.simulatorJsons)
+    if len(destinationIds) != len(simulators):
+        raise ValueError("Destination ID and simulator output counts do not match")
+
+    return (destinationIds, simulators)
 
 
 def writeGithubOutput(name: str, value: str):
@@ -245,31 +276,15 @@ def writeGithubMultilineOutput(name: str, values: list[str]):
         return
 
     with open(outputFile, "a", encoding="utf-8") as file:
-        print(f"{name}<<__XCODE_TEST_THE_TRICORDERS__", file=file)
+        print(f"{name}<<{OUTPUT_MARKER}", file=file)
         for value in values:
             print(value, file=file)
-        print("__XCODE_TEST_THE_TRICORDERS__", file=file)
-
-
-def publishOutputs(resultBundleDirectory: str, resultBundlePaths: list[str]):
-    """
-    Publishes the generated test result bundle outputs for GitHub Actions
-
-    Parameters
-    ----------
-    resultBundleDirectory
-        The directory containing the generated xcresult bundles
-    resultBundlePaths
-        The generated xcresult bundle paths
-    """
-
-    writeGithubOutput("result_bundle_directory", resultBundleDirectory)
-    writeGithubMultilineOutput("result_bundle_paths", resultBundlePaths)
+        print(OUTPUT_MARKER, file=file)
 
 
 def runTests(scriptArgs: argparse.Namespace,
              destinationIds: list[str],
-             simulators: list[dict[str, str]]) -> list[str]:
+             simulators: list[dict[str, str]]) -> tuple[str, list[str]]:
     """
     Runs xcodebuild tests for all selected simulator destinations
 
@@ -277,44 +292,28 @@ def runTests(scriptArgs: argparse.Namespace,
     ----------
     scriptArgs
         The parsed script arguments
-    destinationIds
-        The simulator destination IDs
-    simulators
-        The parsed simulator metadata
 
     Returns
     -------
-    list[str]
-        The generated xcresult bundle paths
+    tuple[str, list[str]]
+        The result bundle directory and generated xcresult bundle paths
     """
 
-    if len(destinationIds) != len(simulators):
-        raise ValueError("Destination ID and simulator output counts do not match")
+    xcodeContainerType = determineXcodeContainerType(scriptArgs.xcodeContainer)
+    extraArgs = shlex.split(scriptArgs.xcodebuildExtraArgs)
 
     os.makedirs(scriptArgs.resultBundleDirectory, exist_ok=True)
 
     resultBundlePaths: list[str] = []
-    extraArgs = shlex.split(scriptArgs.xcodebuildExtraArgs)
-    xcodeContainerType = determineXcodeContainerType(scriptArgs.xcodeContainer)
-
-    for index, destinationId in enumerate(destinationIds):
-        simulator = simulators[index]
-        simulatorName = simulator["name"]
-        simulatorOs = simulator["os"]
-        safeName = simulator["safe_name"]
-
-        if len(safeName) <= 0:
-            raise ValueError("Simulator output is missing a safe_name value")
-
-        destination = f"id={destinationId},arch={scriptArgs.destinationArch}"
-        resultBundlePath = determineResultBundlePath(
-            resultBundleDirectory=scriptArgs.resultBundleDirectory,
-            scheme=scriptArgs.scheme,
-            safeName=safeName,
+    for destinationId, simulator in zip(destinationIds, simulators):
+        resultBundlePath = os.path.join(
+            scriptArgs.resultBundleDirectory,
+            f"{scriptArgs.scheme}-{simulator['safe_name']}.xcresult",
         )
+        destination = f"id={destinationId},arch={scriptArgs.destinationArch}"
 
         print(
-            f"Running {scriptArgs.scheme} on {simulatorName} ({simulatorOs}) -> {resultBundlePath}",
+            f"Running {scriptArgs.scheme} on {simulator['name']} ({simulator['os']}) -> {resultBundlePath}",
             file=sys.stderr,
         )
 
@@ -336,10 +335,9 @@ def runTests(scriptArgs: argparse.Namespace,
                 "test",
             ]
         )
-
         resultBundlePaths.append(resultBundlePath)
 
-    return resultBundlePaths
+    return (scriptArgs.resultBundleDirectory, resultBundlePaths)
 
 
 def main():
@@ -350,19 +348,14 @@ def main():
 
     printScriptStart()
 
-    validateScriptArguments(scriptArgs)
-    destinationIds = parseDestinationIds(scriptArgs.destinationIds)
-    simulators = parseSimulatorJsons(scriptArgs.simulatorJsons)
-    resultBundlePaths = runTests(
+    destinationIds, simulators = validateScriptArguments(scriptArgs)
+    resultBundleDirectory, resultBundlePaths = runTests(
         scriptArgs=scriptArgs,
         destinationIds=destinationIds,
         simulators=simulators,
     )
-
-    publishOutputs(
-        resultBundleDirectory=scriptArgs.resultBundleDirectory,
-        resultBundlePaths=resultBundlePaths,
-    )
+    writeGithubOutput("result_bundle_directory", resultBundleDirectory)
+    writeGithubMultilineOutput("result_bundle_paths", resultBundlePaths)
 
 
 if __name__ == "__main__":
