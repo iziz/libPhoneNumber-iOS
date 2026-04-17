@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #  pick_simulator.py
-#  pick-my-xcode-tricorder
+#  simctl-pick-a-tricorder
 #
 #  Created by Kodex on 4/17/26.
 #

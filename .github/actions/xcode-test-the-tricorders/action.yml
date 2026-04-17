@@ -1,0 +1,63 @@
+name: Xcode Test The Tricorders
+description: Run xcodebuild tests against simulator destinations selected by simctl-pick-a-tricorder.
+
+inputs:
+  scheme:
+    description: Xcode scheme to test.
+    required: true
+  xcode_container:
+    description: Path to the Xcode project or workspace.
+    required: true
+  destination_ids:
+    description: Newline-separated list of simulator destination UDIDs.
+    required: true
+  simulator_jsons:
+    description: JSON array of simulator objects returned by simctl-pick-a-tricorder.
+    required: true
+  result_bundle_directory:
+    description: Directory where generated xcresult bundles should be written.
+    required: false
+    default: TestResults
+  destination_arch:
+    description: Destination architecture to use with xcodebuild.
+    required: false
+    default: arm64
+  enable_code_coverage:
+    description: Value to pass to -enableCodeCoverage.
+    required: false
+    default: "YES"
+  code_signing_allowed:
+    description: Value to pass through CODE_SIGNING_ALLOWED.
+    required: false
+    default: "NO"
+  xcodebuild_extra_args:
+    description: Optional extra xcodebuild arguments.
+    required: false
+    default: ""
+
+outputs:
+  result_bundle_directory:
+    description: Directory containing the generated xcresult bundles.
+    value: ${{ steps.run.outputs.result_bundle_directory }}
+  result_bundle_paths:
+    description: Newline-separated list of generated xcresult bundle paths.
+    value: ${{ steps.run.outputs.result_bundle_paths }}
+
+runs:
+  using: composite
+  steps:
+    - name: Run xcodebuild tests
+      id: run
+      shell: bash
+      run: |
+        set -eo pipefail
+        python3 "${{ github.action_path }}/run_xcode_tests.py" \
+          --scheme "${{ inputs.scheme }}" \
+          --xcode-container "${{ inputs.xcode_container }}" \
+          --destination-ids "${{ inputs.destination_ids }}" \
+          --simulator-jsons "${{ inputs.simulator_jsons }}" \
+          --result-bundle-directory "${{ inputs.result_bundle_directory }}" \
+          --destination-arch "${{ inputs.destination_arch }}" \
+          --enable-code-coverage "${{ inputs.enable_code_coverage }}" \
+          --code-signing-allowed "${{ inputs.code_signing_allowed }}" \
+          --xcodebuild-extra-args "${{ inputs.xcodebuild_extra_args }}"

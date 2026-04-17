@@ -31,76 +31,27 @@ jobs:
 
       - name: Resolve iPhone simulator destination
         id: destination
-        uses: ./.github/actions/pick-my-xcode-tricorder
+        uses: ./.github/actions/simctl-pick-a-tricorder
         with:
           device_types: iphone
           iphoneos_version: latest
           selection_mode: random-compatible
 
       - name: Run unit tests
-        env:
-          SCHEME: ${{ matrix.scheme }}
-          DESTINATION_IDS: ${{ steps.destination.outputs.destination_ids }}
-          SIMULATOR_JSONS: ${{ steps.destination.outputs.simulator_jsons }}
-        run: |
-          set -eo pipefail
-          mkdir -p TestResults
-
-          python3 -c '
-          import json
-          import os
-          import subprocess
-          import sys
-
-          scheme = os.environ["SCHEME"]
-          destination_ids = [
-            value.strip()
-            for value in os.environ["DESTINATION_IDS"].splitlines()
-            if value.strip()
-          ]
-          simulators = json.loads(os.environ["SIMULATOR_JSONS"])
-
-          if len(destination_ids) != len(simulators):
-            raise SystemExit("Destination ID and simulator output counts do not match")
-
-          for index, destination_id in enumerate(destination_ids):
-            simulator = simulators[index]
-            simulator_name = simulator["name"]
-            simulator_os = simulator["os"]
-            destination = f"id={destination_id},arch=arm64"
-            safe_name = simulator["safe_name"]
-            result_bundle_path = os.path.join("TestResults", f"{scheme}-{safe_name}.xcresult")
-
-            print(
-              f"Running {scheme} on {simulator_name} ({simulator_os}) -> {result_bundle_path}",
-              file=sys.stderr,
-            )
-
-            subprocess.check_call(
-              [
-                "xcodebuild",
-                "-project",
-                "libPhoneNumber.xcodeproj",
-                "-scheme",
-                scheme,
-                "-destination",
-                destination,
-                "-resultBundlePath",
-                result_bundle_path,
-                "-enableCodeCoverage",
-                "YES",
-                "CODE_SIGNING_ALLOWED=NO",
-                "test",
-              ]
-            )
-          '
+        id: run-tests
+        uses: ./.github/actions/xcode-test-the-tricorders
+        with:
+          scheme: ${{ matrix.scheme }}
+          xcode_container: libPhoneNumber.xcodeproj
+          destination_ids: ${{ steps.destination.outputs.destination_ids }}
+          simulator_jsons: ${{ steps.destination.outputs.simulator_jsons }}
 
       - name: Upload unit test results
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: project-unit-tests-${{ matrix.scheme }}
-          path: TestResults/*.xcresult
+          path: ${{ steps.run-tests.outputs.result_bundle_paths }}
 
   coverage-summary:
     name: Combined Code Coverage

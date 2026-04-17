@@ -1,4 +1,4 @@
-# Pick My Xcode Tricorder
+# Simctl Pick A Tricorder
 
 Local composite action for choosing an installed simulator device from `xcrun simctl list devices --json`.
 
@@ -37,7 +37,7 @@ Local composite action for choosing an installed simulator device from `xcrun si
 ```yaml
 - name: Pick simulator
   id: simulator
-  uses: ./.github/actions/pick-my-xcode-tricorder
+  uses: ./.github/actions/simctl-pick-a-tricorder
   with:
     device_types: iphone,ipad
     iphoneos_version: latest
@@ -45,27 +45,10 @@ Local composite action for choosing an installed simulator device from `xcrun si
     selection_mode: random-latest-compatible
 
 - name: Run tests
-  env:
-    DESTINATION_IDS: ${{ steps.simulator.outputs.destination_ids }}
-    SIMULATOR_JSONS: ${{ steps.simulator.outputs.simulator_jsons }}
-  run: |
-    python3 -c '
-    import json
-    import os
-
-    destination_ids = [
-      value.strip()
-      for value in os.environ["DESTINATION_IDS"].splitlines()
-      if value.strip()
-    ]
-    simulators = json.loads(os.environ["SIMULATOR_JSONS"])
-
-    for index, destination_id in enumerate(destination_ids):
-      simulator = simulators[index]
-      destination = f"id={destination_id},arch=arm64"
-      safe_name = simulator["safe_name"]
-      print(f"Run against {simulator['name']} ({simulator['os']})")
-      print(f"Use safe result-bundle name: {safe_name}")
-      print(f"xcodebuild -destination {destination} test")
-    '
+  uses: ./.github/actions/xcode-test-the-tricorders
+  with:
+    scheme: libPhoneNumber
+    xcode_container: libPhoneNumber.xcodeproj
+    destination_ids: ${{ steps.simulator.outputs.destination_ids }}
+    simulator_jsons: ${{ steps.simulator.outputs.simulator_jsons }}
 ```
