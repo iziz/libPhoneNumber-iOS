@@ -31,74 +31,76 @@ jobs:
 
       - name: Resolve iPhone simulator destination
         id: destination
-        run: |
-          set -eo pipefail
-
-          destination_id="$(
-            xcrun simctl list devices --json |
-              python3 -c '
-                import json
-                import re
-                import random
-                import sys
-
-                latest_os_version = None
-                candidates = []
-                for runtime, entries in json.load(sys.stdin).get("devices", {}).items():
-                  runtime_match = re.match(r"com\.apple\.CoreSimulator\.SimRuntime\.iOS-(\d+)-(\d+)", runtime)
-                  if not runtime_match:
-                    continue
-
-                  os_version = tuple(int(part) for part in runtime_match.groups())
-                  if latest_os_version is None or os_version > latest_os_version:
-                    latest_os_version = os_version
-                    candidates = []
-                  elif os_version < latest_os_version:
-                    continue
-
-                  print(f"Runtime: {runtime} ({len(entries)} devices)", file=sys.stderr)
-                  for entry in entries:
-                    name = (entry["name"] or "").strip()
-                    udid = entry["udid"]
-                    if entry["isAvailable"] and udid and name.startswith("iPhone"):
-                      candidates.append((name, udid))
-                      the_os = f"{os_version[0]}.{os_version[1]}"
-                      print(f"  {name} (iOS {the_os}) [{udid}]", file=sys.stderr)
-
-                if not candidates:
-                  raise SystemExit("No iPhone simulator destinations found")
-
-                selected = random.choice(candidates)
-                the_os = f"{latest_os_version[0]}.{latest_os_version[1]}"
-                print(f"Selected Simulator: {selected[0]} (iOS {the_os}) [{selected[1]}]", file=sys.stderr)
-                print(selected[1])
-                '
-          )"
-
-          echo "destination=id=$destination_id,arch=arm64" >> "$GITHUB_OUTPUT"
+        uses: ./.github/actions/pick-my-xcode-tricorder
+        with:
+          device_types: iphone
+          iphoneos_version: latest
+          selection_mode: random-compatible
 
       - name: Run unit tests
         env:
           SCHEME: ${{ matrix.scheme }}
+          DESTINATION_IDS: ${{ steps.destination.outputs.destination_ids }}
+          SIMULATOR_JSONS: ${{ steps.destination.outputs.simulator_jsons }}
         run: |
           set -eo pipefail
           mkdir -p TestResults
 
-          xcodebuild \
-            -project libPhoneNumber.xcodeproj \
-            -scheme "$SCHEME" \
-            -destination "${{ steps.destination.outputs.destination }}" \
-            -resultBundlePath "TestResults/${SCHEME}.xcresult" \
-            -enableCodeCoverage YES \
-            CODE_SIGNING_ALLOWED=NO \
-            test
+          python3 -c '
+          import json
+          import os
+          import subprocess
+          import sys
+
+          scheme = os.environ["SCHEME"]
+          destination_ids = [
+            value.strip()
+            for value in os.environ["DESTINATION_IDS"].splitlines()
+            if value.strip()
+          ]
+          simulators = json.loads(os.environ["SIMULATOR_JSONS"])
+
+          if len(destination_ids) != len(simulators):
+            raise SystemExit("Destination ID and simulator output counts do not match")
+
+          for index, destination_id in enumerate(destination_ids):
+            simulator = simulators[index]
+            simulator_name = simulator["name"]
+            simulator_os = simulator["os"]
+            destination = f"id={destination_id},arch=arm64"
+            safe_name = simulator["safe_name"]
+            result_bundle_path = os.path.join("TestResults", f"{scheme}-{safe_name}.xcresult")
+
+            print(
+              f"Running {scheme} on {simulator_name} ({simulator_os}) -> {result_bundle_path}",
+              file=sys.stderr,
+            )
+
+            subprocess.check_call(
+              [
+                "xcodebuild",
+                "-project",
+                "libPhoneNumber.xcodeproj",
+                "-scheme",
+                scheme,
+                "-destination",
+                destination,
+                "-resultBundlePath",
+                result_bundle_path,
+                "-enableCodeCoverage",
+                "YES",
+                "CODE_SIGNING_ALLOWED=NO",
+                "test",
+              ]
+            )
+          '
 
       - name: Upload unit test results
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: project-unit-tests-${{ matrix.scheme }}.xcresult
-          path: TestResults/${{ matrix.scheme }}.xcresult
+          path: TestResults/*.xcresult
 
   coverage-summary:
     name: Combined Code Coverage

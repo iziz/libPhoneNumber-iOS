@@ -1,0 +1,61 @@
+name: Pick My Xcode Tricorder
+description: Select a compatible Apple simulator device from the installed simctl inventory.
+
+inputs:
+  device_types:
+    description: "Ordered, comma-separated list of device types to consider. Supported values: iphone, ipad, macos, watch, vision."
+    required: true
+  selection_mode:
+    description: "One of random-compatible, random-latest-compatible, model-type, latest-model."
+    required: false
+    default: random-compatible
+  model_preferences:
+    description: 'Semicolon-separated device type mappings such as "iphone=Pro Max;ipad=Pro;watch=Ultra;vision=Pro".'
+    required: false
+    default: ""
+  iphoneos_version:
+    description: "Specific iOS version for iPhone devices, or latest."
+    required: false
+    default: latest
+  ipados_version:
+    description: "Specific iOS version for iPad devices, or latest."
+    required: false
+    default: latest
+  macos_version:
+    description: "Specific macOS version for macOS simulator devices, or latest."
+    required: false
+    default: latest
+  watchos_version:
+    description: "Specific watchOS version for watch devices, or latest."
+    required: false
+    default: latest
+  visionos_version:
+    description: "Specific visionOS version for Vision devices, or latest."
+    required: false
+    default: latest
+
+outputs:
+  simulator_jsons:
+    description: "The selected simulators as a JSON array of objects with udid, name, os, and modelType."
+    value: ${{ steps.pick.outputs.simulator_jsons }}
+  destination_ids:
+    description: "The selected simulator UDIDs as a newline-separated list."
+    value: ${{ steps.pick.outputs.destination_ids }}
+
+runs:
+  using: composite
+  steps:
+    - name: Pick simulator
+      id: pick
+      shell: bash
+      run: |
+        set -eo pipefail
+        python3 "${{ github.action_path }}/pick_simulator.py" \
+          --device-types "${{ inputs.device_types }}" \
+          --selection-mode "${{ inputs.selection_mode }}" \
+          --model-preferences "${{ inputs.model_preferences }}" \
+          --iphoneos-version "${{ inputs.iphoneos_version }}" \
+          --ipados-version "${{ inputs.ipados_version }}" \
+          --macos-version "${{ inputs.macos_version }}" \
+          --watchos-version "${{ inputs.watchos_version }}" \
+          --visionos-version "${{ inputs.visionos_version }}"
