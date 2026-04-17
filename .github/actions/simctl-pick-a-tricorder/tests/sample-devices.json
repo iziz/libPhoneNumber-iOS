@@ -1,0 +1,74 @@
+{
+  "devices": {
+    "com.apple.CoreSimulator.SimRuntime.iOS-18-1": [
+      {
+        "name": "iPhone 16",
+        "udid": "AAA11111-1111-1111-1111-111111111111",
+        "isAvailable": true
+      },
+      {
+        "name": "iPhone 16 Pro",
+        "udid": "AAA22222-2222-2222-2222-222222222222",
+        "isAvailable": true
+      },
+      {
+        "name": "iPad Pro 13-inch (M4)",
+        "udid": "AAA33333-3333-3333-3333-333333333333",
+        "isAvailable": true
+      }
+    ],
+    "com.apple.CoreSimulator.SimRuntime.iOS-18-2": [
+      {
+        "name": "iPhone 17",
+        "udid": "BBB11111-1111-1111-1111-111111111111",
+        "isAvailable": true
+      },
+      {
+        "name": "iPhone 17 Pro",
+        "udid": "BBB22222-2222-2222-2222-222222222222",
+        "isAvailable": true
+      },
+      {
+        "name": "iPhone 17 Pro Max",
+        "udid": "BBB33333-3333-3333-3333-333333333333",
+        "isAvailable": true
+      },
+      {
+        "name": "iPad Air 13-inch (M3)",
+        "udid": "BBB44444-4444-4444-4444-444444444444",
+        "isAvailable": true
+      }
+    ],
+    "com.apple.CoreSimulator.SimRuntime.watchOS-11-2": [
+      {
+        "name": "Apple Watch SE (2nd generation) (44mm)",
+        "udid": "CCC11111-1111-1111-1111-111111111111",
+        "isAvailable": true
+      },
+      {
+        "name": "Apple Watch Ultra 2 (49mm)",
+        "udid": "CCC22222-2222-2222-2222-222222222222",
+        "isAvailable": true
+      }
+    ],
+    "com.apple.CoreSimulator.SimRuntime.macOS-15-0": [
+      {
+        "name": "Mac",
+        "udid": "DDD11111-1111-1111-1111-111111111111",
+        "isAvailable": true
+      },
+      {
+        "name": "MacBook Pro (16-inch)",
+        "udid": "DDD22222-2222-2222-2222-222222222222",
+        "isAvailable": true
+      }
+    ],
+    "com.apple.CoreSimulator.SimRuntime.xrOS-2-0": [
+      {
+        "name": "Apple Vision Pro",
+        "udid": "EEE11111-1111-1111-1111-111111111111",
+        "isAvailable": true
+      }
+    ]
+  }
+}

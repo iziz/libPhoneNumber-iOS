@@ -29,3 +29,17 @@ ObjectiveC.gcda
 # SPM
 .build
 .swiftpm
+
+# Python
+*.py[cod]
+**/__pycache__/
+**/.pytest_cache/
+
+# Python action tests
+.coverage
+.coverage.*
+.github/actions/python-action-tests/.coverage
+.github/actions/python-action-tests/.coverage.*
+.github/actions/python-action-tests/.venv/
+.github/actions/python-action-tests/build/
+.venv-python-action-tests/

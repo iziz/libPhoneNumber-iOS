@@ -1,0 +1,22 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+junit_family = "xunit2"
+addopts = ["-ra"]
+
+[tool.coverage.run]
+branch = true
+relative_files = true
+patch = ["subprocess"]
+source = [
+  ".github/actions/simctl-pick-a-tricorder",
+  ".github/actions/xccov-warp-bubble",
+  ".github/actions/xcode-test-the-tricorders",
+]
+omit = [".github/actions/python-action-tests/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+precision = 2
+omit = [".github/actions/python-action-tests/*"]
