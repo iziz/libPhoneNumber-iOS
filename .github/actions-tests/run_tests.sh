@@ -3,7 +3,7 @@
 set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-repo_root="$(cd "$script_dir/../../.." && pwd)"
+repo_root="$(cd "$script_dir/../.." && pwd)"
 
 results_dir="${PYTHON_ACTION_TEST_RESULTS_DIR:-$script_dir/build/python-action-test-results}"
 coverage_fail_under="${PYTHON_ACTION_TEST_COVERAGE_FAIL_UNDER:-}"
@@ -30,7 +30,9 @@ trap cleanup_python_caches EXIT
 
 pytest_args=(
   "-c" "$script_dir/pyproject.toml"
-  "$script_dir/tests"
+  "$script_dir/simctl-pick-a-tricorder"
+  "$script_dir/xcode-test-the-tricorders"
+  "$script_dir/xccov-warp-bubble"
   "--junitxml=$results_dir/junit.xml"
   "--cov=.github/actions/simctl-pick-a-tricorder"
   "--cov=.github/actions/xcode-test-the-tricorders"

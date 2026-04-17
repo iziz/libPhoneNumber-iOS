@@ -1,6 +1,10 @@
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
+testpaths = [
+  "simctl-pick-a-tricorder",
+  "xcode-test-the-tricorders",
+  "xccov-warp-bubble",
+]
+python_files = ["*_tests.py"]
 junit_family = "xunit2"
 addopts = ["-ra"]
 
@@ -13,10 +17,10 @@ source = [
   ".github/actions/xccov-warp-bubble",
   ".github/actions/xcode-test-the-tricorders",
 ]
-omit = [".github/actions/python-action-tests/*"]
+omit = [".github/actions-tests/*"]
 
 [tool.coverage.report]
 show_missing = true
 skip_empty = true
 precision = 2
-omit = [".github/actions/python-action-tests/*"]
+omit = [".github/actions-tests/*"]

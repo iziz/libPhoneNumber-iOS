@@ -38,8 +38,8 @@ ObjectiveC.gcda
 # Python action tests
 .coverage
 .coverage.*
-.github/actions/python-action-tests/.coverage
-.github/actions/python-action-tests/.coverage.*
-.github/actions/python-action-tests/.venv/
-.github/actions/python-action-tests/build/
+.github/actions-tests/.coverage
+.github/actions-tests/.coverage.*
+.github/actions-tests/.venv/
+.github/actions-tests/build/
 .venv-python-action-tests/
