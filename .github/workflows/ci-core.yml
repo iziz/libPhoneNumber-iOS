@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: project-unit-tests-${{ matrix.scheme }}
-          path: ${{ steps.run-tests.outputs.result_bundle_paths }}
+          path: ${{ steps.run-tests.outputs.result_bundle_directory }}
 
   coverage-summary:
     name: Combined Code Coverage

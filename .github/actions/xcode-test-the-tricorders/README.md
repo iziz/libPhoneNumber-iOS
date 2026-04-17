@@ -58,5 +58,5 @@ Local composite action for running `xcodebuild test` across simulator destinatio
   uses: actions/upload-artifact@v6
   with:
     name: project-unit-tests-libPhoneNumber
-    path: ${{ steps.tests.outputs.result_bundle_paths }}
+    path: ${{ steps.tests.outputs.result_bundle_directory }}
 ```

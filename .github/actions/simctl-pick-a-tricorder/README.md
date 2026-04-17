@@ -45,10 +45,17 @@ Local composite action for choosing an installed simulator device from `xcrun si
     selection_mode: random-latest-compatible
 
 - name: Run tests
+  id: tests
   uses: ./.github/actions/xcode-test-the-tricorders
   with:
     scheme: libPhoneNumber
     xcode_container: libPhoneNumber.xcodeproj
     destination_ids: ${{ steps.simulator.outputs.destination_ids }}
     simulator_jsons: ${{ steps.simulator.outputs.simulator_jsons }}
+
+- name: Upload unit test results
+  uses: actions/upload-artifact@v6
+  with:
+    name: project-unit-tests-libPhoneNumber
+    path: ${{ steps.tests.outputs.result_bundle_directory }}
 ```
