@@ -1,0 +1,52 @@
+name: Xccov Warp Bubble
+description: Generate a code coverage summary from downloaded xcresult bundles.
+
+inputs:
+  xcresults_directory:
+    description: Root directory containing downloaded artifact folders with xcresult bundles.
+    required: false
+    default: CoverageResults/xcresults
+  summary_file:
+    description: Markdown file path where the coverage summary should be written.
+    required: false
+    default: CoverageResults/code-coverage-summary.md
+  failing_coverage_threshold:
+    description: Coverage percent below which the status is marked as failing.
+    required: false
+    default: "60"
+  passing_coverage_threshold:
+    description: Coverage percent at or above which the status is marked as passing.
+    required: false
+    default: "75"
+
+outputs:
+  coverage_percent:
+    description: The overall coverage percent. For one scope this is that scope coverage; for multiple scopes this is the combined coverage.
+    value: ${{ steps.summary.outputs.coverage_percent }}
+  summary_file:
+    description: Markdown summary file path.
+    value: ${{ steps.summary.outputs.summary_file }}
+  scope_count:
+    description: The number of coverage scopes that were summarized.
+    value: ${{ steps.summary.outputs.scope_count }}
+
+runs:
+  using: composite
+  steps:
+    - name: Generate code coverage summary
+      id: summary
+      shell: bash
+      env:
+        INPUT_XCRESULTS_DIRECTORY: ${{ inputs.xcresults_directory }}
+        INPUT_SUMMARY_FILE: ${{ inputs.summary_file }}
+        INPUT_FAILING_COVERAGE_THRESHOLD: ${{ inputs.failing_coverage_threshold }}
+        INPUT_PASSING_COVERAGE_THRESHOLD: ${{ inputs.passing_coverage_threshold }}
+      run: |
+        set -eo pipefail
+        python3 "${{ github.action_path }}/generate_coverage_summary.py" \
+          --xcresults-directory "$INPUT_XCRESULTS_DIRECTORY" \
+          --summary-file "$INPUT_SUMMARY_FILE" \
+          --failing-coverage-threshold "$INPUT_FAILING_COVERAGE_THRESHOLD" \
+          --passing-coverage-threshold "$INPUT_PASSING_COVERAGE_THRESHOLD"
+
+        cat "$INPUT_SUMMARY_FILE" >> "$GITHUB_STEP_SUMMARY"
