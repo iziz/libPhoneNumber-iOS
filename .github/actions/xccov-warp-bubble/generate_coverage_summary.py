@@ -8,7 +8,7 @@
 #
 # This script reads downloaded xcresult bundles, calculates per-scope coverage,
 # optionally calculates combined coverage across multiple scopes, prints the
-# results to the GitHub Actions log, and writes a markdown coverage summary file.
+# results to the GitHub Actions log, and writes markdown and JSON summary files.
 
 import argparse
 import json
@@ -18,7 +18,7 @@ import sys
 from dataclasses import dataclass
 
 
-SCRIPT_VERSION: str = "0.1.0"
+SCRIPT_VERSION: str = "0.2.0"
 """The current version of the script"""
 
 
@@ -28,6 +28,17 @@ XCRESULT_SUFFIX: str = ".xcresult"
 
 DEFAULT_SCOPE_PREFIXES_TO_TRIM: tuple[str, ...] = ("project-unit-tests-",)
 """Common artifact name prefixes that should be trimmed from scope labels"""
+
+
+@dataclass(frozen=True)
+class CoverageThresholds:
+    """Represents the configured coverage thresholds"""
+
+    failingCoverageThreshold: float
+    """Coverage percent below which the status is considered failing"""
+
+    passingCoverageThreshold: float
+    """Coverage percent at or above which the status is considered passing"""
 
 
 @dataclass(frozen=True)
@@ -71,6 +82,9 @@ def setupArgumentParser() -> argparse.ArgumentParser:
     parser.add_argument("--summary-file", metavar="CoverageResults/code-coverage-summary.md",
                         help="The markdown file path where the coverage summary should be written",
                         dest='summaryFile', required=True)
+    parser.add_argument("--summary-json-file", metavar="CoverageResults/code-coverage-summary.json",
+                        help="The JSON file path where the coverage summary should be written",
+                        dest='summaryJsonFile', required=True)
     parser.add_argument("--failing-coverage-threshold", metavar="60",
                         help="Coverage percent below which the status is marked as failing",
                         dest='failingCoverageThreshold', required=True)
@@ -115,7 +129,7 @@ def parseCoverageThreshold(value: str, label: str) -> float:
     return threshold
 
 
-def validateScriptArguments(scriptArgs: argparse.Namespace) -> tuple[float, float]:
+def validateScriptArguments(scriptArgs: argparse.Namespace) -> CoverageThresholds:
     """
     Validates the parsed script arguments
 
@@ -126,8 +140,8 @@ def validateScriptArguments(scriptArgs: argparse.Namespace) -> tuple[float, floa
 
     Returns
     -------
-    tuple[float, float]
-        The parsed failing and passing coverage thresholds
+    CoverageThresholds
+        The parsed coverage thresholds
     """
 
     if len(scriptArgs.xcresultsDirectory.strip()) <= 0:
@@ -135,6 +149,9 @@ def validateScriptArguments(scriptArgs: argparse.Namespace) -> tuple[float, floa
 
     if len(scriptArgs.summaryFile.strip()) <= 0:
         raise ValueError("A summary file path must be provided")
+
+    if len(scriptArgs.summaryJsonFile.strip()) <= 0:
+        raise ValueError("A summary JSON file path must be provided")
 
     failingCoverageThreshold = parseCoverageThreshold(
         scriptArgs.failingCoverageThreshold,
@@ -150,7 +167,10 @@ def validateScriptArguments(scriptArgs: argparse.Namespace) -> tuple[float, floa
             "The failing coverage threshold must be less than the passing coverage threshold"
         )
 
-    return (failingCoverageThreshold, passingCoverageThreshold)
+    return CoverageThresholds(
+        failingCoverageThreshold=failingCoverageThreshold,
+        passingCoverageThreshold=passingCoverageThreshold,
+    )
 
 
 def normalizeScopeName(scopeName: str) -> str:
@@ -214,9 +234,9 @@ def findResultBundles(searchRoot: str) -> list[str]:
     return sorted(resultBundles)
 
 
-def determineScopeBundles(searchRoot: str) -> dict[str, list[str]]:
+def discoverCoverageScopes(searchRoot: str) -> dict[str, list[str]]:
     """
-    Determines the downloaded coverage scopes and their xcresult bundles
+    Discovers the downloaded coverage scopes and their xcresult bundles
 
     Parameters
     ----------
@@ -251,7 +271,8 @@ def determineScopeBundles(searchRoot: str) -> dict[str, list[str]]:
 
     rootResultBundles = findResultBundles(searchRoot)
     if len(rootResultBundles) > 0:
-        scopeBundles[normalizeScopeName(os.path.basename(os.path.normpath(searchRoot)) or "Coverage")] = rootResultBundles
+        fallbackScopeName = os.path.basename(os.path.normpath(searchRoot)) or "Coverage"
+        scopeBundles[normalizeScopeName(fallbackScopeName)] = rootResultBundles
 
     return scopeBundles
 
@@ -337,20 +358,130 @@ def summarizeLineCoverage(lineCoverageMap: dict[str, dict[int, bool]]) -> tuple[
     return (coveredLines, executableLines, coveragePercent)
 
 
-def determineStatusEmoji(coveragePercent: float,
-                         failingCoverageThreshold: float,
-                         passingCoverageThreshold: float) -> str:
+def createScopeCoverage(name: str,
+                        lineCoverageMap: dict[str, dict[int, bool]]) -> ScopeCoverage:
     """
-    Determines the coverage status emoji for a coverage percent
+    Creates a scope coverage summary from an aggregated line coverage map
+
+    Parameters
+    ----------
+    name
+        The scope display name
+    lineCoverageMap
+        The aggregated line coverage map
+
+    Returns
+    -------
+    ScopeCoverage
+        The created scope coverage summary
+    """
+
+    coveredLines, executableLines, coveragePercent = summarizeLineCoverage(lineCoverageMap)
+    return ScopeCoverage(
+        name=name,
+        coveredLines=coveredLines,
+        executableLines=executableLines,
+        coveragePercent=coveragePercent,
+    )
+
+
+def calculateScopeCoverages(discoveredScopes: dict[str, list[str]]) -> tuple[list[ScopeCoverage], dict[str, dict[int, bool]]]:
+    """
+    Calculates per-scope coverages and the aggregated combined line coverage map
+
+    Parameters
+    ----------
+    discoveredScopes
+        The discovered scopes and their xcresult bundle paths
+
+    Returns
+    -------
+    tuple[list[ScopeCoverage], dict[str, dict[int, bool]]]
+        The per-scope coverage summaries and the combined line coverage map
+    """
+
+    combinedCoverageMap: dict[str, dict[int, bool]] = {}
+    scopeCoverageSummaries: list[ScopeCoverage] = []
+
+    for scopeName, resultBundles in sorted(discoveredScopes.items()):
+        scopeCoverageMap: dict[str, dict[int, bool]] = {}
+
+        for resultBundle in resultBundles:
+            print(f"Processing result bundle for {scopeName}: {resultBundle}")
+            report = readCoverageReport(resultBundle)
+            mergeCoverageReport(scopeCoverageMap, report)
+            mergeCoverageReport(combinedCoverageMap, report)
+
+        scopeCoverageSummaries.append(
+            createScopeCoverage(
+                name=scopeName,
+                lineCoverageMap=scopeCoverageMap,
+            )
+        )
+
+    return (scopeCoverageSummaries, combinedCoverageMap)
+
+
+def calculateOverallCoverage(scopeCoverageSummaries: list[ScopeCoverage],
+                             combinedCoverageMap: dict[str, dict[int, bool]]) -> ScopeCoverage | None:
+    """
+    Calculates the overall combined coverage when multiple scopes are present
+
+    Parameters
+    ----------
+    scopeCoverageSummaries
+        The per-scope coverage summaries
+    combinedCoverageMap
+        The combined line coverage map
+
+    Returns
+    -------
+    ScopeCoverage | None
+        The combined coverage summary, or None when only one scope is present
+    """
+
+    if len(scopeCoverageSummaries) <= 1:
+        return None
+
+    return createScopeCoverage(
+        name="Combined",
+        lineCoverageMap=combinedCoverageMap,
+    )
+
+
+def determineCoverageStatus(coveragePercent: float,
+                            thresholds: CoverageThresholds) -> str:
+    """
+    Determines the normalized status for a coverage percent
 
     Parameters
     ----------
     coveragePercent
         The coverage percent to evaluate
-    failingCoverageThreshold
-        The failing coverage threshold
-    passingCoverageThreshold
-        The passing coverage threshold
+    thresholds
+        The configured coverage thresholds
+
+    Returns
+    -------
+    str
+        The normalized coverage status
+    """
+
+    if coveragePercent < thresholds.failingCoverageThreshold:
+        return "fail"
+    if coveragePercent < thresholds.passingCoverageThreshold:
+        return "warn"
+    return "pass"
+
+
+def determineStatusEmoji(status: str) -> str:
+    """
+    Determines the coverage status emoji for a normalized status
+
+    Parameters
+    ----------
+    status
+        The normalized coverage status
 
     Returns
     -------
@@ -358,11 +489,186 @@ def determineStatusEmoji(coveragePercent: float,
         The status emoji
     """
 
-    if coveragePercent < failingCoverageThreshold:
+    if status == "fail":
         return "❌"
-    if coveragePercent < passingCoverageThreshold:
+    if status == "warn":
         return "⚠️"
     return "✅"
+
+
+def printCoverageSummary(scopeCoverageSummaries: list[ScopeCoverage],
+                         overallCoverage: ScopeCoverage | None,
+                         thresholds: CoverageThresholds):
+    """
+    Prints the coverage summary details to the GitHub Actions log
+
+    Parameters
+    ----------
+    scopeCoverageSummaries
+        The per-scope coverage summaries
+    overallCoverage
+        The optional combined coverage summary
+    thresholds
+        The configured coverage thresholds
+    """
+
+    for scopeCoverage in scopeCoverageSummaries:
+        status = determineCoverageStatus(scopeCoverage.coveragePercent, thresholds)
+        emoji = determineStatusEmoji(status)
+        print(f"{scopeCoverage.name} - {scopeCoverage.coveragePercent:.2f}% {emoji}")
+
+    if overallCoverage is not None:
+        status = determineCoverageStatus(overallCoverage.coveragePercent, thresholds)
+        emoji = determineStatusEmoji(status)
+        print(f"Combined - {overallCoverage.coveragePercent:.2f}% {emoji}")
+
+
+def ensureParentDirectory(filePath: str):
+    """
+    Ensures that the parent directory exists for a file path
+
+    Parameters
+    ----------
+    filePath
+        The file path whose parent directory should exist
+    """
+
+    parentDirectory = os.path.dirname(filePath)
+    if len(parentDirectory) > 0:
+        os.makedirs(parentDirectory, exist_ok=True)
+
+
+def renderMarkdownSummary(scopeCoverageSummaries: list[ScopeCoverage],
+                          overallCoverage: ScopeCoverage | None,
+                          thresholds: CoverageThresholds) -> str:
+    """
+    Renders the markdown coverage summary text
+
+    Parameters
+    ----------
+    scopeCoverageSummaries
+        The per-scope coverage summaries
+    overallCoverage
+        The optional combined coverage summary
+    thresholds
+        The configured coverage thresholds
+
+    Returns
+    -------
+    str
+        The rendered markdown summary
+    """
+
+    lines: list[str] = [
+        "### Code Coverage",
+        "",
+        "| Scope | Coverage | Status |",
+        "| --- | :---: | :---: |",
+    ]
+
+    for scopeCoverage in scopeCoverageSummaries:
+        status = determineCoverageStatus(scopeCoverage.coveragePercent, thresholds)
+        emoji = determineStatusEmoji(status)
+        lines.append(f"| {scopeCoverage.name} | {scopeCoverage.coveragePercent:.2f}% | {emoji} |")
+
+    if overallCoverage is not None:
+        status = determineCoverageStatus(overallCoverage.coveragePercent, thresholds)
+        emoji = determineStatusEmoji(status)
+        indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+        lines.append(
+            f"| {indent} **Combined** | **{overallCoverage.coveragePercent:.2f}%** | **{emoji}** |"
+        )
+
+    return "\n".join(lines) + "\n"
+
+
+def renderJsonSummary(scopeCoverageSummaries: list[ScopeCoverage],
+                      overallCoverage: ScopeCoverage | None,
+                      thresholds: CoverageThresholds) -> dict[str, object]:
+    """
+    Renders the JSON coverage summary payload
+
+    Parameters
+    ----------
+    scopeCoverageSummaries
+        The per-scope coverage summaries
+    overallCoverage
+        The optional combined coverage summary
+    thresholds
+        The configured coverage thresholds
+
+    Returns
+    -------
+    dict[str, object]
+        The JSON coverage summary payload
+    """
+
+    def serializeScope(scopeCoverage: ScopeCoverage) -> dict[str, object]:
+        status = determineCoverageStatus(scopeCoverage.coveragePercent, thresholds)
+        return {
+            "name": scopeCoverage.name,
+            "covered_lines": scopeCoverage.coveredLines,
+            "executable_lines": scopeCoverage.executableLines,
+            "coverage_percent": round(scopeCoverage.coveragePercent, 2),
+            "status": status,
+            "status_emoji": determineStatusEmoji(status),
+        }
+
+    payload: dict[str, object] = {
+        "scope_count": len(scopeCoverageSummaries),
+        "thresholds": {
+            "failing_coverage_threshold": thresholds.failingCoverageThreshold,
+            "passing_coverage_threshold": thresholds.passingCoverageThreshold,
+        },
+        "scopes": [serializeScope(scopeCoverage) for scopeCoverage in scopeCoverageSummaries],
+        "overall_coverage_percent": "",
+    }
+
+    if len(scopeCoverageSummaries) == 1:
+        payload["overall_coverage_percent"] = round(scopeCoverageSummaries[0].coveragePercent, 2)
+
+    if overallCoverage is not None:
+        payload["combined"] = serializeScope(overallCoverage)
+        payload["overall_coverage_percent"] = round(overallCoverage.coveragePercent, 2)
+
+    return payload
+
+
+def writeTextFile(filePath: str, contents: str):
+    """
+    Writes text contents to a file path
+
+    Parameters
+    ----------
+    filePath
+        The file path to write
+    contents
+        The text contents to write
+    """
+
+    ensureParentDirectory(filePath)
+
+    with open(filePath, "w", encoding="utf-8") as file:
+        file.write(contents)
+
+
+def writeJsonFile(filePath: str, payload: dict[str, object]):
+    """
+    Writes a JSON payload to a file path
+
+    Parameters
+    ----------
+    filePath
+        The file path to write
+    payload
+        The JSON payload to write
+    """
+
+    ensureParentDirectory(filePath)
+
+    with open(filePath, "w", encoding="utf-8") as file:
+        json.dump(payload, file, indent=2, sort_keys=True)
+        file.write("\n")
 
 
 def writeGithubOutput(name: str, value: str):
@@ -385,7 +691,10 @@ def writeGithubOutput(name: str, value: str):
         print(f"{name}={value}", file=file)
 
 
-def publishOutputs(summaryFile: str, coveragePercent: str, scopeCount: int):
+def publishOutputs(summaryFile: str,
+                   summaryJsonFile: str,
+                   coveragePercent: str,
+                   scopeCount: int):
     """
     Publishes the generated coverage summary outputs for GitHub Actions
 
@@ -393,6 +702,8 @@ def publishOutputs(summaryFile: str, coveragePercent: str, scopeCount: int):
     ----------
     summaryFile
         The markdown summary file path
+    summaryJsonFile
+        The JSON summary file path
     coveragePercent
         The overall coverage percent string
     scopeCount
@@ -400,86 +711,76 @@ def publishOutputs(summaryFile: str, coveragePercent: str, scopeCount: int):
     """
 
     writeGithubOutput("summary_file", summaryFile)
+    writeGithubOutput("summary_json_file", summaryJsonFile)
     writeGithubOutput("coverage_percent", coveragePercent)
     writeGithubOutput("scope_count", str(scopeCount))
 
 
-def writeUnavailableSummary(summaryFile: str, message: str):
+def writeUnavailableSummaries(summaryFile: str,
+                              summaryJsonFile: str,
+                              message: str,
+                              thresholds: CoverageThresholds):
     """
-    Writes a markdown summary file for an unavailable coverage result
+    Writes markdown and JSON summary files for an unavailable coverage result
 
     Parameters
     ----------
     summaryFile
         The markdown summary file path
+    summaryJsonFile
+        The JSON summary file path
     message
         The message to write
+    thresholds
+        The configured coverage thresholds
     """
 
-    summaryDirectory = os.path.dirname(summaryFile)
-    if len(summaryDirectory) > 0:
-        os.makedirs(summaryDirectory, exist_ok=True)
+    markdownSummary = "\n".join([
+        "### Code Coverage",
+        "",
+        message,
+        "",
+    ])
+    jsonSummary = {
+        "message": message,
+        "overall_coverage_percent": "",
+        "scope_count": 0,
+        "scopes": [],
+        "thresholds": {
+            "failing_coverage_threshold": thresholds.failingCoverageThreshold,
+            "passing_coverage_threshold": thresholds.passingCoverageThreshold,
+        },
+    }
 
-    with open(summaryFile, "w", encoding="utf-8") as file:
-        print("### Code Coverage", file=file)
-        print(file=file)
-        print(message, file=file)
+    writeTextFile(summaryFile, markdownSummary)
+    writeJsonFile(summaryJsonFile, jsonSummary)
 
 
-def writeSummaryFile(summaryFile: str,
-                     scopeCoverageSummaries: list[ScopeCoverage],
-                     overallCoverage: ScopeCoverage | None,
-                     failingCoverageThreshold: float,
-                     passingCoverageThreshold: float):
+def determineOverallCoveragePercent(scopeCoverageSummaries: list[ScopeCoverage],
+                                    overallCoverage: ScopeCoverage | None) -> str:
     """
-    Writes the markdown coverage summary file
+    Determines the overall coverage percent string for action outputs
 
     Parameters
     ----------
-    summaryFile
-        The markdown summary file path
     scopeCoverageSummaries
         The per-scope coverage summaries
     overallCoverage
         The optional combined coverage summary
-    failingCoverageThreshold
-        The failing coverage threshold
-    passingCoverageThreshold
-        The passing coverage threshold
+
+    Returns
+    -------
+    str
+        The overall coverage percent string
     """
 
-    summaryDirectory = os.path.dirname(summaryFile)
-    if len(summaryDirectory) > 0:
-        os.makedirs(summaryDirectory, exist_ok=True)
+    if overallCoverage is not None:
+        return f"{overallCoverage.coveragePercent:.2f}"
 
-    with open(summaryFile, "w", encoding="utf-8") as file:
-        print("### Code Coverage", file=file)
-        print(file=file)
-        print("| Scope | Coverage | Status |", file=file)
-        print("| --- | :---: | :---: |", file=file)
+    if len(scopeCoverageSummaries) == 1:
+        return f"{scopeCoverageSummaries[0].coveragePercent:.2f}"
 
-        for scopeCoverage in scopeCoverageSummaries:
-            emoji = determineStatusEmoji(
-                coveragePercent=scopeCoverage.coveragePercent,
-                failingCoverageThreshold=failingCoverageThreshold,
-                passingCoverageThreshold=passingCoverageThreshold,
-            )
-            print(
-                f"| {scopeCoverage.name} | {scopeCoverage.coveragePercent:.2f}% | {emoji} |",
-                file=file,
-            )
-
-        if overallCoverage is not None:
-            combinedEmoji = determineStatusEmoji(
-                coveragePercent=overallCoverage.coveragePercent,
-                failingCoverageThreshold=failingCoverageThreshold,
-                passingCoverageThreshold=passingCoverageThreshold,
-            )
-            indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-            print(
-                f"| {indent} **Combined** | **{overallCoverage.coveragePercent:.2f}%** | **{combinedEmoji}** |",
-                file=file,
-            )
+    return ""
 
 
 def main():
@@ -490,75 +791,54 @@ def main():
 
     printScriptStart()
 
-    failingCoverageThreshold, passingCoverageThreshold = validateScriptArguments(scriptArgs)
-    scopeBundles = determineScopeBundles(scriptArgs.xcresultsDirectory)
+    thresholds = validateScriptArguments(scriptArgs)
+    discoveredScopes = discoverCoverageScopes(scriptArgs.xcresultsDirectory)
 
-    if len(scopeBundles) <= 0:
-        writeUnavailableSummary(
-            scriptArgs.summaryFile,
-            "Code coverage unavailable because no unit test result bundles were downloaded.",
+    if len(discoveredScopes) <= 0:
+        writeUnavailableSummaries(
+            summaryFile=scriptArgs.summaryFile,
+            summaryJsonFile=scriptArgs.summaryJsonFile,
+            message="Code coverage unavailable because no unit test result bundles were downloaded.",
+            thresholds=thresholds,
         )
         publishOutputs(
             summaryFile=scriptArgs.summaryFile,
+            summaryJsonFile=scriptArgs.summaryJsonFile,
             coveragePercent="",
             scopeCount=0,
         )
         return
 
-    combinedCoverageMap: dict[str, dict[int, bool]] = {}
-    scopeCoverageSummaries: list[ScopeCoverage] = []
+    scopeCoverageSummaries, combinedCoverageMap = calculateScopeCoverages(discoveredScopes)
+    overallCoverage = calculateOverallCoverage(
+        scopeCoverageSummaries=scopeCoverageSummaries,
+        combinedCoverageMap=combinedCoverageMap,
+    )
 
-    for scopeName, resultBundles in sorted(scopeBundles.items()):
-        scopeCoverageMap: dict[str, dict[int, bool]] = {}
-
-        for resultBundle in resultBundles:
-            print(f"Processing result bundle for {scopeName}: {resultBundle}")
-            report = readCoverageReport(resultBundle)
-            mergeCoverageReport(scopeCoverageMap, report)
-            mergeCoverageReport(combinedCoverageMap, report)
-
-        coveredLines, executableLines, coveragePercent = summarizeLineCoverage(scopeCoverageMap)
-        scopeCoverage = ScopeCoverage(
-            name=scopeName,
-            coveredLines=coveredLines,
-            executableLines=executableLines,
-            coveragePercent=coveragePercent,
-        )
-        scopeCoverageSummaries.append(scopeCoverage)
-        print(
-            f"{scopeCoverage.name} - {scopeCoverage.coveragePercent:.2f}% "
-            f"{determineStatusEmoji(scopeCoverage.coveragePercent, failingCoverageThreshold, passingCoverageThreshold)}"
-        )
-
-    overallCoverage: ScopeCoverage | None = None
-    overallCoveragePercent = ""
-
-    if len(scopeCoverageSummaries) == 1:
-        overallCoveragePercent = f"{scopeCoverageSummaries[0].coveragePercent:.2f}"
-    else:
-        coveredLines, executableLines, coveragePercent = summarizeLineCoverage(combinedCoverageMap)
-        overallCoverage = ScopeCoverage(
-            name="Combined",
-            coveredLines=coveredLines,
-            executableLines=executableLines,
-            coveragePercent=coveragePercent,
-        )
-        overallCoveragePercent = f"{overallCoverage.coveragePercent:.2f}"
-        print(
-            f"Combined - {overallCoverage.coveragePercent:.2f}% "
-            f"{determineStatusEmoji(overallCoverage.coveragePercent, failingCoverageThreshold, passingCoverageThreshold)}"
-        )
-
-    writeSummaryFile(
-        summaryFile=scriptArgs.summaryFile,
+    printCoverageSummary(
         scopeCoverageSummaries=scopeCoverageSummaries,
         overallCoverage=overallCoverage,
-        failingCoverageThreshold=failingCoverageThreshold,
-        passingCoverageThreshold=passingCoverageThreshold,
+        thresholds=thresholds,
     )
+
+    markdownSummary = renderMarkdownSummary(
+        scopeCoverageSummaries=scopeCoverageSummaries,
+        overallCoverage=overallCoverage,
+        thresholds=thresholds,
+    )
+    jsonSummary = renderJsonSummary(
+        scopeCoverageSummaries=scopeCoverageSummaries,
+        overallCoverage=overallCoverage,
+        thresholds=thresholds,
+    )
+
+    writeTextFile(scriptArgs.summaryFile, markdownSummary)
+    writeJsonFile(scriptArgs.summaryJsonFile, jsonSummary)
+
     publishOutputs(
         summaryFile=scriptArgs.summaryFile,
-        coveragePercent=overallCoveragePercent,
+        summaryJsonFile=scriptArgs.summaryJsonFile,
+        coveragePercent=determineOverallCoveragePercent(scopeCoverageSummaries, overallCoverage),
         scopeCount=len(scopeCoverageSummaries),
     )
 

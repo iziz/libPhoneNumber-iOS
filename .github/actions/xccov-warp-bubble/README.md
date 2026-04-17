@@ -10,6 +10,9 @@ Local composite action for generating a code coverage summary from downloaded `.
 - `summary_file`
   - Markdown file path where the coverage summary should be written
   - Default: `CoverageResults/code-coverage-summary.md`
+- `summary_json_file`
+  - JSON file path where the coverage summary should be written
+  - Default: `CoverageResults/code-coverage-summary.json`
 - `failing_coverage_threshold`
   - Coverage percent below which the status is marked with a red X
   - Default: `60`
@@ -23,6 +26,7 @@ If only one coverage scope is found, the action reports coverage for that scope 
 
 - `coverage_percent`
 - `summary_file`
+- `summary_json_file`
 - `scope_count`
 
 ## Example
@@ -40,6 +44,7 @@ If only one coverage scope is found, the action reports coverage for that scope 
   with:
     xcresults_directory: CoverageResults/xcresults
     summary_file: CoverageResults/code-coverage-summary.md
+    summary_json_file: CoverageResults/code-coverage-summary.json
 
 - name: Publish coverage comment to pull request
   uses: marocchino/sticky-pull-request-comment@v2

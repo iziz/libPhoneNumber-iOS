@@ -10,6 +10,10 @@ inputs:
     description: Markdown file path where the coverage summary should be written.
     required: false
     default: CoverageResults/code-coverage-summary.md
+  summary_json_file:
+    description: JSON file path where the coverage summary should be written.
+    required: false
+    default: CoverageResults/code-coverage-summary.json
   failing_coverage_threshold:
     description: Coverage percent below which the status is marked as failing.
     required: false
@@ -26,6 +30,9 @@ outputs:
   summary_file:
     description: Markdown summary file path.
     value: ${{ steps.summary.outputs.summary_file }}
+  summary_json_file:
+    description: JSON summary file path.
+    value: ${{ steps.summary.outputs.summary_json_file }}
   scope_count:
     description: The number of coverage scopes that were summarized.
     value: ${{ steps.summary.outputs.scope_count }}
@@ -39,6 +46,7 @@ runs:
       env:
         INPUT_XCRESULTS_DIRECTORY: ${{ inputs.xcresults_directory }}
         INPUT_SUMMARY_FILE: ${{ inputs.summary_file }}
+        INPUT_SUMMARY_JSON_FILE: ${{ inputs.summary_json_file }}
         INPUT_FAILING_COVERAGE_THRESHOLD: ${{ inputs.failing_coverage_threshold }}
         INPUT_PASSING_COVERAGE_THRESHOLD: ${{ inputs.passing_coverage_threshold }}
       run: |
@@ -46,6 +54,7 @@ runs:
         python3 "${{ github.action_path }}/generate_coverage_summary.py" \
           --xcresults-directory "$INPUT_XCRESULTS_DIRECTORY" \
           --summary-file "$INPUT_SUMMARY_FILE" \
+          --summary-json-file "$INPUT_SUMMARY_JSON_FILE" \
           --failing-coverage-threshold "$INPUT_FAILING_COVERAGE_THRESHOLD" \
           --passing-coverage-threshold "$INPUT_PASSING_COVERAGE_THRESHOLD"
 
