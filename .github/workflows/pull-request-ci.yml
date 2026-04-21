@@ -26,7 +26,7 @@ jobs:
     secrets: inherit
 
   podspec-lint:
-    name: Podspec Sensor Sweep
+    name: Podspec Linting
     uses: ./.github/workflows/github-podspec-sensor-sweep.yml
     with:
       podspecs: |

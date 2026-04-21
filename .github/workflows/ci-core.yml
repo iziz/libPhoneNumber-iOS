@@ -2,12 +2,6 @@ name: CI Core
 
 on:
   workflow_call:
-    inputs:
-      publish_pr_comment:
-        description: Publish the combined coverage summary as a PR comment.
-        required: false
-        default: false
-        type: boolean
     outputs:
       combined_coverage_percent:
         description: Combined unit test coverage percent across all schemes.
@@ -78,11 +72,3 @@ jobs:
         with:
           xcresults_directory: CoverageResults/xcresults
           summary_file: CoverageResults/code-coverage-summary.md
-
-      - name: Publish combined coverage comment to pull request
-        if: inputs.publish_pr_comment
-        uses: marocchino/sticky-pull-request-comment@v3
-        with:
-          header: combined-code-coverage
-          path: ${{ steps.coverage.outputs.summary_file }}
-          skip_unchanged: true

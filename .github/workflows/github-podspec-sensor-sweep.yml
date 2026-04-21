@@ -63,7 +63,7 @@ jobs:
           )"
 
   podspec-lint:
-    name: Podspec Sensor Sweep (${{ matrix.podspec }})
+    name: Podspec Linting (${{ matrix.podspec }})
     runs-on: macos-latest
     needs: prepare-inputs
     strategy:
