@@ -1,4 +1,4 @@
-name: Simctl Pick A Tricorder
+name: Simctl Tricorder Selector
 description: Select a compatible Apple simulator device from the installed simctl inventory.
 
 inputs:

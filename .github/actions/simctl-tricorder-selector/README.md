@@ -37,7 +37,7 @@ Local composite action for choosing an installed simulator device from `xcrun si
 ```yaml
 - name: Pick simulator
   id: simulator
-  uses: ./.github/actions/simctl-pick-a-tricorder
+  uses: ./.github/actions/simctl-tricorder-selector
   with:
     device_types: iphone,ipad
     iphoneos_version: latest
@@ -46,7 +46,7 @@ Local composite action for choosing an installed simulator device from `xcrun si
 
 - name: Run tests
   id: tests
-  uses: ./.github/actions/xcode-test-the-tricorders
+  uses: ./.github/actions/xcode-tricorder-tester
   with:
     scheme: libPhoneNumber
     xcode_container: libPhoneNumber.xcodeproj

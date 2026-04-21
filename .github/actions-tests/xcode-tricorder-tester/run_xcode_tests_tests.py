@@ -155,7 +155,7 @@ def test_main_runs_end_to_end(run_xcode_tests_module, tmp_path, monkeypatch):
 
 
 def test_run_xcode_tests_script_runs_as_black_box(repo_root, python_executable, tmp_path):
-    script_path = repo_root / ".github/actions/xcode-test-the-tricorders/run_xcode_tests.py"
+    script_path = repo_root / ".github/actions/xcode-tricorder-tester/run_xcode_tests.py"
     output_file = tmp_path / "github-output.txt"
     fake_bin_dir = tmp_path / "bin"
     fake_bin_dir.mkdir()

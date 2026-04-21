@@ -30,12 +30,12 @@ trap cleanup_python_caches EXIT
 
 pytest_args=(
   "-c" "$script_dir/pyproject.toml"
-  "$script_dir/simctl-pick-a-tricorder"
-  "$script_dir/xcode-test-the-tricorders"
+  "$script_dir/simctl-tricorder-selector"
+  "$script_dir/xcode-tricorder-tester"
   "$script_dir/xccov-warp-bubble"
   "--junitxml=$results_dir/junit.xml"
-  "--cov=.github/actions/simctl-pick-a-tricorder"
-  "--cov=.github/actions/xcode-test-the-tricorders"
+  "--cov=.github/actions/simctl-tricorder-selector"
+  "--cov=.github/actions/xcode-tricorder-tester"
   "--cov=.github/actions/xccov-warp-bubble"
   "--cov-branch"
   "--cov-report="

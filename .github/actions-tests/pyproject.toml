@@ -1,7 +1,7 @@
 [tool.pytest.ini_options]
 testpaths = [
-  "simctl-pick-a-tricorder",
-  "xcode-test-the-tricorders",
+  "simctl-tricorder-selector",
+  "xcode-tricorder-tester",
   "xccov-warp-bubble",
 ]
 python_files = ["*_tests.py"]
@@ -13,9 +13,9 @@ branch = true
 relative_files = true
 patch = ["subprocess"]
 source = [
-  ".github/actions/simctl-pick-a-tricorder",
+  ".github/actions/simctl-tricorder-selector",
   ".github/actions/xccov-warp-bubble",
-  ".github/actions/xcode-test-the-tricorders",
+  ".github/actions/xcode-tricorder-tester",
 ]
 omit = [".github/actions-tests/*"]
 

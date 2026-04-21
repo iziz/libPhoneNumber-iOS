@@ -1,5 +1,5 @@
-name: Xcode Test The Tricorders
-description: Run xcodebuild tests against simulator destinations selected by simctl-pick-a-tricorder.
+name: Xcode Tricorder Tester
+description: Run xcodebuild tests against simulator destinations selected by simctl-tricorder-selector.
 
 inputs:
   scheme:
@@ -12,7 +12,7 @@ inputs:
     description: Newline-separated list of simulator destination UDIDs.
     required: true
   simulator_jsons:
-    description: JSON array of simulator objects returned by simctl-pick-a-tricorder.
+    description: JSON array of simulator objects returned by simctl-tricorder-selector.
     required: true
   result_bundle_directory:
     description: Directory where generated xcresult bundles should be written.

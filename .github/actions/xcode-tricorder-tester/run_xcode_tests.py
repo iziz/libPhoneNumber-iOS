@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #  run_xcode_tests.py
-#  xcode-test-the-tricorders
+#  xcode-tricorder-tester
 #
 #  Created by Kodex on 4/17/26.
 #

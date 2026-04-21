@@ -31,7 +31,7 @@ jobs:
 
       - name: Resolve iPhone simulator destination
         id: destination
-        uses: ./.github/actions/simctl-pick-a-tricorder
+        uses: ./.github/actions/simctl-tricorder-selector
         with:
           device_types: iphone
           iphoneos_version: latest
@@ -39,7 +39,7 @@ jobs:
 
       - name: Run unit tests
         id: run-tests
-        uses: ./.github/actions/xcode-test-the-tricorders
+        uses: ./.github/actions/xcode-tricorder-tester
         with:
           scheme: ${{ matrix.scheme }}
           xcode_container: libPhoneNumber.xcodeproj

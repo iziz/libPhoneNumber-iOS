@@ -43,7 +43,7 @@ def load_module(module_name: str, relative_path: str):
 def pick_simulator_module():
     return load_module(
         "test_pick_simulator_module",
-        ".github/actions/simctl-pick-a-tricorder/pick_simulator.py",
+        ".github/actions/simctl-tricorder-selector/pick_simulator.py",
     )
 
 
@@ -51,7 +51,7 @@ def pick_simulator_module():
 def run_xcode_tests_module():
     return load_module(
         "test_run_xcode_tests_module",
-        ".github/actions/xcode-test-the-tricorders/run_xcode_tests.py",
+        ".github/actions/xcode-tricorder-tester/run_xcode_tests.py",
     )
 
 

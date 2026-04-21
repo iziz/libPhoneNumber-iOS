@@ -1,6 +1,6 @@
 # Xcode Test The Tricorders
 
-Local composite action for running `xcodebuild test` across simulator destinations selected by `simctl-pick-a-tricorder`.
+Local composite action for running `xcodebuild test` across simulator destinations selected by `simctl-tricorder-selector`.
 
 ## Inputs
 
@@ -11,9 +11,9 @@ Local composite action for running `xcodebuild test` across simulator destinatio
   - The action infers the type from the file extension
   - Supported values end in `.xcodeproj` or `.xcworkspace`
 - `destination_ids`
-  - Newline-separated simulator UDIDs from `simctl-pick-a-tricorder`
+  - Newline-separated simulator UDIDs from `simctl-tricorder-selector`
 - `simulator_jsons`
-  - JSON array from `simctl-pick-a-tricorder`
+  - JSON array from `simctl-tricorder-selector`
 - `result_bundle_directory`
   - Directory where `.xcresult` bundles should be created
   - Default: `TestResults`
@@ -39,7 +39,7 @@ Local composite action for running `xcodebuild test` across simulator destinatio
 ```yaml
 - name: Pick simulator
   id: simulator
-  uses: ./.github/actions/simctl-pick-a-tricorder
+  uses: ./.github/actions/simctl-tricorder-selector
   with:
     device_types: iphone
     iphoneos_version: latest
@@ -47,7 +47,7 @@ Local composite action for running `xcodebuild test` across simulator destinatio
 
 - name: Run unit tests
   id: tests
-  uses: ./.github/actions/xcode-test-the-tricorders
+  uses: ./.github/actions/xcode-tricorder-tester
   with:
     scheme: libPhoneNumber
     xcode_container: libPhoneNumber.xcodeproj

@@ -325,7 +325,7 @@ def test_main_runs_end_to_end(pick_simulator_module, tmp_path, sample_devices_pa
 
 
 def test_pick_simulator_script_runs_as_black_box(repo_root, python_executable, tmp_path, sample_devices_payload):
-    script_path = repo_root / ".github/actions/simctl-pick-a-tricorder/pick_simulator.py"
+    script_path = repo_root / ".github/actions/simctl-tricorder-selector/pick_simulator.py"
     output_file = tmp_path / "github-output.txt"
     fake_bin_dir = tmp_path / "bin"
     fake_bin_dir.mkdir()
