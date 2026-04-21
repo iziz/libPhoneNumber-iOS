@@ -5,10 +5,8 @@ on:
     inputs:
       schemes:
         description: |
-          Newline-separated list of Xcode schemes to test.
-          Example:
-            libPhoneNumber
-            libPhoneNumberGeocoding
+          JSON array of Xcode schemes to test.
+          Example: ["libPhoneNumber", "libPhoneNumberGeocoding"]
         required: true
         type: string
       xcode_container:
@@ -17,10 +15,9 @@ on:
         type: string
       device_types:
         description: |
-          Newline-separated list of simulator device types to resolve.
+          Comma-separated list of simulator device types to resolve.
           Supported values include iphone, ipad, macos, watch, and vision.
-          Example:
-            iphone
+          Example: iphone,ipad
         required: true
         type: string
       selection_mode:
@@ -90,58 +87,9 @@ on:
         value: ${{ jobs.coverage-summary.outputs.combined_coverage_percent }}
 
 jobs:
-  prepare-inputs:
-    name: Prepare Workflow Inputs
-    runs-on: ubuntu-latest
-    outputs:
-      schemes_json: ${{ steps.parse.outputs.schemes_json }}
-      device_types_csv: ${{ steps.parse.outputs.device_types_csv }}
-
-    steps:
-      - name: Parse workflow inputs
-        id: parse
-        shell: bash
-        env:
-          INPUT_SCHEMES: ${{ inputs.schemes }}
-          INPUT_DEVICE_TYPES: ${{ inputs.device_types }}
-        run: |
-          set -eo pipefail
-          python3 -c "$(cat <<'PYTHON'
-          import json
-          import os
-
-
-          def parse_list_input(value, input_name):
-              """Parse a newline-separated list input."""
-
-              items = []
-              for raw_line in value.splitlines():
-                  line = raw_line.strip()
-                  if len(line) <= 0 or line.startswith("#"):
-                      continue
-                  items.append(line)
-
-              if len(items) <= 0:
-                  raise SystemExit(f"{input_name} must contain at least one item")
-
-              return items
-
-
-          schemes = parse_list_input(os.environ["INPUT_SCHEMES"], "schemes")
-          device_types = parse_list_input(os.environ["INPUT_DEVICE_TYPES"], "device_types")
-
-          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
-              print("schemes_json<<EOF", file=handle)
-              print(json.dumps(schemes), file=handle)
-              print("EOF", file=handle)
-              print(f"device_types_csv={','.join(device_types)}", file=handle)
-          PYTHON
-          )"
-
   resolve-destinations:
     name: Resolve Simulator Destinations
     runs-on: macos-latest
-    needs: prepare-inputs
     outputs:
       destination_ids: ${{ steps.destination.outputs.destination_ids }}
       simulator_jsons: ${{ steps.destination.outputs.simulator_jsons }}
@@ -154,7 +102,7 @@ jobs:
         id: destination
         uses: ./.github/actions/simctl-tricorder-selector
         with:
-          device_types: ${{ needs.prepare-inputs.outputs.device_types_csv }}
+          device_types: ${{ inputs.device_types }}
           selection_mode: ${{ inputs.selection_mode }}
           model_preferences: ${{ inputs.model_preferences }}
           iphoneos_version: ${{ inputs.iphoneos_version }}
@@ -167,12 +115,11 @@ jobs:
     name: Unit Tests (${{ matrix.scheme }})
     runs-on: macos-latest
     needs:
-      - prepare-inputs
       - resolve-destinations
     strategy:
       fail-fast: false
       matrix:
-        scheme: ${{ fromJson(needs.prepare-inputs.outputs.schemes_json) }}
+        scheme: ${{ fromJson(inputs.schemes) }}
 
     steps:
       - name: Check out repository

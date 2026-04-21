@@ -16,20 +16,23 @@ jobs:
   unit-tests:
     uses: ./.github/workflows/github-holodeck-trials.yml
     with:
-      schemes: |
-        libPhoneNumber
-        libPhoneNumberGeocoding
-        libPhoneNumberShortNumber
+      schemes: >-
+        [
+          "libPhoneNumber",
+          "libPhoneNumberGeocoding",
+          "libPhoneNumberShortNumber"
+        ]
       xcode_container: libPhoneNumber.xcodeproj
-      device_types: |
-        iphone
+      device_types: iphone
     secrets: inherit
 
   podspec-lint:
     name: Podspec Linting
     uses: ./.github/workflows/github-podspec-sensor-sweep.yml
     with:
-      podspecs: |
-        libPhoneNumber-iOS.podspec
-        libPhoneNumberGeocoding.podspec
-        libPhoneNumberShortNumber.podspec
+      podspecs: >-
+        [
+          "libPhoneNumber-iOS.podspec",
+          "libPhoneNumberGeocoding.podspec",
+          "libPhoneNumberShortNumber.podspec"
+        ]

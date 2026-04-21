@@ -22,8 +22,10 @@ jobs:
     name: Podspec Linting
     uses: ./.github/workflows/github-podspec-sensor-sweep.yml
     with:
-      podspecs: |
-        libPhoneNumber-iOS.podspec
-        libPhoneNumberGeocoding.podspec
-        libPhoneNumberShortNumber.podspec
+      podspecs: >-
+        [
+          "libPhoneNumber-iOS.podspec",
+          "libPhoneNumberGeocoding.podspec",
+          "libPhoneNumberShortNumber.podspec"
+        ]
     secrets: inherit
