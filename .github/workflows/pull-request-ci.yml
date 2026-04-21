@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   unit-tests:
+    name: Unit Testing
     uses: ./.github/workflows/github-holodeck-trials.yml
     with:
       schemes: >-
