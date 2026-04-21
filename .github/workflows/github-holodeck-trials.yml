@@ -5,10 +5,10 @@ on:
     inputs:
       schemes:
         description: |
-          YAML list of Xcode schemes to test.
+          Newline-separated list of Xcode schemes to test.
           Example:
-            - libPhoneNumber
-            - libPhoneNumberGeocoding
+            libPhoneNumber
+            libPhoneNumberGeocoding
         required: true
         type: string
       xcode_container:
@@ -17,10 +17,10 @@ on:
         type: string
       device_types:
         description: |
-          YAML list of simulator device types to resolve.
+          Newline-separated list of simulator device types to resolve.
           Supported values include iphone, ipad, macos, watch, and vision.
           Example:
-            - iphone
+            iphone
         required: true
         type: string
       selection_mode:
@@ -111,39 +111,30 @@ jobs:
           import os
 
 
-          def parse_yaml_list(value, input_name):
-              \"\"\"Parse a simple YAML list made up of \"- value\" lines.\"\"\"
+          def parse_list_input(value, input_name):
+              """Parse a newline-separated list input."""
 
               items = []
               for raw_line in value.splitlines():
                   line = raw_line.strip()
-                  if len(line) <= 0 or line.startswith(\"#\"):
+                  if len(line) <= 0 or line.startswith("#"):
                       continue
-                  if not line.startswith(\"-\"):
-                      raise SystemExit(
-                          f\"{input_name} must be provided as a YAML list using lines that start with \\\"- \\\": {raw_line}\"
-                      )
-
-                  item = line[1:].strip()
-                  if len(item) <= 0:
-                      raise SystemExit(f\"{input_name} contains an empty item: {raw_line}\")
-
-                  items.append(item)
+                  items.append(line)
 
               if len(items) <= 0:
-                  raise SystemExit(f\"{input_name} must contain at least one item\")
+                  raise SystemExit(f"{input_name} must contain at least one item")
 
               return items
 
 
-          schemes = parse_yaml_list(os.environ[\"INPUT_SCHEMES\"], \"schemes\")
-          device_types = parse_yaml_list(os.environ[\"INPUT_DEVICE_TYPES\"], \"device_types\")
+          schemes = parse_list_input(os.environ["INPUT_SCHEMES"], "schemes")
+          device_types = parse_list_input(os.environ["INPUT_DEVICE_TYPES"], "device_types")
 
-          with open(os.environ[\"GITHUB_OUTPUT\"], \"a\", encoding=\"utf-8\") as handle:
-              print(\"schemes_json<<EOF\", file=handle)
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              print("schemes_json<<EOF", file=handle)
               print(json.dumps(schemes), file=handle)
-              print(\"EOF\", file=handle)
-              print(f\"device_types_csv={','.join(device_types)}\", file=handle)
+              print("EOF", file=handle)
+              print(f"device_types_csv={','.join(device_types)}", file=handle)
           PYTHON
           )"
 

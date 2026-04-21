@@ -5,10 +5,10 @@ on:
     inputs:
       podspecs:
         description: |
-          YAML list of podspec paths to lint.
+          Newline-separated list of podspec paths to lint.
           Example:
-            - libPhoneNumber-iOS.podspec
-            - libPhoneNumberGeocoding.podspec
+            libPhoneNumber-iOS.podspec
+            libPhoneNumberGeocoding.podspec
         required: true
         type: string
       cocoapods_version:
@@ -37,37 +37,28 @@ jobs:
           import os
 
 
-          def parse_yaml_list(value, input_name):
-              \"\"\"Parse a simple YAML list made up of \"- value\" lines.\"\"\"
+          def parse_list_input(value, input_name):
+              """Parse a newline-separated list input."""
 
               items = []
               for raw_line in value.splitlines():
                   line = raw_line.strip()
-                  if len(line) <= 0 or line.startswith(\"#\"):
+                  if len(line) <= 0 or line.startswith("#"):
                       continue
-                  if not line.startswith(\"-\"):
-                      raise SystemExit(
-                          f\"{input_name} must be provided as a YAML list using lines that start with \\\"- \\\": {raw_line}\"
-                      )
-
-                  item = line[1:].strip()
-                  if len(item) <= 0:
-                      raise SystemExit(f\"{input_name} contains an empty item: {raw_line}\")
-
-                  items.append(item)
+                  items.append(line)
 
               if len(items) <= 0:
-                  raise SystemExit(f\"{input_name} must contain at least one item\")
+                  raise SystemExit(f"{input_name} must contain at least one item")
 
               return items
 
 
-          podspecs = parse_yaml_list(os.environ[\"INPUT_PODSPECS\"], \"podspecs\")
+          podspecs = parse_list_input(os.environ["INPUT_PODSPECS"], "podspecs")
 
-          with open(os.environ[\"GITHUB_OUTPUT\"], \"a\", encoding=\"utf-8\") as handle:
-              print(\"podspecs_json<<EOF\", file=handle)
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              print("podspecs_json<<EOF", file=handle)
               print(json.dumps(podspecs), file=handle)
-              print(\"EOF\", file=handle)
+              print("EOF", file=handle)
           PYTHON
           )"
 
