@@ -20,14 +20,10 @@ Local composite action for running `xcodebuild test` across simulator destinatio
 - `destination_arch`
   - Architecture used in each `xcodebuild -destination`
   - Default: `arm64`
-- `enable_code_coverage`
-  - Value passed to `-enableCodeCoverage`
-  - Default: `YES`
-- `code_signing_allowed`
-  - Value passed through `CODE_SIGNING_ALLOWED`
-  - Default: `NO`
 - `xcodebuild_extra_args`
   - Optional extra `xcodebuild` arguments
+
+This action always runs with `-enableCodeCoverage YES` and `CODE_SIGNING_ALLOWED=NO`.
 
 ## Outputs
 

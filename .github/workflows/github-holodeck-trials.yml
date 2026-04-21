@@ -1,0 +1,243 @@
+name: GitHub Holodeck Trials
+
+on:
+  workflow_call:
+    inputs:
+      schemes:
+        description: |
+          YAML list of Xcode schemes to test.
+          Example:
+            - libPhoneNumber
+            - libPhoneNumberGeocoding
+        required: true
+        type: string
+      xcode_container:
+        description: Path to the Xcode project or workspace to test.
+        required: true
+        type: string
+      device_types:
+        description: |
+          YAML list of simulator device types to resolve.
+          Supported values include iphone, ipad, macos, watch, and vision.
+          Example:
+            - iphone
+        required: true
+        type: string
+      selection_mode:
+        description: |
+          Simulator selection mode to pass to simctl-tricorder-selector.
+          Supported values:
+            - random-compatible
+            - random-latest-compatible
+            - model-type
+            - latest-model
+        required: false
+        default: random-compatible
+        type: string
+      model_preferences:
+        description: Optional model preferences such as iphone=Pro Max;ipad=Pro.
+        required: false
+        default: ""
+        type: string
+      iphoneos_version:
+        description: Specific iOS version for iPhone devices, or latest.
+        required: false
+        default: latest
+        type: string
+      ipados_version:
+        description: Specific iPadOS version for iPad devices, or latest.
+        required: false
+        default: latest
+        type: string
+      macos_version:
+        description: Specific macOS version for macOS simulator devices, or latest.
+        required: false
+        default: latest
+        type: string
+      watchos_version:
+        description: Specific watchOS version for watch devices, or latest.
+        required: false
+        default: latest
+        type: string
+      visionos_version:
+        description: Specific visionOS version for Vision devices, or latest.
+        required: false
+        default: latest
+        type: string
+      destination_arch:
+        description: Destination architecture to use with xcodebuild.
+        required: false
+        default: arm64
+        type: string
+      xcodebuild_extra_args:
+        description: Optional extra xcodebuild arguments.
+        required: false
+        default: ""
+        type: string
+      failing_coverage_threshold:
+        description: Coverage percent below which the status is marked as failing.
+        required: false
+        default: "60"
+        type: string
+      passing_coverage_threshold:
+        description: Coverage percent at or above which the status is marked as passing.
+        required: false
+        default: "75"
+        type: string
+    outputs:
+      combined_coverage_percent:
+        description: Combined unit test coverage percent across all schemes.
+        value: ${{ jobs.coverage-summary.outputs.combined_coverage_percent }}
+
+jobs:
+  prepare-inputs:
+    name: Prepare Workflow Inputs
+    runs-on: ubuntu-latest
+    outputs:
+      schemes_json: ${{ steps.parse.outputs.schemes_json }}
+      device_types_csv: ${{ steps.parse.outputs.device_types_csv }}
+
+    steps:
+      - name: Parse workflow inputs
+        id: parse
+        shell: bash
+        env:
+          INPUT_SCHEMES: ${{ inputs.schemes }}
+          INPUT_DEVICE_TYPES: ${{ inputs.device_types }}
+        run: |
+          set -eo pipefail
+          python3 -c "$(cat <<'PYTHON'
+          import json
+          import os
+
+
+          def parse_yaml_list(value, input_name):
+              \"\"\"Parse a simple YAML list made up of \"- value\" lines.\"\"\"
+
+              items = []
+              for raw_line in value.splitlines():
+                  line = raw_line.strip()
+                  if len(line) <= 0 or line.startswith(\"#\"):
+                      continue
+                  if not line.startswith(\"-\"):
+                      raise SystemExit(
+                          f\"{input_name} must be provided as a YAML list using lines that start with \\\"- \\\": {raw_line}\"
+                      )
+
+                  item = line[1:].strip()
+                  if len(item) <= 0:
+                      raise SystemExit(f\"{input_name} contains an empty item: {raw_line}\")
+
+                  items.append(item)
+
+              if len(items) <= 0:
+                  raise SystemExit(f\"{input_name} must contain at least one item\")
+
+              return items
+
+
+          schemes = parse_yaml_list(os.environ[\"INPUT_SCHEMES\"], \"schemes\")
+          device_types = parse_yaml_list(os.environ[\"INPUT_DEVICE_TYPES\"], \"device_types\")
+
+          with open(os.environ[\"GITHUB_OUTPUT\"], \"a\", encoding=\"utf-8\") as handle:
+              print(\"schemes_json<<EOF\", file=handle)
+              print(json.dumps(schemes), file=handle)
+              print(\"EOF\", file=handle)
+              print(f\"device_types_csv={','.join(device_types)}\", file=handle)
+          PYTHON
+          )"
+
+  resolve-destinations:
+    name: Resolve Simulator Destinations
+    runs-on: macos-latest
+    needs: prepare-inputs
+    outputs:
+      destination_ids: ${{ steps.destination.outputs.destination_ids }}
+      simulator_jsons: ${{ steps.destination.outputs.simulator_jsons }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Resolve simulator destinations
+        id: destination
+        uses: ./.github/actions/simctl-tricorder-selector
+        with:
+          device_types: ${{ needs.prepare-inputs.outputs.device_types_csv }}
+          selection_mode: ${{ inputs.selection_mode }}
+          model_preferences: ${{ inputs.model_preferences }}
+          iphoneos_version: ${{ inputs.iphoneos_version }}
+          ipados_version: ${{ inputs.ipados_version }}
+          macos_version: ${{ inputs.macos_version }}
+          watchos_version: ${{ inputs.watchos_version }}
+          visionos_version: ${{ inputs.visionos_version }}
+
+  unit-tests:
+    name: Unit Tests (${{ matrix.scheme }})
+    runs-on: macos-latest
+    needs:
+      - prepare-inputs
+      - resolve-destinations
+    strategy:
+      fail-fast: false
+      matrix:
+        scheme: ${{ fromJson(needs.prepare-inputs.outputs.schemes_json) }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Run unit tests
+        id: run-tests
+        uses: ./.github/actions/xcode-tricorder-tester
+        with:
+          scheme: ${{ matrix.scheme }}
+          xcode_container: ${{ inputs.xcode_container }}
+          destination_ids: ${{ needs.resolve-destinations.outputs.destination_ids }}
+          simulator_jsons: ${{ needs.resolve-destinations.outputs.simulator_jsons }}
+          destination_arch: ${{ inputs.destination_arch }}
+          xcodebuild_extra_args: ${{ inputs.xcodebuild_extra_args }}
+
+      - name: Upload unit test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: project-unit-tests-${{ matrix.scheme }}
+          path: ${{ steps.run-tests.outputs.result_bundle_directory }}
+
+  coverage-summary:
+    name: Combined Code Coverage
+    runs-on: macos-latest
+    needs: unit-tests
+    if: always()
+    outputs:
+      combined_coverage_percent: ${{ steps.coverage.outputs.coverage_percent }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Download unit test results
+        continue-on-error: true
+        uses: actions/download-artifact@v8
+        with:
+          pattern: project-unit-tests-*
+          path: CoverageResults/xcresults
+
+      - name: Generate code coverage summary
+        id: coverage
+        uses: ./.github/actions/xccov-warp-bubble
+        with:
+          xcresults_directory: CoverageResults/xcresults
+          summary_file: CoverageResults/code-coverage-summary.md
+          summary_json_file: CoverageResults/code-coverage-summary.json
+          failing_coverage_threshold: ${{ inputs.failing_coverage_threshold }}
+          passing_coverage_threshold: ${{ inputs.passing_coverage_threshold }}
+
+      - name: Publish combined coverage comment to pull request
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v3
+        with:
+          header: combined-code-coverage
+          path: ${{ steps.coverage.outputs.summary_file }}
+          skip_unchanged: true

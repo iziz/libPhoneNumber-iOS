@@ -1,0 +1,94 @@
+name: GitHub Podspec Sensor Sweep
+
+on:
+  workflow_call:
+    inputs:
+      podspecs:
+        description: |
+          YAML list of podspec paths to lint.
+          Example:
+            - libPhoneNumber-iOS.podspec
+            - libPhoneNumberGeocoding.podspec
+        required: true
+        type: string
+      cocoapods_version:
+        description: CocoaPods version to install.
+        required: false
+        default: latest
+        type: string
+
+jobs:
+  prepare-inputs:
+    name: Prepare Workflow Inputs
+    runs-on: ubuntu-latest
+    outputs:
+      podspecs_json: ${{ steps.parse.outputs.podspecs_json }}
+
+    steps:
+      - name: Parse workflow inputs
+        id: parse
+        shell: bash
+        env:
+          INPUT_PODSPECS: ${{ inputs.podspecs }}
+        run: |
+          set -eo pipefail
+          python3 -c "$(cat <<'PYTHON'
+          import json
+          import os
+
+
+          def parse_yaml_list(value, input_name):
+              \"\"\"Parse a simple YAML list made up of \"- value\" lines.\"\"\"
+
+              items = []
+              for raw_line in value.splitlines():
+                  line = raw_line.strip()
+                  if len(line) <= 0 or line.startswith(\"#\"):
+                      continue
+                  if not line.startswith(\"-\"):
+                      raise SystemExit(
+                          f\"{input_name} must be provided as a YAML list using lines that start with \\\"- \\\": {raw_line}\"
+                      )
+
+                  item = line[1:].strip()
+                  if len(item) <= 0:
+                      raise SystemExit(f\"{input_name} contains an empty item: {raw_line}\")
+
+                  items.append(item)
+
+              if len(items) <= 0:
+                  raise SystemExit(f\"{input_name} must contain at least one item\")
+
+              return items
+
+
+          podspecs = parse_yaml_list(os.environ[\"INPUT_PODSPECS\"], \"podspecs\")
+
+          with open(os.environ[\"GITHUB_OUTPUT\"], \"a\", encoding=\"utf-8\") as handle:
+              print(\"podspecs_json<<EOF\", file=handle)
+              print(json.dumps(podspecs), file=handle)
+              print(\"EOF\", file=handle)
+          PYTHON
+          )"
+
+  podspec-lint:
+    name: Podspec Sensor Sweep (${{ matrix.podspec }})
+    runs-on: macos-latest
+    needs: prepare-inputs
+    strategy:
+      fail-fast: false
+      matrix:
+        podspec: ${{ fromJson(needs.prepare-inputs.outputs.podspecs_json) }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up CocoaPods
+        uses: maxim-lobanov/setup-cocoapods@v1
+        with:
+          version: ${{ inputs.cocoapods_version }}
+
+      - name: Lint podspec
+        run: |
+          pod lib lint "${{ matrix.podspec }}" --verbose

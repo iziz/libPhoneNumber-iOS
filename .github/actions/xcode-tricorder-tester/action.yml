@@ -22,14 +22,6 @@ inputs:
     description: Destination architecture to use with xcodebuild.
     required: false
     default: arm64
-  enable_code_coverage:
-    description: Value to pass to -enableCodeCoverage.
-    required: false
-    default: "YES"
-  code_signing_allowed:
-    description: Value to pass through CODE_SIGNING_ALLOWED.
-    required: false
-    default: "NO"
   xcodebuild_extra_args:
     description: Optional extra xcodebuild arguments.
     required: false
@@ -56,8 +48,6 @@ runs:
         INPUT_SIMULATOR_JSONS: ${{ inputs.simulator_jsons }}
         INPUT_RESULT_BUNDLE_DIRECTORY: ${{ inputs.result_bundle_directory }}
         INPUT_DESTINATION_ARCH: ${{ inputs.destination_arch }}
-        INPUT_ENABLE_CODE_COVERAGE: ${{ inputs.enable_code_coverage }}
-        INPUT_CODE_SIGNING_ALLOWED: ${{ inputs.code_signing_allowed }}
         INPUT_XCODEBUILD_EXTRA_ARGS: ${{ inputs.xcodebuild_extra_args }}
       run: |
         set -eo pipefail
@@ -68,6 +58,4 @@ runs:
           --simulator-jsons "$INPUT_SIMULATOR_JSONS" \
           --result-bundle-directory "$INPUT_RESULT_BUNDLE_DIRECTORY" \
           --destination-arch "$INPUT_DESTINATION_ARCH" \
-          --enable-code-coverage "$INPUT_ENABLE_CODE_COVERAGE" \
-          --code-signing-allowed "$INPUT_CODE_SIGNING_ALLOWED" \
           --xcodebuild-extra-args "$INPUT_XCODEBUILD_EXTRA_ARGS"

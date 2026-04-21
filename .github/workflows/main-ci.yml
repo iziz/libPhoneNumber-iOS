@@ -19,3 +19,13 @@ jobs:
     with:
       publish_pr_comment: false
     secrets: inherit
+
+  podspec-lint:
+    name: Podspec Sensor Sweep
+    uses: ./.github/workflows/github-podspec-sensor-sweep.yml
+    with:
+      podspecs: |
+        - libPhoneNumber-iOS.podspec
+        - libPhoneNumberGeocoding.podspec
+        - libPhoneNumberShortNumber.podspec
+    secrets: inherit

@@ -18,8 +18,6 @@ def build_script_args(tmp_path, **overrides):
         ]),
         "resultBundleDirectory": str(tmp_path / "TestResults"),
         "destinationArch": "arm64",
-        "enableCodeCoverage": "YES",
-        "codeSigningAllowed": "NO",
         "xcodebuildExtraArgs": "--test-iterations 2",
     }
     values.update(overrides)
@@ -34,25 +32,18 @@ def test_setup_argument_parser_parses_valid_values(run_xcode_tests_module):
         "--destination-ids", "SIM-001",
         "--simulator-jsons", '[{"name":"iPhone 16","os":"18.0","safe_name":"iphone-16"}]',
         "--destination-arch", "arm64",
-        "--enable-code-coverage", "YES",
-        "--code-signing-allowed", "NO",
     ])
 
     assert script_args.scheme == "libPhoneNumber"
-    assert script_args.enableCodeCoverage == "YES"
-    assert script_args.codeSigningAllowed == "NO"
+    assert script_args.destinationArch == "arm64"
 
 
 def test_argument_parsing_helpers(run_xcode_tests_module):
     assert run_xcode_tests_module.parseNonEmptyArgument(" libPhoneNumber ") == "libPhoneNumber"
-    assert run_xcode_tests_module.parseYesNoArgument("yes") == "YES"
     assert run_xcode_tests_module.parseDestinationIds("A\nB\n\n") == ["A", "B"]
 
     with pytest.raises(ValueError):
         run_xcode_tests_module.parseNonEmptyArgument("   ")
-
-    with pytest.raises(ValueError):
-        run_xcode_tests_module.parseYesNoArgument("maybe")
 
 
 def test_determine_xcode_container_type(run_xcode_tests_module):
@@ -197,8 +188,6 @@ def test_run_xcode_tests_script_runs_as_black_box(repo_root, python_executable, 
         ]),
         "--result-bundle-directory", str(result_bundle_directory),
         "--destination-arch", "arm64",
-        "--enable-code-coverage", "YES",
-        "--code-signing-allowed", "NO",
         "--xcodebuild-extra-args", "--test-iterations 2",
     ]
     environment = os.environ.copy()

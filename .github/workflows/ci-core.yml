@@ -86,26 +86,3 @@ jobs:
           header: combined-code-coverage
           path: ${{ steps.coverage.outputs.summary_file }}
           skip_unchanged: true
-
-  podspec-lint:
-    name: Podspec Lint (${{ matrix.podspec }})
-    runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        podspec:
-          - libPhoneNumber-iOS.podspec
-          - libPhoneNumberGeocoding.podspec
-          - libPhoneNumberShortNumber.podspec
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v6
-
-      - name: Set up CocoaPods
-        uses: maxim-lobanov/setup-cocoapods@v1
-        with:
-          version: latest
-
-      - name: Lint podspec
-        run: pod lib lint "${{ matrix.podspec }}" --verbose

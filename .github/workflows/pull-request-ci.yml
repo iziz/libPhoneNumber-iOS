@@ -13,8 +13,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ci:
-    uses: ./.github/workflows/ci-core.yml
+  unit-tests:
+    uses: ./.github/workflows/github-holodeck-trials.yml
     with:
-      publish_pr_comment: true
+      schemes: |
+        - libPhoneNumber
+        - libPhoneNumberGeocoding
+        - libPhoneNumberShortNumber
+      xcode_container: libPhoneNumber.xcodeproj
+      device_types: |
+        - iphone
     secrets: inherit
+
+  podspec-lint:
+    name: Podspec Sensor Sweep
+    uses: ./.github/workflows/github-podspec-sensor-sweep.yml
+    with:
+      podspecs: |
+        - libPhoneNumber-iOS.podspec
+        - libPhoneNumberGeocoding.podspec
+        - libPhoneNumberShortNumber.podspec

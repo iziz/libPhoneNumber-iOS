@@ -18,7 +18,7 @@ import subprocess
 import sys
 
 
-SCRIPT_VERSION: str = "0.2.1"
+SCRIPT_VERSION: str = "0.2.2"
 """The current version of the script"""
 
 
@@ -70,12 +70,6 @@ def setupArgumentParser() -> argparse.ArgumentParser:
     parser.add_argument("--destination-arch", metavar="arm64", required=True,
                         help="The destination architecture to use with xcodebuild",
                         dest='destinationArch', type=parseNonEmptyArgument)
-    parser.add_argument("--enable-code-coverage", metavar="YES", required=True,
-                        help="The value to pass to -enableCodeCoverage",
-                        dest='enableCodeCoverage', type=parseYesNoArgument)
-    parser.add_argument("--code-signing-allowed", metavar="NO", required=True,
-                        help="The value to pass through CODE_SIGNING_ALLOWED",
-                        dest='codeSigningAllowed', type=parseYesNoArgument)
     parser.add_argument("--xcodebuild-extra-args", metavar="--test-iterations 2",
                         help="Optional extra xcodebuild arguments",
                         dest='xcodebuildExtraArgs', default="")
@@ -107,28 +101,6 @@ def parseNonEmptyArgument(value: str) -> str:
     normalizedValue = value.strip()
     if len(normalizedValue) <= 0:
         raise ValueError("Argument value must not be empty")
-
-    return normalizedValue
-
-
-def parseYesNoArgument(value: str) -> str:
-    """
-    Parses and validates a YES or NO argument value
-
-    Parameters
-    ----------
-    value
-        The raw argument value
-
-    Returns
-    -------
-    str
-        The normalized YES or NO value
-    """
-
-    normalizedValue = parseNonEmptyArgument(value).upper()
-    if normalizedValue not in {"YES", "NO"}:
-        raise ValueError(f"Unsupported YES/NO value specified: {value}")
 
     return normalizedValue
 
@@ -329,8 +301,8 @@ def runTests(scriptArgs: argparse.Namespace,
                 "-resultBundlePath",
                 resultBundlePath,
                 "-enableCodeCoverage",
-                scriptArgs.enableCodeCoverage,
-                "CODE_SIGNING_ALLOWED=" + scriptArgs.codeSigningAllowed,
+                "YES",
+                "CODE_SIGNING_ALLOWED=NO",
                 *extraArgs,
                 "test",
             ]
