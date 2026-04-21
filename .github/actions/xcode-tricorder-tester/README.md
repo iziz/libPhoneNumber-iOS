@@ -55,7 +55,7 @@ Local composite action for running `xcodebuild test` across simulator destinatio
     simulator_jsons: ${{ steps.simulator.outputs.simulator_jsons }}
 
 - name: Upload unit test results
-  uses: actions/upload-artifact@v6
+  uses: actions/upload-artifact@v7
   with:
     name: project-unit-tests-libPhoneNumber
     path: ${{ steps.tests.outputs.result_bundle_directory }}

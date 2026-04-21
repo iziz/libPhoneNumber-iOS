@@ -33,7 +33,7 @@ If only one coverage scope is found, the action reports coverage for that scope 
 
 ```yaml
 - name: Download unit test results
-  uses: actions/download-artifact@v7
+  uses: actions/download-artifact@v8
   with:
     pattern: project-unit-tests-*
     path: CoverageResults/xcresults
@@ -47,7 +47,7 @@ If only one coverage scope is found, the action reports coverage for that scope 
     summary_json_file: CoverageResults/code-coverage-summary.json
 
 - name: Publish coverage comment to pull request
-  uses: marocchino/sticky-pull-request-comment@v2
+  uses: marocchino/sticky-pull-request-comment@v3
   with:
     header: combined-code-coverage
     path: ${{ steps.coverage.outputs.summary_file }}

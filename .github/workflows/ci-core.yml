@@ -48,7 +48,7 @@ jobs:
 
       - name: Upload unit test results
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: project-unit-tests-${{ matrix.scheme }}
           path: ${{ steps.run-tests.outputs.result_bundle_directory }}
@@ -67,7 +67,7 @@ jobs:
 
       - name: Download unit test results
         continue-on-error: true
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           pattern: project-unit-tests-*
           path: CoverageResults/xcresults
@@ -81,7 +81,7 @@ jobs:
 
       - name: Publish combined coverage comment to pull request
         if: inputs.publish_pr_comment
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: combined-code-coverage
           path: ${{ steps.coverage.outputs.summary_file }}
