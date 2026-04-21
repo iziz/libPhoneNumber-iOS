@@ -87,12 +87,13 @@ on:
         value: ${{ jobs.coverage-summary.outputs.combined_coverage_percent }}
 
 jobs:
-  resolve-destinations:
-    name: Resolve Simulator Destinations
+  unit-tests:
+    name: Unit Tests (${{ matrix.scheme }})
     runs-on: macos-latest
-    outputs:
-      destination_ids: ${{ steps.destination.outputs.destination_ids }}
-      simulator_jsons: ${{ steps.destination.outputs.simulator_jsons }}
+    strategy:
+      fail-fast: false
+      matrix:
+        scheme: ${{ fromJson(inputs.schemes) }}
 
     steps:
       - name: Check out repository
@@ -111,28 +112,14 @@ jobs:
           watchos_version: ${{ inputs.watchos_version }}
           visionos_version: ${{ inputs.visionos_version }}
 
-  unit-tests:
-    name: Unit Tests (${{ matrix.scheme }})
-    runs-on: macos-latest
-    needs:
-      - resolve-destinations
-    strategy:
-      fail-fast: false
-      matrix:
-        scheme: ${{ fromJson(inputs.schemes) }}
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v6
-
       - name: Run unit tests
         id: run-tests
         uses: ./.github/actions/xcode-tricorder-tester
         with:
           scheme: ${{ matrix.scheme }}
           xcode_container: ${{ inputs.xcode_container }}
-          destination_ids: ${{ needs.resolve-destinations.outputs.destination_ids }}
-          simulator_jsons: ${{ needs.resolve-destinations.outputs.simulator_jsons }}
+          destination_ids: ${{ steps.destination.outputs.destination_ids }}
+          simulator_jsons: ${{ steps.destination.outputs.simulator_jsons }}
           destination_arch: ${{ inputs.destination_arch }}
           xcodebuild_extra_args: ${{ inputs.xcodebuild_extra_args }}
 
