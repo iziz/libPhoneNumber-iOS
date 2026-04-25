@@ -34,7 +34,7 @@ echo "Compressing JSON Files..."
 
 TEMPDIR=$(mktemp -d)
 gzip -c "../generatedJSON/PhoneNumberMetaData.json" > "$TEMPDIR/PhoneNumberMetaData.zip"
-gzip -c "../generatedJSON/ShortNumberMetaData.json" > "$TEMPDIR/ShortNumberMetaData.zip"
+gzip -c "../generatedJSON/ShortNumberMetadata.json" > "$TEMPDIR/ShortNumberMetaData.zip"
 
 
 echo "Generating Files..."
@@ -88,7 +88,7 @@ echo "  $SHORT_NUMBER_METADATA_HEADER"
 cat > "$SHORT_NUMBER_METADATA_HEADER" <<'EOF'
 /*****
  * Data Generated from GeneratePhoneNumberHeader.sh
- * Off of ShortNumberMetaData.json
+ * Off of ShortNumberMetadata.json
  */
 
 #include <zlib.h>
@@ -122,7 +122,7 @@ cat >> "$SHORT_NUMBER_METADATA_IMPL" <<'EOF'
 z_const size_t kShortNumberMetaDataCompressedLength = sizeof(kShortNumberMetaData);
 EOF
 
-LIB_SIZE=$(stat -f%z "../generatedJSON/ShortNumberMetaData.json")
+LIB_SIZE=$(stat -f%z "../generatedJSON/ShortNumberMetadata.json")
 echo "z_const size_t kShortNumberMetaDataExpandedLength = $LIB_SIZE;" >> "$SHORT_NUMBER_METADATA_IMPL"
 
 

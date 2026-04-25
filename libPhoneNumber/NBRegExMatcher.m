@@ -40,7 +40,7 @@
                                                                        error:nil];
 
   if (regEx == nil) {
-    NSAssert(true, @"Regular expression shouldn't be nil");
+    NSAssert(NO, @"Regular expression shouldn't be nil");
     return NO;
   }
 
@@ -51,7 +51,7 @@
     [[NBRegularExpressionCache sharedInstance] regularExpressionForPattern:nationalNumberPattern
                                                                      error:NULL];
   if (prefixRegEx == nil) {
-    NSAssert(true, @"Regular expression shouldn't be nil");
+    NSAssert(NO, @"Regular expression shouldn't be nil");
     return NO;
   }
 

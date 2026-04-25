@@ -140,7 +140,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   return error;
 }
 
-- (NSRegularExpression * _Nonnull)entireRegularExpressionWithPattern:(NSString * _Nonnull)regexPattern
+- (NSRegularExpression * _Nullable)entireRegularExpressionWithPattern:(NSString * _Nonnull)regexPattern
                                                     options:(NSRegularExpressionOptions)options
                                                       error:(NSError * _Nullable * _Nullable)error {
   [_entireStringCacheLock lock];
@@ -158,7 +158,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
       }
 
       regex = [self regularExpressionWithPattern:finalRegexString options:0 error:error];
-      [_entireStringRegexCache setObject:regex forKey:regexPattern];
+      if (regex != nil) {
+        [_entireStringRegexCache setObject:regex forKey:regexPattern];
+      }
     }
 
     return regex;
@@ -167,7 +169,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   }
 }
 
-- (NSRegularExpression * _Nonnull)regularExpressionWithPattern:(NSString * _Nonnull)pattern
+- (NSRegularExpression * _Nullable)regularExpressionWithPattern:(NSString * _Nonnull)pattern
                                                        options:(NSRegularExpressionOptions)options
                                                          error:(NSError * _Nullable * _Nullable)error {
   [_lockPatternCache lock];
@@ -182,7 +184,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
       regex = [NSRegularExpression regularExpressionWithPattern:pattern
                                                         options:options
                                                           error:error];
-      [_regexPatternCache setObject:regex forKey:pattern];
+      if (regex != nil) {
+        [_regexPatternCache setObject:regex forKey:pattern];
+      }
     }
     return regex;
   } @finally {
