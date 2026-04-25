@@ -45,6 +45,9 @@
 - (NSString * _Nonnull)getNationalSignificantNumber:(NBPhoneNumber * _Nonnull)phoneNumber;
 
 - (NSArray * _Nullable)getSupportedRegions;
+- (NSArray<NSNumber *> * _Nonnull)getSupportedCallingCodes;
+- (NSArray<NSNumber *> * _Nonnull)getSupportedTypesForRegion:(NSString * _Nullable)regionCode;
+- (NSArray<NSNumber *> * _Nonnull)getSupportedTypesForNonGeoEntity:(NSNumber * _Nonnull)countryCallingCode;
 
 - (NBEPhoneNumberType)getNumberType:(NBPhoneNumber * _Nonnull)phoneNumber;
 
@@ -77,6 +80,9 @@
 
 - (BOOL)isPossibleNumber:(NBPhoneNumber * _Nonnull)number;
 - (BOOL)isPossibleNumber:(NBPhoneNumber * _Nonnull)number error:(NSError * _Nullable * _Nullable)error;
+- (BOOL)isPossibleNumber:(NBPhoneNumber * _Nonnull)number forType:(NBEPhoneNumberType)type;
+- (NBEValidationResult)isPossibleNumberWithReason:(NBPhoneNumber * _Nonnull)number
+                                          forType:(NBEPhoneNumberType)type;
 - (BOOL)isPossibleNumberString:(NSString * _Nonnull)number
              regionDialingFrom:(NSString * _Nullable)regionDialingFrom
                          error:(NSError * _Nullable * _Nullable)error;
@@ -147,4 +153,3 @@
 - (NSString * _Nonnull)getCountryMobileTokenFromCountryCode:(NSInteger)countryCallingCode;
 
 @end
-

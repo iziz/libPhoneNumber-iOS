@@ -28,6 +28,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NBPhoneMetaData * _Nullable)shortNumberMetadataForRegion:(NSString * _Nonnull)regionCode;
 
+/**
+ * Returns the region codes that have short-number metadata.
+ */
+- (NSArray<NSString *> * _Nonnull)getSupportedRegions;
+
 @end
 
 NS_ASSUME_NONNULL_END

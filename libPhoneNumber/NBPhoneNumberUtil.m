@@ -439,10 +439,43 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
+    NSString *extnDigitsExplicit = [NSString stringWithFormat:@"([%@]{1,20})", NB_VALID_DIGITS_STRING];
+    NSString *extnDigitsLikely = [NSString stringWithFormat:@"([%@]{1,15})", NB_VALID_DIGITS_STRING];
+    NSString *extnDigitsAmbiguous = [NSString stringWithFormat:@"([%@]{1,9})", NB_VALID_DIGITS_STRING];
+    NSString *extnDigitsNotSure = [NSString stringWithFormat:@"([%@]{1,6})", NB_VALID_DIGITS_STRING];
+    NSString *possibleSeparatorsBetweenNumberAndExtLabel =
+        [NSString stringWithFormat:@"[ %@\\t,]*", NB_NON_BREAKING_SPACE];
+    NSString *possibleCharsAfterExtLabel =
+        [NSString stringWithFormat:@"[:\\.．]?[ %@\\t,-]*", NB_NON_BREAKING_SPACE];
+    NSString *possibleSeparatorsNumberExtLabelNoComma =
+        [NSString stringWithFormat:@"[ %@\\t]*", NB_NON_BREAKING_SPACE];
+    NSString *explicitExtLabels =
+        @"(?:e?xt(?:ensi(?:ó?|ó))?n?|ｅ?ｘｔｎ?|доб|anexo)";
+    NSString *ambiguousExtLabels = @"(?:[xｘ#＃~～]|int|ｉｎｔ)";
+    NSString *rfcExtn = [NSString stringWithFormat:@"%@%@", RFC3966_EXTN_PREFIX, extnDigitsExplicit];
+    NSString *explicitExtn = [NSString stringWithFormat:@"%@%@%@%@#?",
+                                                        possibleSeparatorsBetweenNumberAndExtLabel,
+                                                        explicitExtLabels,
+                                                        possibleCharsAfterExtLabel,
+                                                        extnDigitsExplicit];
+    NSString *ambiguousExtn = [NSString stringWithFormat:@"%@%@%@%@#?",
+                                                         possibleSeparatorsBetweenNumberAndExtLabel,
+                                                         ambiguousExtLabels,
+                                                         possibleCharsAfterExtLabel,
+                                                         extnDigitsAmbiguous];
+    NSString *americanStyleExtnWithSuffix =
+        [NSString stringWithFormat:@"[- ]+%@#", extnDigitsNotSure];
+    NSString *autoDiallingExtn = [NSString stringWithFormat:@"%@(?:,{2}|;)%@%@#?",
+                                                            possibleSeparatorsNumberExtLabelNoComma,
+                                                            possibleCharsAfterExtLabel,
+                                                            extnDigitsLikely];
+    NSString *onlyCommasExtn = [NSString stringWithFormat:@"%@(?:,)+%@%@#?",
+                                                          possibleSeparatorsNumberExtLabelNoComma,
+                                                          possibleCharsAfterExtLabel,
+                                                          extnDigitsAmbiguous];
     NSString *EXTN_PATTERNS_FOR_PARSING =
-        @"(?:;ext=([0-9０-９٠-٩۰-۹]{1,7})|[  "
-        @"\\t,]*(?:e?xt(?:ensi(?:ó?|ó))?n?|ｅ?ｘｔｎ?|[,xｘX#＃~～]|int|anexo|ｉｎｔ)[:\\.．]?["
-        @"  \\t,-]*([0-9０-９٠-٩۰-۹]{1,7})#?|[- ]+([0-9０-９٠-٩۰-۹]{1,5})#)$";
+        [@[ rfcExtn, explicitExtn, ambiguousExtn, americanStyleExtnWithSuffix, autoDiallingExtn, onlyCommasExtn ]
+            componentsJoinedByString:@"|"];
 
     LEADING_PLUS_CHARS_PATTERN = [NSString stringWithFormat:@"^[%@]+", NB_PLUS_CHARS];
 
@@ -454,7 +487,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     UNWANTED_END_CHAR_PATTERN =
         [NSString stringWithFormat:@"[^%@%@#]+$", NB_VALID_DIGITS_STRING, VALID_ALPHA];
 
-    EXTN_PATTERN = [NSString stringWithFormat:@"(?:%@)$", EXTN_PATTERNS_FOR_PARSING];
+    EXTN_PATTERN = [NSString stringWithFormat:@"(?i:(?:%@)$)", EXTN_PATTERNS_FOR_PARSING];
 
     SEPARATOR_PATTERN = [NSString stringWithFormat:@"[%@]+", VALID_PUNCTUATION];
 
@@ -467,6 +500,25 @@ static NSArray *GEO_MOBILE_COUNTRIES;
         @"~⁓∼～*A-Za-z0-9０-９٠-٩۰-۹]*(?:;ext=([0-9０-９٠-٩۰-۹]{1,7})|[  "
         @"\\t,]*(?:e?xt(?:ensi(?:ó?|ó))?n?|ｅ?ｘｔｎ?|[,xｘ#＃~～]|int|anexo|ｉｎｔ)[:\\.．]?[ "
         @" \\t,-]*([0-9０-９٠-٩۰-۹]{1,7})#?|[- ]+([0-9０-９٠-٩۰-۹]{1,5})#)?$";
+    NSString *minLengthPhoneNumberPattern =
+        [NSString stringWithFormat:@"[%@]{%lu}",
+                                   NB_VALID_DIGITS_STRING,
+                                   (unsigned long)MIN_LENGTH_FOR_NSN_];
+    NSString *validPhoneNumber =
+        [NSString stringWithFormat:@"[%@]*(?:[%@%@]*[%@]){3,}[%@%@%@%@]*",
+                                   NB_PLUS_CHARS,
+                                   VALID_PUNCTUATION,
+                                   STAR_SIGN,
+                                   NB_VALID_DIGITS_STRING,
+                                   VALID_PUNCTUATION,
+                                   STAR_SIGN,
+                                   VALID_ALPHA,
+                                   NB_VALID_DIGITS_STRING];
+    VALID_PHONE_NUMBER_PATTERN =
+        [NSString stringWithFormat:@"(?i:^(?:%@)$|^(?:%@)(?:(?:%@))?$)",
+                                   minLengthPhoneNumberPattern,
+                                   validPhoneNumber,
+                                   EXTN_PATTERNS_FOR_PARSING];
   });
 }
 
@@ -2663,7 +2715,9 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 }
 
 - (BOOL)isPossibleNumber:(NBPhoneNumber * _Nonnull)number {
-  return [self isPossibleNumberWithReason:number] == NBEValidationResultIS_POSSIBLE;
+  NBEValidationResult result = [self isPossibleNumberWithReason:number];
+  return result == NBEValidationResultIS_POSSIBLE ||
+         result == NBEValidationResultIS_POSSIBLE_LOCAL_ONLY;
 }
 
 /**
@@ -2694,8 +2748,8 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   NSArray<NSNumber *> *localLengths = descForType.possibleLengthLocalOnly;
 
   if (type == NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE) {
-    if ([self descHasPossibleNumberData:[self getNumberDescByType:metadata
-                                                             type:NBEPhoneNumberTypeFIXED_LINE]]) {
+    if (![self descHasPossibleNumberData:[self getNumberDescByType:metadata
+                                                              type:NBEPhoneNumberTypeFIXED_LINE]]) {
       // The rare case has been encountered where no fixedLine data is available (true for some
       // non-geographical entities), so we just check mobile.
       return [self validateNumberLength:number metadata:metadata type:NBEPhoneNumberTypeMOBILE];
@@ -2778,7 +2832,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   NSUInteger actualLength = number.length;
 
   if ([localLengths containsObject:@(actualLength)]) {
-    return NBEValidationResultIS_POSSIBLE;
+    return NBEValidationResultIS_POSSIBLE_LOCAL_ONLY;
   }
 
   // There should always be "possibleLengths" set for every element. This will
@@ -2844,6 +2898,17 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 }
 
 - (NBEValidationResult)isPossibleNumberWithReason:(NBPhoneNumber * _Nonnull)number {
+  return [self isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeUNKNOWN];
+}
+
+- (BOOL)isPossibleNumber:(NBPhoneNumber * _Nonnull)number forType:(NBEPhoneNumberType)type {
+  NBEValidationResult result = [self isPossibleNumberWithReason:number forType:type];
+  return result == NBEValidationResultIS_POSSIBLE ||
+         result == NBEValidationResultIS_POSSIBLE_LOCAL_ONLY;
+}
+
+- (NBEValidationResult)isPossibleNumberWithReason:(NBPhoneNumber * _Nonnull)number
+                                          forType:(NBEPhoneNumberType)type {
   NSString *nationalNumber = [self getNationalSignificantNumber:number];
   NSNumber *countryCode = number.countryCode;
   // Note: For Russian Fed and NANPA numbers, we just use the rules from the
@@ -2859,7 +2924,7 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   // Metadata cannot be nil because the country calling code is valid.
   NBPhoneMetaData *metadata = [self getMetadataForRegionOrCallingCode:countryCode
                                                            regionCode:regionCode];
-  return [self testNumberLength:nationalNumber desc:metadata.generalDesc];
+  return [self validateNumberLength:nationalNumber metadata:metadata type:type];
 }
 
 /**
@@ -2988,6 +3053,40 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 
   NSArray *supportedRegions = [allKeys filteredArrayUsingPredicate:predicateIsNaN];
   return supportedRegions;
+}
+
+- (NSArray<NSNumber *> * _Nonnull)getSupportedCallingCodes {
+  NSArray<NSString *> *callingCodeStrings = [[self.helper countryCodeToRegionCodeDictionary] allKeys];
+  NSMutableArray<NSNumber *> *callingCodes = [[NSMutableArray alloc] initWithCapacity:callingCodeStrings.count];
+
+  for (NSString *callingCodeString in callingCodeStrings) {
+    [callingCodes addObject:@(callingCodeString.integerValue)];
+  }
+
+  [callingCodes sortUsingSelector:@selector(compare:)];
+  return [callingCodes copy];
+}
+
+- (NSArray<NSNumber *> * _Nonnull)getSupportedTypesForRegion:(NSString * _Nullable)regionCode {
+  if (![self isValidRegionCode:regionCode]) {
+    return @[];
+  }
+
+  NBPhoneMetaData *metadata = [self.helper getMetadataForRegion:regionCode];
+  if (metadata == nil) {
+    return @[];
+  }
+
+  return [self getSupportedTypesForMetadata:metadata];
+}
+
+- (NSArray<NSNumber *> * _Nonnull)getSupportedTypesForNonGeoEntity:(NSNumber * _Nonnull)countryCallingCode {
+  NBPhoneMetaData *metadata = [self.helper getMetadataForNonGeographicalRegion:countryCallingCode];
+  if (metadata == nil) {
+    return @[];
+  }
+
+  return [self getSupportedTypesForMetadata:metadata];
 }
 
 /*
@@ -3167,8 +3266,43 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 - (BOOL)descHasPossibleNumberData:(NBPhoneNumberDesc * _Nonnull)desc {
   // If this is empty, it means numbers of this type inherit from the "general desc" -> the value
   // "-1" means that no numbers exist for this type.
-  return [desc.possibleLength count] != 1 ||
-         ![[desc.possibleLength firstObject] isEqualToNumber:@(-1)];
+  return desc != nil &&
+         ([desc.possibleLength count] != 1 ||
+          ![[desc.possibleLength firstObject] isEqualToNumber:@(-1)]);
+}
+
+- (BOOL)descHasData:(NBPhoneNumberDesc * _Nullable)desc {
+  // Local-only lengths alone do not make type-specific APIs useful.
+  return desc != nil &&
+         ([NBMetadataHelper hasValue:desc.exampleNumber] ||
+          [self descHasPossibleNumberData:desc] ||
+          [NBMetadataHelper hasValue:desc.nationalNumberPattern]);
+}
+
+- (NSArray<NSNumber *> * _Nonnull)getSupportedTypesForMetadata:(NBPhoneMetaData * _Nonnull)metadata {
+  NSArray<NSNumber *> *candidateTypes = @[
+    @(NBEPhoneNumberTypeFIXED_LINE),
+    @(NBEPhoneNumberTypeMOBILE),
+    @(NBEPhoneNumberTypeTOLL_FREE),
+    @(NBEPhoneNumberTypePREMIUM_RATE),
+    @(NBEPhoneNumberTypeSHARED_COST),
+    @(NBEPhoneNumberTypeVOIP),
+    @(NBEPhoneNumberTypePERSONAL_NUMBER),
+    @(NBEPhoneNumberTypePAGER),
+    @(NBEPhoneNumberTypeUAN),
+    @(NBEPhoneNumberTypeVOICEMAIL)
+  ];
+  NSMutableArray<NSNumber *> *supportedTypes = [[NSMutableArray alloc] init];
+
+  for (NSNumber *typeNumber in candidateTypes) {
+    NBPhoneNumberDesc *desc = [self getNumberDescByType:metadata
+                                                   type:(NBEPhoneNumberType)typeNumber.integerValue];
+    if ([self descHasData:desc]) {
+      [supportedTypes addObject:typeNumber];
+    }
+  }
+
+  return [supportedTypes copy];
 }
 
 /**

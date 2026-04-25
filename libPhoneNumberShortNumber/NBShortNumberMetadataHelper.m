@@ -86,6 +86,18 @@ static NSString *StringByTrimming(NSString *aString) {
   return nil;
 }
 
+- (NSArray<NSString *> * _Nonnull)getSupportedRegions {
+  NSArray<NSString *> *allKeys = [_shortNumberDataMap[@"countryToMetadata"] allKeys];
+  NSPredicate *predicateIsNaN =
+      [NSPredicate predicateWithBlock:^BOOL(NSString *evaluatedObject, NSDictionary *bindings) {
+        NSCharacterSet *nonDecimalCharacterSet =
+            [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+        return [evaluatedObject rangeOfCharacterFromSet:nonDecimalCharacterSet].location != NSNotFound;
+      }];
+  NSArray<NSString *> *supportedRegions = [allKeys filteredArrayUsingPredicate:predicateIsNaN];
+  return [supportedRegions sortedArrayUsingSelector:@selector(compare:)];
+}
+
 /**
  * Expand gzipped data into a JSON object.
 

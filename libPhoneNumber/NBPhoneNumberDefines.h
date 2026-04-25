@@ -61,13 +61,13 @@ typedef NS_ENUM(NSInteger, NBEMatchType) {
 };
 
 typedef NS_ENUM(NSInteger, NBEValidationResult) {
-  NBEValidationResultINVALID_LENGTH = -1,
-  NBEValidationResultUNKNOWN = 0,
-  NBEValidationResultIS_POSSIBLE = 1,
-  NBEValidationResultINVALID_COUNTRY_CODE = 2,
-  NBEValidationResultTOO_SHORT = 3,
-  NBEValidationResultTOO_LONG = 4,
-  NBEValidationResultIS_POSSIBLE_LOCAL_ONLY = 5
+  NBEValidationResultIS_POSSIBLE = 0,
+  NBEValidationResultINVALID_COUNTRY_CODE = 1,
+  NBEValidationResultTOO_SHORT = 2,
+  NBEValidationResultTOO_LONG = 3,
+  NBEValidationResultIS_POSSIBLE_LOCAL_ONLY = 4,
+  NBEValidationResultINVALID_LENGTH = 5,
+  NBEValidationResultUNKNOWN = 6
 };
 
 typedef NS_ENUM(NSInteger, NBECountryCodeSource) {

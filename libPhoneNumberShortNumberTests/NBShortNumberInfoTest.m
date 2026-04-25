@@ -318,6 +318,11 @@
   XCTAssertEqualObjects(@"100", [_testHelper exampleShortNumberWithRegionCode:@"AM"]);
   XCTAssertEqualObjects(@"15", [_testHelper exampleShortNumberWithRegionCode:@"FR"]);
   XCTAssertEqualObjects(@"", [_testHelper exampleShortNumberWithRegionCode:@"UN001"]);
+
+  XCTAssertEqualObjects(@"100", [_shortNumberUtil getExampleShortNumber:@"AM"]);
+  XCTAssertEqualObjects(@"15", [_shortNumberUtil getExampleShortNumber:@"FR"]);
+  XCTAssertEqualObjects(@"", [_shortNumberUtil getExampleShortNumber:@"UN001"]);
+  XCTAssertEqualObjects(@"", [_shortNumberUtil getExampleShortNumber:nil]);
 }
 
 - (void)testGetExampleShortNumberForCost {
@@ -331,6 +336,22 @@
                                                     regionCode:@"FR"]);
   XCTAssertEqualObjects(@"", [_testHelper exampleShortNumberForCost:NBEShortNumberCostUnknown
                                                          regionCode:@"FR"]);
+
+  XCTAssertEqualObjects(@"15", [_shortNumberUtil getExampleShortNumberForRegion:@"FR"
+                                                                           cost:NBEShortNumberCostTollFree]);
+  XCTAssertEqualObjects(@"611", [_shortNumberUtil getExampleShortNumberForRegion:@"FR"
+                                                                            cost:NBEShortNumberCostStandardRate]);
+  XCTAssertEqualObjects(@"1000", [_shortNumberUtil getExampleShortNumberForRegion:@"FR"
+                                                                             cost:NBEShortNumberCostPremiumRate]);
+  XCTAssertEqualObjects(@"", [_shortNumberUtil getExampleShortNumberForRegion:@"FR"
+                                                                         cost:NBEShortNumberCostUnknown]);
+}
+
+- (void)testGetSupportedRegions {
+  NSArray<NSString *> *supportedRegions = [_shortNumberUtil getSupportedRegions];
+  XCTAssertTrue(supportedRegions.count > 0);
+  XCTAssertTrue([supportedRegions containsObject:@"US"]);
+  XCTAssertFalse([supportedRegions containsObject:@"001"]);
 }
 
 - (void)testConnectsToEmergencyNumber_US {

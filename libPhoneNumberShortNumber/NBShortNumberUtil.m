@@ -47,6 +47,44 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
   return self;
 }
 
+- (NSArray<NSString *> *)getSupportedRegions {
+  return [_helper getSupportedRegions];
+}
+
+- (NSString *)getExampleShortNumber:(NSString *)regionCode {
+  NBPhoneMetaData *metadata = [_helper shortNumberMetadataForRegion:regionCode ?: @""];
+  if (metadata == nil) {
+    return @"";
+  }
+
+  return metadata.shortCode.exampleNumber ?: @"";
+}
+
+- (NSString *)getExampleShortNumberForRegion:(NSString *)regionCode
+                                        cost:(NBEShortNumberCost)cost {
+  NBPhoneMetaData *metadata = [_helper shortNumberMetadataForRegion:regionCode];
+  if (metadata == nil) {
+    return @"";
+  }
+
+  NBPhoneNumberDesc *desc = nil;
+  switch (cost) {
+    case NBEShortNumberCostTollFree:
+      desc = metadata.tollFree;
+      break;
+    case NBEShortNumberCostStandardRate:
+      desc = metadata.standardRate;
+      break;
+    case NBEShortNumberCostPremiumRate:
+      desc = metadata.premiumRate;
+      break;
+    case NBEShortNumberCostUnknown:
+      break;
+  }
+
+  return desc.exampleNumber ?: @"";
+}
+
 - (BOOL)isPossibleShortNumber:(NBPhoneNumber *)phoneNumber forRegion:(NSString *)regionDialingFrom {
   if (![self doesPhoneNumber:phoneNumber matchesRegion:regionDialingFrom]) {
     return NO;

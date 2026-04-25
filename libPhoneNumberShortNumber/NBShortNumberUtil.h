@@ -28,6 +28,29 @@ typedef NS_ENUM(NSUInteger, NBEShortNumberCost) {
 /// Short number util singleton with a default metadata helper.
 + (NBShortNumberUtil *)sharedInstance;
 
+/**
+ * Convenience method to get a list of regions the short-number library has metadata for.
+ */
+- (NSArray<NSString *> *)getSupportedRegions;
+
+/**
+ * Gets a valid short number for the specified region.
+ *
+ * @param regionCode the region for which an example short number is needed
+ * @return a valid short number for the specified region, or an empty string when unavailable.
+ */
+- (NSString *)getExampleShortNumber:(nullable NSString *)regionCode;
+
+/**
+ * Gets a valid short number for the specified cost category.
+ *
+ * @param regionCode the region for which an example short number is needed
+ * @param cost the cost category of number that is needed
+ * @return a valid short number for the specified region and cost, or an empty string when unavailable.
+ */
+- (NSString *)getExampleShortNumberForRegion:(NSString *)regionCode
+                                        cost:(NBEShortNumberCost)cost;
+
 - (instancetype)init NS_UNAVAILABLE;
 
 /// Initialize short number util with a metadata helper.

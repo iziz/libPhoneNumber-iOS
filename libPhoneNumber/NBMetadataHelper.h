@@ -26,6 +26,7 @@
 - (NBPhoneMetaData *)getMetadataForRegion:(NSString *)regionCode;
 
 - (NSDictionary *)countryCodeToCountryNumberDictionary;
+- (NSDictionary *)countryCodeToRegionCodeDictionary;
 - (NSArray *)getAllMetadata;
 
 @end
