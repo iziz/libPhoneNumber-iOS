@@ -1,308 +1,284 @@
 [![CocoaPods](https://img.shields.io/cocoapods/p/libPhoneNumber-iOS.svg?style=flat)](http://cocoapods.org/?q=libPhoneNumber-iOS)
 [![CocoaPods](https://img.shields.io/cocoapods/v/libPhoneNumber-iOS.svg?style=flat)](http://cocoapods.org/?q=libPhoneNumber-iOS)
-[![Travis](https://travis-ci.org/iziz/libPhoneNumber-iOS.svg?branch=master)](https://travis-ci.org/iziz/libPhoneNumber-iOS)
-[![Coveralls](https://coveralls.io/repos/iziz/libPhoneNumber-iOS/badge.svg?branch=master&service=github)](https://coveralls.io/github/iziz/libPhoneNumber-iOS?branch=master)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-# **libPhoneNumber for iOS**
+# libPhoneNumber for iOS
 
- - NBPhoneNumberUtil
- - NBAsYouTypeFormatter
+Objective-C implementation of Google's [libphonenumber](https://github.com/google/libphonenumber) metadata and behavior for Apple platforms, with a Swift-first facade for new Swift integrations.
 
-> ARC only
+The project keeps the Objective-C core stable for existing apps while exposing a smaller Swift API for common parsing, formatting, validation, geocoding, and short-number workflows.
 
-## Update Log
-[https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
+## Products
 
+| Product | Use when |
+| --- | --- |
+| `libPhoneNumberSwift` | You are writing new Swift code and want a native-feeling facade. |
+| `libPhoneNumber` | You need the stable Objective-C core API. |
+| `libPhoneNumberGeocoding` | You need offline region descriptions for phone numbers. |
+| `libPhoneNumberShortNumber` | You need emergency and short-code support. |
 
-## Issue
-You can check phone number validation using below link.
-https://rawgit.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/demo-compiled.html
+## Installation
 
-Please report, if the above results are different from this iOS library.
-Otherwise, please create issue to following link below to request additional telephone numbers formatting rule.
-https://github.com/google/libphonenumber/issues
+### Swift Package Manager
 
-Metadata in this library was generated from that. so, you should change it first. :)
+Add this repository as a package dependency and select the products you need.
 
-## Install
+For most Swift apps, choose:
 
-#### Using [CocoaPods](http://cocoapods.org/?q=libPhoneNumber-iOS)
+```swift
+.product(name: "libPhoneNumberSwift", package: "libPhoneNumber")
 ```
-source 'https://github.com/CocoaPods/Specs.git'
-pod 'libPhoneNumber-iOS', '~> 0.8'
+
+Use the Objective-C-compatible products directly if you need lower-level access:
+
+```swift
+.product(name: "libPhoneNumber", package: "libPhoneNumber")
+.product(name: "libPhoneNumberGeocoding", package: "libPhoneNumber")
+.product(name: "libPhoneNumberShortNumber", package: "libPhoneNumber")
 ```
-##### Installing libPhoneNumber Geocoding Features
+
+### CocoaPods
+
+For Objective-C-compatible core APIs:
+
+```ruby
+pod 'libPhoneNumber-iOS', '~> 1.4'
 ```
-pod 'libPhoneNumberGeocoding', :git => 'https://github.com/CocoaPods/Specs.git'
-```
-##### Installing Swift-first Facade
-```
+
+For the Swift-first facade:
+
+```ruby
 pod 'libPhoneNumberSwift', '~> 1.4'
 ```
 
-#### Using [Carthage](https://github.com/Carthage/Carthage)
+Optional modules:
 
- Carthage is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
-
- You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
-
-```bash
-$ brew update
-$ brew install carthage
+```ruby
+pod 'libPhoneNumberGeocoding', '~> 1.4'
+pod 'libPhoneNumberShortNumber', '~> 1.4'
 ```
 
-To integrate libPhoneNumber into your Xcode project using Carthage, specify it in your `Cartfile`:
+### Carthage
+
+Add this to your `Cartfile`:
 
 ```ogdl
 github "iziz/libPhoneNumber-iOS"
 ```
 
-And set the **Embedded Content Contains Swift** to "Yes" in your build settings.
+### Manual Integration
 
-#### Setting up manually
- Add source files to your projects from libPhoneNumber
-    - Add "Contacts.framework"
+Add the source files from the modules you need and link `Contacts.framework` for the core library.
 
-See sample test code from
-> [libPhoneNumber-iOS/libPhoneNumberTests/ ... Test.m] (https://github.com/iziz/libPhoneNumber-iOS/tree/master/libPhoneNumberTests)
+## Swift Quick Start
 
-#### Using Swift Package Manager
-Add this repository as a package dependency and choose the product that matches your integration:
-
-- `libPhoneNumber`: Objective-C-compatible core APIs.
-- `libPhoneNumberGeocoding`: offline geocoding APIs.
-- `libPhoneNumberShortNumber`: short-number APIs.
-- `libPhoneNumberSwift`: Swift-first facade over the stable Objective-C core.
-
-## Usage - **NBPhoneNumberUtil**
-```obj-c
- NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
- NSError *anError = nil;
- NBPhoneNumber *myNumber = [phoneUtil parse:@"6766077303"
-                              defaultRegion:@"AT" error:&anError];
- if (anError == nil) {
-     NSLog(@"isValidPhoneNumber ? [%@]", [phoneUtil isValidNumber:myNumber] ? @"YES":@"NO");
-
-     // E164          : +436766077303
-     NSLog(@"E164          : %@", [phoneUtil format:myNumber
-                                       numberFormat:NBEPhoneNumberFormatE164
-                                              error:&anError]);
-     // INTERNATIONAL : +43 676 6077303
-     NSLog(@"INTERNATIONAL : %@", [phoneUtil format:myNumber
-                                       numberFormat:NBEPhoneNumberFormatINTERNATIONAL
-                                              error:&anError]);
-     // NATIONAL      : 0676 6077303
-     NSLog(@"NATIONAL      : %@", [phoneUtil format:myNumber
-                                       numberFormat:NBEPhoneNumberFormatNATIONAL
-                                              error:&anError]);
-     // RFC3966       : tel:+43-676-6077303
-     NSLog(@"RFC3966       : %@", [phoneUtil format:myNumber
-                                       numberFormat:NBEPhoneNumberFormatRFC3966
-                                              error:&anError]);
- } else {
-     NSLog(@"Error : %@", [anError localizedDescription]);
- }
-
- NSLog (@"extractCountryCode [%@]", [phoneUtil extractCountryCode:@"823213123123" nationalNumber:nil]);
-
- NSString *nationalNumber = nil;
- NSNumber *countryCode = [phoneUtil extractCountryCode:@"823213123123" nationalNumber:&nationalNumber];
-
- NSLog (@"extractCountryCode [%@] [%@]", countryCode, nationalNumber);
-```
-##### Output
-```
-2014-07-06 12:39:37.240 libPhoneNumberTest[1581:60b] isValidPhoneNumber ? [YES]
-2014-07-06 12:39:37.242 libPhoneNumberTest[1581:60b] E164          : +436766077303
-2014-07-06 12:39:37.243 libPhoneNumberTest[1581:60b] INTERNATIONAL : +43 676 6077303
-2014-07-06 12:39:37.243 libPhoneNumberTest[1581:60b] NATIONAL      : 0676 6077303
-2014-07-06 12:39:37.244 libPhoneNumberTest[1581:60b] RFC3966       : tel:+43-676-6077303
-2014-07-06 12:39:37.244 libPhoneNumberTest[1581:60b] extractCountryCode [82]
-2014-07-06 12:39:37.245 libPhoneNumberTest[1581:60b] extractCountryCode [82] [3213123123]
-```
-
-#### with Swift
-For new Swift code, prefer the Swift-first facade:
+Prefer `libPhoneNumberSwift` for new Swift code:
 
 ```swift
 import libPhoneNumberSwift
 
 let phoneUtil = PhoneNumberUtility.shared
 let phoneNumber = try phoneUtil.parse("01065431234", defaultRegion: "KR")
-let formattedString = try phoneUtil.format(phoneNumber, as: .e164)
+
+let e164 = try phoneUtil.format(phoneNumber, as: .e164)
+let isValid = phoneUtil.isValidNumber(phoneNumber)
+let numberType = phoneUtil.type(of: phoneNumber)
 ```
 
-The facade keeps Swift call sites small while delegating parsing, formatting, validation, geocoding, and short-number behavior to the existing Objective-C implementation.
+The Swift facade delegates to the Objective-C implementation. Phone number parsing and validation logic should stay in the Objective-C core so upstream behavior remains centralized.
 
-##### Case (1) with Framework
-```
-import libPhoneNumberiOS
-```
+### As-You-Type Formatting
 
-##### Case (2) with Bridging-Header
-```obj-c
-// Manually added
-#import "NBPhoneNumberUtil.h"
-#import "NBPhoneNumber.h"
-
-// CocoaPods (check your library path)
-#import "libPhoneNumber_iOS/NBPhoneNumberUtil.h"
-#import "libPhoneNumber_iOS/NBPhoneNumber.h"
-
-// add more if you want...
-```
-
-##### Case (3) with CocoaPods
-import libPhoneNumber_iOS
-
-
-##### - in swift class file
-###### 2.x
 ```swift
-override func viewDidLoad() {
-    super.viewDidLoad()
+import libPhoneNumberSwift
 
-    guard let phoneUtil = NBPhoneNumberUtil.sharedInstance() else {
-        return
-    }
+let formatter = AsYouTypeFormatter(regionCode: "US")
 
-    do {
-        let phoneNumber: NBPhoneNumber = try phoneUtil.parse("01065431234", defaultRegion: "KR")
-        let formattedString: String = try phoneUtil.format(phoneNumber, numberFormat: .E164)
+formatter.inputDigit("6") // "6"
+formatter.inputDigit("5") // "65"
+formatter.inputDigit("0") // "650"
+formatter.inputDigit("2") // "650-2"
+```
 
-        NSLog("[%@]", formattedString)
-    }
-    catch let error as NSError {
-        print(error.localizedDescription)
-    }
+### Short Numbers
+
+```swift
+import libPhoneNumberSwift
+
+let phoneUtil = PhoneNumberUtility.shared
+let shortUtil = ShortNumberUtility.shared
+let number = try phoneUtil.parse("911", defaultRegion: "US")
+
+shortUtil.isValidShortNumber(number, forRegion: "US")
+shortUtil.connectsToEmergencyNumber("911", forRegion: "US")
+shortUtil.expectedCost(of: number, forRegion: "US")
+```
+
+### Geocoding
+
+```swift
+import libPhoneNumberSwift
+
+let phoneUtil = PhoneNumberUtility.shared
+let geocoder = PhoneNumberGeocoder.shared
+let number = try phoneUtil.parse("16502530000", defaultRegion: "US")
+
+let description = geocoder.description(for: number, languageCode: "en")
+```
+
+## Objective-C Usage
+
+Use `NBPhoneNumberUtil` when integrating from Objective-C or when you need direct access to the core API:
+
+```objc
+NBPhoneNumberUtil *phoneUtil = [NBPhoneNumberUtil sharedInstance];
+NSError *error = nil;
+
+NBPhoneNumber *phoneNumber = [phoneUtil parse:@"6766077303"
+                                defaultRegion:@"AT"
+                                        error:&error];
+
+if (phoneNumber != nil && error == nil) {
+  NSLog(@"isValidPhoneNumber ? %@", [phoneUtil isValidNumber:phoneNumber] ? @"YES" : @"NO");
+
+  NSLog(@"E164          : %@", [phoneUtil format:phoneNumber
+                                    numberFormat:NBEPhoneNumberFormatE164
+                                           error:&error]);
+  NSLog(@"INTERNATIONAL : %@", [phoneUtil format:phoneNumber
+                                    numberFormat:NBEPhoneNumberFormatINTERNATIONAL
+                                           error:&error]);
+  NSLog(@"NATIONAL      : %@", [phoneUtil format:phoneNumber
+                                    numberFormat:NBEPhoneNumberFormatNATIONAL
+                                           error:&error]);
+  NSLog(@"RFC3966       : %@", [phoneUtil format:phoneNumber
+                                    numberFormat:NBEPhoneNumberFormatRFC3966
+                                           error:&error]);
+} else {
+  NSLog(@"Error: %@", error.localizedDescription);
 }
 ```
 
-## Usage - **NBAsYouTypeFormatter**
-```obj-c
- NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
-    NSLog(@"%@", [f inputDigit:@"6"]); // "6"
-    NSLog(@"%@", [f inputDigit:@"5"]); // "65"
-    NSLog(@"%@", [f inputDigit:@"0"]); // "650"
-    NSLog(@"%@", [f inputDigit:@"2"]); // "650-2"
-    NSLog(@"%@", [f inputDigit:@"5"]); // "650 25"
-    NSLog(@"%@", [f inputDigit:@"3"]); // "650 253"
+### As-You-Type Formatting
 
-    // Note this is how a US local number (without area code) should be formatted.
-    NSLog(@"%@", [f inputDigit:@"2"]); // "650 2532"
-    NSLog(@"%@", [f inputDigit:@"2"]); // "650 253 22"
-    NSLog(@"%@", [f inputDigit:@"2"]); // "650 253 222"
-    NSLog(@"%@", [f inputDigit:@"2"]); // "650 253 2222"
-    // Can remove last digit
-    NSLog(@"%@", [f removeLastDigit]); // "650 253 222"
+```objc
+NBAsYouTypeFormatter *formatter = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
 
-    NSLog(@"%@", [f inputString:@"16502532222"]); // 1 650 253 2222
+NSLog(@"%@", [formatter inputDigit:@"6"]); // "6"
+NSLog(@"%@", [formatter inputDigit:@"5"]); // "65"
+NSLog(@"%@", [formatter inputDigit:@"0"]); // "650"
+NSLog(@"%@", [formatter inputDigit:@"2"]); // "650-2"
 ```
 
-## libPhoneNumberGeocoding
+## Swift Bridging For Legacy Integrations
 
-For more information on libPhoneNumberGeocoding and its usage, please visit [libPhoneNumberGeocoding](https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberGeocoding/README.md) for more information.
+Existing Swift projects can continue to import Objective-C headers directly.
 
-## libPhoneNumberShortNumber
+For manual integration:
 
-For more information on libPhoneNumberShortNumber and its usage, please visit [libPhoneNumberShortNumber](https://github.com/iziz/libPhoneNumber-iOS/blob/master/libPhoneNumberShortNumber/README.md) for more information.
+```objc
+#import "NBPhoneNumberUtil.h"
+#import "NBPhoneNumber.h"
+```
 
-##### Visit [libphonenumber](https://github.com/google/libphonenumber) for more information or mail (zen.isis@gmail.com)
+For CocoaPods:
 
-## Updating libPhoneNumber MetaData
+```objc
+#import "libPhoneNumber_iOS/NBPhoneNumberUtil.h"
+#import "libPhoneNumber_iOS/NBPhoneNumber.h"
+```
 
-We are dependent on the community to help keep this library up-to-date with the latest libPhoneNumber MetaData from Google.
+New Swift code should prefer `libPhoneNumberSwift` unless it specifically needs Objective-C API details.
 
-When new versions of libPhoneNumber MetaData are released from Google, please feel free to work to update this repo with a pull request.
-Make sure to follow the steps below to update the main MetaData & the Geocoding MetaData (even if you don't consume all of the functionality).
+## Metadata And Upstream Parity
 
-To see the current version of MetaData used by this library, check the commit comments and/or release notes. To correlate the version of metadata go to Google's [libphonenumber repo](https://github.com/google/libphonenumber).
+Phone number behavior is driven by Google's libphonenumber metadata. When metadata or upstream behavior changes, update this repository in a normal PR and include:
 
+- The Google libphonenumber version or commit used.
+- Main metadata changes.
+- Geocoding metadata changes, if applicable.
+- Upstream test parity results.
+- Upstream API parity results.
+- Local test results.
 
-### Update Main MetaData
-1. `cd` into the `scripts` directory
-2. Run `metadataGenerator.swift` passing in the desired version number
+Useful commands:
 
-   ```
-   ./metadataGenerator.swift 1.2.3 --pretty
-   ```
+```bash
+swift scripts/checkUpstreamTestParity.swift --upstream-ref <version-or-ref>
+swift scripts/checkUpstreamAPIParity.swift --upstream-ref <version-or-ref>
+swift test
+LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test
+swift build -c release
+```
 
-This downloads metadata from Google's libphonenumber repository, updates the generated Objective-C metadata files from compact JSON, and writes the `generatedJSON` files in pretty-printed form so consumers can compare commits easily.
+For the full maintenance workflow, see:
 
-> NOTE: The embedded phone number MetaData is generated from compact JSON before the `generatedJSON` files are pretty-printed, which keeps the embedded gzip payloads small.
+- [Upstream parity guide](docs/UPSTREAM_PARITY.md)
+- [Testing guide](docs/TESTING.md)
 
+## Updating Metadata
 
-### Update Geocoding MetaData
-1. Open the libPhoneNumber-GeocodingParser project in Xcode
-2. Edit the libPhoneNumber-GeocodingParser Scheme
-3. In the `Run` section go to the `Arguments` tab
-4. Edit the version argument to be the desired version number
-5. Add an argument specifying the output directory (ex. `/Users/john.doe/geocoding`)
-6. Run the libPhoneNumber-GeocodingParser program in Xcode (`Cmd+R`) on your machine
-7. Wait a few minutes for the program to complete (the console will say when the program is done)
-8. Copy the `*.db` files from your specified output directory to `libPhoneNumberGeocodingMetaData/GeocodingMetaData.bundle`
+### Main Metadata
 
+Run the metadata generator from the `scripts` directory:
 
-### Validating Updates
-1. Open the libPhoneNumber project in Xcode
-2. Run the tests for each library of the project:
- * libPhoneNumber
- * libPhoneNumberGeocoding
- * libPhoneNumberShortNumber
+```bash
+cd scripts
+./metadataGenerator.swift <libphonenumber-version> --pretty
+```
 
-3. Open the `Package.swift` SPM project in Xcode
-4. Run the tests for the package - `libPhoneNumber-Package` (runs the tests for each of the package targets in one run)
+This downloads metadata from Google's libphonenumber repository, updates the generated Objective-C metadata files from compact JSON, and writes pretty-printed `generatedJSON` files for review.
 
-5. Run the upstream JavaScript test parity check:
+### Geocoding Metadata
 
-   ```
-   swift scripts/checkUpstreamTestParity.swift --upstream-ref <version-or-ref>
-   swift scripts/checkUpstreamAPIParity.swift --upstream-ref <version-or-ref>
-   ```
+1. Open `libPhoneNumber-GeocodingParser` in Xcode.
+2. Edit the run scheme arguments.
+3. Set the libphonenumber version.
+4. Set an output directory.
+5. Run the parser.
+6. Copy the generated `*.db` files into `libPhoneNumberGeocodingMetaData/GeocodingMetaData.bundle`.
 
-For the complete maintenance workflow, see:
+## Validation
 
-* [Upstream parity guide](docs/UPSTREAM_PARITY.md)
-* [Testing guide](docs/TESTING.md)
+Before merging behavior, metadata, packaging, or API changes, run the relevant checks from [docs/TESTING.md](docs/TESTING.md).
 
-#### Optional Validation: Cocoapods
-1. `cd` into the `libPhoneNumber-Demo` directory
-2. Verify the `Podfile` is pointing to the local copies of the pods (using `:path => '../'`)
-3. Run `pod install`
-4. Open the `libPhoneNumber-Demo` project in Xcode
-5. Run the demo project validating phonenumber formatting works as expected
+Common local checks:
 
+```bash
+swift test
+LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test
+swift build -c release
+git diff --check
+```
 
-#### Optional Validation: Swift Package Manager
-1. Open the `libPhoneNumber-Demo-SPM` project in Xcode
-2. Verify the `libPhoneNumber` package is using the `local` version
-3. Run the demo project validating phonenumber formatting works as expected
-4. Change the `libPhoneNumber` to use the `remote` version (will need to point at the branch)
-5. Build the demo project validating everything builds successfully
-  * Can also run the demo, but validating successful build will probably provide all the necessary value
+For Swift facade changes:
 
-### Creating A New Version
+```bash
+pod lib lint libPhoneNumberSwift.podspec --allow-warnings --include-podspecs='*.podspec'
+```
 
-1. Determine what the next version should be based on whether the release is:
-  * JUST Bug fixes - increase the 3rd digit - 1.2.0 --> 1.2.1
-  * Updated Metadata or added functionality - increase the "minor version" - 1.1.0 --> 1.2.0
-  * Major changes, possibly non-passive - increase the "major version" - 1.5.0 --> 2.0.0
+For Xcode schemes:
 
-2. Use the script (in the `scripts` folder) - `versionCommitter.swift`.
+```bash
+xcodebuild test -scheme libPhoneNumber -destination 'platform=iOS Simulator,name=iPhone 16'
+xcodebuild test -scheme libPhoneNumberGeocoding -destination 'platform=iOS Simulator,name=iPhone 16'
+xcodebuild test -scheme libPhoneNumberShortNumber -destination 'platform=iOS Simulator,name=iPhone 16'
+```
 
-  Pass the new version into the script and push it to the proper remote repo to create a pull request
+## Release Checklist
 
-        scripts/versionCommitter.swift 2.2.4 --push --remote myOrigin
+1. Decide the next version:
+   - Patch for bug fixes.
+   - Minor for metadata updates or additive functionality.
+   - Major for breaking changes.
+2. Run the validation matrix.
+3. Lint the affected podspecs.
+4. Open a pull request with upstream version, parity results, and test results.
+5. Create a GitHub release after merge.
+6. Push updated podspecs.
 
-3. Lint the cocoapod
+## Links
 
-        pod lib lint libPhoneNumber-iOS.podspec
-
-4. Create a pull request for the created branch (ex: `Version-2.2.4`)
-5. Create a draft release in github describing the changes
-6. Try to get at least 2 approvals on the pull request
-7. Pull in pull request onto master
-8. Push the podspec
-
-        pod trunk push libPhoneNumber-iOS.podspec
+- [Google libphonenumber](https://github.com/google/libphonenumber)
+- [Update log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
+- [libPhoneNumberGeocoding README](libPhoneNumberGeocoding/README.md)
+- [libPhoneNumberShortNumber README](libPhoneNumberShortNumber/README.md)
