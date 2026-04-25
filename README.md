@@ -201,16 +201,12 @@ To see the current version of MetaData used by this library, check the commit co
 2. Run `metadataGenerator.swift` passing in the desired version number
 
    ```
-   ./metadataGenerator.swift 1.2.3
+   ./metadataGenerator.swift 1.2.3 --pretty
    ```
 
-3. Run `GeneratePhoneNumberMetaDataFiles.sh` to update the generated files
-4. Update the `generatedJSON` files to be "pretty printed" so that consumers can easily compare commits to see differences (add the `-p` argument)
+This downloads metadata from Google's libphonenumber repository, updates the generated Objective-C metadata files from compact JSON, and writes the `generatedJSON` files in pretty-printed form so consumers can compare commits easily.
 
-   ```
-   ./metadataGenerator.swift 1.2.3 -p
-   ```
-> NOTE: Don't want to generate the phone number MetaData off of the pretty-printed files because that takes up A LOT more space
+> NOTE: The embedded phone number MetaData is generated from compact JSON before the `generatedJSON` files are pretty-printed, which keeps the embedded gzip payloads small.
 
 
 ### Update Geocoding MetaData
