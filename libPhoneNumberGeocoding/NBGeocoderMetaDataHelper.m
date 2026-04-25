@@ -48,15 +48,18 @@ static NSString *const preparedStatement = @"WITH recursive count(x)"
     _countryCode = countryCode;
     _language = languageCode;
 
-    NSURL *bundleURL = [bundle resourceURL];
     NSString *shortLanguageCode = [[languageCode componentsSeparatedByString:@"-"] firstObject];
-    NSString *databasePath = [NSString stringWithFormat:@"%@%@.db", bundleURL, shortLanguageCode];
+    NSURL *databaseURL = [[bundle resourceURL]
+        URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.db", shortLanguageCode]];
+    NSString *databasePath = [databaseURL path];
     if (databasePath == nil) {
-      @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                     reason:@"Geocoding Database URL not found"
-                                   userInfo:nil];
+      return self;
     }
-    sqlite3_open([databasePath UTF8String], &_database);
+    if (sqlite3_open([databasePath UTF8String], &_database) != SQLITE_OK) {
+      sqlite3_close_v2(_database);
+      _database = NULL;
+      return self;
+    }
 
     sqlite3_prepare_v2(_database,
                        [[NSString stringWithFormat:preparedStatement, countryCode] UTF8String], -1,
@@ -75,6 +78,10 @@ static NSString *const preparedStatement = @"WITH recursive count(x)"
 
 - (NSString * _Nullable)searchPhoneNumber:(NBPhoneNumber *)phoneNumber {
   @synchronized(self) {
+    if (_database == NULL || _selectStatement == NULL) {
+      return nil;
+    }
+
     if (![phoneNumber.countryCode isEqualToNumber:_countryCode]) {
       _countryCode = phoneNumber.countryCode;
       sqlite3_finalize(_selectStatement);

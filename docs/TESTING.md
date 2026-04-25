@@ -2,6 +2,8 @@
 
 Use this guide before merging changes to metadata, parsing, formatting, geocoding, short-number behavior, or public APIs.
 
+The Swift package includes both the stable Objective-C targets and the Swift-first facade target, so `swift test` is the baseline check for Swift and Objective-C package users.
+
 ## Fast Local Validation
 
 Run the Swift Package Manager test suite:
@@ -116,6 +118,14 @@ For short-number behavior changes:
 - `swift test`
 - `xcodebuild test -scheme libPhoneNumberShortNumber -destination 'id=<simulator-udid>'`
 - `git diff --check`
+
+For Swift facade changes:
+
+- `swift test`
+- `LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test`
+- `swift build -c release`
+- `pod lib lint libPhoneNumberSwift.podspec --allow-warnings --include-podspecs='*.podspec'`
+- Confirm the facade remains a thin wrapper over the Objective-C core instead of duplicating phone-number logic.
 
 ## Locale-Sensitive Tests
 

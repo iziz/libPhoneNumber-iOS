@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   
   s.resources    = "libPhoneNumberGeocodingMetaData/*.bundle"
 
-  s.dependency 'libPhoneNumber-iOS', '~> 1.3.0'
+  s.dependency 'libPhoneNumber-iOS', '~> 1.4.0'
   
   s.source_files = [
                     'libPhoneNumberGeocoding/**/*.{h,m}',

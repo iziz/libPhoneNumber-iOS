@@ -36,6 +36,10 @@ pod 'libPhoneNumber-iOS', '~> 0.8'
 ```
 pod 'libPhoneNumberGeocoding', :git => 'https://github.com/CocoaPods/Specs.git'
 ```
+##### Installing Swift-first Facade
+```
+pod 'libPhoneNumberSwift', '~> 1.4'
+```
 
 #### Using [Carthage](https://github.com/Carthage/Carthage)
 
@@ -62,6 +66,14 @@ And set the **Embedded Content Contains Swift** to "Yes" in your build settings.
 
 See sample test code from
 > [libPhoneNumber-iOS/libPhoneNumberTests/ ... Test.m] (https://github.com/iziz/libPhoneNumber-iOS/tree/master/libPhoneNumberTests)
+
+#### Using Swift Package Manager
+Add this repository as a package dependency and choose the product that matches your integration:
+
+- `libPhoneNumber`: Objective-C-compatible core APIs.
+- `libPhoneNumberGeocoding`: offline geocoding APIs.
+- `libPhoneNumberShortNumber`: short-number APIs.
+- `libPhoneNumberSwift`: Swift-first facade over the stable Objective-C core.
 
 ## Usage - **NBPhoneNumberUtil**
 ```obj-c
@@ -111,6 +123,18 @@ See sample test code from
 ```
 
 #### with Swift
+For new Swift code, prefer the Swift-first facade:
+
+```swift
+import libPhoneNumberSwift
+
+let phoneUtil = PhoneNumberUtility.shared
+let phoneNumber = try phoneUtil.parse("01065431234", defaultRegion: "KR")
+let formattedString = try phoneUtil.format(phoneNumber, as: .e164)
+```
+
+The facade keeps Swift call sites small while delegating parsing, formatting, validation, geocoding, and short-number behavior to the existing Objective-C implementation.
+
 ##### Case (1) with Framework
 ```
 import libPhoneNumberiOS
@@ -161,7 +185,7 @@ override func viewDidLoad() {
     NSLog(@"%@", [f inputDigit:@"6"]); // "6"
     NSLog(@"%@", [f inputDigit:@"5"]); // "65"
     NSLog(@"%@", [f inputDigit:@"0"]); // "650"
-    NSLog(@"%@", [f inputDigit:@"2"]); // "650 2"
+    NSLog(@"%@", [f inputDigit:@"2"]); // "650-2"
     NSLog(@"%@", [f inputDigit:@"5"]); // "650 25"
     NSLog(@"%@", [f inputDigit:@"3"]); // "650 253"
 

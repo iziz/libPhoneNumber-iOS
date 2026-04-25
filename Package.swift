@@ -23,6 +23,10 @@ let package = Package(
         .library(
             name: "libPhoneNumberShortNumber",
             targets: ["libPhoneNumberShortNumber"]
+        ),
+        .library(
+            name: "libPhoneNumberSwift",
+            targets: ["libPhoneNumberSwift"]
         )
     ],
     targets: [
@@ -122,6 +126,22 @@ let package = Package(
                 "libPhoneNumberTestsCommon",
             ],
             path: "libPhoneNumberShortNumberTests"
+        ),
+        .target(
+            name: "libPhoneNumberSwift",
+            dependencies: [
+                "libPhoneNumber",
+                "libPhoneNumberGeocoding",
+                "libPhoneNumberShortNumber",
+            ],
+            path: "libPhoneNumberSwift"
+        ),
+        .testTarget(
+            name: "libPhoneNumberSwiftTests",
+            dependencies: [
+                "libPhoneNumberSwift",
+            ],
+            path: "libPhoneNumberSwiftTests"
         ),
     ]
 )
