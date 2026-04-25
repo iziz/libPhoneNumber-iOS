@@ -349,6 +349,22 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertNotNil([self.helper getMetadataForRegion:@" JP        "]);
 }
 
+- (void)testGetMetadataForRegion {
+  NBPhoneMetaData *metadata = [_aUtil getMetadataForRegion:@"US"];
+  XCTAssertNotNil(metadata);
+  XCTAssertEqualObjects(@1, metadata.countryCode);
+  XCTAssertNil([_aUtil getMetadataForRegion:nil]);
+  XCTAssertNil([_aUtil getMetadataForRegion:@""]);
+}
+
+- (void)testGetMetadataForNonGeographicalRegion {
+  NBPhoneMetaData *metadata = [_aUtil getMetadataForNonGeographicalRegion:@800];
+  XCTAssertNotNil(metadata);
+  XCTAssertEqualObjects(@800, metadata.countryCode);
+  XCTAssertNil([_aUtil getMetadataForNonGeographicalRegion:nil]);
+  XCTAssertNil([_aUtil getMetadataForNonGeographicalRegion:@999]);
+}
+
 - (void)testNSDictionaryableKey {
   NSError *anError = nil;
 
@@ -549,6 +565,17 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   }
 }
 
+- (void)testGetSupportedGlobalNetworkCallingCodes {
+  NSArray<NSNumber *> *supportedCallingCodes = [_aUtil getSupportedGlobalNetworkCallingCodes];
+  XCTAssertTrue(supportedCallingCodes.count > 0);
+  XCTAssertFalse([supportedCallingCodes containsObject:@1]);
+  XCTAssertTrue([supportedCallingCodes containsObject:@800]);
+
+  for (NSNumber *callingCode in supportedCallingCodes) {
+    XCTAssertEqualObjects(@"001", [_aUtil getRegionCodeForCountryCode:callingCode]);
+  }
+}
+
 - (void)testGetSupportedTypesForRegion {
   NSArray<NSNumber *> *supportedUSTypes = [_aUtil getSupportedTypesForRegion:@"US"];
   XCTAssertTrue([supportedUSTypes containsObject:@(NBEPhoneNumberTypeFIXED_LINE)]);
@@ -587,6 +614,18 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
                         [_aUtil getNationalSignificantNumber:self.internationalTollFreeNumber]);
 }
 
+- (void)testGetNationalSignificantNumber_ManyLeadingZeros {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @1;
+  number.nationalNumber = @650;
+  number.italianLeadingZero = YES;
+  number.numberOfLeadingZeros = @2;
+  XCTAssertEqualObjects(@"00650", [_aUtil getNationalSignificantNumber:number]);
+
+  number.numberOfLeadingZeros = @-3;
+  XCTAssertEqualObjects(@"650", [_aUtil getNationalSignificantNumber:number]);
+}
+
 - (void)testGetExampleNumber {
   XCTAssertTrue([self.deNumber isEqual:[_aUtil getExampleNumber:@"DE" error:nil]]);
 
@@ -611,7 +650,7 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertNil([_aUtil getExampleNumber:@"001" error:nil]);
 }
 
-- (void)testexampleNumberForNonGeoEntity {
+- (void)testGetExampleNumberForNonGeoEntity {
   XCTAssertTrue([self.internationalTollFreeNumber
       isEqual:[_aUtil getExampleNumberForNonGeoEntity:@800 error:nil]]);
   XCTAssertTrue([self.universalPremiumRateNumber
@@ -1031,7 +1070,7 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
                                                   regionCallingFrom:@"AQ"]);
 }
 
-- (void)testFormatWithCarrierCod {
+- (void)testFormatWithCarrierCode {
   // We only support this for AR in our test metadata, and only for mobile
   // numbers starting with certain values.
 
@@ -1787,6 +1826,75 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
                                          error:nil]);
 }
 
+- (void)testIsPossibleNumberForType_DifferentTypeLengths {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @54;
+  number.nationalNumber = @12345;
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeUNKNOWN]);
+
+  number.nationalNumber = @123456;
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeTOLL_FREE]);
+
+  number.nationalNumber = @123456789;
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeTOLL_FREE]);
+
+  number.nationalNumber = @1234567890;
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeTOLL_FREE]);
+
+  number.nationalNumber = @12345678901;
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeTOLL_FREE]);
+}
+
+- (void)testIsPossibleNumberForType_LocalOnly {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @49;
+  number.nationalNumber = @12;
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeMOBILE]);
+}
+
+- (void)testIsPossibleNumberForType_DataMissingForSizeReasons {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @55;
+  number.nationalNumber = @12345678;
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+
+  number.nationalNumber = @1234567890;
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+}
+
+- (void)testIsPossibleNumberForType_NumberTypeNotSupportedForRegion {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @55;
+  number.nationalNumber = @12345678;
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE]);
+
+  number.countryCode = @979;
+  number.nationalNumber = @123456789;
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertFalse([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE]);
+  XCTAssertTrue([_aUtil isPossibleNumber:number forType:NBEPhoneNumberTypePREMIUM_RATE]);
+}
+
 - (void)testIsPossibleNumberWithReason {
   // National numbers for country calling code +1 that are within 7 to 10 digits
   // are possible.
@@ -1813,6 +1921,164 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertEqual(NBEValidationResultIS_POSSIBLE, [_aUtil isPossibleNumberWithReason:number]);
   XCTAssertEqual(NBEValidationResultTOO_LONG,
                  [_aUtil isPossibleNumberWithReason:self.internationalTollFreeTooLongNumber]);
+}
+
+- (void)testIsPossibleNumberForTypeWithReason_DifferentTypeLengths {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @54;
+  number.nationalNumber = @12345;
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+
+  number.nationalNumber = @123456;
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeTOLL_FREE]);
+
+  number.nationalNumber = @123456789;
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeTOLL_FREE]);
+
+  number.nationalNumber = @1234567890;
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeTOLL_FREE]);
+
+  number.nationalNumber = @12345678901;
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertEqual(NBEValidationResultTOO_LONG,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultTOO_LONG,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeTOLL_FREE]);
+}
+
+- (void)testIsPossibleNumberForTypeWithReason_LocalOnly {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @49;
+  number.nationalNumber = @12;
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE_LOCAL_ONLY,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE_LOCAL_ONLY,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+}
+
+- (void)testIsPossibleNumberForTypeWithReason_DataMissingForSizeReasons {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @55;
+  number.nationalNumber = @12345678;
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE_LOCAL_ONLY,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE_LOCAL_ONLY,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+
+  number.nationalNumber = @1234567890;
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeUNKNOWN]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+}
+
+- (void)testIsPossibleNumberForTypeWithReason_NumberTypeNotSupportedForRegion {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @55;
+  number.nationalNumber = @12345678;
+  XCTAssertEqual(NBEValidationResultINVALID_LENGTH,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE_LOCAL_ONLY,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE]);
+
+  number.nationalNumber = @1234567;
+  XCTAssertEqual(NBEValidationResultINVALID_LENGTH,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE]);
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+
+  number.countryCode = @882;
+  number.nationalNumber = @1234567;
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE]);
+  XCTAssertEqual(NBEValidationResultINVALID_LENGTH,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+
+  number.countryCode = @979;
+  number.nationalNumber = @123456789;
+  XCTAssertEqual(NBEValidationResultINVALID_LENGTH,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultINVALID_LENGTH,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertEqual(NBEValidationResultINVALID_LENGTH,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypePREMIUM_RATE]);
+}
+
+- (void)testIsPossibleNumberForTypeWithReason_FixedLineOrMobile {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @290;
+  number.nationalNumber = @1234;
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE]);
+
+  number.nationalNumber = @12345;
+  XCTAssertEqual(NBEValidationResultTOO_SHORT,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertEqual(NBEValidationResultTOO_LONG,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultINVALID_LENGTH,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE]);
+
+  number.nationalNumber = @123456;
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertEqual(NBEValidationResultTOO_LONG,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE]);
+
+  number.nationalNumber = @1234567;
+  XCTAssertEqual(NBEValidationResultTOO_LONG,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE]);
+  XCTAssertEqual(NBEValidationResultTOO_LONG,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeMOBILE]);
+  XCTAssertEqual(NBEValidationResultTOO_LONG,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE]);
+
+  number.nationalNumber = @12345678;
+  XCTAssertEqual(NBEValidationResultIS_POSSIBLE,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeTOLL_FREE]);
+  XCTAssertEqual(NBEValidationResultTOO_LONG,
+                 [_aUtil isPossibleNumberWithReason:number forType:NBEPhoneNumberTypeFIXED_LINE_OR_MOBILE]);
 }
 
 - (void)testIsNotPossibleNumber {
@@ -2327,12 +2593,13 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
                   defaultRegion:@"US"
                           error:&anError]]);
   // This is invalid because no "+" sign is present as part of phone-context.
-  // The phone context is simply ignored in this case just as if it contains a
-  // domain.
-  XCTAssertTrue(
-      [self.usLocalNumber isEqual:[_aUtil parse:@"tel:2530000;isub=12345;phone-context=1-650"
-                                      defaultRegion:@"US"
-                                              error:&anError]]);
+  anError = nil;
+  [_aUtil parse:@"tel:2530000;isub=12345;phone-context=1-650"
+  defaultRegion:@"US"
+          error:&anError];
+  XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain);
+
+  anError = nil;
   XCTAssertTrue(
       [self.usLocalNumber isEqual:[_aUtil parse:@"tel:2530000;isub=12345;phone-context=1234.com"
                                       defaultRegion:@"US"
@@ -2920,7 +3187,7 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
       XCTFail(@"Unknown region code not allowed: should fail.");
     else
       // Expected this exception.
-      XCTAssertEqualObjects(@"INVALID_COUNTRY_CODE", anError.domain,
+      XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain,
                             @"Wrong error type stored in exception.");
   }
 }
@@ -2977,6 +3244,86 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertTrue([nzNumberWithRawInput isEqual:[_aUtil parseAndKeepRawInput:@"+64 3 331 6005"
                                                              defaultRegion:nil
                                                                      error:&anError]]);
+}
+
+- (void)testParseNumberTooShortIfNationalPrefixStripped {
+  NSError *anError = nil;
+  NBPhoneNumber *byNumber = [[NBPhoneNumber alloc] init];
+  byNumber.countryCode = @375;
+  byNumber.nationalNumber = @8123;
+  XCTAssertTrue([byNumber isEqual:[_aUtil parse:@"8123" defaultRegion:@"BY" error:&anError]]);
+
+  byNumber.nationalNumber = @81234;
+  XCTAssertTrue([byNumber isEqual:[_aUtil parse:@"81234" defaultRegion:@"BY" error:&anError]]);
+
+  byNumber.nationalNumber = @812345;
+  XCTAssertTrue([byNumber isEqual:[_aUtil parse:@"812345" defaultRegion:@"BY" error:&anError]]);
+
+  byNumber.nationalNumber = @123456;
+  XCTAssertTrue([byNumber isEqual:[_aUtil parse:@"8123456" defaultRegion:@"BY" error:&anError]]);
+}
+
+- (void)assertThrowsForInvalidPhoneContext:(NSString *)numberToParse {
+  NSError *anError = nil;
+  [_aUtil parse:numberToParse defaultRegion:NB_UNKNOWN_REGION error:&anError];
+  XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain);
+}
+
+- (void)testParseWithPhoneContext {
+  NSError *anError = nil;
+  XCTAssertTrue([self.nzNumber isEqual:[_aUtil parse:@"tel:033316005;phone-context=+64"
+                                       defaultRegion:NB_UNKNOWN_REGION
+                                               error:&anError]]);
+  XCTAssertTrue([self.nzNumber isEqual:[_aUtil parse:@"tel:033316005;phone-context=+64;{this isn't part of phone-context anymore!}"
+                                       defaultRegion:NB_UNKNOWN_REGION
+                                               error:&anError]]);
+
+  NBPhoneNumber *nzFromPhoneContext = [[NBPhoneNumber alloc] init];
+  nzFromPhoneContext.countryCode = @64;
+  nzFromPhoneContext.nationalNumber = @3033316005;
+  XCTAssertTrue([nzFromPhoneContext isEqual:[_aUtil parse:@"tel:033316005;phone-context=+64-3"
+                                            defaultRegion:NB_UNKNOWN_REGION
+                                                    error:&anError]]);
+
+  NBPhoneNumber *brFromPhoneContext = [[NBPhoneNumber alloc] init];
+  brFromPhoneContext.countryCode = @55;
+  brFromPhoneContext.nationalNumber = @5033316005;
+  XCTAssertTrue([brFromPhoneContext isEqual:[_aUtil parse:@"tel:033316005;phone-context=+(555)"
+                                            defaultRegion:NB_UNKNOWN_REGION
+                                                    error:&anError]]);
+
+  NBPhoneNumber *usFromPhoneContext = [[NBPhoneNumber alloc] init];
+  usFromPhoneContext.countryCode = @1;
+  usFromPhoneContext.nationalNumber = @23033316005;
+  XCTAssertTrue([usFromPhoneContext isEqual:[_aUtil parse:@"tel:033316005;phone-context=+-1-2.3()"
+                                            defaultRegion:NB_UNKNOWN_REGION
+                                                    error:&anError]]);
+
+  XCTAssertTrue([self.nzNumber isEqual:[_aUtil parse:@"tel:033316005;phone-context=abc.nz"
+                                       defaultRegion:@"NZ"
+                                               error:&anError]]);
+  XCTAssertTrue([self.nzNumber isEqual:[_aUtil parse:@"tel:033316005;phone-context=www.PHONE-numb3r.com"
+                                       defaultRegion:@"NZ"
+                                               error:&anError]]);
+  XCTAssertTrue([self.nzNumber isEqual:[_aUtil parse:@"tel:033316005;phone-context=a"
+                                       defaultRegion:@"NZ"
+                                               error:&anError]]);
+  XCTAssertTrue([self.nzNumber isEqual:[_aUtil parse:@"tel:033316005;phone-context=3phone.J."
+                                       defaultRegion:@"NZ"
+                                               error:&anError]]);
+  XCTAssertTrue([self.nzNumber isEqual:[_aUtil parse:@"tel:033316005;phone-context=a--z"
+                                       defaultRegion:@"NZ"
+                                               error:&anError]]);
+
+  [self assertThrowsForInvalidPhoneContext:@"tel:033316005;phone-context="];
+  [self assertThrowsForInvalidPhoneContext:@"tel:033316005;phone-context=+"];
+  [self assertThrowsForInvalidPhoneContext:@"tel:033316005;phone-context=64"];
+  [self assertThrowsForInvalidPhoneContext:@"tel:033316005;phone-context=++64"];
+  [self assertThrowsForInvalidPhoneContext:@"tel:033316005;phone-context=+abc"];
+  [self assertThrowsForInvalidPhoneContext:@"tel:033316005;phone-context=."];
+  [self assertThrowsForInvalidPhoneContext:@"tel:033316005;phone-context=3phone"];
+  [self assertThrowsForInvalidPhoneContext:@"tel:033316005;phone-context=a-.nz"];
+  [self assertThrowsForInvalidPhoneContext:@"tel:033316005;phone-context=a{b}c"];
 }
 
 - (void)testParseExtensions {
@@ -3103,6 +3450,14 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
                                              defaultRegion:@"US"
                                                      error:&anError]]);
 
+  NSString *numberWithExtension = @"(800) 901-3355 ext: 7246433";
+  XCTAssertEqualObjects(@"7246433", [_aUtil maybeStripExtension:&numberWithExtension]);
+  XCTAssertEqualObjects(@"(800) 901-3355", numberWithExtension);
+
+  NSString *numberWithoutExtension = @"(800) 901-3355";
+  XCTAssertEqualObjects(@"", [_aUtil maybeStripExtension:&numberWithoutExtension]);
+  XCTAssertEqualObjects(@"(800) 901-3355", numberWithoutExtension);
+
   id nzNumberWithLongExtension = [[NBPhoneNumber alloc] init];
   [nzNumberWithLongExtension setCountryCode:@64];
   [nzNumberWithLongExtension setNationalNumber:@33316005];
@@ -3155,6 +3510,126 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertTrue([usWithExtension isEqual:[_aUtil parse:@"+1 (645) 123 1234 ext. 910#"
                                              defaultRegion:@"US"
                                                      error:&anError]]);
+}
+
+- (void)testParseHandlesLongExtensionsWithExplicitLabels {
+  NSError *anError = nil;
+  NBPhoneNumber *nzNumber = [[NBPhoneNumber alloc] init];
+  nzNumber.countryCode = @64;
+  nzNumber.nationalNumber = @33316005;
+
+  nzNumber.extension = @"0";
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"tel:+6433316005;ext=0"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+
+  nzNumber.extension = @"01234567890123456789";
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"tel:+6433316005;ext=01234567890123456789"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+  [_aUtil parse:@"tel:+6433316005;ext=012345678901234567890"
+  defaultRegion:@"NZ"
+          error:&anError];
+  XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain);
+
+  anError = nil;
+  nzNumber.extension = @"1";
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"03 3316005ext:1"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+
+  nzNumber.extension = @"12345678901234567890";
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"03 3316005 xtn:12345678901234567890"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"03 3316005 extension\t12345678901234567890"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"03 3316005 xtensio:12345678901234567890"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"03 3316005 xtensión, 12345678901234567890#"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"03 3316005extension.12345678901234567890"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"03 3316005 доб:12345678901234567890"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+
+  anError = nil;
+  [_aUtil parse:@"03 3316005 extension 123456789012345678901"
+  defaultRegion:@"NZ"
+          error:&anError];
+  XCTAssertEqualObjects(@"TOO_LONG", anError.domain);
+}
+
+- (void)testParseHandlesLongExtensionsWithAutoDiallingLabels {
+  NSError *anError = nil;
+  NBPhoneNumber *usNumberUserInput = [[NBPhoneNumber alloc] init];
+  usNumberUserInput.countryCode = @1;
+  usNumberUserInput.nationalNumber = @2679000000;
+  usNumberUserInput.extension = @"123456789012345";
+  XCTAssertTrue([usNumberUserInput isEqual:[_aUtil parse:@"+12679000000,,123456789012345#"
+                                           defaultRegion:@"US"
+                                                   error:&anError]]);
+  XCTAssertTrue([usNumberUserInput isEqual:[_aUtil parse:@"+12679000000;123456789012345#"
+                                           defaultRegion:@"US"
+                                                   error:&anError]]);
+
+  NBPhoneNumber *ukNumberUserInput = [[NBPhoneNumber alloc] init];
+  ukNumberUserInput.countryCode = @44;
+  ukNumberUserInput.nationalNumber = @2034000000;
+  ukNumberUserInput.extension = @"123456789";
+  XCTAssertTrue([ukNumberUserInput isEqual:[_aUtil parse:@"+442034000000,,123456789#"
+                                           defaultRegion:@"GB"
+                                                   error:&anError]]);
+
+  [_aUtil parse:@"+12679000000,,1234567890123456#" defaultRegion:@"US" error:&anError];
+  XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain);
+}
+
+- (void)testParseHandlesShortExtensionsWithAmbiguousChar {
+  NSError *anError = nil;
+  NBPhoneNumber *nzNumber = [[NBPhoneNumber alloc] init];
+  nzNumber.countryCode = @64;
+  nzNumber.nationalNumber = @33316005;
+  nzNumber.extension = @"123456789";
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"03 3316005 x 123456789"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"03 3316005 x. 123456789"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"03 3316005 #123456789#"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+  XCTAssertTrue([nzNumber isEqual:[_aUtil parse:@"03 3316005 ~ 123456789"
+                                  defaultRegion:@"NZ"
+                                          error:&anError]]);
+
+  [_aUtil parse:@"03 3316005 ~ 1234567890" defaultRegion:@"NZ" error:&anError];
+  XCTAssertEqualObjects(@"TOO_LONG", anError.domain);
+}
+
+- (void)testParseHandlesShortExtensionsWhenNotSureOfLabel {
+  NSError *anError = nil;
+  NBPhoneNumber *usNumber = [[NBPhoneNumber alloc] init];
+  usNumber.countryCode = @1;
+  usNumber.nationalNumber = @1234567890;
+  usNumber.extension = @"666666";
+  XCTAssertTrue([usNumber isEqual:[_aUtil parse:@"+1123-456-7890 666666#"
+                                  defaultRegion:@"US"
+                                          error:&anError]]);
+
+  usNumber.extension = @"6";
+  XCTAssertTrue([usNumber isEqual:[_aUtil parse:@"+11234567890-6#"
+                                  defaultRegion:@"US"
+                                          error:&anError]]);
+
+  [_aUtil parse:@"+1123-456-7890 7777777#" defaultRegion:@"US" error:&anError];
+  XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain);
 }
 
 - (void)testParseAndKeepRaw {
@@ -3219,6 +3694,36 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertTrue([koreanNumber isEqual:[_aUtil parseAndKeepRawInput:@"08122123456"
                                                      defaultRegion:@"KR"
                                                              error:&anError]]);
+}
+
+- (void)testParseItalianLeadingZeros {
+  NSError *anError = nil;
+  NBPhoneNumber *oneZero = [[NBPhoneNumber alloc] init];
+  oneZero.countryCode = @61;
+  oneZero.nationalNumber = @11;
+  oneZero.italianLeadingZero = YES;
+  XCTAssertTrue([oneZero isEqual:[_aUtil parse:@"011" defaultRegion:@"AU" error:&anError]]);
+
+  NBPhoneNumber *twoZeros = [[NBPhoneNumber alloc] init];
+  twoZeros.countryCode = @61;
+  twoZeros.nationalNumber = @1;
+  twoZeros.italianLeadingZero = YES;
+  twoZeros.numberOfLeadingZeros = @2;
+  XCTAssertTrue([twoZeros isEqual:[_aUtil parse:@"001" defaultRegion:@"AU" error:&anError]]);
+
+  NBPhoneNumber *stillTwoZeros = [[NBPhoneNumber alloc] init];
+  stillTwoZeros.countryCode = @61;
+  stillTwoZeros.nationalNumber = @0;
+  stillTwoZeros.italianLeadingZero = YES;
+  stillTwoZeros.numberOfLeadingZeros = @2;
+  XCTAssertTrue([stillTwoZeros isEqual:[_aUtil parse:@"000" defaultRegion:@"AU" error:&anError]]);
+
+  NBPhoneNumber *threeZeros = [[NBPhoneNumber alloc] init];
+  threeZeros.countryCode = @61;
+  threeZeros.nationalNumber = @0;
+  threeZeros.italianLeadingZero = YES;
+  threeZeros.numberOfLeadingZeros = @3;
+  XCTAssertTrue([threeZeros isEqual:[_aUtil parse:@"0000" defaultRegion:@"AU" error:&anError]]);
 }
 
 - (void)testCountryWithNoNumberDesc {
@@ -3435,6 +3940,79 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   [italianNumberTwo setExtension:@""];
   XCTAssertEqual(NBEMatchTypeSHORT_NSN_MATCH, [_aUtil isNumberMatch:italianNumberOne
                                                              second:italianNumberTwo]);
+}
+
+- (void)testIsNumberMatchShortMatchIfDiffNumLeadingZeros {
+  NBPhoneNumber *nzNumberOne = [[NBPhoneNumber alloc] init];
+  NBPhoneNumber *nzNumberTwo = [[NBPhoneNumber alloc] init];
+
+  nzNumberOne.countryCode = @64;
+  nzNumberOne.nationalNumber = @33316005;
+  nzNumberOne.italianLeadingZero = YES;
+
+  nzNumberTwo.countryCode = @64;
+  nzNumberTwo.nationalNumber = @33316005;
+  nzNumberTwo.italianLeadingZero = YES;
+  nzNumberTwo.numberOfLeadingZeros = @2;
+
+  XCTAssertEqual(NBEMatchTypeSHORT_NSN_MATCH, [_aUtil isNumberMatch:nzNumberOne second:nzNumberTwo]);
+
+  nzNumberOne.italianLeadingZero = NO;
+  nzNumberOne.numberOfLeadingZeros = @1;
+  nzNumberTwo.italianLeadingZero = YES;
+  nzNumberTwo.numberOfLeadingZeros = @1;
+  XCTAssertEqual(NBEMatchTypeSHORT_NSN_MATCH, [_aUtil isNumberMatch:nzNumberOne second:nzNumberTwo]);
+}
+
+- (void)testIsNumberMatchAcceptsProtoDefaultsAsMatch {
+  NBPhoneNumber *nzNumberOne = [[NBPhoneNumber alloc] init];
+  NBPhoneNumber *nzNumberTwo = [[NBPhoneNumber alloc] init];
+
+  nzNumberOne.countryCode = @64;
+  nzNumberOne.nationalNumber = @33316005;
+  nzNumberOne.italianLeadingZero = YES;
+
+  nzNumberTwo.countryCode = @64;
+  nzNumberTwo.nationalNumber = @33316005;
+  nzNumberTwo.italianLeadingZero = YES;
+  nzNumberTwo.numberOfLeadingZeros = @1;
+
+  XCTAssertEqual(NBEMatchTypeEXACT_MATCH, [_aUtil isNumberMatch:nzNumberOne second:nzNumberTwo]);
+}
+
+- (void)testIsNumberMatchMatchesDiffLeadingZerosIfItalianLeadingZeroFalse {
+  NBPhoneNumber *nzNumberOne = [[NBPhoneNumber alloc] init];
+  NBPhoneNumber *nzNumberTwo = [[NBPhoneNumber alloc] init];
+
+  nzNumberOne.countryCode = @64;
+  nzNumberOne.nationalNumber = @33316005;
+
+  nzNumberTwo.countryCode = @64;
+  nzNumberTwo.nationalNumber = @33316005;
+  nzNumberTwo.numberOfLeadingZeros = @1;
+
+  XCTAssertEqual(NBEMatchTypeEXACT_MATCH, [_aUtil isNumberMatch:nzNumberOne second:nzNumberTwo]);
+
+  nzNumberTwo.numberOfLeadingZeros = @10;
+  XCTAssertEqual(NBEMatchTypeEXACT_MATCH, [_aUtil isNumberMatch:nzNumberOne second:nzNumberTwo]);
+}
+
+- (void)testIsNumberMatchIgnoresSomeFields {
+  NBPhoneNumber *brNumberOne = [[NBPhoneNumber alloc] init];
+  NBPhoneNumber *brNumberTwo = [[NBPhoneNumber alloc] init];
+  brNumberOne.countryCode = @55;
+  brNumberOne.nationalNumber = @3121286979;
+  brNumberOne.countryCodeSource = @(NBECountryCodeSourceFROM_NUMBER_WITH_PLUS_SIGN);
+  brNumberOne.preferredDomesticCarrierCode = @"12";
+  brNumberOne.rawInput = @"012 3121286979";
+
+  brNumberTwo.countryCode = @55;
+  brNumberTwo.nationalNumber = @3121286979;
+  brNumberTwo.countryCodeSource = @(NBECountryCodeSourceFROM_DEFAULT_COUNTRY);
+  brNumberTwo.preferredDomesticCarrierCode = @"14";
+  brNumberTwo.rawInput = @"143121286979";
+
+  XCTAssertEqual(NBEMatchTypeEXACT_MATCH, [_aUtil isNumberMatch:brNumberOne second:brNumberTwo]);
 }
 
 - (void)testCanBeInternationallyDialled {

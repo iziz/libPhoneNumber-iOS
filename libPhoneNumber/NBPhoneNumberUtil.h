@@ -44,8 +44,11 @@
 - (NSString * _Nullable)getNddPrefixForRegion:(NSString * _Nullable)regionCode stripNonDigits:(BOOL)stripNonDigits;
 - (NSString * _Nonnull)getNationalSignificantNumber:(NBPhoneNumber * _Nonnull)phoneNumber;
 
+- (NBPhoneMetaData * _Nullable)getMetadataForRegion:(NSString * _Nullable)regionCode;
+- (NBPhoneMetaData * _Nullable)getMetadataForNonGeographicalRegion:(NSNumber * _Nullable)countryCallingCode;
 - (NSArray * _Nullable)getSupportedRegions;
 - (NSArray<NSNumber *> * _Nonnull)getSupportedCallingCodes;
+- (NSArray<NSNumber *> * _Nonnull)getSupportedGlobalNetworkCallingCodes;
 - (NSArray<NSNumber *> * _Nonnull)getSupportedTypesForRegion:(NSString * _Nullable)regionCode;
 - (NSArray<NSNumber *> * _Nonnull)getSupportedTypesForNonGeoEntity:(NSNumber * _Nonnull)countryCallingCode;
 
@@ -95,6 +98,7 @@
 - (BOOL)maybeStripNationalPrefixAndCarrierCode:(NSString * _Nullable * _Nullable)number
                                       metadata:(NBPhoneMetaData * _Nonnull)metadata
                                    carrierCode:(NSString * _Nullable * _Nullable)carrierCode;
+- (NSString * _Nonnull)maybeStripExtension:(NSString * _Nonnull * _Nonnull)number;
 - (NBECountryCodeSource)maybeStripInternationalPrefixAndNormalize:(NSString * _Nullable * _Nullable)numberStr
                                                 possibleIddPrefix:(NSString * _Nonnull)possibleIddPrefix;
 

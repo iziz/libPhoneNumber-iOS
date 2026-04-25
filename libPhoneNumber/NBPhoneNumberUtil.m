@@ -94,6 +94,8 @@ static NSString *VALID_PHONE_NUMBER_PATTERN;
 static NSString *VALID_START_CHAR_PATTERN;
 static NSString *UNWANTED_END_CHAR_PATTERN;
 static NSString *SECOND_NUMBER_START_PATTERN;
+static NSString *RFC3966_GLOBAL_NUMBER_DIGITS_PATTERN;
+static NSString *RFC3966_DOMAINNAME_PATTERN;
 
 static NSDictionary *ALL_NORMALIZATION_MAPPINGS;
 static NSDictionary *DIALLABLE_CHAR_MAPPINGS;
@@ -393,14 +395,32 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   // national prefix.
   NSString *nationalNumber = [phoneNumber.nationalNumber stringValue];
   if (phoneNumber.italianLeadingZero) {
+    NSInteger numberOfLeadingZeros = phoneNumber.numberOfLeadingZeros.integerValue;
+    if (numberOfLeadingZeros <= 0) {
+      return nationalNumber;
+    }
     NSString *zeroNumbers =
-        [@"" stringByPaddingToLength:phoneNumber.numberOfLeadingZeros.integerValue
+        [@"" stringByPaddingToLength:(NSUInteger)numberOfLeadingZeros
                           withString:@"0"
                      startingAtIndex:0];
     return [NSString stringWithFormat:@"%@%@", zeroNumbers, nationalNumber];
   }
 
   return [phoneNumber.nationalNumber stringValue];
+}
+
+- (NBPhoneMetaData * _Nullable)getMetadataForRegion:(NSString * _Nullable)regionCode {
+  if (regionCode == nil) {
+    return nil;
+  }
+  return [self.helper getMetadataForRegion:regionCode];
+}
+
+- (NBPhoneMetaData * _Nullable)getMetadataForNonGeographicalRegion:(NSNumber * _Nullable)countryCallingCode {
+  if (countryCallingCode == nil) {
+    return nil;
+  }
+  return [self.helper getMetadataForNonGeographicalRegion:countryCallingCode];
 }
 
 #pragma mark - Initializations -
@@ -519,6 +539,23 @@ static NSArray *GEO_MOBILE_COUNTRIES;
                                    minLengthPhoneNumberPattern,
                                    validPhoneNumber,
                                    EXTN_PATTERNS_FOR_PARSING];
+
+    NSString *rfc3966VisualSeparator = @"[\\-\\.\\(\\)]?";
+    NSString *rfc3966PhoneDigit =
+        [NSString stringWithFormat:@"([%@]|%@)", NB_VALID_DIGITS_STRING, rfc3966VisualSeparator];
+    RFC3966_GLOBAL_NUMBER_DIGITS_PATTERN =
+        [NSString stringWithFormat:@"^\\+%@*[%@]%@*$",
+                                   rfc3966PhoneDigit,
+                                   NB_VALID_DIGITS_STRING,
+                                   rfc3966PhoneDigit];
+
+    NSString *alphaNumeric = [NSString stringWithFormat:@"%@%@", VALID_ALPHA, NB_VALID_DIGITS_STRING];
+    NSString *domainLabel =
+        [NSString stringWithFormat:@"[%@]+((\\-)*[%@])*", alphaNumeric, alphaNumeric];
+    NSString *topLabel =
+        [NSString stringWithFormat:@"[%@]+((\\-)*[%@])*", VALID_ALPHA, alphaNumeric];
+    RFC3966_DOMAINNAME_PATTERN =
+        [NSString stringWithFormat:@"^(%@\\.)*%@\\.?$", domainLabel, topLabel];
   });
 }
 
@@ -3067,6 +3104,19 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   return [callingCodes copy];
 }
 
+- (NSArray<NSNumber *> * _Nonnull)getSupportedGlobalNetworkCallingCodes {
+  NSMutableArray<NSNumber *> *globalNetworkCallingCodes = [[NSMutableArray alloc] init];
+
+  for (NSNumber *callingCode in [self getSupportedCallingCodes]) {
+    NSString *regionCode = [self getRegionCodeForCountryCode:callingCode];
+    if ([regionCode isEqualToString:NB_REGION_CODE_FOR_NON_GEO_ENTITY]) {
+      [globalNetworkCallingCodes addObject:callingCode];
+    }
+  }
+
+  return [globalNetworkCallingCodes copy];
+}
+
 - (NSArray<NSNumber *> * _Nonnull)getSupportedTypesForRegion:(NSString * _Nullable)regionCode {
   if (![self isValidRegionCode:regionCode]) {
     return @[];
@@ -3715,6 +3765,15 @@ static NSArray *GEO_MOBILE_COUNTRIES;
     return nil;
   }
 
+  NSString *phoneContext = [self extractPhoneContext:numberToParse];
+  if (![self isPhoneContextValid:phoneContext]) {
+    if (error != NULL) {
+      (*error) = [self errorWithObject:[NSString stringWithFormat:@"NOT_A_NUMBER:%@", numberToParse]
+                            withDomain:@"NOT_A_NUMBER"];
+    }
+    return nil;
+  }
+
   NSString *nationalNumber = @"";
   [self buildNationalNumberForParsing:numberToParse nationalNumber:&nationalNumber];
 
@@ -3875,6 +3934,43 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   phoneNumber.nationalNumber =
       [NSNumber numberWithLongLong:[normalizedNationalNumberStr longLongValue]];
   return phoneNumber;
+}
+
+- (NSString * _Nullable)extractPhoneContext:(NSString * _Nonnull)numberToExtractFrom {
+  NSRange phoneContextRange = [numberToExtractFrom rangeOfString:RFC3966_PHONE_CONTEXT];
+  if (phoneContextRange.location == NSNotFound) {
+    return nil;
+  }
+
+  NSUInteger phoneContextStart = NSMaxRange(phoneContextRange);
+  if (phoneContextStart >= numberToExtractFrom.length) {
+    return @"";
+  }
+
+  NSRange parameterRange =
+      [numberToExtractFrom rangeOfString:@";"
+                                 options:NSLiteralSearch
+                                   range:NSMakeRange(phoneContextStart,
+                                                     numberToExtractFrom.length - phoneContextStart)];
+  if (parameterRange.location != NSNotFound) {
+    return [numberToExtractFrom substringWithRange:NSMakeRange(phoneContextStart,
+                                                               parameterRange.location - phoneContextStart)];
+  }
+
+  return [numberToExtractFrom substringFromIndex:phoneContextStart];
+}
+
+- (BOOL)isPhoneContextValid:(NSString * _Nullable)phoneContext {
+  if (phoneContext == nil) {
+    return YES;
+  }
+
+  if (phoneContext.length == 0) {
+    return NO;
+  }
+
+  return [self matchesEntirely:RFC3966_GLOBAL_NUMBER_DIGITS_PATTERN string:phoneContext] ||
+         [self matchesEntirely:RFC3966_DOMAINNAME_PATTERN string:phoneContext];
 }
 
 /**
@@ -4061,10 +4157,16 @@ static NSArray *GEO_MOBILE_COUNTRIES;
   firstNumber.rawInput = @"";
   [firstNumber clearCountryCodeSource];
   firstNumber.preferredDomesticCarrierCode = @"";
+  if (!firstNumber.italianLeadingZero) {
+    firstNumber.numberOfLeadingZeros = @1;
+  }
 
   secondNumber.rawInput = @"";
   [secondNumber clearCountryCodeSource];
   secondNumber.preferredDomesticCarrierCode = @"";
+  if (!secondNumber.italianLeadingZero) {
+    secondNumber.numberOfLeadingZeros = @1;
+  }
 
   if (firstNumber.extension != nil && firstNumber.extension.length == 0) {
     firstNumber.extension = nil;

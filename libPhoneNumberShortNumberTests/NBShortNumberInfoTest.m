@@ -132,7 +132,17 @@
                                                       forRegion:@"BB"]);
 }
 
-- (void)testExpectedCost {
+- (void)testIsSmsService {
+  NBPhoneNumber *smsServiceNumberForSomeRegion = [[NBPhoneNumber alloc] init];
+  smsServiceNumberForSomeRegion.countryCode = @1;
+  smsServiceNumberForSomeRegion.nationalNumber = @21234;
+  XCTAssertTrue([_shortNumberUtil isPhoneNumberSMSService:smsServiceNumberForSomeRegion
+                                                forRegion:@"US"]);
+  XCTAssertFalse([_shortNumberUtil isPhoneNumberSMSService:smsServiceNumberForSomeRegion
+                                                 forRegion:@"BB"]);
+}
+
+- (void)testGetExpectedCost {
   // Premium rate.
   NSString *premiumRateSample = [_testHelper exampleShortNumberForCost:NBEShortNumberCostPremiumRate
                                                             regionCode:@"FR"];
@@ -218,7 +228,7 @@
                  [_shortNumberUtil expectedCostOfPhoneNumber:unknownNumber2]);
 }
 
-- (void)testExpectedCostForSharedCountryCallingCode {
+- (void)testGetExpectedCostForSharedCountryCallingCode {
   NSString *ambiguousPremiumRateString = @"1234";
   NBPhoneNumber *ambiguousPremiumRateNumber = [[NBPhoneNumber alloc] init];
   ambiguousPremiumRateNumber.countryCode = @61;
@@ -314,7 +324,7 @@
                  [_shortNumberUtil expectedCostOfPhoneNumber:ambiguousTollFreeNumber]);
 }
 
-- (void)testGetExampleShortNumber {
+- (void)testExampleShortNumberPresence {
   XCTAssertEqualObjects(@"100", [_testHelper exampleShortNumberWithRegionCode:@"AM"]);
   XCTAssertEqualObjects(@"15", [_testHelper exampleShortNumberWithRegionCode:@"FR"]);
   XCTAssertEqualObjects(@"", [_testHelper exampleShortNumberWithRegionCode:@"UN001"]);

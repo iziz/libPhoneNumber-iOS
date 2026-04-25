@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+
+jobs:
+  spm-and-parity:
+    name: SPM and parity
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Show toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Check upstream test parity
+        run: swift scripts/checkUpstreamTestParity.swift
+
+      - name: Check upstream API parity
+        run: swift scripts/checkUpstreamAPIParity.swift
+
+      - name: Run SwiftPM tests
+        run: swift test
+
+      - name: Run SwiftPM tests with Korean locale
+        run: LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test
+
+      - name: Build release package
+        run: swift build -c release
+
+      - name: Check diff whitespace
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git diff --check "origin/${{ github.base_ref }}...HEAD"
+          elif git rev-parse --verify HEAD~1 >/dev/null 2>&1; then
+            git diff --check HEAD~1..HEAD
+          else
+            git diff --check
+          fi
+
+  xcode-schemes:
+    name: Xcode schemes
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Select available iPhone simulator
+        id: simulator
+        run: |
+          set -euo pipefail
+          udid="$(xcrun simctl list devices available | awk -F '[()]' '/iPhone/ { print $2; exit }')"
+          if [ -z "$udid" ]; then
+            echo "No available iPhone simulator found." >&2
+            xcrun simctl list devices available >&2
+            exit 1
+          fi
+          echo "udid=$udid" >> "$GITHUB_OUTPUT"
+          echo "Selected simulator: $udid"
+
+      - name: Test libPhoneNumber scheme
+        run: |
+          xcodebuild test \
+            -scheme libPhoneNumber \
+            -destination "id=${{ steps.simulator.outputs.udid }}" \
+            -derivedDataPath /tmp/libphone-xc-libphonenumber-dd
+
+      - name: Test libPhoneNumberGeocoding scheme
+        run: |
+          xcodebuild test \
+            -scheme libPhoneNumberGeocoding \
+            -destination "id=${{ steps.simulator.outputs.udid }}" \
+            -derivedDataPath /tmp/libphone-xc-geocoding-dd
+
+      - name: Test libPhoneNumberShortNumber scheme
+        run: |
+          xcodebuild test \
+            -scheme libPhoneNumberShortNumber \
+            -destination "id=${{ steps.simulator.outputs.udid }}" \
+            -derivedDataPath /tmp/libphone-xc-shortnumber-dd

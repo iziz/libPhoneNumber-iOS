@@ -230,6 +230,18 @@ This downloads metadata from Google's libphonenumber repository, updates the gen
 3. Open the `Package.swift` SPM project in Xcode
 4. Run the tests for the package - `libPhoneNumber-Package` (runs the tests for each of the package targets in one run)
 
+5. Run the upstream JavaScript test parity check:
+
+   ```
+   swift scripts/checkUpstreamTestParity.swift --upstream-ref <version-or-ref>
+   swift scripts/checkUpstreamAPIParity.swift --upstream-ref <version-or-ref>
+   ```
+
+For the complete maintenance workflow, see:
+
+* [Upstream parity guide](docs/UPSTREAM_PARITY.md)
+* [Testing guide](docs/TESTING.md)
+
 #### Optional Validation: Cocoapods
 1. `cd` into the `libPhoneNumber-Demo` directory
 2. Verify the `Podfile` is pointing to the local copies of the pods (using `:path => '../'`)

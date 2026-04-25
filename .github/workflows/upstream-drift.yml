@@ -1,0 +1,21 @@
+name: Upstream Drift
+
+on:
+  schedule:
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  google-master-parity:
+    name: Google master parity
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check upstream test parity against Google master
+        run: swift scripts/checkUpstreamTestParity.swift --upstream-ref master
+
+      - name: Check upstream API parity against Google master
+        run: swift scripts/checkUpstreamAPIParity.swift --upstream-ref master

@@ -139,6 +139,44 @@
   XCTAssertEqualObjects(@"99999 12 345", [f inputDigit:@"5"]);
 }
 
+- (void)testAYTFNoNationalPrefixFormattingRule {
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"AO"
+                                                              metadataHelper:_helper];
+  XCTAssertEqualObjects(@"3", [f inputDigit:@"3"]);
+  XCTAssertEqualObjects(@"33", [f inputDigit:@"3"]);
+  XCTAssertEqualObjects(@"333", [f inputDigit:@"3"]);
+  XCTAssertEqualObjects(@"333 3", [f inputDigit:@"3"]);
+  XCTAssertEqualObjects(@"333 33", [f inputDigit:@"3"]);
+  XCTAssertEqualObjects(@"333 333", [f inputDigit:@"3"]);
+}
+
+- (void)testAYTFClearNDDAfterIddExtraction {
+  NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"KR"
+                                                              metadataHelper:_helper];
+  XCTAssertEqualObjects(@"0", [f inputDigit:@"0"]);
+  XCTAssertEqualObjects(@"00", [f inputDigit:@"0"]);
+  XCTAssertEqualObjects(@"007", [f inputDigit:@"7"]);
+  XCTAssertEqualObjects(@"0070", [f inputDigit:@"0"]);
+  XCTAssertEqualObjects(@"00700", [f inputDigit:@"0"]);
+  XCTAssertEqualObjects(@"00700 1 ", [f inputDigit:@"1"]);
+  XCTAssertEqualObjects(@"00700 1 2", [f inputDigit:@"2"]);
+  XCTAssertEqualObjects(@"00700 1 23", [f inputDigit:@"3"]);
+  XCTAssertEqualObjects(@"00700 1 234", [f inputDigit:@"4"]);
+  XCTAssertEqualObjects(@"00700 1 234 5", [f inputDigit:@"5"]);
+  XCTAssertEqualObjects(@"00700 1 234 56", [f inputDigit:@"6"]);
+  XCTAssertEqualObjects(@"00700 1 234 567", [f inputDigit:@"7"]);
+  XCTAssertEqualObjects(@"00700 1 234 567 8", [f inputDigit:@"8"]);
+  XCTAssertEqualObjects(@"00700 1 234 567 89", [f inputDigit:@"9"]);
+  XCTAssertEqualObjects(@"00700 1 234 567 890", [f inputDigit:@"0"]);
+  XCTAssertEqualObjects(@"00700 1 234 567 8901", [f inputDigit:@"1"]);
+  XCTAssertEqualObjects(@"00700123456789012", [f inputDigit:@"2"]);
+  XCTAssertEqualObjects(@"007001234567890123", [f inputDigit:@"3"]);
+  XCTAssertEqualObjects(@"0070012345678901234", [f inputDigit:@"4"]);
+  XCTAssertEqualObjects(@"00700123456789012345", [f inputDigit:@"5"]);
+  XCTAssertEqualObjects(@"007001234567890123456", [f inputDigit:@"6"]);
+  XCTAssertEqualObjects(@"0070012345678901234567", [f inputDigit:@"7"]);
+}
+
 - (void)testAYTFUS {
   NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"
                                                               metadataHelper:_helper];
