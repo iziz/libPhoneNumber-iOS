@@ -30,6 +30,12 @@ Check whitespace before committing:
 git diff --check
 ```
 
+Check package and README version alignment:
+
+```bash
+swift scripts/checkVersionConsistency.swift
+```
+
 ## Upstream Parity Validation
 
 Run the upstream test parity check:
@@ -90,6 +96,8 @@ For metadata updates:
 
 - `swift scripts/checkUpstreamTestParity.swift --upstream-ref <metadata-ref>`
 - `swift scripts/checkUpstreamAPIParity.swift --upstream-ref <metadata-ref>`
+- `swift scripts/updateGeocodingMetadata.swift <metadata-ref> --output /tmp/geocoding-review` if geocoding metadata changed upstream.
+- `scripts/testGeocodingMetadataUpdater.sh` if the geocoding updater changed.
 - `swift test`
 - `LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test`
 - `swift build -c release`
@@ -126,6 +134,15 @@ For Swift facade changes:
 - `swift build -c release`
 - `pod lib lint libPhoneNumberSwift.podspec --allow-warnings --include-podspecs='*.podspec'`
 - Confirm the facade remains a thin wrapper over the Objective-C core instead of duplicating phone-number logic.
+- See `docs/SWIFT_FACADE_MODULE_SPLIT.md` before changing module boundaries.
+
+For packaging changes:
+
+- `swift scripts/checkVersionConsistency.swift`
+- `pod lib lint libPhoneNumber-iOS.podspec --allow-warnings`
+- `pod lib lint libPhoneNumberGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumberShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumberSwift.podspec --allow-warnings --include-podspecs='*.podspec'`
 
 ## Locale-Sensitive Tests
 

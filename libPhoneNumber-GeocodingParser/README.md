@@ -1,36 +1,26 @@
-# **libPhoneNumber-iOS Geocoding File Parser**
+# libPhoneNumber-iOS Geocoding File Parser
 
-An Objective-C program that converts Google's libPhoneNumber geocoding information into SQLite databases that 
-can be used in the libPhoneNumber-iOS library for geocoding functionality. This program downloads Google's
-libPhoneNumber repository and iterates through each language folder of geocoding metadata and creates an 
-individual SQLite database file for each language. The program creates individual tables for each country code of 
-geocoding region data provided for each language. 
+This Objective-C parser is the legacy Xcode project used to convert Google's libphonenumber geocoding text files into SQLite databases.
 
-## Usage
+New metadata updates should use the repository-level command-line updater instead:
 
-This program has 1 required input arguments for ```main.m```:
+```bash
+swift scripts/updateGeocodingMetadata.swift <libphonenumber-version> --replace-bundle
+```
 
-1) The local system directory path to the desired destination to save the SQLite database files.
-Example: /Users/JohnDoe/Documents
+The Swift updater does not require opening Xcode, supports local source directories, and is suitable for CI or scripted maintenance.
 
-## Updating libPhoneNumber-iOS GeocodingMetaData.bundle 
+## Legacy Parser Usage
 
-libPhoneNumber's geocoding metadata files are periodically updated by contributors. Please fetch the most recently
-updated geocoding data files by using this program and replace the current database files in 
-GeocodingMetaData.bundle, found in the [libPhoneNumberGeocoding target](https://github.com/iziz/libPhoneNumber-iOS/tree/master/libPhoneNumberGeocodingMetaData).
+The legacy parser accepts:
 
-Please contribute to libPhoneNumber-iOS library by creating a pull request to replace outdated databases with the
-up-to-date SQLite databases produced by this program. 
+1. The Google libphonenumber version or `master`.
+2. The local output directory for generated SQLite database files.
 
+Example:
 
-##### Visit [libphonenumber](https://github.com/google/libphonenumber) for more information
+```text
+9.0.29 /Users/JohnDoe/Documents/geocoding
+```
 
-### Update Steps
-1. Open the libPhoneNumber-GeocodingParser project in Xcode
-2. Edit the libPhoneNumber-GeocodingParser Scheme
-3. In the `Run` section go to the `Arguments` tab
-4. Edit the version argument to be the desired version number
-5. Add an argument specifying the output directory (ex. `/Users/john.doe/geocoding`)
-6. Run the libPhoneNumber-GeocodingParser program in Xcode (`Cmd+R`) on your machine
-7. Wait a few minutes for the program to complete
-8. Copy the `*.db` files from your specified output directory to `libPhoneNumberGeocodingMetaData/GeocodingMetaData.bundle`
+Prefer the Swift updater unless you are specifically debugging this Objective-C parser.

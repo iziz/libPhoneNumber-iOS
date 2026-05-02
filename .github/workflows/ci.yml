@@ -50,6 +50,43 @@ jobs:
             git diff --check
           fi
 
+  maintenance-scripts:
+    name: Maintenance scripts
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Show tool versions
+        run: |
+          swift --version
+          sqlite3 --version
+
+      - name: Check version consistency
+        run: swift scripts/checkVersionConsistency.swift
+
+      - name: Smoke test geocoding metadata updater
+        run: scripts/testGeocodingMetadataUpdater.sh
+
+  cocoapods-lint:
+    name: CocoaPods lint
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Show CocoaPods version
+        run: pod --version
+
+      - name: Lint podspecs
+        run: |
+          pod lib lint libPhoneNumber-iOS.podspec --allow-warnings
+          pod lib lint libPhoneNumberGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
+          pod lib lint libPhoneNumberShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
+          pod lib lint libPhoneNumberSwift.podspec --allow-warnings --include-podspecs='*.podspec'
+
   xcode-schemes:
     name: Xcode schemes
     runs-on: macos-latest

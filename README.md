@@ -230,12 +230,21 @@ This downloads metadata from Google's libphonenumber repository, updates the gen
 
 ### Geocoding Metadata
 
-1. Open `libPhoneNumber-GeocodingParser` in Xcode.
-2. Edit the run scheme arguments.
-3. Set the libphonenumber version.
-4. Set an output directory.
-5. Run the parser.
-6. Copy the generated `*.db` files into `libPhoneNumberGeocodingMetaData/GeocodingMetaData.bundle`.
+Generate SQLite geocoding databases with the command-line updater:
+
+```bash
+swift scripts/updateGeocodingMetadata.swift <libphonenumber-version> --replace-bundle
+```
+
+Examples:
+
+```bash
+swift scripts/updateGeocodingMetadata.swift 9.0.29 --replace-bundle
+swift scripts/updateGeocodingMetadata.swift master --output /tmp/geocoding
+swift scripts/updateGeocodingMetadata.swift --source /tmp/libphonenumber --output /tmp/geocoding
+```
+
+Use `--output` to inspect generated databases before replacing the checked-in bundle. Use `--source` when you already have a local Google libphonenumber checkout or an extracted `resources/geocoding` directory.
 
 ## Validation
 
@@ -244,6 +253,7 @@ Before merging behavior, metadata, packaging, or API changes, run the relevant c
 Common local checks:
 
 ```bash
+swift scripts/checkVersionConsistency.swift
 swift test
 LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test
 swift build -c release
@@ -270,15 +280,20 @@ xcodebuild test -scheme libPhoneNumberShortNumber -destination 'platform=iOS Sim
    - Patch for bug fixes.
    - Minor for metadata updates or additive functionality.
    - Major for breaking changes.
-2. Run the validation matrix.
-3. Lint the affected podspecs.
-4. Open a pull request with upstream version, parity results, and test results.
-5. Create a GitHub release after merge.
-6. Push updated podspecs.
+2. Update project versions:
+   ```bash
+   swift scripts/updateProjectVersions.swift <new-version>
+   ```
+3. Run the validation matrix.
+4. Lint the affected podspecs.
+5. Open a pull request with upstream version, parity results, and test results.
+6. Create a GitHub release after merge.
+7. Push updated podspecs.
 
 ## Links
 
 - [Google libphonenumber](https://github.com/google/libphonenumber)
 - [Update log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
+- [Swift facade module split](docs/SWIFT_FACADE_MODULE_SPLIT.md)
 - [libPhoneNumberGeocoding README](libPhoneNumberGeocoding/README.md)
 - [libPhoneNumberShortNumber README](libPhoneNumberShortNumber/README.md)

@@ -146,7 +146,13 @@ After updating metadata:
 3. Run the full test matrix in `docs/TESTING.md`.
 4. If upstream tests changed, port the new or renamed tests before merging.
 
-Geocoding metadata is maintained through the `libPhoneNumber-GeocodingParser` workflow documented in `README.md`.
+Geocoding metadata is maintained through the command-line updater:
+
+```bash
+swift scripts/updateGeocodingMetadata.swift <version-or-ref> --replace-bundle
+```
+
+Use `--output <dir>` to inspect generated databases before replacing the checked-in bundle, or `--source <dir>` to generate from a local Google libphonenumber checkout.
 
 ## Review Expectations
 

@@ -9,186 +9,258 @@
 //
 
 import Foundation
+#if os(Linux)
+import Glibc
+#else
+import Darwin
+#endif
 
-// MARK: - Script Configuration
+struct Version: CustomStringConvertible {
+  let major: Int
+  let minor: Int
+  let patch: Int
 
-let scriptVersion = "1.0.0"
+  var description: String {
+    "\(major).\(minor).\(patch)"
+  }
 
-let scriptName = URL(fileURLWithPath: (CommandLine.arguments.first)!).lastPathComponent
+  var minorRange: String {
+    "\(major).\(minor)"
+  }
 
-let dividingLine = "-----------------------------------------------------"
-let header =
-"""
-\(dividingLine)
-\(scriptName) v\(scriptVersion)
-"""
-let footer =
-"""
-\(dividingLine)
-"""
-
-// MARK: - String Extension
-
-extension String {
-  /// Whether this string represents a numbered version: X.Y.Z, X.Y, or Z
-  var isVersion: Bool {
-    // Regex to match a common version format (e.g., X.Y.Z, X.Y, X)
-    // where X, Y, Z are one or more digits.
-    let versionPattern = #"^\d+(\.\d+){0,2}$"#
-    
-    do {
-      let regex = try Regex(versionPattern)
-      return self.wholeMatch(of: regex) != nil
-    } catch {
-      return false
+  init?(_ rawValue: String) {
+    let parts = rawValue.split(separator: ".").map(String.init)
+    guard parts.count == 3,
+          let major = Int(parts[0]),
+          let minor = Int(parts[1]),
+          let patch = Int(parts[2]) else {
+      return nil
     }
+
+    self.major = major
+    self.minor = minor
+    self.patch = patch
   }
 }
 
-// MARK: - Argument Parsing
+let scriptVersion = "1.1.0"
+let scriptName = URL(fileURLWithPath: CommandLine.arguments.first ?? "updateProjectVersions.swift").lastPathComponent
+let repoRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
 
 enum LogMode {
-    case verbose
-    case quiet
+  case verbose
+  case quiet
 }
 
 var mode: LogMode = .verbose
-var newVersion: String?
+var shouldRunConsistencyCheck = true
+var newVersion: Version?
 
-var argIter: IndexingIterator<Array<String>.SubSequence> = CommandLine.arguments.dropFirst().makeIterator()
+func usage() -> Never {
+  print("""
+  Usage:
+    \(scriptName) [--no-status] [--skip-consistency-check] <new_version>
 
-while let arg: String = argIter.next() {
-    switch arg {
-    case "-n", "--no-status":
-        mode = .quiet
-    default:
-        if newVersion == nil, arg.isVersion {
-            newVersion = arg
-        } else {
-            print("Unknown argument: \(arg)")
-            exit(1)
-        }
+  Updates Xcode project versions, podspec versions, podspec dependency ranges,
+  and README CocoaPods examples. The version must use X.Y.Z format.
+  """)
+  exit(2)
+}
+
+var arguments = Array(CommandLine.arguments.dropFirst())
+while !arguments.isEmpty {
+  let argument = arguments.removeFirst()
+  switch argument {
+  case "-n", "--no-status":
+    mode = .quiet
+  case "--skip-consistency-check":
+    shouldRunConsistencyCheck = false
+  case "-h", "--help":
+    usage()
+  default:
+    guard newVersion == nil, let version = Version(argument) else {
+      print("Unknown argument or invalid version: \(argument)")
+      usage()
     }
+    newVersion = version
+  }
 }
 
-guard let ver = newVersion else {
-    print("Usage: \(scriptName) [-n|--no-status] <new_version>")
-    exit(1)
+guard let version = newVersion else {
+  usage()
 }
 
-/**
- Logs out the specified status message, if logging is enabled
- 
- - parameter message: The status message to log out
- */
 func logStatus(_ message: String) {
-    guard mode == .verbose else {
-        return
-    }
+  guard mode == .verbose else {
+    return
+  }
 
-    print(message)
+  print(message)
 }
 
-// MARK: - File Search Utilities
+func relativePath(for url: URL) -> String {
+  url.path.replacingOccurrences(of: repoRoot.path + "/", with: "")
+}
 
-/**
- Finds all the files in the directory (and any subdirectories) with the specified suffixes
- 
- - parameter suffixes: The file suffixes to look for
- - parameter directory: The directory to search in
- 
- - returns The array of files with the specified suffixes
- */
+func readUTF8(_ url: URL) -> String? {
+  try? String(contentsOf: url, encoding: .utf8)
+}
+
+func writeUTF8(_ text: String, to url: URL) -> Bool {
+  do {
+    try text.write(to: url, atomically: true, encoding: .utf8)
+    return true
+  } catch {
+    fputs("Failed to write \(relativePath(for: url)): \(error)\n", stderr)
+    return false
+  }
+}
+
+func replacingMatches(in text: String, pattern: String, template: String, options: NSRegularExpression.Options = []) -> String {
+  guard let regex = try? NSRegularExpression(pattern: pattern, options: options) else {
+    return text
+  }
+  let range = NSRange(text.startIndex..., in: text)
+  return regex.stringByReplacingMatches(in: text, range: range, withTemplate: template)
+}
+
 func findFiles(suffixes: [String], in directory: URL) -> [URL] {
-    let fm = FileManager.default
-    var found = [URL]()
-    let resourceKeys = [URLResourceKey.isDirectoryKey]
-    let enumerator = fm.enumerator(at: directory, includingPropertiesForKeys: resourceKeys, options: [.skipsHiddenFiles])!
-    for case let fileURL as URL in enumerator {
-        // Ignore files within the cocoapods sub-project
-        if fileURL.pathComponents.contains("Pods") {
-            continue
-        }
+  let fileManager = FileManager.default
+  var found: [URL] = []
+  let resourceKeys = [URLResourceKey.isDirectoryKey]
 
-        let ext = fileURL.pathExtension.lowercased()
-        let name = fileURL.lastPathComponent.lowercased()
-        if suffixes.contains(ext) {
-            found.append(fileURL)
-        } else if suffixes.contains(where: { name.hasSuffix($0) }) {
-            found.append(fileURL)
-        }
+  guard let enumerator = fileManager.enumerator(
+    at: directory,
+    includingPropertiesForKeys: resourceKeys,
+    options: [.skipsHiddenFiles]
+  ) else {
+    return []
+  }
+
+  for case let fileURL as URL in enumerator {
+    if fileURL.pathComponents.contains("Pods") || fileURL.pathComponents.contains(".build") {
+      continue
     }
-    return found
+
+    let fileExtension = fileURL.pathExtension.lowercased()
+    let fileName = fileURL.lastPathComponent.lowercased()
+    if suffixes.contains(fileExtension) || suffixes.contains(where: { fileName.hasSuffix($0) }) {
+      found.append(fileURL)
+    }
+  }
+
+  return found
 }
 
-// MARK: - Version Updating
-
-/**
- Updates the specified pbxproj file to use the specfiied project version
- 
- - parameter url: The location of the pbxproj file to update
- - parameter version: The new project version to use in the file
- 
- - returns Whether the file was modified
- */
 @discardableResult
-func updatePBXProj(at url: URL, toVersion version: String) -> Bool {
-    guard let text = try? String(contentsOf: url, encoding: .utf8) else {
-        return false
-    }
-    var modified = text
-    let pattern = #"\s*=\s*[^;]+;"#
-    let variableNames = ["MARKETING_VERSION", "CURRENT_PROJECT_VERSION"]
-    var changed = false
-    
-    for name in variableNames {
-        guard let regex = try? NSRegularExpression(pattern: name + pattern) else { continue }
-        let results = regex.matches(in: modified, range: NSRange(modified.startIndex..., in: modified))
-        if !results.isEmpty {
-            modified = regex.stringByReplacingMatches(in: modified, range: NSRange(modified.startIndex..., in: modified), withTemplate: "\(name) = \(version);")
-            changed = true
-        }
-    }
-    
-    if changed, modified != text {
-        try? modified.write(to: url, atomically: true, encoding: .utf8)
-        return true
-    }
+func updatePBXProj(at url: URL, toVersion version: Version) -> Bool {
+  guard let text = readUTF8(url) else {
     return false
+  }
+
+  var updated = text
+  for variableName in ["MARKETING_VERSION", "CURRENT_PROJECT_VERSION"] {
+    updated = replacingMatches(
+      in: updated,
+      pattern: #"(\b\#(variableName)\s*=\s*)[^;]+(;)"#,
+      template: "$1\(version)$2"
+    )
+  }
+
+  guard updated != text else {
+    return false
+  }
+
+  return writeUTF8(updated, to: url)
 }
 
-/**
- Updates the `version` field in a `.podspec` file at the specified URL to the given version string.
- 
- - parameter url: The file URL pointing to the `.podspec` file to update.
- - parameter version:  The new version string to set for the `*.version` field.
- 
- - returns Whether the file was modified
- */
 @discardableResult
-func updatePodspec(at url: URL, toVersion version: String) -> Bool {
-    guard let text = try? String(contentsOf: url, encoding: .utf8) else {
-        return false
-    }
-
-    let podspecVersionPattern = #"(^\s*.*\.version\s*=\s*['\"])([^'\"]+)(['\"])"#
-    let regex = try! NSRegularExpression(pattern: podspecVersionPattern, options: [.anchorsMatchLines])
-
-    let newText = regex.stringByReplacingMatches(in: text, range: NSRange(text.startIndex..., in: text), withTemplate: "$1\(version)$3")
-    
-    if text != newText {
-        try? newText.write(to: url, atomically: true, encoding: .utf8)
-        return true
-    }
+func updatePodspec(at url: URL, toVersion version: Version) -> Bool {
+  guard let text = readUTF8(url) else {
     return false
+  }
+
+  var updated = replacingMatches(
+    in: text,
+    pattern: #"(^\s*.*\.version\s*=\s*['"])([^'"]+)(['"])"#,
+    template: "$1\(version)$3",
+    options: [.anchorsMatchLines]
+  )
+
+  updated = replacingMatches(
+    in: updated,
+    pattern: #"(^\s*s\.dependency\s+['"][^'"]+['"]\s*,\s*['"]~>\s*)([^'"]+)(['"])"#,
+    template: "$1\(version)$3",
+    options: [.anchorsMatchLines]
+  )
+
+  guard updated != text else {
+    return false
+  }
+
+  return writeUTF8(updated, to: url)
 }
 
-// MARK: - Script Execution
+@discardableResult
+func updateREADME(at url: URL, toVersion version: Version) -> Bool {
+  guard let text = readUTF8(url) else {
+    return false
+  }
 
-let repoRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-var modifiedFiles = [String]()
+  let podNames = [
+    "libPhoneNumber-iOS",
+    "libPhoneNumberSwift",
+    "libPhoneNumberGeocoding",
+    "libPhoneNumberShortNumber",
+  ].joined(separator: "|")
 
-logStatus(header + "\n")
+  let updated = replacingMatches(
+    in: text,
+    pattern: #"(pod\s+['"](?:\#(podNames))['"]\s*,\s*['"]~>\s*)([^'"]+)(['"])"#,
+    template: "$1\(version.minorRange)$3"
+  )
+
+  guard updated != text else {
+    return false
+  }
+
+  return writeUTF8(updated, to: url)
+}
+
+func runConsistencyCheck() -> Bool {
+  let checker = repoRoot.appendingPathComponent("scripts/checkVersionConsistency.swift")
+  guard FileManager.default.fileExists(atPath: checker.path) else {
+    fputs("Skipping consistency check because scripts/checkVersionConsistency.swift is missing.\n", stderr)
+    return true
+  }
+
+  let process = Process()
+  process.currentDirectoryURL = repoRoot
+  process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+  process.arguments = ["swift", "scripts/checkVersionConsistency.swift"]
+  fflush(stdout)
+
+  do {
+    try process.run()
+    process.waitUntilExit()
+    return process.terminationStatus == 0
+  } catch {
+    fputs("Failed to run version consistency check: \(error)\n", stderr)
+    return false
+  }
+}
+
+var modifiedFiles: [String] = []
+
+logStatus("""
+-----------------------------------------------------
+\(scriptName) v\(scriptVersion)
+-----------------------------------------------------
+
+Updating project versions to: \(version)
+README CocoaPods examples will use: ~> \(version.minorRange)
+
+""")
 
 let pbxprojFiles = findFiles(suffixes: ["pbxproj"], in: repoRoot)
 let podspecFiles = findFiles(suffixes: ["podspec"], in: repoRoot)
@@ -196,30 +268,43 @@ let podspecFiles = findFiles(suffixes: ["podspec"], in: repoRoot)
 logStatus("Found \(pbxprojFiles.count) *.pbxproj files")
 logStatus("Found \(podspecFiles.count) *.podspec files")
 
-logStatus("\nUpdating versions to: \(ver)\n")
-
-for file in pbxprojFiles {
-    if updatePBXProj(at: file, toVersion: ver) {
-        let relPath = file.path.replacingOccurrences(of: repoRoot.path + "/", with: "")
-        modifiedFiles.append(relPath)
-        logStatus("[UPDATED] \(relPath)")
-    }
+for file in pbxprojFiles.sorted(by: { $0.path < $1.path }) {
+  if updatePBXProj(at: file, toVersion: version) {
+    let path = relativePath(for: file)
+    modifiedFiles.append(path)
+    logStatus("[UPDATED] \(path)")
+  }
 }
 
-for file in podspecFiles {
-    if updatePodspec(at: file, toVersion: ver) {
-        let relPath = file.path.replacingOccurrences(of: repoRoot.path + "/", with: "")
-        modifiedFiles.append(relPath)
-        logStatus("[UPDATED] \(relPath)")
-    }
+for file in podspecFiles.sorted(by: { $0.path < $1.path }) {
+  if updatePodspec(at: file, toVersion: version) {
+    let path = relativePath(for: file)
+    modifiedFiles.append(path)
+    logStatus("[UPDATED] \(path)")
+  }
+}
+
+let readme = repoRoot.appendingPathComponent("README.md")
+if updateREADME(at: readme, toVersion: version) {
+  let path = relativePath(for: readme)
+  modifiedFiles.append(path)
+  logStatus("[UPDATED] \(path)")
 }
 
 logStatus("\nModified \(modifiedFiles.count) file(s):")
-
 if mode == .verbose {
-    for path in modifiedFiles { print(path) }
+  for path in modifiedFiles {
+    print(path)
+  }
 } else {
-    modifiedFiles.forEach { print($0) }
+  modifiedFiles.forEach { print($0) }
 }
 
-logStatus(footer)
+if shouldRunConsistencyCheck {
+  logStatus("\nRunning version consistency check...")
+  guard runConsistencyCheck() else {
+    exit(1)
+  }
+}
+
+logStatus("-----------------------------------------------------")
