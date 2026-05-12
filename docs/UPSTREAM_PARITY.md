@@ -125,6 +125,23 @@ If upstream exposes a method that should be public in Objective-C, add it to the
 
 ## Metadata Update Workflow
 
+Before updating checked-in metadata, generate a freshness report:
+
+```bash
+swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness
+```
+
+This writes:
+
+- `.build/metadata-freshness/metadata-diff-summary.md`
+- `.build/metadata-freshness/metadata-update-issue.md`
+- `.build/metadata-freshness/metadata-update-pr.md`
+- `.build/metadata-freshness/metadata-update-log-entry.md`
+
+Use these files as maintenance inputs. They are review artifacts, not generated source.
+
+For user-reported numbering-plan gaps that are not yet in upstream metadata, follow [Issue-driven metadata patch policy](METADATA_PATCH_POLICY.md).
+
 For phone-number and short-number metadata:
 
 ```bash

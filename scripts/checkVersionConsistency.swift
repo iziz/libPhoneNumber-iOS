@@ -56,24 +56,42 @@ let expectedPodspecFiles = [
   "libPhoneNumber-iOS.podspec",
   "libPhoneNumberGeocoding.podspec",
   "libPhoneNumberShortNumber.podspec",
-  "libPhoneNumberSwift.podspec",
+  "libPhoneNumber-iOS-SwiftCore.podspec",
+  "libPhoneNumber-iOS-SwiftGeocoding.podspec",
+  "libPhoneNumber-iOS-SwiftShortNumber.podspec",
+  "libPhoneNumber-iOS-SwiftUI.podspec",
+  "libPhoneNumber-iOS-Swift.podspec",
 ]
 
 let expectedPackageProducts = [
   "libPhoneNumber": "libPhoneNumber",
   "libPhoneNumberGeocoding": "libPhoneNumberGeocoding",
   "libPhoneNumberShortNumber": "libPhoneNumberShortNumber",
+  "libPhoneNumberSwiftCore": "libPhoneNumberSwiftCore",
+  "libPhoneNumberSwiftGeocoding": "libPhoneNumberSwiftGeocoding",
+  "libPhoneNumberSwiftShortNumber": "libPhoneNumberSwiftShortNumber",
+  "libPhoneNumberSwiftUI": "libPhoneNumberSwiftUI",
   "libPhoneNumberSwift": "libPhoneNumberSwift",
 ]
 
 let expectedInternalDependencies = [
   "libPhoneNumberGeocoding": ["libPhoneNumber-iOS"],
   "libPhoneNumberShortNumber": ["libPhoneNumber-iOS"],
-  "libPhoneNumberSwift": [
-    "libPhoneNumber-iOS",
+  "libPhoneNumber-iOS-Swift": [
+    "libPhoneNumber-iOS-SwiftCore",
+    "libPhoneNumber-iOS-SwiftGeocoding",
+    "libPhoneNumber-iOS-SwiftShortNumber",
+  ],
+  "libPhoneNumber-iOS-SwiftCore": ["libPhoneNumber-iOS"],
+  "libPhoneNumber-iOS-SwiftGeocoding": [
+    "libPhoneNumber-iOS-SwiftCore",
     "libPhoneNumberGeocoding",
+  ],
+  "libPhoneNumber-iOS-SwiftShortNumber": [
+    "libPhoneNumber-iOS-SwiftCore",
     "libPhoneNumberShortNumber",
   ],
+  "libPhoneNumber-iOS-SwiftUI": ["libPhoneNumber-iOS-SwiftCore"],
 ]
 
 let repoRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)

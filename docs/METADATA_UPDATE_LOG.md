@@ -47,7 +47,11 @@ git diff --check
 pod lib lint libPhoneNumber-iOS.podspec --allow-warnings
 pod lib lint libPhoneNumberGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
 pod lib lint libPhoneNumberShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumberSwift.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'
 ```
 
 ### Results
@@ -59,7 +63,7 @@ pod lib lint libPhoneNumberSwift.podspec --allow-warnings --include-podspecs='*.
 - SwiftPM Korean locale tests: passed, 204 tests.
 - Release build: passed.
 - Whitespace check: passed.
-- CocoaPods lint: all four podspecs passed validation.
+- CocoaPods lint: all podspecs available at release time passed validation.
 - Geocoding database sanity check: 34 databases, `en.db` has 151 geocoding tables, `kk.db` has 1 geocoding table.
 
 ### Notes

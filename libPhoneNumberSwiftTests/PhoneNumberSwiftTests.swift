@@ -2,7 +2,7 @@ import XCTest
 import libPhoneNumberSwift
 
 final class PhoneNumberSwiftTests: XCTestCase {
-    func testPhoneNumberUtilityParsesAndFormats() throws {
+    func testUmbrellaReexportsCoreFacade() throws {
         let util = PhoneNumberUtility.shared
         let number = try util.parse("6502530000", defaultRegion: "US")
 
@@ -13,16 +13,7 @@ final class PhoneNumberSwiftTests: XCTestCase {
         XCTAssertEqual("US", util.regionCode(for: number))
     }
 
-    func testAsYouTypeFormatterFacade() {
-        let formatter = AsYouTypeFormatter(regionCode: "US")
-
-        XCTAssertEqual("6", formatter.inputDigit("6"))
-        XCTAssertEqual("65", formatter.inputDigit("5"))
-        XCTAssertEqual("650", formatter.inputDigit("0"))
-        XCTAssertEqual("650-2", formatter.inputDigit("2"))
-    }
-
-    func testShortNumberUtilityFacade() throws {
+    func testUmbrellaReexportsShortNumberFacade() throws {
         let phoneUtil = PhoneNumberUtility.shared
         let shortUtil = ShortNumberUtility.shared
         let number = try phoneUtil.parse("911", defaultRegion: "US")
@@ -33,7 +24,7 @@ final class PhoneNumberSwiftTests: XCTestCase {
         XCTAssertEqual(.tollFree, shortUtil.expectedCost(of: number, forRegion: "US"))
     }
 
-    func testGeocoderFacade() throws {
+    func testUmbrellaReexportsGeocodingFacade() throws {
         let util = PhoneNumberUtility.shared
         let geocoder = PhoneNumberGeocoder.shared
         let number = try util.parse("16502530000", defaultRegion: "US")

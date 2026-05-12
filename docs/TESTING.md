@@ -94,6 +94,7 @@ For a small implementation or test-only change:
 
 For metadata updates:
 
+- `swift scripts/checkMetadataFreshness.swift --current-ref <metadata-ref> --output .build/metadata-freshness`
 - `swift scripts/checkUpstreamTestParity.swift --upstream-ref <metadata-ref>`
 - `swift scripts/checkUpstreamAPIParity.swift --upstream-ref <metadata-ref>`
 - `swift scripts/updateGeocodingMetadata.swift <metadata-ref> --output /tmp/geocoding-review` if geocoding metadata changed upstream.
@@ -133,7 +134,11 @@ For Swift facade changes:
 - `swift test`
 - `LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test`
 - `swift build -c release`
-- `pod lib lint libPhoneNumberSwift.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'`
 - Confirm the facade remains a thin wrapper over the Objective-C core instead of duplicating phone-number logic.
 - See `docs/SWIFT_FACADE_MODULE_SPLIT.md` before changing module boundaries.
 
@@ -143,7 +148,11 @@ For packaging changes:
 - `pod lib lint libPhoneNumber-iOS.podspec --allow-warnings`
 - `pod lib lint libPhoneNumberGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'`
 - `pod lib lint libPhoneNumberShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumberSwift.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'`
 
 ## Locale-Sensitive Tests
 

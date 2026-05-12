@@ -12,7 +12,11 @@ The project keeps the Objective-C core stable for existing apps while exposing a
 
 | Product | Use when |
 | --- | --- |
-| `libPhoneNumberSwift` | You are writing new Swift code and want a native-feeling facade. |
+| `libPhoneNumberSwiftCore` | You are writing Swift code and only need parsing, formatting, validation, and as-you-type formatting. |
+| `libPhoneNumberSwiftGeocoding` | You need the Swift facade plus offline geocoding. |
+| `libPhoneNumberSwiftShortNumber` | You need the Swift facade plus emergency and short-code support. |
+| `libPhoneNumberSwiftUI` | You need a SwiftUI phone-number input component. |
+| `libPhoneNumberSwift` | You want the backwards-compatible Swift umbrella facade with every Swift module. |
 | `libPhoneNumber` | You need the stable Objective-C core API. |
 | `libPhoneNumberGeocoding` | You need offline region descriptions for phone numbers. |
 | `libPhoneNumberShortNumber` | You need emergency and short-code support. |
@@ -23,7 +27,21 @@ The project keeps the Objective-C core stable for existing apps while exposing a
 
 Add this repository as a package dependency and select the products you need.
 
-For most Swift apps, choose:
+For most Swift apps, choose the smallest Swift facade product:
+
+```swift
+.product(name: "libPhoneNumberSwiftCore", package: "libPhoneNumber")
+```
+
+Add optional Swift facade products only when needed:
+
+```swift
+.product(name: "libPhoneNumberSwiftGeocoding", package: "libPhoneNumber")
+.product(name: "libPhoneNumberSwiftShortNumber", package: "libPhoneNumber")
+.product(name: "libPhoneNumberSwiftUI", package: "libPhoneNumber")
+```
+
+Existing apps can keep using the umbrella product:
 
 ```swift
 .product(name: "libPhoneNumberSwift", package: "libPhoneNumber")
@@ -42,20 +60,34 @@ Use the Objective-C-compatible products directly if you need lower-level access:
 For Objective-C-compatible core APIs:
 
 ```ruby
-pod 'libPhoneNumber-iOS', '~> 1.5'
+pod 'libPhoneNumber-iOS', '~> 1.6'
 ```
 
-For the Swift-first facade:
+For the Swift-first core facade:
 
 ```ruby
-pod 'libPhoneNumberSwift', '~> 1.5'
+pod 'libPhoneNumber-iOS-SwiftCore', '~> 1.6'
+```
+
+Optional Swift facade modules:
+
+```ruby
+pod 'libPhoneNumber-iOS-SwiftGeocoding', '~> 1.6'
+pod 'libPhoneNumber-iOS-SwiftShortNumber', '~> 1.6'
+pod 'libPhoneNumber-iOS-SwiftUI', '~> 1.6'
+```
+
+For the backwards-compatible Swift umbrella facade:
+
+```ruby
+pod 'libPhoneNumber-iOS-Swift', '~> 1.6'
 ```
 
 Optional modules:
 
 ```ruby
-pod 'libPhoneNumberGeocoding', '~> 1.5'
-pod 'libPhoneNumberShortNumber', '~> 1.5'
+pod 'libPhoneNumberGeocoding', '~> 1.6'
+pod 'libPhoneNumberShortNumber', '~> 1.6'
 ```
 
 ### Carthage
@@ -72,10 +104,10 @@ Add the source files from the modules you need and link `Contacts.framework` for
 
 ## Swift Quick Start
 
-Prefer `libPhoneNumberSwift` for new Swift code:
+Prefer `libPhoneNumberSwiftCore` for new Swift code that only needs parsing, formatting, validation, and as-you-type formatting:
 
 ```swift
-import libPhoneNumberSwift
+import libPhoneNumberSwiftCore
 
 let phoneUtil = PhoneNumberUtility.shared
 let phoneNumber = try phoneUtil.parse("01065431234", defaultRegion: "KR")
@@ -87,10 +119,21 @@ let numberType = phoneUtil.type(of: phoneNumber)
 
 The Swift facade delegates to the Objective-C implementation. Phone number parsing and validation logic should stay in the Objective-C core so upstream behavior remains centralized.
 
+For storage, concurrency boundaries, or API responses, use the immutable value wrapper:
+
+```swift
+let value = try phoneUtil.value(from: "01065431234", defaultRegion: "KR").get()
+
+value.e164
+value.regionCode
+value.nationalSignificantNumber
+value.type
+```
+
 ### As-You-Type Formatting
 
 ```swift
-import libPhoneNumberSwift
+import libPhoneNumberSwiftCore
 
 let formatter = AsYouTypeFormatter(regionCode: "US")
 
@@ -103,7 +146,8 @@ formatter.inputDigit("2") // "650-2"
 ### Short Numbers
 
 ```swift
-import libPhoneNumberSwift
+import libPhoneNumberSwiftCore
+import libPhoneNumberSwiftShortNumber
 
 let phoneUtil = PhoneNumberUtility.shared
 let shortUtil = ShortNumberUtility.shared
@@ -117,13 +161,40 @@ shortUtil.expectedCost(of: number, forRegion: "US")
 ### Geocoding
 
 ```swift
-import libPhoneNumberSwift
+import libPhoneNumberSwiftCore
+import libPhoneNumberSwiftGeocoding
 
 let phoneUtil = PhoneNumberUtility.shared
 let geocoder = PhoneNumberGeocoder.shared
 let number = try phoneUtil.parse("16502530000", defaultRegion: "US")
 
 let description = geocoder.description(for: number, languageCode: "en")
+```
+
+### SwiftUI Phone Input
+
+```swift
+import SwiftUI
+import libPhoneNumberSwiftUI
+
+struct PhoneForm: View {
+  @State private var phoneNumber = ""
+  @State private var e164: String?
+
+  var body: some View {
+    PhoneNumberTextField(
+      "Phone number",
+      text: $phoneNumber,
+      defaultRegion: "US",
+      onStateChange: { state in
+        e164 = state.e164
+      },
+      regionPicker: { region in
+        Text(region)
+      }
+    )
+  }
+}
 ```
 
 ## Objective-C Usage
@@ -187,7 +258,7 @@ For CocoaPods:
 #import "libPhoneNumber_iOS/NBPhoneNumber.h"
 ```
 
-New Swift code should prefer `libPhoneNumberSwift` unless it specifically needs Objective-C API details.
+New Swift code should prefer `libPhoneNumberSwiftCore` unless it specifically needs geocoding, short-number support, or Objective-C API details.
 
 ## Metadata And Upstream Parity
 
@@ -203,6 +274,7 @@ Phone number behavior is driven by Google's libphonenumber metadata. When metada
 Useful commands:
 
 ```bash
+swift scripts/checkMetadataFreshness.swift
 swift scripts/checkUpstreamTestParity.swift --upstream-ref <version-or-ref>
 swift scripts/checkUpstreamAPIParity.swift --upstream-ref <version-or-ref>
 swift test
@@ -213,6 +285,8 @@ swift build -c release
 For the full maintenance workflow, see:
 
 - [Upstream parity guide](docs/UPSTREAM_PARITY.md)
+- [Metadata patch policy](docs/METADATA_PATCH_POLICY.md)
+- [Package size options](docs/PACKAGE_SIZE_OPTIONS.md)
 - [Testing guide](docs/TESTING.md)
 
 ## Updating Metadata
@@ -246,6 +320,16 @@ swift scripts/updateGeocodingMetadata.swift --source /tmp/libphonenumber --outpu
 
 Use `--output` to inspect generated databases before replacing the checked-in bundle. Use `--source` when you already have a local Google libphonenumber checkout or an extracted `resources/geocoding` directory.
 
+### Freshness Check
+
+Generate a current-vs-upstream metadata freshness summary and issue/PR text candidates:
+
+```bash
+swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness
+```
+
+The script writes review artifacts only. It does not modify checked-in metadata.
+
 ## Validation
 
 Before merging behavior, metadata, packaging, or API changes, run the relevant checks from [docs/TESTING.md](docs/TESTING.md).
@@ -263,7 +347,11 @@ git diff --check
 For Swift facade changes:
 
 ```bash
-pod lib lint libPhoneNumberSwift.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'
 ```
 
 For Xcode schemes:

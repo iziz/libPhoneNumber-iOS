@@ -32,7 +32,8 @@ This is convenient for users who want one import, but it makes every Swift facad
 | `libPhoneNumberSwiftCore` | `libPhoneNumber` | `PhoneNumber`, `PhoneNumberUtility`, `AsYouTypeFormatter`, Swift enums/errors |
 | `libPhoneNumberSwiftGeocoding` | `libPhoneNumberSwiftCore`, `libPhoneNumberGeocoding` | `PhoneNumberGeocoder` |
 | `libPhoneNumberSwiftShortNumber` | `libPhoneNumberSwiftCore`, `libPhoneNumberShortNumber` | `ShortNumberUtility`, short-number cost/type wrappers |
-| `libPhoneNumberSwift` | all Swift facade modules | Backwards-compatible umbrella import |
+| `libPhoneNumberSwiftUI` | `libPhoneNumberSwiftCore`, `SwiftUI` | `PhoneNumberTextField`, `PhoneNumberFieldStyle`, validation state |
+| `libPhoneNumberSwift` | core, geocoding, short-number facade modules | Backwards-compatible umbrella import |
 
 The umbrella module should contain little or no behavior. Its purpose is compatibility and convenience.
 
@@ -40,20 +41,21 @@ The umbrella module should contain little or no behavior. Its purpose is compati
 
 Prefer explicit podspecs or subspecs that mirror the Swift Package products:
 
-- `libPhoneNumberSwiftCore`
-- `libPhoneNumberSwiftGeocoding`
-- `libPhoneNumberSwiftShortNumber`
-- `libPhoneNumberSwift` as an umbrella pod
+- `libPhoneNumber-iOS-SwiftCore`
+- `libPhoneNumber-iOS-SwiftGeocoding`
+- `libPhoneNumber-iOS-SwiftShortNumber`
+- `libPhoneNumber-iOS-SwiftUI`
+- `libPhoneNumber-iOS-Swift` as an umbrella pod
 
-The umbrella pod should remain available and continue to depend on all Swift facade modules. New README examples should eventually recommend `libPhoneNumberSwiftCore` for parse/format-only apps.
+The umbrella pod should remain available and continue to depend on the non-UI Swift facade modules. SwiftUI remains opt-in because it is UI-specific and its view APIs require newer SwiftUI runtime availability. New README examples should recommend `libPhoneNumber-iOS-SwiftCore` for parse/format-only apps.
 
 ## Migration Plan
 
-1. Document the split and keep the current product unchanged.
-2. Move Swift facade files into feature-aligned directories without changing public symbols.
-3. Add SPM targets/products for core, geocoding, short-number, and umbrella modules.
-4. Add matching CocoaPods packaging and lint checks.
-5. Update README examples to recommend the smallest product for each workflow.
+1. Document the split and keep the current product unchanged. Done.
+2. Move Swift facade files into feature-aligned directories without changing public symbols. Done.
+3. Add SPM targets/products for core, geocoding, short-number, and umbrella modules. Done.
+4. Add matching CocoaPods packaging and lint checks. Done.
+5. Update README examples to recommend the smallest product for each workflow. Done.
 6. Keep the umbrella product until at least one minor release after the split.
 
 ## Acceptance Criteria

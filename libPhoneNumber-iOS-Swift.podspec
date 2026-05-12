@@ -1,8 +1,9 @@
 Pod::Spec.new do |s|
-  s.name         = "libPhoneNumberSwift"
-  s.version      = "1.5.0"
-  s.summary      = "Swift-first facade for libPhoneNumber-iOS"
-  s.description  = "Swift-first facade over the stable Objective-C libPhoneNumber-iOS core."
+  s.name         = "libPhoneNumber-iOS-Swift"
+  s.module_name  = "libPhoneNumberSwift"
+  s.version      = "1.6.0"
+  s.summary      = "Swift-first umbrella facade for libPhoneNumber-iOS"
+  s.description  = "Swift-first umbrella facade over the stable Objective-C libPhoneNumber-iOS core and optional geocoding and short-number modules."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
   s.license      = 'Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)'
   s.authors      = {
@@ -24,9 +25,9 @@ Pod::Spec.new do |s|
   s.swift_version = "5.5"
   s.requires_arc = true
 
-  s.dependency 'libPhoneNumber-iOS', '~> 1.5.0'
-  s.dependency 'libPhoneNumberGeocoding', '~> 1.5.0'
-  s.dependency 'libPhoneNumberShortNumber', '~> 1.5.0'
+  s.dependency 'libPhoneNumber-iOS-SwiftCore', '~> 1.6.0'
+  s.dependency 'libPhoneNumber-iOS-SwiftGeocoding', '~> 1.6.0'
+  s.dependency 'libPhoneNumber-iOS-SwiftShortNumber', '~> 1.6.0'
 
   s.source_files = [
                     'libPhoneNumberSwift/**/*.swift',
