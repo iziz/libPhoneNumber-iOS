@@ -42,20 +42,20 @@ Use the Objective-C-compatible products directly if you need lower-level access:
 For Objective-C-compatible core APIs:
 
 ```ruby
-pod 'libPhoneNumber-iOS', '~> 1.4'
+pod 'libPhoneNumber-iOS', '~> 1.5'
 ```
 
 For the Swift-first facade:
 
 ```ruby
-pod 'libPhoneNumberSwift', '~> 1.4'
+pod 'libPhoneNumberSwift', '~> 1.5'
 ```
 
 Optional modules:
 
 ```ruby
-pod 'libPhoneNumberGeocoding', '~> 1.4'
-pod 'libPhoneNumberShortNumber', '~> 1.4'
+pod 'libPhoneNumberGeocoding', '~> 1.5'
+pod 'libPhoneNumberShortNumber', '~> 1.5'
 ```
 
 ### Carthage
