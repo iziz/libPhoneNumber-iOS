@@ -56,10 +56,15 @@ let expectedPodspecFiles = [
   "libPhoneNumber-iOS.podspec",
   "libPhoneNumberGeocoding.podspec",
   "libPhoneNumberShortNumber.podspec",
+  "libPhoneNumberCarrier.podspec",
+  "libPhoneNumberTimeZones.podspec",
   "libPhoneNumber-iOS-SwiftCore.podspec",
   "libPhoneNumber-iOS-SwiftGeocoding.podspec",
   "libPhoneNumber-iOS-SwiftShortNumber.podspec",
+  "libPhoneNumber-iOS-SwiftCarrier.podspec",
+  "libPhoneNumber-iOS-SwiftTimeZones.podspec",
   "libPhoneNumber-iOS-SwiftUI.podspec",
+  "libPhoneNumber-iOS-SwiftUIEnrichment.podspec",
   "libPhoneNumber-iOS-Swift.podspec",
 ]
 
@@ -67,16 +72,23 @@ let expectedPackageProducts = [
   "libPhoneNumber": "libPhoneNumber",
   "libPhoneNumberGeocoding": "libPhoneNumberGeocoding",
   "libPhoneNumberShortNumber": "libPhoneNumberShortNumber",
+  "libPhoneNumberCarrier": "libPhoneNumberCarrier",
+  "libPhoneNumberTimeZones": "libPhoneNumberTimeZones",
   "libPhoneNumberSwiftCore": "libPhoneNumberSwiftCore",
   "libPhoneNumberSwiftGeocoding": "libPhoneNumberSwiftGeocoding",
   "libPhoneNumberSwiftShortNumber": "libPhoneNumberSwiftShortNumber",
+  "libPhoneNumberSwiftCarrier": "libPhoneNumberSwiftCarrier",
+  "libPhoneNumberSwiftTimeZones": "libPhoneNumberSwiftTimeZones",
   "libPhoneNumberSwiftUI": "libPhoneNumberSwiftUI",
+  "libPhoneNumberSwiftUIEnrichment": "libPhoneNumberSwiftUIEnrichment",
   "libPhoneNumberIOSSwift": "libPhoneNumberIOSSwift",
 ]
 
 let expectedInternalDependencies = [
   "libPhoneNumberGeocoding": ["libPhoneNumber-iOS"],
   "libPhoneNumberShortNumber": ["libPhoneNumber-iOS"],
+  "libPhoneNumberCarrier": ["libPhoneNumber-iOS"],
+  "libPhoneNumberTimeZones": ["libPhoneNumber-iOS"],
   "libPhoneNumber-iOS-Swift": [
     "libPhoneNumber-iOS-SwiftCore",
     "libPhoneNumber-iOS-SwiftGeocoding",
@@ -91,7 +103,20 @@ let expectedInternalDependencies = [
     "libPhoneNumber-iOS-SwiftCore",
     "libPhoneNumberShortNumber",
   ],
+  "libPhoneNumber-iOS-SwiftCarrier": [
+    "libPhoneNumber-iOS-SwiftCore",
+    "libPhoneNumberCarrier",
+  ],
+  "libPhoneNumber-iOS-SwiftTimeZones": [
+    "libPhoneNumber-iOS-SwiftCore",
+    "libPhoneNumberTimeZones",
+  ],
   "libPhoneNumber-iOS-SwiftUI": ["libPhoneNumber-iOS-SwiftCore"],
+  "libPhoneNumber-iOS-SwiftUIEnrichment": [
+    "libPhoneNumber-iOS-SwiftUI",
+    "libPhoneNumber-iOS-SwiftCarrier",
+    "libPhoneNumber-iOS-SwiftTimeZones",
+  ],
 ]
 
 let repoRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)

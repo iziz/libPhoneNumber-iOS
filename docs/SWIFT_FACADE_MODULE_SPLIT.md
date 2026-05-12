@@ -4,13 +4,15 @@ This document defines the target direction for a Swift-first facade while keepin
 
 ## Current State
 
-`libPhoneNumberIOSSwift` is a single Swift facade target. It depends on:
+The Swift facade is split into feature-aligned targets. `libPhoneNumberIOSSwift` remains as a non-UI umbrella target and depends on:
 
 - `libPhoneNumber`
 - `libPhoneNumberGeocoding`
 - `libPhoneNumberShortNumber`
 
 This is convenient for users who want one import, but it makes every Swift facade consumer link optional geocoding and short-number features even when they only need parsing, formatting, and validation.
+
+Carrier, timezone, and SwiftUI enrichment modules are separate opt-in products and are not part of the umbrella module.
 
 ## Goals
 
@@ -32,7 +34,10 @@ This is convenient for users who want one import, but it makes every Swift facad
 | `libPhoneNumberSwiftCore` | `libPhoneNumber` | `PhoneNumber`, `PhoneNumberUtility`, `AsYouTypeFormatter`, Swift enums/errors |
 | `libPhoneNumberSwiftGeocoding` | `libPhoneNumberSwiftCore`, `libPhoneNumberGeocoding` | `PhoneNumberGeocoder` |
 | `libPhoneNumberSwiftShortNumber` | `libPhoneNumberSwiftCore`, `libPhoneNumberShortNumber` | `ShortNumberUtility`, short-number cost/type wrappers |
+| `libPhoneNumberSwiftCarrier` | `libPhoneNumberSwiftCore`, `libPhoneNumberCarrier` | `PhoneNumberCarrierMapper` |
+| `libPhoneNumberSwiftTimeZones` | `libPhoneNumberSwiftCore`, `libPhoneNumberTimeZones` | `PhoneNumberTimeZonesMapper` |
 | `libPhoneNumberSwiftUI` | `libPhoneNumberSwiftCore`, `SwiftUI` | `PhoneNumberTextField`, `PhoneNumberFieldStyle`, validation state |
+| `libPhoneNumberSwiftUIEnrichment` | `libPhoneNumberSwiftUI`, `libPhoneNumberSwiftCarrier`, `libPhoneNumberSwiftTimeZones` | `CarrierTimeZonesPhoneNumberEnricher` |
 | `libPhoneNumberIOSSwift` | core, geocoding, short-number facade modules | Umbrella import |
 
 The umbrella module should contain little or no behavior. Its purpose is compatibility and convenience.
@@ -44,10 +49,13 @@ Prefer explicit podspecs or subspecs that mirror the Swift Package products:
 - `libPhoneNumber-iOS-SwiftCore`
 - `libPhoneNumber-iOS-SwiftGeocoding`
 - `libPhoneNumber-iOS-SwiftShortNumber`
+- `libPhoneNumber-iOS-SwiftCarrier`
+- `libPhoneNumber-iOS-SwiftTimeZones`
 - `libPhoneNumber-iOS-SwiftUI`
+- `libPhoneNumber-iOS-SwiftUIEnrichment`
 - `libPhoneNumber-iOS-Swift` as an umbrella pod
 
-The umbrella pod should remain available and continue to depend on the non-UI Swift facade modules. SwiftUI remains opt-in because it is UI-specific and its view APIs require newer SwiftUI runtime availability. New README examples should recommend `libPhoneNumber-iOS-SwiftCore` for parse/format-only apps.
+The umbrella pod should remain available and continue to depend on the core, geocoding, and short-number Swift facade modules. Carrier, timezone, and SwiftUI remain opt-in because they add metadata or UI-specific dependencies. New README examples should recommend `libPhoneNumber-iOS-SwiftCore` for parse/format-only apps.
 
 ## Migration Plan
 
@@ -71,4 +79,4 @@ The umbrella pod should remain available and continue to depend on the non-UI Sw
 - Run `swift scripts/checkVersionConsistency.swift` after adding products or podspecs.
 - Run `swift test` and `LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test`.
 - Run `pod lib lint` for all Swift facade podspecs.
-- Inspect the package graph to confirm `libPhoneNumberSwiftCore` does not depend on geocoding or short-number targets.
+- Inspect the package graph to confirm `libPhoneNumberSwiftCore` does not depend on geocoding, short-number, carrier, timezone, or SwiftUI targets.

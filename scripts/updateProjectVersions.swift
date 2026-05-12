@@ -213,9 +213,14 @@ func updateREADME(at url: URL, toVersion version: Version) -> Bool {
     "libPhoneNumber-iOS-SwiftCore",
     "libPhoneNumber-iOS-SwiftGeocoding",
     "libPhoneNumber-iOS-SwiftShortNumber",
+    "libPhoneNumber-iOS-SwiftCarrier",
+    "libPhoneNumber-iOS-SwiftTimeZones",
     "libPhoneNumber-iOS-SwiftUI",
+    "libPhoneNumber-iOS-SwiftUIEnrichment",
     "libPhoneNumberGeocoding",
     "libPhoneNumberShortNumber",
+    "libPhoneNumberCarrier",
+    "libPhoneNumberTimeZones",
   ].joined(separator: "|")
 
   let updated = replacingMatches(

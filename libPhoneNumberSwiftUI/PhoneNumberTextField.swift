@@ -10,6 +10,7 @@ public struct PhoneNumberFieldState: Equatable {
     public let regionCode: String?
     public let type: PhoneNumberType
     public let validationResult: ValidationResult?
+    public let enrichment: PhoneNumberEnrichment?
     public let isPossible: Bool
     public let isValid: Bool
     public let error: Error?
@@ -20,10 +21,25 @@ public struct PhoneNumberFieldState: Equatable {
         lhs.regionCode == rhs.regionCode &&
         lhs.type == rhs.type &&
         lhs.validationResult == rhs.validationResult &&
+        lhs.enrichment == rhs.enrichment &&
         lhs.isPossible == rhs.isPossible &&
         lhs.isValid == rhs.isValid &&
         String(describing: lhs.error) == String(describing: rhs.error)
     }
+}
+
+public struct PhoneNumberEnrichment: Equatable, Sendable {
+    public let carrierName: String?
+    public let timeZones: [String]
+
+    public init(carrierName: String?, timeZones: [String]) {
+        self.carrierName = carrierName
+        self.timeZones = timeZones
+    }
+}
+
+public protocol PhoneNumberEnriching {
+    func enrichment(for number: PhoneNumber, regionCode: String?) -> PhoneNumberEnrichment
 }
 
 public struct PhoneNumberFieldStyle {
@@ -58,9 +74,14 @@ public struct PhoneNumberFieldStyle {
 
 public struct PhoneNumberFieldFormatter {
     private let utility: PhoneNumberUtility
+    private let enricher: PhoneNumberEnriching?
 
-    public init(utility: PhoneNumberUtility = .shared) {
+    public init(
+        utility: PhoneNumberUtility = .shared,
+        enricher: PhoneNumberEnriching? = nil
+    ) {
         self.utility = utility
+        self.enricher = enricher
     }
 
     public func formattedText(for text: String, defaultRegion: String) -> String {
@@ -77,12 +98,14 @@ public struct PhoneNumberFieldFormatter {
             let number = try utility.parse(text, defaultRegion: defaultRegion)
             let e164 = try? utility.format(number, as: .e164)
             let validationResult = try? utility.possibleNumberReason(number)
+            let regionCode = utility.regionCode(for: number)
             return PhoneNumberFieldState(
                 text: text,
                 e164: e164,
-                regionCode: utility.regionCode(for: number),
+                regionCode: regionCode,
                 type: utility.type(of: number),
                 validationResult: validationResult,
+                enrichment: enricher?.enrichment(for: number, regionCode: regionCode),
                 isPossible: utility.isPossibleNumber(number),
                 isValid: utility.isValidNumber(number),
                 error: nil
@@ -94,6 +117,7 @@ public struct PhoneNumberFieldFormatter {
                 regionCode: nil,
                 type: .unknown,
                 validationResult: nil,
+                enrichment: nil,
                 isPossible: false,
                 isValid: false,
                 error: error

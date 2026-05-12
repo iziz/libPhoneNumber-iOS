@@ -30,7 +30,10 @@ Add optional modules only when needed:
 ```swift
 .product(name: "libPhoneNumberSwiftGeocoding", package: "libPhoneNumber")
 .product(name: "libPhoneNumberSwiftShortNumber", package: "libPhoneNumber")
+.product(name: "libPhoneNumberSwiftCarrier", package: "libPhoneNumber")
+.product(name: "libPhoneNumberSwiftTimeZones", package: "libPhoneNumber")
 .product(name: "libPhoneNumberSwiftUI", package: "libPhoneNumber")
+.product(name: "libPhoneNumberSwiftUIEnrichment", package: "libPhoneNumber")
 ```
 
 Use the umbrella product when you want one non-UI import for core, geocoding, and short-number facades:
@@ -64,11 +67,16 @@ import libPhoneNumberIOSSwift
 | `libPhoneNumberSwiftCore` | SPM, CocoaPods | You need Swift parsing, formatting, validation, and as-you-type formatting. |
 | `libPhoneNumberSwiftGeocoding` | SPM, CocoaPods | You need Swift offline geocoding on top of the core facade. |
 | `libPhoneNumberSwiftShortNumber` | SPM, CocoaPods | You need Swift emergency-number and short-code support. |
+| `libPhoneNumberSwiftCarrier` | SPM, CocoaPods | You need Swift carrier prefix lookup. |
+| `libPhoneNumberSwiftTimeZones` | SPM, CocoaPods | You need Swift timezone prefix lookup. |
 | `libPhoneNumberSwiftUI` | SPM, CocoaPods | You need a SwiftUI phone-number input component. |
+| `libPhoneNumberSwiftUIEnrichment` | SPM, CocoaPods | You want carrier/timezone metadata connected to SwiftUI field state. |
 | `libPhoneNumberIOSSwift` | SPM, CocoaPods umbrella module | You want one non-UI Swift import for core, geocoding, and short-number facades. |
 | `libPhoneNumber` | SPM, CocoaPods, Carthage, manual | You need the stable Objective-C core API. |
 | `libPhoneNumberGeocoding` | SPM, CocoaPods | You need Objective-C offline geocoding APIs. |
 | `libPhoneNumberShortNumber` | SPM, CocoaPods | You need Objective-C emergency-number and short-code APIs. |
+| `libPhoneNumberCarrier` | SPM, CocoaPods | You need Objective-C carrier prefix lookup APIs. |
+| `libPhoneNumberTimeZones` | SPM, CocoaPods | You need Objective-C timezone prefix lookup APIs. |
 
 The SwiftUI module is intentionally separate from the umbrella module because it is UI-specific and requires SwiftUI runtime availability.
 
@@ -88,7 +96,10 @@ Select only the products your app needs:
 .product(name: "libPhoneNumberSwiftCore", package: "libPhoneNumber")
 .product(name: "libPhoneNumberSwiftGeocoding", package: "libPhoneNumber")
 .product(name: "libPhoneNumberSwiftShortNumber", package: "libPhoneNumber")
+.product(name: "libPhoneNumberSwiftCarrier", package: "libPhoneNumber")
+.product(name: "libPhoneNumberSwiftTimeZones", package: "libPhoneNumber")
 .product(name: "libPhoneNumberSwiftUI", package: "libPhoneNumber")
+.product(name: "libPhoneNumberSwiftUIEnrichment", package: "libPhoneNumber")
 .product(name: "libPhoneNumberIOSSwift", package: "libPhoneNumber")
 ```
 
@@ -98,6 +109,8 @@ Objective-C-compatible products are also available:
 .product(name: "libPhoneNumber", package: "libPhoneNumber")
 .product(name: "libPhoneNumberGeocoding", package: "libPhoneNumber")
 .product(name: "libPhoneNumberShortNumber", package: "libPhoneNumber")
+.product(name: "libPhoneNumberCarrier", package: "libPhoneNumber")
+.product(name: "libPhoneNumberTimeZones", package: "libPhoneNumber")
 ```
 
 ### CocoaPods
@@ -114,7 +127,10 @@ Swift facade modules:
 pod 'libPhoneNumber-iOS-SwiftCore', '~> 1.6'
 pod 'libPhoneNumber-iOS-SwiftGeocoding', '~> 1.6'
 pod 'libPhoneNumber-iOS-SwiftShortNumber', '~> 1.6'
+pod 'libPhoneNumber-iOS-SwiftCarrier', '~> 1.6'
+pod 'libPhoneNumber-iOS-SwiftTimeZones', '~> 1.6'
 pod 'libPhoneNumber-iOS-SwiftUI', '~> 1.6'
+pod 'libPhoneNumber-iOS-SwiftUIEnrichment', '~> 1.6'
 ```
 
 Swift umbrella facade:
@@ -128,6 +144,8 @@ Objective-C optional modules:
 ```ruby
 pod 'libPhoneNumberGeocoding', '~> 1.6'
 pod 'libPhoneNumberShortNumber', '~> 1.6'
+pod 'libPhoneNumberCarrier', '~> 1.6'
+pod 'libPhoneNumberTimeZones', '~> 1.6'
 ```
 
 ### Carthage
@@ -211,6 +229,32 @@ let number = try phoneUtil.parse("16502530000", defaultRegion: "US")
 let description = geocoder.description(for: number, languageCode: "en")
 ```
 
+### Carrier
+
+```swift
+import libPhoneNumberSwiftCore
+import libPhoneNumberSwiftCarrier
+
+let phoneUtil = PhoneNumberUtility.shared
+let mapper = PhoneNumberCarrierMapper.shared
+let number = try phoneUtil.parse("+244917654321", defaultRegion: "AO")
+
+let carrier = mapper.safeDisplayName(for: number, localeCode: "en")
+```
+
+### Timezones
+
+```swift
+import libPhoneNumberSwiftCore
+import libPhoneNumberSwiftTimeZones
+
+let phoneUtil = PhoneNumberUtility.shared
+let mapper = PhoneNumberTimeZonesMapper.shared
+let number = try phoneUtil.parse("16502530000", defaultRegion: "US")
+
+let timeZones = mapper.timeZones(for: number)
+```
+
 ### SwiftUI Phone Input
 
 ```swift
@@ -231,6 +275,37 @@ struct PhoneForm: View {
       },
       regionPicker: { region in
         Text(region)
+      }
+    )
+  }
+}
+```
+
+### SwiftUI Carrier And Timezone Enrichment
+
+```swift
+import SwiftUI
+import libPhoneNumberSwiftUI
+import libPhoneNumberSwiftUIEnrichment
+
+struct EnrichedPhoneForm: View {
+  @State private var phoneNumber = ""
+  @State private var carrierName: String?
+  @State private var timeZones: [String] = []
+
+  private let formatter = PhoneNumberFieldFormatter(
+    enricher: CarrierTimeZonesPhoneNumberEnricher(localeCode: "en")
+  )
+
+  var body: some View {
+    PhoneNumberTextField(
+      "Phone number",
+      text: $phoneNumber,
+      defaultRegion: "AO",
+      formatter: formatter,
+      onStateChange: { state in
+        carrierName = state.enrichment?.carrierName
+        timeZones = state.enrichment?.timeZones ?? []
       }
     )
   }

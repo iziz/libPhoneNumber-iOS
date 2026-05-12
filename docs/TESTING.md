@@ -137,7 +137,10 @@ For Swift facade changes:
 - `pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'`
 - `pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'`
 - `pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftCarrier.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'`
 - `pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftUIEnrichment.podspec --allow-warnings --include-podspecs='*.podspec'`
 - `pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'`
 - Confirm the facade remains a thin wrapper over the Objective-C core instead of duplicating phone-number logic.
 - See `docs/SWIFT_FACADE_MODULE_SPLIT.md` before changing module boundaries.
@@ -148,10 +151,15 @@ For packaging changes:
 - `pod lib lint libPhoneNumber-iOS.podspec --allow-warnings`
 - `pod lib lint libPhoneNumberGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'`
 - `pod lib lint libPhoneNumberShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumberCarrier.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumberTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'`
 - `pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'`
 - `pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'`
 - `pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftCarrier.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'`
 - `pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `pod lib lint libPhoneNumber-iOS-SwiftUIEnrichment.podspec --allow-warnings --include-podspecs='*.podspec'`
 - `pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'`
 
 ## Locale-Sensitive Tests

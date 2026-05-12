@@ -28,13 +28,15 @@ Result: all files were unchanged. No required ObjC logic port or new upstream JS
 
 Upstream Java had a `PhoneNumberUtil.formatInOriginalFormat` refactor between `v9.0.25` and `v9.0.30`, but the JavaScript implementation remained unchanged. This project tracks Google JavaScript parity, so no immediate ObjC change was applied for that Java-only diff.
 
-Carrier and timezone data changed upstream, but this project does not currently package carrier mapper or timezone metadata.
+Carrier and timezone data changed upstream and are now packaged as opt-in modules after this baseline.
 
 ### Commands
 
 ```bash
 swift scripts/metadataGenerator.swift v9.0.30 --pretty
 swift scripts/updateGeocodingMetadata.swift v9.0.30 --replace-bundle
+swift scripts/updateCarrierMetadata.swift v9.0.30 --replace-bundle --output .build/carrier-metadata/v9.0.30
+swift scripts/updateTimeZonesMetadata.swift v9.0.30 --replace-bundle --output .build/timezone-metadata/v9.0.30
 
 swift scripts/checkUpstreamTestParity.swift --upstream-ref v9.0.30
 swift scripts/checkUpstreamAPIParity.swift --upstream-ref v9.0.30
@@ -47,10 +49,15 @@ git diff --check
 pod lib lint libPhoneNumber-iOS.podspec --allow-warnings
 pod lib lint libPhoneNumberGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
 pod lib lint libPhoneNumberShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumberCarrier.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumberTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'
 pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'
 pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
 pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftCarrier.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'
 pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftUIEnrichment.podspec --allow-warnings --include-podspecs='*.podspec'
 pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'
 ```
 
@@ -65,6 +72,8 @@ pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspec
 - Whitespace check: passed.
 - CocoaPods lint: all podspecs available at release time passed validation.
 - Geocoding database sanity check: 34 databases, `en.db` has 151 geocoding tables, `kk.db` has 1 geocoding table.
+- Carrier metadata sanity check: 31,001 prefix rows, 107 mobile portable regions, packed database about 2.0 MB.
+- Timezone metadata sanity check: 3,294 prefix rows, packed database about 232 KB.
 
 ### Notes
 

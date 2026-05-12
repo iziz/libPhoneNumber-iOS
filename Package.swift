@@ -25,6 +25,14 @@ let package = Package(
             targets: ["libPhoneNumberShortNumber"]
         ),
         .library(
+            name: "libPhoneNumberCarrier",
+            targets: ["libPhoneNumberCarrier"]
+        ),
+        .library(
+            name: "libPhoneNumberTimeZones",
+            targets: ["libPhoneNumberTimeZones"]
+        ),
+        .library(
             name: "libPhoneNumberSwiftCore",
             targets: ["libPhoneNumberSwiftCore"]
         ),
@@ -37,8 +45,20 @@ let package = Package(
             targets: ["libPhoneNumberSwiftShortNumber"]
         ),
         .library(
+            name: "libPhoneNumberSwiftCarrier",
+            targets: ["libPhoneNumberSwiftCarrier"]
+        ),
+        .library(
+            name: "libPhoneNumberSwiftTimeZones",
+            targets: ["libPhoneNumberSwiftTimeZones"]
+        ),
+        .library(
             name: "libPhoneNumberSwiftUI",
             targets: ["libPhoneNumberSwiftUI"]
+        ),
+        .library(
+            name: "libPhoneNumberSwiftUIEnrichment",
+            targets: ["libPhoneNumberSwiftUIEnrichment"]
         ),
         .library(
             name: "libPhoneNumberIOSSwift",
@@ -144,6 +164,60 @@ let package = Package(
             path: "libPhoneNumberShortNumberTests"
         ),
         .target(
+            name: "libPhoneNumberCarrierMetaData",
+            path: "libPhoneNumberCarrierMetaData",
+            resources: [
+                .copy("CarrierMetaData.bundle")
+            ],
+            publicHeadersPath: "."
+        ),
+        .target(
+            name: "libPhoneNumberCarrier",
+            dependencies: [
+                "libPhoneNumber",
+                "libPhoneNumberCarrierMetaData",
+            ],
+            path: "libPhoneNumberCarrier",
+            exclude: [
+                "Info.plist",
+            ],
+            publicHeadersPath: "."
+        ),
+        .testTarget(
+            name: "libPhoneNumberCarrierTests",
+            dependencies: [
+                "libPhoneNumberCarrier",
+            ],
+            path: "libPhoneNumberCarrierTests"
+        ),
+        .target(
+            name: "libPhoneNumberTimeZonesMetaData",
+            path: "libPhoneNumberTimeZonesMetaData",
+            resources: [
+                .copy("TimeZonesMetaData.bundle")
+            ],
+            publicHeadersPath: "."
+        ),
+        .target(
+            name: "libPhoneNumberTimeZones",
+            dependencies: [
+                "libPhoneNumber",
+                "libPhoneNumberTimeZonesMetaData",
+            ],
+            path: "libPhoneNumberTimeZones",
+            exclude: [
+                "Info.plist",
+            ],
+            publicHeadersPath: "."
+        ),
+        .testTarget(
+            name: "libPhoneNumberTimeZonesTests",
+            dependencies: [
+                "libPhoneNumberTimeZones",
+            ],
+            path: "libPhoneNumberTimeZonesTests"
+        ),
+        .target(
             name: "libPhoneNumberSwiftCore",
             dependencies: [
                 "libPhoneNumber",
@@ -167,6 +241,22 @@ let package = Package(
             path: "libPhoneNumberSwiftShortNumber"
         ),
         .target(
+            name: "libPhoneNumberSwiftCarrier",
+            dependencies: [
+                "libPhoneNumberSwiftCore",
+                "libPhoneNumberCarrier",
+            ],
+            path: "libPhoneNumberSwiftCarrier"
+        ),
+        .target(
+            name: "libPhoneNumberSwiftTimeZones",
+            dependencies: [
+                "libPhoneNumberSwiftCore",
+                "libPhoneNumberTimeZones",
+            ],
+            path: "libPhoneNumberSwiftTimeZones"
+        ),
+        .target(
             name: "libPhoneNumberIOSSwift",
             dependencies: [
                 "libPhoneNumberSwiftCore",
@@ -181,6 +271,15 @@ let package = Package(
                 "libPhoneNumberSwiftCore",
             ],
             path: "libPhoneNumberSwiftUI"
+        ),
+        .target(
+            name: "libPhoneNumberSwiftUIEnrichment",
+            dependencies: [
+                "libPhoneNumberSwiftUI",
+                "libPhoneNumberSwiftCarrier",
+                "libPhoneNumberSwiftTimeZones",
+            ],
+            path: "libPhoneNumberSwiftUIEnrichment"
         ),
         .testTarget(
             name: "libPhoneNumberSwiftCoreTests",
@@ -206,6 +305,22 @@ let package = Package(
             path: "libPhoneNumberSwiftShortNumberTests"
         ),
         .testTarget(
+            name: "libPhoneNumberSwiftCarrierTests",
+            dependencies: [
+                "libPhoneNumberSwiftCore",
+                "libPhoneNumberSwiftCarrier",
+            ],
+            path: "libPhoneNumberSwiftCarrierTests"
+        ),
+        .testTarget(
+            name: "libPhoneNumberSwiftTimeZonesTests",
+            dependencies: [
+                "libPhoneNumberSwiftCore",
+                "libPhoneNumberSwiftTimeZones",
+            ],
+            path: "libPhoneNumberSwiftTimeZonesTests"
+        ),
+        .testTarget(
             name: "libPhoneNumberIOSSwiftTests",
             dependencies: [
                 "libPhoneNumberIOSSwift",
@@ -215,9 +330,17 @@ let package = Package(
         .testTarget(
             name: "libPhoneNumberSwiftUITests",
             dependencies: [
+                "libPhoneNumberSwiftCore",
                 "libPhoneNumberSwiftUI",
             ],
             path: "libPhoneNumberSwiftUITests"
+        ),
+        .testTarget(
+            name: "libPhoneNumberSwiftUIEnrichmentTests",
+            dependencies: [
+                "libPhoneNumberSwiftUIEnrichment",
+            ],
+            path: "libPhoneNumberSwiftUIEnrichmentTests"
         ),
     ]
 )
