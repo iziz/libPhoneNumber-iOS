@@ -98,6 +98,7 @@ For metadata updates:
 - `swift scripts/checkUpstreamAPIParity.swift --upstream-ref <metadata-ref>`
 - `swift scripts/updateGeocodingMetadata.swift <metadata-ref> --output /tmp/geocoding-review` if geocoding metadata changed upstream.
 - `scripts/testGeocodingMetadataUpdater.sh` if the geocoding updater changed.
+- Update `docs/METADATA_UPDATE_LOG.md` with the upstream comparison and validation results.
 - `swift test`
 - `LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test`
 - `swift build -c release`

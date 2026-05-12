@@ -145,6 +145,7 @@ After updating metadata:
 2. Run the upstream test and API parity checks against the same upstream ref used for metadata.
 3. Run the full test matrix in `docs/TESTING.md`.
 4. If upstream tests changed, port the new or renamed tests before merging.
+5. Record the upstream comparison and validation results in `docs/METADATA_UPDATE_LOG.md`.
 
 Geocoding metadata is maintained through the command-line updater:
 
@@ -159,6 +160,7 @@ Use `--output <dir>` to inspect generated databases before replacing the checked
 Every PR that updates metadata or upstream-synced behavior should include:
 
 - The Google libphonenumber ref used.
+- The `docs/METADATA_UPDATE_LOG.md` entry added or updated for the change.
 - The test parity and API parity commands and results.
 - The test commands and result.
 - Any intentional ObjC/API naming differences.
