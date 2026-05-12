@@ -94,6 +94,7 @@ For a small implementation or test-only change:
 
 For metadata updates:
 
+- Use a patch version for metadata-only releases. Use a minor version only when the change also adds public API, new modules, or additive behavior beyond metadata freshness.
 - `swift scripts/checkMetadataFreshness.swift --current-ref <metadata-ref> --output .build/metadata-freshness`
 - `swift scripts/checkUpstreamTestParity.swift --upstream-ref <metadata-ref>`
 - `swift scripts/checkUpstreamAPIParity.swift --upstream-ref <metadata-ref>`

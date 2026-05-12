@@ -462,8 +462,8 @@ xcodebuild test -scheme libPhoneNumberShortNumber -destination 'platform=iOS Sim
 ## Release Checklist
 
 1. Decide the next version:
-   - Patch for bug fixes.
-   - Minor for metadata updates or additive functionality.
+   - Patch for bug fixes or metadata-only updates.
+   - Minor for additive functionality or public API additions.
    - Major for breaking changes.
 2. Update project versions:
    ```bash

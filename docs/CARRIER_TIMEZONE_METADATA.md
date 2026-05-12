@@ -63,7 +63,7 @@ Do not add these modules to `libPhoneNumberSwiftCore` or the default SwiftUI mod
 | `libPhoneNumber-iOS-SwiftTimeZones` | `libPhoneNumberSwiftTimeZones` |
 | `libPhoneNumber-iOS-SwiftUIEnrichment` | `libPhoneNumberSwiftUIEnrichment` |
 
-Use a minor version release for the first shipped carrier/timezone modules.
+The first shipped carrier/timezone modules used a minor release because they added public modules. Later carrier/timezone metadata-only refreshes should use patch releases.
 
 ## Metadata Format
 

@@ -2,6 +2,8 @@
 
 This file records upstream comparison results for metadata updates. Keep entries concise, command-based, and reviewable so future updates do not need to rediscover the same baseline.
 
+Metadata-only updates should ship as patch releases. Use a minor release only when the update also adds public API, new modules, or additive behavior beyond metadata freshness.
+
 ## 2026-05-12: Google libphonenumber v9.0.30
 
 ### Scope

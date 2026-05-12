@@ -125,6 +125,8 @@ If upstream exposes a method that should be public in Objective-C, add it to the
 
 ## Metadata Update Workflow
 
+Metadata-only updates should ship as patch releases. Use a minor release only when the update also adds public API, new modules, or additive behavior beyond metadata freshness.
+
 Before updating checked-in metadata, generate a freshness report:
 
 ```bash
