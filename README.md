@@ -16,7 +16,7 @@ The project keeps the Objective-C core stable for existing apps while exposing a
 | `libPhoneNumberSwiftGeocoding` | You need the Swift facade plus offline geocoding. |
 | `libPhoneNumberSwiftShortNumber` | You need the Swift facade plus emergency and short-code support. |
 | `libPhoneNumberSwiftUI` | You need a SwiftUI phone-number input component. |
-| `libPhoneNumberSwift` | You want the backwards-compatible Swift umbrella facade with every Swift module. |
+| `libPhoneNumberIOSSwift` | You want the Swift umbrella facade with core, geocoding, and short-number modules. |
 | `libPhoneNumber` | You need the stable Objective-C core API. |
 | `libPhoneNumberGeocoding` | You need offline region descriptions for phone numbers. |
 | `libPhoneNumberShortNumber` | You need emergency and short-code support. |
@@ -41,10 +41,10 @@ Add optional Swift facade products only when needed:
 .product(name: "libPhoneNumberSwiftUI", package: "libPhoneNumber")
 ```
 
-Existing apps can keep using the umbrella product:
+For a single umbrella import:
 
 ```swift
-.product(name: "libPhoneNumberSwift", package: "libPhoneNumber")
+.product(name: "libPhoneNumberIOSSwift", package: "libPhoneNumber")
 ```
 
 Use the Objective-C-compatible products directly if you need lower-level access:
@@ -77,7 +77,7 @@ pod 'libPhoneNumber-iOS-SwiftShortNumber', '~> 1.6'
 pod 'libPhoneNumber-iOS-SwiftUI', '~> 1.6'
 ```
 
-For the backwards-compatible Swift umbrella facade:
+For the Swift umbrella facade:
 
 ```ruby
 pod 'libPhoneNumber-iOS-Swift', '~> 1.6'

@@ -10,7 +10,7 @@ The Swift facade is split so consumers can choose the smallest dependency surfac
 | Core plus offline geocoding | `libPhoneNumberSwiftGeocoding` |
 | Core plus emergency and short-code support | `libPhoneNumberSwiftShortNumber` |
 | SwiftUI phone input | `libPhoneNumberSwiftUI` |
-| Backwards-compatible non-UI umbrella | `libPhoneNumberSwift` |
+| Non-UI umbrella | `libPhoneNumberIOSSwift` |
 
 ## CocoaPods
 
@@ -20,7 +20,7 @@ The Swift facade is split so consumers can choose the smallest dependency surfac
 | Core plus offline geocoding | `libPhoneNumber-iOS-SwiftGeocoding` |
 | Core plus emergency and short-code support | `libPhoneNumber-iOS-SwiftShortNumber` |
 | SwiftUI phone input | `libPhoneNumber-iOS-SwiftUI` |
-| Backwards-compatible non-UI umbrella | `libPhoneNumber-iOS-Swift` |
+| Non-UI umbrella | `libPhoneNumber-iOS-Swift` |
 
 The SwiftUI module is intentionally not part of the umbrella product because it is UI-specific. Its public SwiftUI view APIs are guarded with Swift availability annotations for iOS 13, macOS 10.15, tvOS 13, and watchOS 6.
 

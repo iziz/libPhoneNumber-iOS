@@ -209,7 +209,11 @@ func updateREADME(at url: URL, toVersion version: Version) -> Bool {
 
   let podNames = [
     "libPhoneNumber-iOS",
-    "libPhoneNumberSwift",
+    "libPhoneNumber-iOS-Swift",
+    "libPhoneNumber-iOS-SwiftCore",
+    "libPhoneNumber-iOS-SwiftGeocoding",
+    "libPhoneNumber-iOS-SwiftShortNumber",
+    "libPhoneNumber-iOS-SwiftUI",
     "libPhoneNumberGeocoding",
     "libPhoneNumberShortNumber",
   ].joined(separator: "|")

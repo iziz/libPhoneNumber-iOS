@@ -4,7 +4,7 @@ This document defines the target direction for a Swift-first facade while keepin
 
 ## Current State
 
-`libPhoneNumberSwift` is a single Swift facade target. It depends on:
+`libPhoneNumberIOSSwift` is a single Swift facade target. It depends on:
 
 - `libPhoneNumber`
 - `libPhoneNumberGeocoding`
@@ -16,14 +16,14 @@ This is convenient for users who want one import, but it makes every Swift facad
 
 - Keep Objective-C as the source of truth for parsing, formatting, validation, geocoding, and short-number behavior.
 - Let Swift consumers depend on a smaller core facade without pulling geocoding metadata or short-number APIs.
-- Preserve `import libPhoneNumberSwift` as the backwards-compatible umbrella module during migration.
+- Use `import libPhoneNumberIOSSwift` as the umbrella module.
 - Keep CocoaPods and Swift Package Manager product names predictable.
 
 ## Non-Goals
 
 - Do not rewrite libphonenumber behavior in Swift.
 - Do not rename or destabilize the Objective-C public API.
-- Do not remove the existing `libPhoneNumberSwift` product until downstream migration data supports it.
+- Do not reintroduce third-party CocoaPods names owned by other maintainers.
 
 ## Target Module Layout
 
@@ -33,7 +33,7 @@ This is convenient for users who want one import, but it makes every Swift facad
 | `libPhoneNumberSwiftGeocoding` | `libPhoneNumberSwiftCore`, `libPhoneNumberGeocoding` | `PhoneNumberGeocoder` |
 | `libPhoneNumberSwiftShortNumber` | `libPhoneNumberSwiftCore`, `libPhoneNumberShortNumber` | `ShortNumberUtility`, short-number cost/type wrappers |
 | `libPhoneNumberSwiftUI` | `libPhoneNumberSwiftCore`, `SwiftUI` | `PhoneNumberTextField`, `PhoneNumberFieldStyle`, validation state |
-| `libPhoneNumberSwift` | core, geocoding, short-number facade modules | Backwards-compatible umbrella import |
+| `libPhoneNumberIOSSwift` | core, geocoding, short-number facade modules | Umbrella import |
 
 The umbrella module should contain little or no behavior. Its purpose is compatibility and convenience.
 
@@ -61,7 +61,7 @@ The umbrella pod should remain available and continue to depend on the non-UI Sw
 ## Acceptance Criteria
 
 - A Swift app that only parses and formats phone numbers can depend on `libPhoneNumberSwiftCore` without linking geocoding metadata.
-- Existing `import libPhoneNumberSwift` users continue to build.
+- The umbrella module uses `import libPhoneNumberIOSSwift`, avoiding third-party CocoaPods names.
 - The Swift facade tests cover both the umbrella module and each split module.
 - CI runs `swift test`, `swift build -c release`, version consistency checks, and CocoaPods lint for every shipped podspec.
 - Any new Swift wrapper still delegates behavior to the Objective-C core.

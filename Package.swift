@@ -41,8 +41,8 @@ let package = Package(
             targets: ["libPhoneNumberSwiftUI"]
         ),
         .library(
-            name: "libPhoneNumberSwift",
-            targets: ["libPhoneNumberSwift"]
+            name: "libPhoneNumberIOSSwift",
+            targets: ["libPhoneNumberIOSSwift"]
         )
     ],
     targets: [
@@ -167,13 +167,13 @@ let package = Package(
             path: "libPhoneNumberSwiftShortNumber"
         ),
         .target(
-            name: "libPhoneNumberSwift",
+            name: "libPhoneNumberIOSSwift",
             dependencies: [
                 "libPhoneNumberSwiftCore",
                 "libPhoneNumberSwiftGeocoding",
                 "libPhoneNumberSwiftShortNumber",
             ],
-            path: "libPhoneNumberSwift"
+            path: "libPhoneNumberIOSSwift"
         ),
         .target(
             name: "libPhoneNumberSwiftUI",
@@ -206,11 +206,11 @@ let package = Package(
             path: "libPhoneNumberSwiftShortNumberTests"
         ),
         .testTarget(
-            name: "libPhoneNumberSwiftTests",
+            name: "libPhoneNumberIOSSwiftTests",
             dependencies: [
-                "libPhoneNumberSwift",
+                "libPhoneNumberIOSSwift",
             ],
-            path: "libPhoneNumberSwiftTests"
+            path: "libPhoneNumberIOSSwiftTests"
         ),
         .testTarget(
             name: "libPhoneNumberSwiftUITests",

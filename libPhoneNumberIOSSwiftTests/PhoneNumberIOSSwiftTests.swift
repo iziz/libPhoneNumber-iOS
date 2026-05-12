@@ -1,7 +1,7 @@
 import XCTest
-import libPhoneNumberSwift
+import libPhoneNumberIOSSwift
 
-final class PhoneNumberSwiftTests: XCTestCase {
+final class PhoneNumberIOSSwiftTests: XCTestCase {
     func testUmbrellaReexportsCoreFacade() throws {
         let util = PhoneNumberUtility.shared
         let number = try util.parse("6502530000", defaultRegion: "US")

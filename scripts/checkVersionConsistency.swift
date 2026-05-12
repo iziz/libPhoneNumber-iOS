@@ -71,7 +71,7 @@ let expectedPackageProducts = [
   "libPhoneNumberSwiftGeocoding": "libPhoneNumberSwiftGeocoding",
   "libPhoneNumberSwiftShortNumber": "libPhoneNumberSwiftShortNumber",
   "libPhoneNumberSwiftUI": "libPhoneNumberSwiftUI",
-  "libPhoneNumberSwift": "libPhoneNumberSwift",
+  "libPhoneNumberIOSSwift": "libPhoneNumberIOSSwift",
 ]
 
 let expectedInternalDependencies = [
