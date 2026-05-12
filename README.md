@@ -1,39 +1,31 @@
-[![CocoaPods](https://img.shields.io/cocoapods/p/libPhoneNumber-iOS.svg?style=flat)](http://cocoapods.org/?q=libPhoneNumber-iOS)
-[![CocoaPods](https://img.shields.io/cocoapods/v/libPhoneNumber-iOS.svg?style=flat)](http://cocoapods.org/?q=libPhoneNumber-iOS)
+[![CocoaPods](https://img.shields.io/cocoapods/p/libPhoneNumber-iOS.svg?style=flat)](https://cocoapods.org/pods/libPhoneNumber-iOS)
+[![CocoaPods](https://img.shields.io/cocoapods/v/libPhoneNumber-iOS.svg?style=flat)](https://cocoapods.org/pods/libPhoneNumber-iOS)
+[![Swift Package Manager](https://img.shields.io/badge/SPM-supported-orange.svg?style=flat)](https://swift.org/package-manager/)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 # libPhoneNumber for iOS
 
-Objective-C implementation of Google's [libphonenumber](https://github.com/google/libphonenumber) metadata and behavior for Apple platforms, with a Swift-first facade for new Swift integrations.
+Apple-platform port of Google's [libphonenumber](https://github.com/google/libphonenumber) metadata and behavior, with a stable Objective-C core and Swift-first facades for modern Swift apps.
 
-The project keeps the Objective-C core stable for existing apps while exposing a smaller Swift API for common parsing, formatting, validation, geocoding, and short-number workflows.
+Use the Objective-C API when you need source-compatible legacy integration. Use the Swift facade modules when you want value-oriented parsing, formatting, validation, geocoding, short-number support, or a SwiftUI phone input.
 
-## Products
+## Why This Library
 
-| Product | Use when |
-| --- | --- |
-| `libPhoneNumberSwiftCore` | You are writing Swift code and only need parsing, formatting, validation, and as-you-type formatting. |
-| `libPhoneNumberSwiftGeocoding` | You need the Swift facade plus offline geocoding. |
-| `libPhoneNumberSwiftShortNumber` | You need the Swift facade plus emergency and short-code support. |
-| `libPhoneNumberSwiftUI` | You need a SwiftUI phone-number input component. |
-| `libPhoneNumberIOSSwift` | You want the Swift umbrella facade with core, geocoding, and short-number modules. |
-| `libPhoneNumber` | You need the stable Objective-C core API. |
-| `libPhoneNumberGeocoding` | You need offline region descriptions for phone numbers. |
-| `libPhoneNumberShortNumber` | You need emergency and short-code support. |
+- Objective-C core remains the source of truth for parsing, formatting, validation, geocoding, and short-number behavior.
+- Swift facade modules provide smaller, task-focused imports for new Swift code.
+- SwiftUI phone input is available as an opt-in module instead of being bundled into the core parser.
+- Swift Package Manager and CocoaPods are both supported.
+- Metadata updates are tracked against Google libphonenumber with parity checks and review artifacts.
 
-## Installation
+## Recommended Setup
 
-### Swift Package Manager
-
-Add this repository as a package dependency and select the products you need.
-
-For most Swift apps, choose the smallest Swift facade product:
+For most Swift apps, start with the core Swift facade:
 
 ```swift
 .product(name: "libPhoneNumberSwiftCore", package: "libPhoneNumber")
 ```
 
-Add optional Swift facade products only when needed:
+Add optional modules only when needed:
 
 ```swift
 .product(name: "libPhoneNumberSwiftGeocoding", package: "libPhoneNumber")
@@ -41,13 +33,66 @@ Add optional Swift facade products only when needed:
 .product(name: "libPhoneNumberSwiftUI", package: "libPhoneNumber")
 ```
 
-For a single umbrella import:
+Use the umbrella product when you want one non-UI import for core, geocoding, and short-number facades:
 
 ```swift
 .product(name: "libPhoneNumberIOSSwift", package: "libPhoneNumber")
 ```
 
-Use the Objective-C-compatible products directly if you need lower-level access:
+For CocoaPods Swift apps:
+
+```ruby
+pod 'libPhoneNumber-iOS-SwiftCore', '~> 1.6'
+```
+
+For the CocoaPods umbrella facade:
+
+```ruby
+pod 'libPhoneNumber-iOS-Swift', '~> 1.6'
+```
+
+Then import the umbrella module as:
+
+```swift
+import libPhoneNumberIOSSwift
+```
+
+## Products
+
+| Product | Package manager | Use when |
+| --- | --- | --- |
+| `libPhoneNumberSwiftCore` | SPM, CocoaPods | You need Swift parsing, formatting, validation, and as-you-type formatting. |
+| `libPhoneNumberSwiftGeocoding` | SPM, CocoaPods | You need Swift offline geocoding on top of the core facade. |
+| `libPhoneNumberSwiftShortNumber` | SPM, CocoaPods | You need Swift emergency-number and short-code support. |
+| `libPhoneNumberSwiftUI` | SPM, CocoaPods | You need a SwiftUI phone-number input component. |
+| `libPhoneNumberIOSSwift` | SPM, CocoaPods umbrella module | You want one non-UI Swift import for core, geocoding, and short-number facades. |
+| `libPhoneNumber` | SPM, CocoaPods, Carthage, manual | You need the stable Objective-C core API. |
+| `libPhoneNumberGeocoding` | SPM, CocoaPods | You need Objective-C offline geocoding APIs. |
+| `libPhoneNumberShortNumber` | SPM, CocoaPods | You need Objective-C emergency-number and short-code APIs. |
+
+The SwiftUI module is intentionally separate from the umbrella module because it is UI-specific and requires SwiftUI runtime availability.
+
+## Installation
+
+### Swift Package Manager
+
+Add this repository as a package dependency:
+
+```text
+https://github.com/iziz/libPhoneNumber-iOS
+```
+
+Select only the products your app needs:
+
+```swift
+.product(name: "libPhoneNumberSwiftCore", package: "libPhoneNumber")
+.product(name: "libPhoneNumberSwiftGeocoding", package: "libPhoneNumber")
+.product(name: "libPhoneNumberSwiftShortNumber", package: "libPhoneNumber")
+.product(name: "libPhoneNumberSwiftUI", package: "libPhoneNumber")
+.product(name: "libPhoneNumberIOSSwift", package: "libPhoneNumber")
+```
+
+Objective-C-compatible products are also available:
 
 ```swift
 .product(name: "libPhoneNumber", package: "libPhoneNumber")
@@ -57,33 +102,28 @@ Use the Objective-C-compatible products directly if you need lower-level access:
 
 ### CocoaPods
 
-For Objective-C-compatible core APIs:
+Core Objective-C API:
 
 ```ruby
 pod 'libPhoneNumber-iOS', '~> 1.6'
 ```
 
-For the Swift-first core facade:
+Swift facade modules:
 
 ```ruby
 pod 'libPhoneNumber-iOS-SwiftCore', '~> 1.6'
-```
-
-Optional Swift facade modules:
-
-```ruby
 pod 'libPhoneNumber-iOS-SwiftGeocoding', '~> 1.6'
 pod 'libPhoneNumber-iOS-SwiftShortNumber', '~> 1.6'
 pod 'libPhoneNumber-iOS-SwiftUI', '~> 1.6'
 ```
 
-For the Swift umbrella facade:
+Swift umbrella facade:
 
 ```ruby
 pod 'libPhoneNumber-iOS-Swift', '~> 1.6'
 ```
 
-Optional modules:
+Objective-C optional modules:
 
 ```ruby
 pod 'libPhoneNumberGeocoding', '~> 1.6'
@@ -117,7 +157,7 @@ let isValid = phoneUtil.isValidNumber(phoneNumber)
 let numberType = phoneUtil.type(of: phoneNumber)
 ```
 
-The Swift facade delegates to the Objective-C implementation. Phone number parsing and validation logic should stay in the Objective-C core so upstream behavior remains centralized.
+The Swift facade delegates to the Objective-C implementation. Phone-number parsing and validation logic should stay in the Objective-C core so upstream behavior remains centralized.
 
 For storage, concurrency boundaries, or API responses, use the immutable value wrapper:
 
@@ -229,7 +269,7 @@ if (phoneNumber != nil && error == nil) {
 }
 ```
 
-### As-You-Type Formatting
+### Objective-C As-You-Type Formatting
 
 ```objc
 NBAsYouTypeFormatter *formatter = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
@@ -260,38 +300,30 @@ For CocoaPods:
 
 New Swift code should prefer `libPhoneNumberSwiftCore` unless it specifically needs geocoding, short-number support, or Objective-C API details.
 
-## Metadata And Upstream Parity
+## Metadata Freshness
 
-Phone number behavior is driven by Google's libphonenumber metadata. When metadata or upstream behavior changes, update this repository in a normal PR and include:
+Phone-number behavior is driven by Google's libphonenumber metadata. Metadata or upstream behavior changes should be reviewed in a normal PR with:
 
 - The Google libphonenumber version or commit used.
 - Main metadata changes.
 - Geocoding metadata changes, if applicable.
 - Upstream test parity results.
 - Upstream API parity results.
-- Local test results.
+- Local validation results.
 
-Useful commands:
+Generate a current-vs-upstream freshness report:
 
 ```bash
-swift scripts/checkMetadataFreshness.swift
-swift scripts/checkUpstreamTestParity.swift --upstream-ref <version-or-ref>
-swift scripts/checkUpstreamAPIParity.swift --upstream-ref <version-or-ref>
-swift test
-LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test
-swift build -c release
+swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness
 ```
 
-For the full maintenance workflow, see:
+The script writes review artifacts only. It does not modify checked-in metadata.
 
-- [Upstream parity guide](docs/UPSTREAM_PARITY.md)
-- [Metadata patch policy](docs/METADATA_PATCH_POLICY.md)
-- [Package size options](docs/PACKAGE_SIZE_OPTIONS.md)
-- [Testing guide](docs/TESTING.md)
+For user-reported numbering-plan gaps that are not yet in upstream metadata, follow the [metadata patch policy](docs/METADATA_PATCH_POLICY.md). Local metadata overrides must be evidence-backed, tested, and removed once upstream includes the change.
 
 ## Updating Metadata
 
-### Main Metadata
+### Main And Short-Number Metadata
 
 Run the metadata generator from the `scripts` directory:
 
@@ -319,16 +351,6 @@ swift scripts/updateGeocodingMetadata.swift --source /tmp/libphonenumber --outpu
 ```
 
 Use `--output` to inspect generated databases before replacing the checked-in bundle. Use `--source` when you already have a local Google libphonenumber checkout or an extracted `resources/geocoding` directory.
-
-### Freshness Check
-
-Generate a current-vs-upstream metadata freshness summary and issue/PR text candidates:
-
-```bash
-swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness
-```
-
-The script writes review artifacts only. It does not modify checked-in metadata.
 
 ## Validation
 
@@ -378,10 +400,19 @@ xcodebuild test -scheme libPhoneNumberShortNumber -destination 'platform=iOS Sim
 6. Create a GitHub release after merge.
 7. Push updated podspecs.
 
+## Maintenance Guides
+
+- [Upstream parity guide](docs/UPSTREAM_PARITY.md)
+- [Testing guide](docs/TESTING.md)
+- [Metadata patch policy](docs/METADATA_PATCH_POLICY.md)
+- [Metadata update log](docs/METADATA_UPDATE_LOG.md)
+- [Package size options](docs/PACKAGE_SIZE_OPTIONS.md)
+- [Swift facade module split](docs/SWIFT_FACADE_MODULE_SPLIT.md)
+
 ## Links
 
 - [Google libphonenumber](https://github.com/google/libphonenumber)
-- [Update log](https://github.com/iziz/libPhoneNumber-iOS/wiki/Update-Log)
-- [Swift facade module split](docs/SWIFT_FACADE_MODULE_SPLIT.md)
+- [Latest release](https://github.com/iziz/libPhoneNumber-iOS/releases/latest)
+- [CocoaPods: libPhoneNumber-iOS](https://cocoapods.org/pods/libPhoneNumber-iOS)
 - [libPhoneNumberGeocoding README](libPhoneNumberGeocoding/README.md)
 - [libPhoneNumberShortNumber README](libPhoneNumberShortNumber/README.md)
