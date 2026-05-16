@@ -31,6 +31,7 @@ enum ScriptError: Error, CustomStringConvertible {
 struct Options {
   var currentRef: String?
   var outputDirectory: URL?
+  var failOnUpdate = false
 }
 
 struct MetadataFile: CaseIterable {
@@ -76,16 +77,18 @@ let repositoryRoot = scriptsDirectory.deletingLastPathComponent()
 func usage() -> String {
   """
   Usage:
-    swift scripts/checkMetadataFreshness.swift [--current-ref <ref>] [--output <dir>]
+    swift scripts/checkMetadataFreshness.swift [--current-ref <ref>] [--output <dir>] [--fail-on-update]
 
   Examples:
     swift scripts/checkMetadataFreshness.swift
     swift scripts/checkMetadataFreshness.swift --current-ref v9.0.30
     swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness
+    swift scripts/checkMetadataFreshness.swift --fail-on-update
 
   Notes:
     - Without --current-ref, the script reads the newest vX.Y.Z entry from docs/METADATA_UPDATE_LOG.md.
     - The script does not modify metadata. It writes review artifacts and candidate maintenance text.
+    - With --fail-on-update, the script exits non-zero after writing artifacts when a newer tag exists.
   """
 }
 
@@ -111,6 +114,8 @@ func parseArguments(_ arguments: [String]) throws -> Options {
         throw ScriptError.invalidArguments("\(argument) requires a path")
       }
       options.outputDirectory = absoluteURL(forPath: arguments[index])
+    case "--fail-on-update":
+      options.failOnUpdate = true
     default:
       throw ScriptError.invalidArguments("Unknown argument: \(argument)\n\n\(usage())")
     }
@@ -374,6 +379,9 @@ do {
   print("Latest upstream tag: \(latestRef)")
   print("Output: \(outputDirectory.path)")
   print(currentRef == latestRef ? "Metadata is up to date." : "Metadata update is available.")
+  if options.failOnUpdate && currentRef != latestRef {
+    exit(2)
+  }
 } catch {
   fputs("checkMetadataFreshness failed: \(error)\n", stderr)
   exit(1)

@@ -5,7 +5,48 @@ on:
     - cron: "30 2 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
+  metadata-freshness:
+    name: Metadata freshness
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check metadata freshness against the latest Google tag
+        run: swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness --fail-on-update
+
+      - name: Upload metadata freshness artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: metadata-freshness
+          path: .build/metadata-freshness
+          if-no-files-found: warn
+
+  source-drift:
+    name: Source and resource drift
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check tracked upstream source and resource drift
+        run: swift scripts/checkUpstreamSourceDrift.swift --output .build/upstream-source-drift --fail-on-drift
+
+      - name: Upload source drift artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upstream-source-drift
+          path: .build/upstream-source-drift
+          if-no-files-found: warn
+
   google-master-parity:
     name: Google master parity
     runs-on: macos-latest
