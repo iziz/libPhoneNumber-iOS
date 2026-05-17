@@ -18,6 +18,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check metadata freshness against the latest Google tag
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness --fail-on-update
 
       - name: Upload metadata freshness artifacts

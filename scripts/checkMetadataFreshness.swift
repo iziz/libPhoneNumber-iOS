@@ -5,7 +5,7 @@ import Foundation
 enum ScriptError: Error, CustomStringConvertible {
   case invalidArguments(String)
   case downloadFailed(URL, String)
-  case invalidResponse(URL)
+  case invalidResponse(URL, String)
   case invalidUTF8(URL)
   case invalidJSON(String)
   case processFailed(String)
@@ -16,8 +16,8 @@ enum ScriptError: Error, CustomStringConvertible {
       return message
     case .downloadFailed(let url, let message):
       return "Failed to download \(url.absoluteString): \(message)"
-    case .invalidResponse(let url):
-      return "Unexpected response while downloading \(url.absoluteString)"
+    case .invalidResponse(let url, let message):
+      return "Unexpected response while downloading \(url.absoluteString): \(message)"
     case .invalidUTF8(let url):
       return "Downloaded data is not UTF-8: \(url.absoluteString)"
     case .invalidJSON(let message):
@@ -184,6 +184,13 @@ func download(_ url: URL) throws -> Data {
   var request = URLRequest(url: url)
   request.timeoutInterval = 60
   request.setValue("libPhoneNumber-iOS checkMetadataFreshness", forHTTPHeaderField: "User-Agent")
+  if url.host == "api.github.com" {
+    request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
+    request.setValue("2022-11-28", forHTTPHeaderField: "X-GitHub-Api-Version")
+    if let token = githubAPIToken() {
+      request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+    }
+  }
 
   let task = URLSession.shared.dataTask(with: request) { data, response, error in
     resultData = data
@@ -197,12 +204,53 @@ func download(_ url: URL) throws -> Data {
   if let resultError {
     throw ScriptError.downloadFailed(url, resultError.localizedDescription)
   }
-  guard let httpResponse = resultResponse as? HTTPURLResponse,
-        (200..<300).contains(httpResponse.statusCode),
+  guard let httpResponse = resultResponse as? HTTPURLResponse else {
+    throw ScriptError.invalidResponse(url, "missing HTTP response")
+  }
+  guard (200..<300).contains(httpResponse.statusCode),
         let data = resultData else {
-    throw ScriptError.invalidResponse(url)
+    throw ScriptError.invalidResponse(url, responseDiagnostics(httpResponse, data: resultData))
   }
   return data
+}
+
+func githubAPIToken() -> String? {
+  let environment = ProcessInfo.processInfo.environment
+  for key in ["GITHUB_TOKEN", "GH_TOKEN"] {
+    if let token = environment[key]?.trimmingCharacters(in: .whitespacesAndNewlines),
+       !token.isEmpty {
+      return token
+    }
+  }
+  return nil
+}
+
+func responseDiagnostics(_ response: HTTPURLResponse, data: Data?) -> String {
+  var parts = ["HTTP \(response.statusCode)"]
+
+  for header in ["X-RateLimit-Remaining", "X-RateLimit-Reset", "Retry-After", "X-GitHub-Request-Id"] {
+    if let value = response.value(forHTTPHeaderField: header) {
+      parts.append("\(header): \(value)")
+    }
+  }
+
+  if let data, !data.isEmpty {
+    if let body = String(data: data, encoding: .utf8) {
+      let normalizedBody = body
+        .replacingOccurrences(of: #"\s+"#, with: " ", options: .regularExpression)
+        .trimmingCharacters(in: .whitespacesAndNewlines)
+      if !normalizedBody.isEmpty {
+        let bodySnippet = normalizedBody.count > 500
+          ? "\(normalizedBody.prefix(500))..."
+          : normalizedBody
+        parts.append("body: \(bodySnippet)")
+      }
+    } else {
+      parts.append("body: \(data.count) non-UTF-8 bytes")
+    }
+  }
+
+  return parts.joined(separator: "; ")
 }
 
 func latestUpstreamTag() throws -> String {
