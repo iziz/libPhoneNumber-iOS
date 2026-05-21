@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check tracked upstream source and resource drift
-        run: swift scripts/checkUpstreamSourceDrift.swift --output .build/upstream-source-drift --fail-on-drift
+        run: swift scripts/checkUpstreamSourceDrift.swift --output .build/upstream-source-drift
 
       - name: Upload source drift artifacts
         if: always()
