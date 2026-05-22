@@ -473,7 +473,11 @@ xcodebuild test -scheme libPhoneNumberShortNumber -destination 'platform=iOS Sim
 4. Lint the affected podspecs.
 5. Open a pull request with upstream version, parity results, and test results.
 6. Create a GitHub release after merge.
-7. Push updated podspecs.
+7. Push updated podspecs in dependency order:
+   ```bash
+   swift scripts/publishPodspecs.swift
+   swift scripts/publishPodspecs.swift --publish
+   ```
 
 ## Maintenance Guides
 
