@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumberCarrier"
-  s.version      = "1.7.0"
+  s.version      = "1.7.1"
   s.summary      = "Carrier metadata features for libPhoneNumber-iOS"
   s.description  = "Carrier metadata lookup for libPhoneNumber-iOS. This optional module stores carrier prefix metadata on disk."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
 
   s.resources    = "libPhoneNumberCarrierMetaData/*.bundle"
 
-  s.dependency 'libPhoneNumber-iOS', '~> 1.7.0'
+  s.dependency 'libPhoneNumber-iOS', '~> 1.7.1'
 
   s.source_files = [
                     'libPhoneNumberCarrier/**/*.{h,m}',

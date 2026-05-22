@@ -27,9 +27,33 @@ swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness
 swift test --filter PhoneNumberSwiftCoreTests/testUganda794MobileRangeFromIssue447
 swift scripts/metadataGenerator.swift v9.0.31 --pretty
 swift test --filter PhoneNumberSwiftCoreTests/testUganda794MobileRangeFromIssue447
+swift scripts/updateProjectVersions.swift 1.7.1
+swift scripts/checkMetadataFreshness.swift --current-ref v9.0.31 --output .build/metadata-freshness
+swift scripts/checkUpstreamTestParity.swift --upstream-ref v9.0.31
+swift scripts/checkUpstreamAPIParity.swift --upstream-ref v9.0.31
+swift scripts/checkVersionConsistency.swift
 swift test
+LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test
+swift build -c release
 git diff --check
-swift scripts/checkMetadataFreshness.swift --current-ref v9.0.31 --output .build/metadata-freshness-v9.0.31
+
+xcodebuild test -scheme libPhoneNumber -destination 'id=1451ACEF-2B8C-480B-9D1F-873DBD717BAF' -derivedDataPath /tmp/libphone-xc-core-dd
+xcodebuild test -scheme libPhoneNumberGeocoding -destination 'id=1451ACEF-2B8C-480B-9D1F-873DBD717BAF' -derivedDataPath /tmp/libphone-xc-geocoding-dd
+xcodebuild test -scheme libPhoneNumberShortNumber -destination 'id=1451ACEF-2B8C-480B-9D1F-873DBD717BAF' -derivedDataPath /tmp/libphone-xc-shortnumber-dd
+
+pod lib lint libPhoneNumber-iOS.podspec --allow-warnings
+pod lib lint libPhoneNumberGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumberShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumberCarrier.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumberTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftCarrier.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-SwiftUIEnrichment.podspec --allow-warnings --include-podspecs='*.podspec'
+pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'
 ```
 
 ### Results
@@ -40,7 +64,14 @@ swift scripts/checkMetadataFreshness.swift --current-ref v9.0.31 --output .build
 - Testing metadata was unchanged.
 - Issue #447 regression test: failed before the metadata update and passed after the metadata update.
 - SwiftPM tests: passed, 230 tests.
+- Korean locale SwiftPM tests: passed, 230 tests.
+- Release build: passed.
 - Whitespace check: passed.
+- Upstream JS test parity: passed, 172 upstream JS tests and 180 local ObjC tests.
+- Upstream JS API parity: passed, 66 upstream JS public prototype methods and 93 local ObjC public selectors.
+- Version consistency: passed for `1.7.1`.
+- Xcode scheme tests: `libPhoneNumber`, `libPhoneNumberGeocoding`, and `libPhoneNumberShortNumber` passed on iPhone 16 simulator `1451ACEF-2B8C-480B-9D1F-873DBD717BAF`.
+- CocoaPods lint: all podspecs available at release time passed validation.
 - Freshness re-check with `--current-ref v9.0.31`: metadata is up to date.
 
 ## 2026-05-12: Google libphonenumber v9.0.30
