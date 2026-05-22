@@ -13,6 +13,18 @@ final class PhoneNumberSwiftCoreTests: XCTestCase {
         XCTAssertEqual("US", util.regionCode(for: number))
     }
 
+    func testUganda794MobileRangeFromIssue447() throws {
+        let util = PhoneNumberUtility.shared
+        let number = try util.parse("+25679(4)123456", defaultRegion: nil)
+
+        XCTAssertEqual("UG", util.regionCode(for: number))
+        XCTAssertTrue(util.isValidNumber(number))
+        XCTAssertTrue(util.isValidNumber(number, forRegion: "UG"))
+        XCTAssertEqual(.mobile, util.type(of: number))
+        XCTAssertEqual("794123456", util.nationalSignificantNumber(for: number))
+        XCTAssertEqual("+256794123456", try util.format(number, as: .e164))
+    }
+
     func testAsYouTypeFormatterFacade() {
         let formatter = AsYouTypeFormatter(regionCode: "US")
 

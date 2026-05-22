@@ -4,6 +4,45 @@ This file records upstream comparison results for metadata updates. Keep entries
 
 Metadata-only updates should ship as patch releases. Use a minor release only when the update also adds public API, new modules, or additive behavior beyond metadata freshness.
 
+## 2026-05-23: Google libphonenumber v9.0.31
+
+### Scope
+
+- Previous local main, testing, and short-number metadata matched Google libphonenumber `v9.0.30`.
+- Updated main phone-number metadata to `v9.0.31`.
+- Updated short-number metadata to `v9.0.31`.
+- Testing metadata was unchanged between `v9.0.30` and `v9.0.31`.
+- Verified issue #447 with a bundled-metadata regression test using the issue-style Uganda mobile input `+25679(4)123456`.
+
+### Issue #447 Verification
+
+The Uganda mobile pattern changed from `9[0-3589]` to `9[0-589]`, which includes the `794` range.
+
+The new regression test failed against the previous `v9.0.30` metadata because the parsed number was not valid for `UG` and its type was `UNKNOWN`. After regenerating from `v9.0.31`, the same issue-style input passed and classified the number as `MOBILE`.
+
+### Commands
+
+```bash
+swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness
+swift test --filter PhoneNumberSwiftCoreTests/testUganda794MobileRangeFromIssue447
+swift scripts/metadataGenerator.swift v9.0.31 --pretty
+swift test --filter PhoneNumberSwiftCoreTests/testUganda794MobileRangeFromIssue447
+swift test
+git diff --check
+swift scripts/checkMetadataFreshness.swift --current-ref v9.0.31 --output .build/metadata-freshness-v9.0.31
+```
+
+### Results
+
+- Freshness check found Google libphonenumber `v9.0.31` as the latest upstream tag.
+- Main phone-number metadata changed.
+- Short-number metadata changed.
+- Testing metadata was unchanged.
+- Issue #447 regression test: failed before the metadata update and passed after the metadata update.
+- SwiftPM tests: passed, 230 tests.
+- Whitespace check: passed.
+- Freshness re-check with `--current-ref v9.0.31`: metadata is up to date.
+
 ## 2026-05-12: Google libphonenumber v9.0.30
 
 ### Scope
