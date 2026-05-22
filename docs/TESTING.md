@@ -64,24 +64,23 @@ See `docs/UPSTREAM_PARITY.md` for the full parity workflow.
 Run the three main schemes on an iOS Simulator:
 
 ```bash
-xcodebuild test -scheme libPhoneNumber -destination 'platform=iOS Simulator,name=iPhone 16'
-xcodebuild test -scheme libPhoneNumberGeocoding -destination 'platform=iOS Simulator,name=iPhone 16'
-xcodebuild test -scheme libPhoneNumberShortNumber -destination 'platform=iOS Simulator,name=iPhone 16'
+swift scripts/testXcodeSchemes.swift
 ```
 
 If the destination name is ambiguous or unavailable, list destinations and use a simulator UDID:
 
 ```bash
 xcodebuild -scheme libPhoneNumber -showdestinations
-xcodebuild test -scheme libPhoneNumber -destination 'id=<simulator-udid>'
+swift scripts/testXcodeSchemes.swift --destination 'id=<simulator-udid>'
 ```
 
 Using a fresh `-derivedDataPath` is useful when code coverage files or stale derived data create noisy warnings:
 
 ```bash
-xcodebuild test -scheme libPhoneNumberShortNumber \
-  -destination 'id=<simulator-udid>' \
-  -derivedDataPath /tmp/libphone-xc-shortnumber-dd
+swift scripts/testXcodeSchemes.swift \
+  --destination 'id=<simulator-udid>' \
+  --derived-data-root /tmp/libphone-xc-dd \
+  libPhoneNumberShortNumber
 ```
 
 ## Required Matrix By Change Type
@@ -98,7 +97,7 @@ For metadata updates:
 - `swift scripts/checkMetadataFreshness.swift --current-ref <metadata-ref> --output .build/metadata-freshness`
 - `swift scripts/checkUpstreamTestParity.swift --upstream-ref <metadata-ref>`
 - `swift scripts/checkUpstreamAPIParity.swift --upstream-ref <metadata-ref>`
-- `swift scripts/updateGeocodingMetadata.swift <metadata-ref> --output /tmp/geocoding-review` if geocoding metadata changed upstream.
+- `swift scripts/updateMetadata.swift <metadata-ref> --dry-run`
 - `scripts/testGeocodingMetadataUpdater.sh` if the geocoding updater changed.
 - Update `docs/METADATA_UPDATE_LOG.md` with the upstream comparison and validation results.
 - `swift test`
@@ -121,13 +120,13 @@ For geocoding behavior changes:
 
 - `swift test`
 - `LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test`
-- `xcodebuild test -scheme libPhoneNumberGeocoding -destination 'id=<simulator-udid>'`
+- `swift scripts/testXcodeSchemes.swift --destination 'id=<simulator-udid>' libPhoneNumberGeocoding`
 - `git diff --check`
 
 For short-number behavior changes:
 
 - `swift test`
-- `xcodebuild test -scheme libPhoneNumberShortNumber -destination 'id=<simulator-udid>'`
+- `swift scripts/testXcodeSchemes.swift --destination 'id=<simulator-udid>' libPhoneNumberShortNumber`
 - `git diff --check`
 
 For Swift facade changes:
@@ -135,33 +134,14 @@ For Swift facade changes:
 - `swift test`
 - `LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test`
 - `swift build -c release`
-- `pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftCarrier.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftUIEnrichment.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `swift scripts/publishPodspecs.swift --lint`
 - Confirm the facade remains a thin wrapper over the Objective-C core instead of duplicating phone-number logic.
 - See `docs/SWIFT_FACADE_MODULE_SPLIT.md` before changing module boundaries.
 
 For packaging changes:
 
 - `swift scripts/checkVersionConsistency.swift`
-- `pod lib lint libPhoneNumber-iOS.podspec --allow-warnings`
-- `pod lib lint libPhoneNumberGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumberShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumberCarrier.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumberTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftCarrier.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-SwiftUIEnrichment.podspec --allow-warnings --include-podspecs='*.podspec'`
-- `pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'`
+- `swift scripts/publishPodspecs.swift --lint`
 
 ## Locale-Sensitive Tests
 

@@ -4,6 +4,7 @@ import Foundation
 
 struct Options {
   var shouldPublish = false
+  var shouldLint = false
   var skipExisting = true
   var retries = 2
   var waitTimeout = 120
@@ -48,13 +49,14 @@ func usage() -> String {
     swift scripts/publishPodspecs.swift [options] [podspec ...]
 
   Options:
+    --lint                Lint podspecs in dependency order without publishing.
     --publish             Push missing podspec versions to CocoaPods trunk.
     --no-skip-existing    Attempt to push versions even when trunk already has them.
     --retries <count>     Retry failed trunk pushes. Default: 2.
     --wait-timeout <sec>  Wait for trunk visibility after each push. Default: 120.
     --help                Print this help.
 
-  Without --publish, the script only prints dependency order and trunk status.
+  Without --lint or --publish, the script only prints dependency order and trunk status.
   """
 }
 
@@ -66,6 +68,8 @@ func parseOptions(_ arguments: [String]) throws -> Options {
     let argument = arguments[index]
 
     switch argument {
+    case "--lint":
+      options.shouldLint = true
     case "--publish":
       options.shouldPublish = true
     case "--no-skip-existing":
@@ -240,7 +244,7 @@ func waitForTrunkVersion(name: String, version: String, timeout: Int) throws -> 
 }
 
 func printPlan(_ podspecs: [Podspec]) {
-  print("Dependency-aware CocoaPods trunk order:")
+  print("Dependency-aware CocoaPods podspec order:")
   for (index, podspec) in podspecs.enumerated() {
     let localDependencies = podspec.dependencies.filter { dependencyName in
       podspecs.contains { $0.name == dependencyName }
@@ -251,6 +255,28 @@ func printPlan(_ podspecs: [Podspec]) {
     print("\(index + 1). \(podspec.name) \(podspec.version) (\(podspec.path))")
     print("   local dependencies: \(dependencyText)")
   }
+}
+
+func lint(_ podspec: Podspec) throws -> Bool {
+  print("[lint] \(podspec.path)")
+  let exitCode = try runStreaming(
+    "pod",
+    [
+      "lib",
+      "lint",
+      podspec.path,
+      "--allow-warnings",
+      "--include-podspecs=*.podspec",
+    ]
+  )
+
+  if exitCode == 0 {
+    print("[ok] \(podspec.name) \(podspec.version) passed lint")
+    return true
+  }
+
+  print("[warn] \(podspec.name) \(podspec.version) lint failed with exit code \(exitCode)")
+  return false
 }
 
 func publish(_ podspec: Podspec, options: Options) throws -> Bool {
@@ -317,6 +343,28 @@ do {
   let orderedPodspecs = try sortedForPublish(podspecs)
 
   printPlan(orderedPodspecs)
+
+  if options.shouldLint {
+    var failedLintPodspecs: [String] = []
+    for podspec in orderedPodspecs {
+      if !(try lint(podspec)) {
+        failedLintPodspecs.append("\(podspec.name) \(podspec.version)")
+      }
+    }
+
+    if !failedLintPodspecs.isEmpty {
+      print("Failed podspec lint validations:")
+      for failedPodspec in failedLintPodspecs {
+        print("- \(failedPodspec)")
+      }
+      exit(1)
+    }
+
+    print("All podspecs passed lint.")
+    if !options.shouldPublish {
+      exit(0)
+    }
+  }
 
   var failedPodspecs: [String] = []
   for podspec in orderedPodspecs {

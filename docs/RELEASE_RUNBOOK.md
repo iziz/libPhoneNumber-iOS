@@ -35,31 +35,34 @@ If the release is for a user-reported numbering-plan issue, add or run a focused
 
 ## Update Metadata
 
-Update main, testing, and short-number metadata:
+Run the all-in-one metadata updater first. Use `--dry-run` to validate downloads, parsing, and generated outputs without changing checked-in metadata:
 
 ```bash
-swift scripts/metadataGenerator.swift <metadata-ref> --pretty
+swift scripts/updateMetadata.swift <metadata-ref> --dry-run
 ```
 
-Update geocoding metadata when upstream geocoding resources changed:
+Update all checked-in metadata families:
 
 ```bash
-swift scripts/updateGeocodingMetadata.swift <metadata-ref> --replace-bundle
+swift scripts/updateMetadata.swift <metadata-ref>
 ```
 
-Update carrier metadata when upstream carrier resources changed:
+Limit the update when only specific metadata families are in scope:
 
 ```bash
-swift scripts/updateCarrierMetadata.swift <metadata-ref> --replace-bundle
+swift scripts/updateMetadata.swift <metadata-ref> --only main,geocoding
+swift scripts/updateMetadata.swift <metadata-ref> --skip carrier,timezones
 ```
 
-Update timezone metadata when upstream timezone resources changed:
+The wrapper runs these underlying generators in order:
 
-```bash
-swift scripts/updateTimeZonesMetadata.swift <metadata-ref> --replace-bundle
-```
+- `scripts/metadataGenerator.swift` for main, testing, and short-number metadata.
+- `scripts/updateGeocodingMetadata.swift` for geocoding databases.
+- `scripts/updateCarrierMetadata.swift` for carrier metadata.
+- `scripts/updateTimeZonesMetadata.swift` for timezone metadata.
+- `scripts/checkMetadataFreshness.swift --current-ref <metadata-ref>` after checked-in updates.
 
-Use `--output <dir>` instead of `--replace-bundle` when reviewing generated artifacts before changing checked-in bundles.
+Use the individual generator scripts only when debugging or intentionally updating one metadata family outside the normal release flow.
 
 ## Version Bump
 
@@ -96,34 +99,20 @@ git diff --check
 Run the main Xcode schemes:
 
 ```bash
-xcodebuild test -scheme libPhoneNumber -destination 'platform=iOS Simulator,name=iPhone 16'
-xcodebuild test -scheme libPhoneNumberGeocoding -destination 'platform=iOS Simulator,name=iPhone 16'
-xcodebuild test -scheme libPhoneNumberShortNumber -destination 'platform=iOS Simulator,name=iPhone 16'
+swift scripts/testXcodeSchemes.swift
 ```
 
 If the simulator destination is ambiguous, use a concrete UDID:
 
 ```bash
 xcodebuild -scheme libPhoneNumber -showdestinations
-xcodebuild test -scheme libPhoneNumber -destination 'id=<simulator-udid>'
+swift scripts/testXcodeSchemes.swift --destination 'id=<simulator-udid>'
 ```
 
 Run CocoaPods lint for every shipped podspec when packaging, dependency, or release metadata changed:
 
 ```bash
-pod lib lint libPhoneNumber-iOS.podspec --allow-warnings
-pod lib lint libPhoneNumberGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumberShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumberCarrier.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumberTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-SwiftCarrier.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-SwiftTimeZones.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-SwiftUIEnrichment.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'
+swift scripts/publishPodspecs.swift --lint
 ```
 
 Re-run freshness after the metadata update to confirm the checked-in metadata matches the selected upstream ref:

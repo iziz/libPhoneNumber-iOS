@@ -398,6 +398,15 @@ For user-reported numbering-plan gaps that are not yet in upstream metadata, fol
 
 ## Updating Metadata
 
+Use the all-in-one updater for normal metadata releases:
+
+```bash
+swift scripts/updateMetadata.swift <libphonenumber-version> --dry-run
+swift scripts/updateMetadata.swift <libphonenumber-version>
+```
+
+Use `--only main,geocoding` or `--skip carrier,timezones` when the release intentionally covers only specific metadata families. See the [release runbook](docs/RELEASE_RUNBOOK.md) for the full release flow.
+
 ### Main And Short-Number Metadata
 
 Run the metadata generator from the `scripts` directory:
@@ -444,19 +453,13 @@ git diff --check
 For Swift facade changes:
 
 ```bash
-pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'
-pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'
+swift scripts/publishPodspecs.swift --lint
 ```
 
 For Xcode schemes:
 
 ```bash
-xcodebuild test -scheme libPhoneNumber -destination 'platform=iOS Simulator,name=iPhone 16'
-xcodebuild test -scheme libPhoneNumberGeocoding -destination 'platform=iOS Simulator,name=iPhone 16'
-xcodebuild test -scheme libPhoneNumberShortNumber -destination 'platform=iOS Simulator,name=iPhone 16'
+swift scripts/testXcodeSchemes.swift
 ```
 
 ## Release Checklist
@@ -470,7 +473,10 @@ xcodebuild test -scheme libPhoneNumberShortNumber -destination 'platform=iOS Sim
    swift scripts/updateProjectVersions.swift <new-version>
    ```
 3. Run the validation matrix.
-4. Lint the affected podspecs.
+4. Lint podspecs:
+   ```bash
+   swift scripts/publishPodspecs.swift --lint
+   ```
 5. Open a pull request with upstream version, parity results, and test results.
 6. Create a GitHub release after merge.
 7. Push updated podspecs in dependency order:
