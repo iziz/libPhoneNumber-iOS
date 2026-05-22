@@ -483,6 +483,7 @@ xcodebuild test -scheme libPhoneNumberShortNumber -destination 'platform=iOS Sim
 
 - [Upstream parity guide](docs/UPSTREAM_PARITY.md)
 - [Testing guide](docs/TESTING.md)
+- [Release runbook](docs/RELEASE_RUNBOOK.md)
 - [Metadata patch policy](docs/METADATA_PATCH_POLICY.md)
 - [Metadata update log](docs/METADATA_UPDATE_LOG.md)
 - [Package size options](docs/PACKAGE_SIZE_OPTIONS.md)
