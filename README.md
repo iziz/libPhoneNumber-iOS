@@ -80,6 +80,8 @@ import libPhoneNumberIOSSwift
 
 The SwiftUI module is intentionally separate from the umbrella module because it is UI-specific and requires SwiftUI runtime availability.
 
+Choose the smallest product that matches the app. Geocoding, carrier, and timezone modules are opt-in because they ship metadata bundles. Carrier names are original-assignment hints and may be misleading in mobile-number-portable regions; use the safe-display API for user-facing carrier labels. Timezone lookup returns possible CLDR timezone IDs from prefix metadata, not the user's current location.
+
 ## Installation
 
 ### Swift Package Manager
@@ -476,8 +478,6 @@ swift scripts/testXcodeSchemes.swift
 - [Release runbook](docs/RELEASE_RUNBOOK.md)
 - [Metadata patch policy](docs/METADATA_PATCH_POLICY.md)
 - [Metadata update log](docs/METADATA_UPDATE_LOG.md)
-- [Package size options](docs/PACKAGE_SIZE_OPTIONS.md)
-- [Swift facade module split](docs/SWIFT_FACADE_MODULE_SPLIT.md)
 
 ## Links
 

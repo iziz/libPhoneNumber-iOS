@@ -136,7 +136,7 @@ For Swift facade changes:
 - `swift build -c release`
 - `swift scripts/publishPodspecs.swift --lint`
 - Confirm the facade remains a thin wrapper over the Objective-C core instead of duplicating phone-number logic.
-- See `docs/SWIFT_FACADE_MODULE_SPLIT.md` before changing module boundaries.
+- See the historical module split note in `docs/archive/SWIFT_FACADE_MODULE_SPLIT.md` before changing module boundaries.
 
 For packaging changes:
 

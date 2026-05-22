@@ -144,18 +144,18 @@ Use these files as maintenance inputs. They are review artifacts, not generated 
 
 For user-reported numbering-plan gaps that are not yet in upstream metadata, follow [Issue-driven metadata patch policy](METADATA_PATCH_POLICY.md).
 
-For phone-number and short-number metadata:
+For checked-in metadata updates, use the release metadata wrapper:
 
 ```bash
-swift scripts/metadataGenerator.swift <version-or-ref> --pretty
+swift scripts/updateMetadata.swift <version-or-ref> --dry-run
+swift scripts/updateMetadata.swift <version-or-ref>
 ```
 
 Examples:
 
 ```bash
-swift scripts/metadataGenerator.swift v9.0.19 --pretty
-swift scripts/metadataGenerator.swift master --dry-run
-swift scripts/metadataGenerator.swift --pack-only
+swift scripts/updateMetadata.swift v9.0.31 --dry-run
+swift scripts/updateMetadata.swift v9.0.31 --only main,geocoding
 ```
 
 After updating metadata:
@@ -166,13 +166,7 @@ After updating metadata:
 4. If upstream tests changed, port the new or renamed tests before merging.
 5. Record the upstream comparison and validation results in `docs/METADATA_UPDATE_LOG.md`.
 
-Geocoding metadata is maintained through the command-line updater:
-
-```bash
-swift scripts/updateGeocodingMetadata.swift <version-or-ref> --replace-bundle
-```
-
-Use `--output <dir>` to inspect generated databases before replacing the checked-in bundle, or `--source <dir>` to generate from a local Google libphonenumber checkout.
+Use the individual metadata generator scripts only when debugging or intentionally updating one metadata family outside the normal release flow.
 
 ## Review Expectations
 

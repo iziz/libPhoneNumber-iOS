@@ -39,7 +39,7 @@ Current checked-in metadata is generated from upstream `v9.0.30`:
 - Packed carrier bundle size: about 2.0 MB.
 - Packed timezone bundle size: about 232 KB.
 
-## Proposed Modules
+## Modules
 
 ### Swift Package Manager
 
@@ -107,9 +107,9 @@ CREATE TABLE timezone_prefixes (
 
 Store `upstream_ref`, `generated_at_utc`, `schema_version`, and `source_digest` in `metadata_info`. Sort all inserted rows by locale and numeric prefix string before writing.
 
-## Generator Plan
+## Metadata Generators
 
-Add two generators:
+Use these generators when working directly with carrier/timezone metadata:
 
 ```bash
 swift scripts/updateCarrierMetadata.swift <version-or-ref> --output /tmp/carrier-review
@@ -130,7 +130,7 @@ Current status:
 - `libPhoneNumberSwiftCarrier` exists as a Swift SPM and CocoaPods facade.
 - `libPhoneNumberSwiftUIEnrichment` exists as an optional SPM and CocoaPods module connecting carrier/timezone metadata to SwiftUI state.
 
-Required options:
+Generator options:
 
 - `--source <path>`: Use an existing Google libphonenumber checkout.
 - `--output <path>`: Write review artifacts without replacing checked-in bundles.
@@ -138,7 +138,7 @@ Required options:
 - `--dry-run`: Parse, validate, and size-report without writing checked-in files.
 - `--pretty`: Write normalized text/JSON review artifacts if useful.
 
-Required generator behavior:
+Generator behavior:
 
 - Reject malformed prefix rows.
 - Reject duplicate locale/prefix rows unless upstream has an intentional duplicate policy documented.
@@ -147,7 +147,7 @@ Required generator behavior:
 - Write a metadata summary suitable for `docs/METADATA_UPDATE_LOG.md`.
 - Produce identical checked-in output when run twice from the same upstream ref.
 
-## Objective-C API Plan
+## Objective-C API
 
 ### Carrier
 
@@ -200,7 +200,7 @@ Behavior:
 - Non-geographical valid numbers use country-level timezone lookup.
 - `timeZonesForGeographicalNumber` assumes the caller already knows the number is geocodable, but still returns `Etc/Unknown` when no prefix mapping exists.
 
-## Swift API Plan
+## Swift API
 
 ### Carrier
 
@@ -231,7 +231,7 @@ public final class PhoneNumberTimeZonesMapper {
 
 Return upstream-compatible `["Etc/Unknown"]` for unknown results.
 
-## SwiftUI Enrichment Plan
+## SwiftUI Enrichment
 
 Keep `libPhoneNumberSwiftUI` dependent only on `libPhoneNumberSwiftCore`. Add an optional enrichment protocol in the lightweight SwiftUI module:
 
@@ -256,7 +256,7 @@ public struct CarrierTimeZonesPhoneNumberEnricher: PhoneNumberEnriching {
 
 `PhoneNumberTextField` can accept an optional enricher without importing carrier/timezone metadata by default.
 
-## Test Plan
+## Testing
 
 Port representative upstream tests:
 
@@ -281,11 +281,11 @@ Local integration tests:
 - `swift test`
 - `LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test`
 - `swift build -c release`
-- `pod lib lint` for every new podspec.
+- `swift scripts/publishPodspecs.swift --lint`
 - Generator determinism test: run generation twice from the same source and confirm no diff.
 - Bundle missing/corrupt tests should return deterministic empty or unknown results without crashing.
 
-## Size Measurement Plan
+## Size Measurement
 
 Every carrier/timezone update should report:
 
@@ -306,7 +306,7 @@ Record the result in `docs/METADATA_UPDATE_LOG.md`.
 - Objective-C carrier and timezone modules are implemented.
 - Swift carrier and timezone facade modules are implemented.
 - Optional SwiftUI enrichment protocol and concrete carrier/timezone enricher are implemented.
-- SPM products, CocoaPods podspecs, README installation examples, package-size docs, and release validation hooks are implemented.
+- SPM products, CocoaPods podspecs, README installation examples, package selection guidance, and release validation hooks are implemented.
 
 ## Release Criteria
 

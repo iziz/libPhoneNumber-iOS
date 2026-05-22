@@ -1,6 +1,8 @@
 # Swift Facade Module Split
 
-This document defines the target direction for a Swift-first facade while keeping the Objective-C implementation as the stable behavioral core.
+This is a historical design note. The split has been implemented; current release and validation commands live in `docs/RELEASE_RUNBOOK.md` and `docs/TESTING.md`.
+
+This document defined the target direction for a Swift-first facade while keeping the Objective-C implementation as the stable behavioral core.
 
 ## Current State
 
