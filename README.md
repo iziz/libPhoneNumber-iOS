@@ -407,34 +407,18 @@ swift scripts/updateMetadata.swift <libphonenumber-version>
 
 Use `--only main,geocoding` or `--skip carrier,timezones` when the release intentionally covers only specific metadata families. See the [release runbook](docs/RELEASE_RUNBOOK.md) for the full release flow.
 
-### Main And Short-Number Metadata
+### Direct Metadata Scripts
 
-Run the metadata generator from the `scripts` directory:
-
-```bash
-cd scripts
-./metadataGenerator.swift <libphonenumber-version> --pretty
-```
-
-This downloads metadata from Google's libphonenumber repository, updates the generated Objective-C metadata files from compact JSON, and writes pretty-printed `generatedJSON` files for review.
-
-### Geocoding Metadata
-
-Generate SQLite geocoding databases with the command-line updater:
+Use the individual generators only when debugging or intentionally updating one metadata family outside the normal release flow:
 
 ```bash
+swift scripts/metadataGenerator.swift <libphonenumber-version> --pretty
 swift scripts/updateGeocodingMetadata.swift <libphonenumber-version> --replace-bundle
+swift scripts/updateCarrierMetadata.swift <libphonenumber-version> --replace-bundle
+swift scripts/updateTimeZonesMetadata.swift <libphonenumber-version> --replace-bundle
 ```
 
-Examples:
-
-```bash
-swift scripts/updateGeocodingMetadata.swift 9.0.29 --replace-bundle
-swift scripts/updateGeocodingMetadata.swift master --output /tmp/geocoding
-swift scripts/updateGeocodingMetadata.swift --source /tmp/libphonenumber --output /tmp/geocoding
-```
-
-Use `--output` to inspect generated databases before replacing the checked-in bundle. Use `--source` when you already have a local Google libphonenumber checkout or an extracted `resources/geocoding` directory.
+Use `--output` to inspect generated review artifacts before replacing checked-in bundles. Use `--source` with the individual scripts when you already have a local Google libphonenumber checkout or extracted resource directory.
 
 ## Validation
 

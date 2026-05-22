@@ -115,7 +115,7 @@ Run CocoaPods lint for every shipped podspec when packaging, dependency, or rele
 swift scripts/publishPodspecs.swift --lint
 ```
 
-Re-run freshness after the metadata update to confirm the checked-in metadata matches the selected upstream ref:
+The all-in-one updater runs the freshness check after checked-in updates. Run it manually only if you used `--skip-freshness-check` or individual generator scripts:
 
 ```bash
 swift scripts/checkMetadataFreshness.swift --current-ref <metadata-ref> --output .build/metadata-freshness

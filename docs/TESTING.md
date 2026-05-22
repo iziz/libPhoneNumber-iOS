@@ -94,16 +94,16 @@ For a small implementation or test-only change:
 For metadata updates:
 
 - Use a patch version for metadata-only releases. Use a minor version only when the change also adds public API, new modules, or additive behavior beyond metadata freshness.
-- `swift scripts/checkMetadataFreshness.swift --current-ref <metadata-ref> --output .build/metadata-freshness`
+- `swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness`
+- `swift scripts/updateMetadata.swift <metadata-ref> --dry-run`
 - `swift scripts/checkUpstreamTestParity.swift --upstream-ref <metadata-ref>`
 - `swift scripts/checkUpstreamAPIParity.swift --upstream-ref <metadata-ref>`
-- `swift scripts/updateMetadata.swift <metadata-ref> --dry-run`
 - `scripts/testGeocodingMetadataUpdater.sh` if the geocoding updater changed.
 - Update `docs/METADATA_UPDATE_LOG.md` with the upstream comparison and validation results.
 - `swift test`
 - `LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test`
 - `swift build -c release`
-- all three Xcode schemes
+- `swift scripts/testXcodeSchemes.swift`
 - `git diff --check`
 
 For public API or parser/formatter behavior changes:
