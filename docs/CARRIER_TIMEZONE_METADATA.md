@@ -27,13 +27,13 @@ Use these Google libphonenumber paths as the upstream inputs and behavior refere
 | Timezone tests | `java/geocoder/test/com/google/i18n/phonenumbers/PhoneNumberToTimeZonesMapperTest.java` | Port representative behavior tests. |
 | Prefix mapper internals | `java/internal/prefixmapper/src/com/google/i18n/phonenumbers/prefixmapper/` | Longest-prefix lookup, locale fallback, and timezone tokenization behavior. |
 
-Current checked-in metadata is generated from upstream `v9.0.30`:
+Current checked-in metadata is generated from upstream `v9.0.32`:
 
-- Carrier resources: 219 `.txt` files, 698,755 bytes before packing.
-- Carrier rows: 31,001 prefix mappings.
+- Carrier resources: 219 `.txt` files, 697,037 bytes before packing.
+- Carrier rows: 31,024 prefix mappings.
 - Carrier locales observed: `ar`, `be`, `en`, `fa`, `ko`, `ru`, `uk`, `zh`, `zh_Hant`.
 - Mobile portable regions: 107 territories from `PhoneNumberMetadata.xml`.
-- Timezone resources: one `map_data.txt` file, about 92 KB before packing.
+- Timezone resources: one `map_data.txt` file, 86,343 bytes before packing.
 - Timezone rows: 3,294 prefix mappings.
 - Timezone values are CLDR/ICU timezone IDs, separated by `&` when a prefix maps to multiple zones.
 - Packed carrier bundle size: about 2.0 MB.
@@ -120,12 +120,12 @@ Current status:
 
 - `scripts/updateTimeZonesMetadata.swift` exists as a deterministic timezone generator.
 - It parses `resources/timezones/map_data.txt`, validates prefixes and timezone IDs, writes `timezone-prefixes.json`, `timezone-size-report.md`, `timezone-update-log-entry.md`, and supports `--source`, `--output`, `--replace-bundle`, `--dry-run`, and `--keep-temp`.
-- `libPhoneNumberTimeZonesMetaData/TimeZonesMetaData.bundle/timezones.db` is generated from Google libphonenumber `v9.0.30`.
+- `libPhoneNumberTimeZonesMetaData/TimeZonesMetaData.bundle/timezones.db` is generated from Google libphonenumber `v9.0.32`.
 - `libPhoneNumberTimeZones` exists as an Objective-C SPM module.
 - `libPhoneNumberSwiftTimeZones` exists as a Swift SPM facade.
 - `scripts/updateCarrierMetadata.swift` exists as a deterministic carrier generator.
 - It parses `resources/carrier`, validates prefixes and carrier names, parses `mobileNumberPortableRegion` from `resources/PhoneNumberMetadata.xml`, writes `carrier-prefixes.json`, `carrier-size-report.md`, `carrier-update-log-entry.md`, and supports `--source`, `--output`, `--replace-bundle`, `--dry-run`, and `--keep-temp`.
-- `libPhoneNumberCarrierMetaData/CarrierMetaData.bundle/carriers.db` is generated from Google libphonenumber `v9.0.30`.
+- `libPhoneNumberCarrierMetaData/CarrierMetaData.bundle/carriers.db` is generated from Google libphonenumber `v9.0.32`.
 - `libPhoneNumberCarrier` exists as an Objective-C SPM and CocoaPods module.
 - `libPhoneNumberSwiftCarrier` exists as a Swift SPM and CocoaPods facade.
 - `libPhoneNumberSwiftUIEnrichment` exists as an optional SPM and CocoaPods module connecting carrier/timezone metadata to SwiftUI state.

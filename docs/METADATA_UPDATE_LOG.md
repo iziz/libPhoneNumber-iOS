@@ -4,6 +4,55 @@ This file records upstream comparison results for metadata updates. Keep entries
 
 Metadata-only updates should ship as patch releases. Use a minor release only when the update also adds public API, new modules, or additive behavior beyond metadata freshness.
 
+## 2026-06-04: Google libphonenumber v9.0.32
+
+### Scope
+
+- Previous local main, testing, and short-number metadata matched Google libphonenumber `v9.0.31`.
+- Updated main phone-number metadata to `v9.0.32`.
+- Testing metadata was unchanged between `v9.0.31` and `v9.0.32`.
+- Short-number metadata was unchanged between `v9.0.31` and `v9.0.32`.
+- Regenerated geocoding metadata from `v9.0.32`; checked-in geocoding databases were unchanged.
+- Regenerated carrier metadata from `v9.0.32`; packed metadata now has 31,024 prefix rows and 107 mobile portable regions.
+- Regenerated timezone metadata from `v9.0.32`; packed metadata still has 3,294 prefix rows.
+
+### Commands
+
+```bash
+swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness
+swift scripts/updateMetadata.swift v9.0.32 --dry-run --output-root .build/metadata-update/v9.0.32-dry-run
+swift scripts/updateMetadata.swift v9.0.32 --output-root .build/metadata-update/v9.0.32
+swift scripts/updateProjectVersions.swift 1.7.2
+swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness --fail-on-update
+swift scripts/checkUpstreamTestParity.swift --upstream-ref v9.0.32
+swift scripts/checkUpstreamAPIParity.swift --upstream-ref v9.0.32
+swift scripts/checkVersionConsistency.swift
+swift test
+LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test
+swift build -c release
+swift scripts/publishPodspecs.swift --lint
+git diff --check
+```
+
+### Results
+
+- Freshness check found Google libphonenumber `v9.0.32` as the latest upstream tag.
+- Main phone-number metadata changed.
+- Testing metadata was unchanged.
+- Short-number metadata was unchanged.
+- Carrier metadata changed to 31,024 prefix rows and 107 mobile portable regions.
+- Timezone metadata source digest changed; row count stayed at 3,294.
+- Geocoding metadata was unchanged after regeneration.
+- Freshness re-check with `--fail-on-update`: metadata is up to date.
+- Upstream JS test parity: passed, 172 upstream JS tests and 180 local ObjC tests.
+- Upstream JS API parity: passed, 66 upstream JS public prototype methods and 93 local ObjC public selectors.
+- Version consistency: passed for `1.7.2`.
+- SwiftPM tests: passed, 230 tests.
+- Korean locale SwiftPM tests: passed, 230 tests.
+- Release build: passed.
+- CocoaPods lint: all podspecs available at release time passed validation.
+- Whitespace check: passed.
+
 ## 2026-05-23: Google libphonenumber v9.0.31
 
 ### Scope
