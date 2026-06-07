@@ -1145,14 +1145,22 @@ static NSArray *GEO_MOBILE_COUNTRIES;
 - (NSString * _Nonnull)format:(NBPhoneNumber * _Nonnull)phoneNumber numberFormat:(NBEPhoneNumberFormat)numberFormat {
   if ([phoneNumber.nationalNumber isEqualToNumber:@0] &&
       [NBMetadataHelper hasValue:phoneNumber.rawInput]) {
-    // Unparseable numbers that kept their raw input just use that.
-    // This is the only case where a number can be formatted as E164 without a
-    // leading '+' symbol (but the original number wasn't parseable anyway).
-    // TODO: Consider removing the 'if' above so that unparseable strings
-    // without raw input format to the empty string instead of "+00"
-    /** @type {string} */
+    // Unparseable numbers that kept their raw input just use that, unless the
+    // default country was specified and the format is E164. In that case, we
+    // prepend the raw input with the country code.
     NSString *rawInput = phoneNumber.rawInput;
-    if ([NBMetadataHelper hasValue:rawInput]) {
+    BOOL hasCountryCode = phoneNumber.countryCode != nil &&
+                          ![phoneNumber.countryCode isEqualToNumber:@-1];
+    if ([NBMetadataHelper hasValue:rawInput] &&
+        hasCountryCode &&
+        [phoneNumber.countryCodeSource integerValue] == NBECountryCodeSourceFROM_DEFAULT_COUNTRY &&
+        numberFormat == NBEPhoneNumberFormatE164) {
+      return [self prefixNumberWithCountryCallingCode:phoneNumber.countryCode
+                                    phoneNumberFormat:NBEPhoneNumberFormatE164
+                              formattedNationalNumber:rawInput
+                                   formattedExtension:@""];
+    } else if ([NBMetadataHelper hasValue:rawInput] ||
+               !hasCountryCode) {
       return rawInput;
     }
   }

@@ -848,6 +848,29 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
                                               numberFormat:NBEPhoneNumberFormatE164]);
 }
 
+- (void)testFormatAUShortCodeNumber {
+  NSError *anError = nil;
+  NBPhoneNumber *auShortCodeNumber = [_aUtil parse:@"000" defaultRegion:@"AU" error:&anError];
+  XCTAssertNil(anError);
+  XCTAssertEqualObjects(@"+61000", [_aUtil format:auShortCodeNumber
+                                      numberFormat:NBEPhoneNumberFormatE164]);
+
+  NBPhoneNumber *auRawShortCodeNumber = [[NBPhoneNumber alloc] init];
+  auRawShortCodeNumber.countryCode = @61;
+  auRawShortCodeNumber.nationalNumber = @0;
+  auRawShortCodeNumber.rawInput = @"000";
+  auRawShortCodeNumber.countryCodeSource = @(NBECountryCodeSourceFROM_DEFAULT_COUNTRY);
+  XCTAssertEqualObjects(@"+61000", [_aUtil format:auRawShortCodeNumber
+                                      numberFormat:NBEPhoneNumberFormatE164]);
+
+  NBPhoneNumber *pgShortCodeNumber = [[NBPhoneNumber alloc] init];
+  pgShortCodeNumber.countryCode = @675;
+  pgShortCodeNumber.nationalNumber = @0;
+  pgShortCodeNumber.rawInput = @"+675000";
+  XCTAssertEqualObjects(@"+675000", [_aUtil format:pgShortCodeNumber
+                                       numberFormat:NBEPhoneNumberFormatE164]);
+}
+
 - (void)testFormatARNumber {
   XCTAssertEqualObjects(@"011 8765-4321", [_aUtil format:self.arNumber
                                               numberFormat:NBEPhoneNumberFormatNATIONAL]);
