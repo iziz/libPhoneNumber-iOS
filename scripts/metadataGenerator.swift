@@ -53,6 +53,20 @@ struct Options {
   var dryRun = false
 }
 
+struct GitHubObject: Decodable {
+  let sha: String
+  let type: String
+  let url: String?
+}
+
+struct GitHubRefResponse: Decodable {
+  let object: GitHubObject
+}
+
+struct GitHubTagResponse: Decodable {
+  let object: GitHubObject
+}
+
 struct MetadataSource: CaseIterable {
   let displayName: String
   let remoteFileName: String
@@ -220,7 +234,41 @@ func runSection<T>(_ name: String, block: () throws -> T) rethrows -> T {
   return result
 }
 
-func downloadString(from url: URL, attempts: Int = 3) throws -> String {
+func githubAPIToken() -> String? {
+  let environment = ProcessInfo.processInfo.environment
+  for key in ["GITHUB_TOKEN", "GH_TOKEN"] {
+    if let token = environment[key]?.trimmingCharacters(in: .whitespacesAndNewlines),
+       !token.isEmpty {
+      return token
+    }
+  }
+  return nil
+}
+
+func isVersionTag(_ ref: String) -> Bool {
+  ref.range(of: #"^v\d+\.\d+\.\d+$"#, options: .regularExpression) != nil
+}
+
+func resolvedRawGitRef(_ ref: String) throws -> String {
+  guard isVersionTag(ref) else {
+    return ref
+  }
+
+  let escapedRef = ref.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ref
+  let refURL = URL(string: "https://api.github.com/repos/google/libphonenumber/git/ref/tags/\(escapedRef)")!
+  let refResponse = try JSONDecoder().decode(GitHubRefResponse.self, from: downloadData(from: refURL))
+
+  guard refResponse.object.type == "tag",
+        let tagURLString = refResponse.object.url,
+        let tagURL = URL(string: tagURLString) else {
+    return refResponse.object.sha
+  }
+
+  let tagResponse = try JSONDecoder().decode(GitHubTagResponse.self, from: downloadData(from: tagURL))
+  return tagResponse.object.type == "commit" ? tagResponse.object.sha : refResponse.object.sha
+}
+
+func downloadData(from url: URL, attempts: Int = 3) throws -> Data {
   var lastError: Error?
 
   for attempt in 1...attempts {
@@ -232,6 +280,13 @@ func downloadString(from url: URL, attempts: Int = 3) throws -> String {
     var request = URLRequest(url: url)
     request.timeoutInterval = 60
     request.setValue("libPhoneNumber-iOS metadataGenerator", forHTTPHeaderField: "User-Agent")
+    if url.host == "api.github.com" {
+      request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
+      request.setValue("2022-11-28", forHTTPHeaderField: "X-GitHub-Api-Version")
+      if let token = githubAPIToken() {
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+      }
+    }
 
     let task = URLSession.shared.dataTask(with: request) { data, response, error in
       resultData = data
@@ -258,11 +313,7 @@ func downloadString(from url: URL, attempts: Int = 3) throws -> String {
         throw ScriptError.invalidResponse(url)
       }
 
-      guard let string = String(data: data, encoding: .utf8) else {
-        throw ScriptError.invalidUTF8(url)
-      }
-
-      return string
+      return data
     } else {
       throw ScriptError.invalidResponse(url)
     }
@@ -273,6 +324,14 @@ func downloadString(from url: URL, attempts: Int = 3) throws -> String {
   }
 
   throw ScriptError.downloadFailed(url, lastError?.localizedDescription ?? "unknown error")
+}
+
+func downloadString(from url: URL, attempts: Int = 3) throws -> String {
+  let data = try downloadData(from: url, attempts: attempts)
+  guard let string = String(data: data, encoding: .utf8) else {
+    throw ScriptError.invalidUTF8(url)
+  }
+  return string
 }
 
 func metadataJSONString(from javaScript: String, variable: String) throws -> String {
@@ -607,8 +666,12 @@ func main() throws {
 
   let ref = normalizedGitRef(options.ref!)
   print("Using google/libphonenumber ref: \(ref)")
+  let rawDownloadRef = try resolvedRawGitRef(ref)
+  if rawDownloadRef != ref {
+    print("Resolved google/libphonenumber ref \(ref) to commit \(rawDownloadRef) for raw metadata downloads.")
+  }
 
-  let jsonFiles = try downloadMetadataJSONFiles(ref: ref)
+  let jsonFiles = try downloadMetadataJSONFiles(ref: rawDownloadRef)
 
   if !options.jsonOnly {
     try runSection(options.dryRun ? "Validating generated Objective-C metadata outputs" : "Generating Objective-C metadata outputs") {

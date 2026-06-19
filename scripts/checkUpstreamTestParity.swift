@@ -55,6 +55,100 @@ while !args.isEmpty {
 }
 
 let repoRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+var cachedRawUpstreamRef: String?
+
+struct GitHubObject: Decodable {
+  let sha: String
+  let type: String
+  let url: String?
+}
+
+struct GitHubRefResponse: Decodable {
+  let object: GitHubObject
+}
+
+struct GitHubTagResponse: Decodable {
+  let object: GitHubObject
+}
+
+func githubAPIToken() -> String? {
+  let environment = ProcessInfo.processInfo.environment
+  for key in ["GITHUB_TOKEN", "GH_TOKEN"] {
+    if let token = environment[key]?.trimmingCharacters(in: .whitespacesAndNewlines),
+       !token.isEmpty {
+      return token
+    }
+  }
+  return nil
+}
+
+func downloadData(from url: URL) throws -> Data {
+  var request = URLRequest(url: url)
+  request.timeoutInterval = 60
+  request.setValue("libPhoneNumber-iOS checkUpstreamTestParity", forHTTPHeaderField: "User-Agent")
+  if url.host == "api.github.com" {
+    request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
+    request.setValue("2022-11-28", forHTTPHeaderField: "X-GitHub-Api-Version")
+    if let token = githubAPIToken() {
+      request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+    }
+  }
+
+  let semaphore = DispatchSemaphore(value: 0)
+  var resultData: Data?
+  var resultResponse: URLResponse?
+  var resultError: Error?
+
+  URLSession.shared.dataTask(with: request) { data, response, error in
+    resultData = data
+    resultResponse = response
+    resultError = error
+    semaphore.signal()
+  }.resume()
+  semaphore.wait()
+
+  if let resultError {
+    throw resultError
+  }
+  guard let httpResponse = resultResponse as? HTTPURLResponse,
+        (200..<300).contains(httpResponse.statusCode),
+        let resultData else {
+    throw URLError(.badServerResponse)
+  }
+  return resultData
+}
+
+func isVersionTag(_ ref: String) -> Bool {
+  ref.range(of: #"^v\d+\.\d+\.\d+$"#, options: .regularExpression) != nil
+}
+
+func resolvedRawGitRef(_ ref: String) throws -> String {
+  guard isVersionTag(ref) else {
+    return ref
+  }
+
+  let escapedRef = ref.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ref
+  let refURL = URL(string: "https://api.github.com/repos/google/libphonenumber/git/ref/tags/\(escapedRef)")!
+  let refResponse = try JSONDecoder().decode(GitHubRefResponse.self, from: downloadData(from: refURL))
+
+  guard refResponse.object.type == "tag",
+        let tagURLString = refResponse.object.url,
+        let tagURL = URL(string: tagURLString) else {
+    return refResponse.object.sha
+  }
+
+  let tagResponse = try JSONDecoder().decode(GitHubTagResponse.self, from: downloadData(from: tagURL))
+  return tagResponse.object.type == "commit" ? tagResponse.object.sha : refResponse.object.sha
+}
+
+func rawUpstreamRef() throws -> String {
+  if let cachedRawUpstreamRef {
+    return cachedRawUpstreamRef
+  }
+  let resolved = try resolvedRawGitRef(upstreamRef)
+  cachedRawUpstreamRef = resolved
+  return resolved
+}
 
 func readUTF8(_ path: String) throws -> String {
   if path.hasPrefix("libPhoneNumber") {
@@ -67,7 +161,8 @@ func readUTF8(_ path: String) throws -> String {
     return try String(contentsOf: url, encoding: .utf8)
   }
 
-  let escapedRef = upstreamRef.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? upstreamRef
+  let rawRef = try rawUpstreamRef()
+  let escapedRef = rawRef.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? rawRef
   let url = URL(string: "https://raw.githubusercontent.com/google/libphonenumber/\(escapedRef)/\(path)")!
   return try String(contentsOf: url, encoding: .utf8)
 }

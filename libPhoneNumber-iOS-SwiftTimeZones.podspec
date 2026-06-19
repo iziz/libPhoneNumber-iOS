@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumber-iOS-SwiftTimeZones"
   s.module_name  = "libPhoneNumberSwiftTimeZones"
-  s.version      = "1.7.2"
+  s.version      = "1.7.3"
   s.summary      = "Swift-first timezone facade for libPhoneNumber-iOS"
   s.description  = "Swift-first timezone metadata facade over libPhoneNumberTimeZones."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
@@ -25,8 +25,8 @@ Pod::Spec.new do |s|
   s.swift_version = "5.5"
   s.requires_arc = true
 
-  s.dependency 'libPhoneNumber-iOS-SwiftCore', '~> 1.7.2'
-  s.dependency 'libPhoneNumberTimeZones', '~> 1.7.2'
+  s.dependency 'libPhoneNumber-iOS-SwiftCore', '~> 1.7.3'
+  s.dependency 'libPhoneNumberTimeZones', '~> 1.7.3'
 
   s.source_files = [
                     'libPhoneNumberSwiftTimeZones/**/*.swift',

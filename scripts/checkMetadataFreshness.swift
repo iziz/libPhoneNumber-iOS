@@ -58,6 +58,20 @@ struct RemoteTag: Decodable {
   let name: String
 }
 
+struct GitHubObject: Decodable {
+  let sha: String
+  let type: String
+  let url: String?
+}
+
+struct GitHubRefResponse: Decodable {
+  let object: GitHubObject
+}
+
+struct GitHubTagResponse: Decodable {
+  let object: GitHubObject
+}
+
 struct FileSummary {
   let file: MetadataFile
   let currentBytes: Int
@@ -265,6 +279,29 @@ func latestUpstreamTag() throws -> String {
   return latest
 }
 
+func isVersionTag(_ ref: String) -> Bool {
+  ref.range(of: #"^v\d+\.\d+\.\d+$"#, options: .regularExpression) != nil
+}
+
+func resolvedRawGitRef(_ ref: String) throws -> String {
+  guard isVersionTag(ref) else {
+    return ref
+  }
+
+  let escapedRef = ref.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ref
+  let refURL = URL(string: "https://api.github.com/repos/google/libphonenumber/git/ref/tags/\(escapedRef)")!
+  let refResponse = try JSONDecoder().decode(GitHubRefResponse.self, from: download(refURL))
+
+  guard refResponse.object.type == "tag",
+        let tagURLString = refResponse.object.url,
+        let tagURL = URL(string: tagURLString) else {
+    return refResponse.object.sha
+  }
+
+  let tagResponse = try JSONDecoder().decode(GitHubTagResponse.self, from: download(tagURL))
+  return tagResponse.object.type == "commit" ? tagResponse.object.sha : refResponse.object.sha
+}
+
 @discardableResult
 func runProcess(_ executable: String, _ arguments: [String]) throws -> Data {
   let process = Process()
@@ -302,9 +339,11 @@ func rawURL(ref: String, path: String) -> URL {
 
 func summarize(currentRef: String, latestRef: String, outputDirectory: URL) throws -> [FileSummary] {
   try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true)
+  let currentDownloadRef = try resolvedRawGitRef(currentRef)
+  let latestDownloadRef = currentRef == latestRef ? currentDownloadRef : try resolvedRawGitRef(latestRef)
   return try MetadataFile.allCases.map { file in
-    let currentData = try download(rawURL(ref: currentRef, path: file.remotePath))
-    let latestData = try download(rawURL(ref: latestRef, path: file.remotePath))
+    let currentData = try download(rawURL(ref: currentDownloadRef, path: file.remotePath))
+    let latestData = try download(rawURL(ref: latestDownloadRef, path: file.remotePath))
     let safeName = file.remotePath.replacingOccurrences(of: "/", with: "_")
     return FileSummary(
       file: file,
