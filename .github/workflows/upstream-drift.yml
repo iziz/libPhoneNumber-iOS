@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.0
 
       - name: Check metadata freshness against the latest Google tag
         env:
@@ -24,7 +24,7 @@ jobs:
 
       - name: Upload metadata freshness artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: metadata-freshness
           path: .build/metadata-freshness
@@ -36,14 +36,14 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.0
 
       - name: Check tracked upstream source and resource drift
         run: swift scripts/checkUpstreamSourceDrift.swift --output .build/upstream-source-drift
 
       - name: Upload source drift artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: upstream-source-drift
           path: .build/upstream-source-drift
@@ -55,7 +55,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.0
 
       - name: Check upstream test parity against Google master
         run: swift scripts/checkUpstreamTestParity.swift --upstream-ref master

@@ -4,6 +4,63 @@ This file records upstream comparison results for metadata updates. Keep entries
 
 Metadata-only updates should ship as patch releases. Use a minor release only when the update also adds public API, new modules, or additive behavior beyond metadata freshness.
 
+## 2026-07-04: Google libphonenumber v9.0.34
+
+### Scope
+
+- Previous local main, testing, and short-number metadata matched Google libphonenumber `v9.0.33`.
+- Updated main phone-number metadata to `v9.0.34`.
+- Testing metadata was unchanged between `v9.0.33` and `v9.0.34`.
+- Short-number metadata was unchanged between `v9.0.33` and `v9.0.34`.
+- Regenerated geocoding metadata from `v9.0.34`; checked-in geocoding databases were unchanged.
+- Regenerated carrier metadata from `v9.0.34`; packed metadata now has 31,019 prefix rows and 107 mobile portable regions.
+- Regenerated timezone metadata from `v9.0.34`; packed metadata now has 3,295 prefix rows and 286 unique timezone IDs.
+- Updated project and podspec versions to `1.7.4`.
+
+### Commands
+
+```bash
+swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness
+swift scripts/updateMetadata.swift v9.0.34 --dry-run --output-root .build/metadata-update/v9.0.34-dry-run
+swift scripts/updateMetadata.swift v9.0.34 --output-root .build/metadata-update/v9.0.34
+swift scripts/updateProjectVersions.swift 1.7.4
+swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness --fail-on-update
+swift scripts/checkUpstreamTestParity.swift --upstream-ref v9.0.34
+swift scripts/checkUpstreamAPIParity.swift --upstream-ref v9.0.34
+swift scripts/checkVersionConsistency.swift
+swift scripts/checkUpstreamSourceDrift.swift --output .build/upstream-source-drift
+scripts/testGeocodingMetadataUpdater.sh
+swift test
+LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test
+swift build -c release
+swift scripts/publishPodspecs.swift --lint
+swift scripts/testXcodeSchemes.swift --destination 'id=C768167E-DCA0-42C0-A2C0-813F6189F418'
+git diff --check
+```
+
+### Results
+
+- Freshness check found Google libphonenumber `v9.0.34` as the latest upstream tag.
+- Main phone-number metadata changed.
+- Testing metadata was unchanged.
+- Short-number metadata was unchanged.
+- Metadata update resolved `v9.0.34` to peeled commit `e6bd443a4d7a38662018a4f24c2265f944afd5fb` for raw metadata downloads.
+- Carrier metadata changed to 31,019 prefix rows and 107 mobile portable regions.
+- Timezone metadata source digest changed; row count increased to 3,295 and unique timezone IDs stayed at 286.
+- Geocoding metadata was unchanged after regeneration.
+- Freshness re-check with `--fail-on-update`: metadata is up to date.
+- Upstream JS test parity: passed, 173 upstream JS tests and 181 local ObjC tests.
+- Upstream JS API parity: passed, 66 upstream JS public prototype methods and 93 local ObjC public selectors.
+- Version consistency: passed for `1.7.4`.
+- Source/resource drift check: passed, 0 changed tracked files from Google `master`.
+- Geocoding metadata updater smoke test: passed.
+- SwiftPM tests: passed, 231 tests.
+- Korean locale SwiftPM tests: passed, 231 tests.
+- Release build: passed.
+- CocoaPods lint: all podspecs passed validation.
+- Xcode scheme tests: `libPhoneNumber`, `libPhoneNumberGeocoding`, and `libPhoneNumberShortNumber` passed on iPhone 17 simulator `C768167E-DCA0-42C0-A2C0-813F6189F418`.
+- Whitespace check: passed.
+
 ## 2026-06-19: Google libphonenumber v9.0.33
 
 ### Scope
