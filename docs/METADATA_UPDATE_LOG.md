@@ -4,6 +4,70 @@ This file records upstream comparison results for metadata updates. Keep entries
 
 Metadata-only updates should ship as patch releases. Use a minor release only when the update also adds public API, new modules, or additive behavior beyond metadata freshness.
 
+## 2026-07-17: Google libphonenumber v9.0.35
+
+### Scope
+
+- Previous local main, testing, and short-number metadata matched Google libphonenumber `v9.0.34`.
+- Updated main phone-number metadata to `v9.0.35`.
+- Testing metadata was unchanged between `v9.0.34` and `v9.0.35`.
+- Updated short-number metadata to `v9.0.35`.
+- Regenerated geocoding metadata from `v9.0.35`; checked-in geocoding databases were unchanged.
+- Regenerated carrier metadata from `v9.0.35`; packed metadata now has 31,033 prefix rows and 107 mobile portable regions.
+- Regenerated timezone metadata from `v9.0.35`; source data remained unchanged at 3,295 prefix rows and 286 unique timezone IDs, while the bundle baseline ref advanced to `v9.0.35`.
+- Updated project and podspec versions to `1.7.5`.
+
+### Upstream Logic And Resource Comparison
+
+- Compared tracked Google source and resource paths from `v9.0.34` (`e6bd443a4d7a`) to `v9.0.35` (`aa97ee8d2582`).
+- All 20 changed tracked files were phone-number, short-number, carrier, or geocoding metadata resources.
+- The tracked JavaScript implementation, test, and public API files were unchanged, so no Objective-C logic or test port was required.
+- A final comparison from `v9.0.35` to Google `master` (`f7e3e88c92b9`) found zero tracked source or resource changes.
+
+### Commands
+
+```bash
+swift scripts/checkMetadataFreshness.swift --output .build/metadata-freshness
+swift scripts/updateMetadata.swift v9.0.35 --dry-run --output-root .build/metadata-update/v9.0.35-dry-run
+swift scripts/checkUpstreamSourceDrift.swift --current-ref v9.0.34 --upstream-ref v9.0.35 --output .build/upstream-source-drift-v9.0.34-to-v9.0.35
+swift scripts/checkUpstreamTestParity.swift --upstream-ref v9.0.35
+swift scripts/checkUpstreamAPIParity.swift --upstream-ref v9.0.35
+swift scripts/updateMetadata.swift v9.0.35 --output-root .build/metadata-update/v9.0.35
+swift scripts/updateProjectVersions.swift 1.7.5
+swift scripts/checkVersionConsistency.swift
+scripts/testGeocodingMetadataUpdater.sh
+swift test
+LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test
+swift build -c release
+swift scripts/testXcodeSchemes.swift --destination 'id=C768167E-DCA0-42C0-A2C0-813F6189F418' --derived-data-root /tmp/libphonenumber-1.7.5-xcode
+swift scripts/publishPodspecs.swift --lint
+swift scripts/checkMetadataFreshness.swift --current-ref v9.0.35 --output .build/metadata-freshness-v9.0.35-final --fail-on-update
+swift scripts/checkUpstreamTestParity.swift --upstream-ref master
+swift scripts/checkUpstreamAPIParity.swift --upstream-ref master
+swift scripts/checkUpstreamSourceDrift.swift --current-ref v9.0.35 --upstream-ref master --output .build/upstream-source-drift-v9.0.35-to-master
+git diff --check
+```
+
+### Results
+
+- Freshness check found Google libphonenumber `v9.0.35` as the latest upstream tag.
+- Main phone-number and short-number metadata changed; testing metadata was unchanged.
+- Metadata generation resolved `v9.0.35` to peeled commit `aa97ee8d2582a727e150104aea96dc0d79e186ef`.
+- Carrier metadata changed to 31,033 prefix rows and 107 mobile portable regions.
+- Geocoding databases were unchanged after regeneration.
+- Timezone source data was unchanged; the regenerated database records `upstream_ref` `v9.0.35` with 3,295 prefix rows.
+- Upstream `v9.0.35` and Google `master` JS test parity passed with 173 upstream JS tests and 181 local Objective-C tests.
+- Upstream `v9.0.35` and Google `master` JS API parity passed with 66 upstream public prototype methods and 93 local Objective-C public selectors.
+- Google `master` source/resource drift check passed with zero changed tracked files after `v9.0.35`.
+- Version consistency passed for `1.7.5`.
+- Geocoding metadata updater smoke test passed.
+- SwiftPM tests passed in the default and Korean locales: 231 tests in each run.
+- Release build passed.
+- Xcode scheme tests passed for `libPhoneNumber`, `libPhoneNumberGeocoding`, and `libPhoneNumberShortNumber` on the iPhone 17 / iOS 26.5 simulator.
+- All 13 podspecs passed dependency-aware CocoaPods lint.
+- Final freshness check with `--fail-on-update` passed.
+- Whitespace check passed.
+
 ## 2026-07-04: Google libphonenumber v9.0.34
 
 ### Scope

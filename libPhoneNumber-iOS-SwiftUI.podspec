@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumber-iOS-SwiftUI"
   s.module_name  = "libPhoneNumberSwiftUI"
-  s.version      = "1.7.4"
+  s.version      = "1.7.5"
   s.summary      = "SwiftUI phone input component for libPhoneNumber-iOS"
   s.description  = "SwiftUI phone input component with live as-you-type formatting, validation state, region picker hooks, and E.164 output."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.swift_version = "5.5"
   s.requires_arc = true
 
-  s.dependency 'libPhoneNumber-iOS-SwiftCore', '~> 1.7.4'
+  s.dependency 'libPhoneNumber-iOS-SwiftCore', '~> 1.7.5'
 
   s.source_files = [
                     'libPhoneNumberSwiftUI/**/*.swift',
