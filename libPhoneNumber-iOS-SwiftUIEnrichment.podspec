@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumber-iOS-SwiftUIEnrichment"
   s.module_name  = "libPhoneNumberSwiftUIEnrichment"
-  s.version      = "1.7.5"
+  s.version      = "1.7.6"
   s.summary      = "SwiftUI carrier and timezone enrichment for libPhoneNumber-iOS"
   s.description  = "Optional SwiftUI phone-input enrichment that connects carrier and timezone metadata to libPhoneNumberSwiftUI state."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
@@ -25,9 +25,9 @@ Pod::Spec.new do |s|
   s.swift_version = "5.5"
   s.requires_arc = true
 
-  s.dependency 'libPhoneNumber-iOS-SwiftUI', '~> 1.7.5'
-  s.dependency 'libPhoneNumber-iOS-SwiftCarrier', '~> 1.7.5'
-  s.dependency 'libPhoneNumber-iOS-SwiftTimeZones', '~> 1.7.5'
+  s.dependency 'libPhoneNumber-iOS-SwiftUI', '~> 1.7.6'
+  s.dependency 'libPhoneNumber-iOS-SwiftCarrier', '~> 1.7.6'
+  s.dependency 'libPhoneNumber-iOS-SwiftTimeZones', '~> 1.7.6'
 
   s.source_files = [
                     'libPhoneNumberSwiftUIEnrichment/**/*.swift',
