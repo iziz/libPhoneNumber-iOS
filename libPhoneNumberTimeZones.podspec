@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumberTimeZones"
-  s.version      = "1.7.6"
+  s.version      = "1.7.7"
   s.summary      = "Timezone metadata features for libPhoneNumber-iOS"
   s.description  = "Timezone metadata lookup for libPhoneNumber-iOS. This optional module stores timezone prefix metadata on disk."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
 
   s.resources    = "libPhoneNumberTimeZonesMetaData/*.bundle"
 
-  s.dependency 'libPhoneNumber-iOS', '~> 1.7.6'
+  s.dependency 'libPhoneNumber-iOS', '~> 1.7.7'
 
   s.source_files = [
                     'libPhoneNumberTimeZones/**/*.{h,m}',
