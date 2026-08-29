@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumber-iOS-SwiftCarrier"
   s.module_name  = "libPhoneNumberSwiftCarrier"
-  s.version      = "1.7.7"
+  s.version      = "1.7.8"
   s.summary      = "Swift-first carrier facade for libPhoneNumber-iOS"
   s.description  = "Swift-first carrier metadata facade over libPhoneNumberCarrier."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
@@ -25,8 +25,8 @@ Pod::Spec.new do |s|
   s.swift_version = "5.5"
   s.requires_arc = true
 
-  s.dependency 'libPhoneNumber-iOS-SwiftCore', '~> 1.7.7'
-  s.dependency 'libPhoneNumberCarrier', '~> 1.7.7'
+  s.dependency 'libPhoneNumber-iOS-SwiftCore', '~> 1.7.8'
+  s.dependency 'libPhoneNumberCarrier', '~> 1.7.8'
 
   s.source_files = [
                     'libPhoneNumberSwiftCarrier/**/*.swift',

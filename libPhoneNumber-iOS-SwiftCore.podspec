@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumber-iOS-SwiftCore"
   s.module_name  = "libPhoneNumberSwiftCore"
-  s.version      = "1.7.7"
+  s.version      = "1.7.8"
   s.summary      = "Swift-first core facade for libPhoneNumber-iOS"
   s.description  = "Swift-first core facade over the stable Objective-C libPhoneNumber-iOS parser, formatter, and validator."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.swift_version = "5.5"
   s.requires_arc = true
 
-  s.dependency 'libPhoneNumber-iOS', '~> 1.7.7'
+  s.dependency 'libPhoneNumber-iOS', '~> 1.7.8'
 
   s.source_files = [
                     'libPhoneNumberSwiftCore/**/*.swift',

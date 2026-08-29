@@ -396,6 +396,40 @@ func removeExistingDatabases(in directory: URL, dryRun: Bool) throws {
   }
 }
 
+func replaceBundleDatabases(from sourceDirectory: URL) throws {
+  let fileManager = FileManager.default
+  let generatedDatabases = try fileManager.contentsOfDirectory(
+    at: sourceDirectory,
+    includingPropertiesForKeys: nil,
+    options: [.skipsHiddenFiles]
+  )
+    .filter { $0.pathExtension.lowercased() == "db" }
+    .sorted { $0.lastPathComponent < $1.lastPathComponent }
+
+  guard !generatedDatabases.isEmpty else {
+    throw ScriptError.processFailed("No generated geocoding databases found in \(sourceDirectory.path)")
+  }
+
+  try fileManager.createDirectory(at: bundleDirectory, withIntermediateDirectories: true)
+  let generatedNames = Set(generatedDatabases.map(\.lastPathComponent))
+  let existingDatabases = try fileManager.contentsOfDirectory(
+    at: bundleDirectory,
+    includingPropertiesForKeys: nil,
+    options: [.skipsHiddenFiles]
+  ).filter { $0.pathExtension.lowercased() == "db" }
+
+  for generatedDatabase in generatedDatabases {
+    let destination = bundleDirectory.appendingPathComponent(generatedDatabase.lastPathComponent)
+    try Data(contentsOf: generatedDatabase).write(to: destination, options: .atomic)
+  }
+
+  for existingDatabase in existingDatabases where !generatedNames.contains(existingDatabase.lastPathComponent) {
+    try fileManager.removeItem(at: existingDatabase)
+  }
+
+  print("Replaced \(bundleDirectory.path) with \(generatedDatabases.count) generated databases")
+}
+
 func generateDatabases(from geocodingDirectory: URL, to outputDirectory: URL, replaceBundle: Bool, dryRun: Bool) throws {
   print("Reading geocoding metadata from \(geocodingDirectory.path)")
   print("\(dryRun ? "Dry run output" : "Writing output") to \(outputDirectory.path)")
@@ -473,6 +507,14 @@ func main() throws {
     replaceBundle: options.replaceBundle,
     dryRun: options.dryRun
   )
+
+  if options.replaceBundle && outputURL.standardizedFileURL != bundleDirectory.standardizedFileURL {
+    if options.dryRun {
+      print("  would replace \(bundleDirectory.path) with the generated databases")
+    } else {
+      try replaceBundleDatabases(from: outputURL)
+    }
+  }
 }
 
 do {
