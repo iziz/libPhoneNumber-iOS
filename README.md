@@ -17,6 +17,20 @@ Use the Objective-C API when you need source-compatible legacy integration. Use 
 - Swift Package Manager and CocoaPods are both supported.
 - Metadata updates are tracked against Google libphonenumber with parity checks and review artifacts.
 
+## Requirements
+
+| Platform | Minimum version |
+| --- | --- |
+| iOS | 15.0 |
+| macCatalyst | 15.0 |
+| tvOS | 15.0 |
+| watchOS | 9.0 |
+| macOS | 12.0 |
+
+These are the lowest deployment targets Xcode 27 accepts. Version 1.7.x
+supports iOS 12, tvOS 12, watchOS 4, and macOS 10.13, but cannot be built
+with Xcode 27.
+
 ## Recommended Setup
 
 For most Swift apps, start with the core Swift facade:
@@ -45,13 +59,13 @@ Use the umbrella product when you want one non-UI import for core, geocoding, an
 For CocoaPods Swift apps:
 
 ```ruby
-pod 'libPhoneNumber-iOS-SwiftCore', '~> 1.7'
+pod 'libPhoneNumber-iOS-SwiftCore', '~> 2.0'
 ```
 
 For the CocoaPods umbrella facade:
 
 ```ruby
-pod 'libPhoneNumber-iOS-Swift', '~> 1.7'
+pod 'libPhoneNumber-iOS-Swift', '~> 2.0'
 ```
 
 Then import the umbrella module as:
@@ -120,34 +134,34 @@ Objective-C-compatible products are also available:
 Core Objective-C API:
 
 ```ruby
-pod 'libPhoneNumber-iOS', '~> 1.7'
+pod 'libPhoneNumber-iOS', '~> 2.0'
 ```
 
 Swift facade modules:
 
 ```ruby
-pod 'libPhoneNumber-iOS-SwiftCore', '~> 1.7'
-pod 'libPhoneNumber-iOS-SwiftGeocoding', '~> 1.7'
-pod 'libPhoneNumber-iOS-SwiftShortNumber', '~> 1.7'
-pod 'libPhoneNumber-iOS-SwiftCarrier', '~> 1.7'
-pod 'libPhoneNumber-iOS-SwiftTimeZones', '~> 1.7'
-pod 'libPhoneNumber-iOS-SwiftUI', '~> 1.7'
-pod 'libPhoneNumber-iOS-SwiftUIEnrichment', '~> 1.7'
+pod 'libPhoneNumber-iOS-SwiftCore', '~> 2.0'
+pod 'libPhoneNumber-iOS-SwiftGeocoding', '~> 2.0'
+pod 'libPhoneNumber-iOS-SwiftShortNumber', '~> 2.0'
+pod 'libPhoneNumber-iOS-SwiftCarrier', '~> 2.0'
+pod 'libPhoneNumber-iOS-SwiftTimeZones', '~> 2.0'
+pod 'libPhoneNumber-iOS-SwiftUI', '~> 2.0'
+pod 'libPhoneNumber-iOS-SwiftUIEnrichment', '~> 2.0'
 ```
 
 Swift umbrella facade:
 
 ```ruby
-pod 'libPhoneNumber-iOS-Swift', '~> 1.7'
+pod 'libPhoneNumber-iOS-Swift', '~> 2.0'
 ```
 
 Objective-C optional modules:
 
 ```ruby
-pod 'libPhoneNumberGeocoding', '~> 1.7'
-pod 'libPhoneNumberShortNumber', '~> 1.7'
-pod 'libPhoneNumberCarrier', '~> 1.7'
-pod 'libPhoneNumberTimeZones', '~> 1.7'
+pod 'libPhoneNumberGeocoding', '~> 2.0'
+pod 'libPhoneNumberShortNumber', '~> 2.0'
+pod 'libPhoneNumberCarrier', '~> 2.0'
+pod 'libPhoneNumberTimeZones', '~> 2.0'
 ```
 
 ### Carthage
