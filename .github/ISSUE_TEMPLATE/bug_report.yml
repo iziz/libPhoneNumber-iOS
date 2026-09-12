@@ -1,0 +1,87 @@
+name: Bug report
+description: A number is parsed, formatted, validated, or described incorrectly, or an API misbehaves.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This library ports Google's libphonenumber. If Google's own
+        implementation agrees with the behavior you are seeing, the change
+        belongs upstream rather than here — please say so below and link it.
+
+  - type: input
+    id: number
+    attributes:
+      label: Phone number
+      description: >
+        The number that reproduces the problem, with its region. Use a test or
+        example number rather than a real person's number where you can.
+      placeholder: "+82 10 6543 1234, default region KR"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual result
+      description: What you expected each API to return, and what it returned.
+      placeholder: |
+        isValidNumber: expected true, got false
+        format(.e164): expected "+821065431234", got "+8201065431234"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: The smallest snippet that shows the problem.
+      render: swift
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Library version
+      placeholder: "2.0.1"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: integration
+    attributes:
+      label: Integration
+      options:
+        - Swift Package Manager
+        - CocoaPods
+        - Carthage
+        - Manual
+    validations:
+      required: true
+
+  - type: input
+    id: module
+    attributes:
+      label: Module
+      description: Which product you imported, for example libPhoneNumberSwiftCore or libPhoneNumberGeocoding.
+      placeholder: libPhoneNumberSwiftCore
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Xcode and platform
+      placeholder: "Xcode 27.0, iOS 18.2 simulator"
+    validations:
+      required: true
+
+  - type: textarea
+    id: upstream
+    attributes:
+      label: Upstream comparison
+      description: >
+        Optional but very helpful. What does Google's libphonenumber do with the
+        same number? The demo at https://libphonenumber.appspot.com answers this
+        in a few seconds.

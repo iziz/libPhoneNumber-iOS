@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Upstream libphonenumber behavior
+    url: https://github.com/google/libphonenumber/issues
+    about: Report parsing, formatting, or validation rules that are wrong in Google's library itself, not just in this port.
+  - name: Security vulnerability
+    url: https://github.com/iziz/libPhoneNumber-iOS/security/advisories/new
+    about: Report privately instead of opening an issue.

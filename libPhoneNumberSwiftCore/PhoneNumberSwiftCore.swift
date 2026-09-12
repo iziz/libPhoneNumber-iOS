@@ -5,8 +5,15 @@ import libPhoneNumber
 import libPhoneNumber_iOS
 #endif
 
+/// A parsed phone number.
+///
+/// This is the Objective-C model object. It is a mutable reference type and is
+/// therefore not `Sendable`: do not share one instance across concurrency
+/// domains. Use ``PhoneNumberValue`` for anything that crosses an actor
+/// boundary, gets stored, or is sent over the wire.
 public typealias PhoneNumber = NBPhoneNumber
 
+@available(*, deprecated, message: "Unused. Every throwing API reports failures as PhoneNumberValueError or the underlying NSError. This type will be removed in the next major version.")
 public enum PhoneNumberError: Error {
     case operationFailed(String)
 
@@ -15,10 +22,31 @@ public enum PhoneNumberError: Error {
     }
 }
 
-public enum PhoneNumberValueError: Error, Equatable {
+/// The error reported by every non-throwing `Result`-returning API on
+/// ``PhoneNumberUtility``.
+public enum PhoneNumberValueError: Error, Equatable, Sendable {
+    /// The text could not be parsed as a phone number.
     case invalidInput(String)
+    /// The number parsed, but could not be rendered in the requested format.
     case formattingFailed(String)
+    /// An error raised by the Objective-C core, flattened to its description.
     case underlying(String)
+
+    /// Wraps an arbitrary error thrown by the Objective-C core.
+    public init(_ error: Error) {
+        self = .underlying(error.localizedDescription)
+    }
+}
+
+extension PhoneNumberValueError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .invalidInput(message),
+             let .formattingFailed(message),
+             let .underlying(message):
+            return message
+        }
+    }
 }
 
 public struct PhoneNumberValue: Codable, Hashable, Sendable {
@@ -111,9 +139,19 @@ public enum CountryCodeSource: Int, Codable, Sendable {
     }
 }
 
-public final class PhoneNumberUtility {
+/// The Objective-C core this facade wraps is safe to share across threads: its
+/// regular-expression caches are lock-protected, its derived metadata tables are
+/// built under a lock, and every table it reads is immutable after
+/// initialization. Sendable is therefore asserted rather than checked, because
+/// the compiler cannot see the Objective-C side's locking.
+public final class PhoneNumberUtility: @unchecked Sendable {
     public static let shared = PhoneNumberUtility()
 
+    /// The wrapped Objective-C utility.
+    ///
+    /// Exposed as an escape hatch for APIs this facade does not surface yet.
+    /// Prefer the Swift methods on this type; anything reachable only through
+    /// `objc` is not covered by the facade's source-stability guarantees.
     public let objc: NBPhoneNumberUtil
 
     public init(objc: NBPhoneNumberUtil = NBPhoneNumberUtil.sharedInstance()) {
@@ -182,7 +220,7 @@ public final class PhoneNumberUtility {
         do {
             return .success(try parse(value.e164, defaultRegion: nil))
         } catch {
-            return .failure(.underlying(error.localizedDescription))
+            return .failure(PhoneNumberValueError(error))
         }
     }
 
@@ -299,7 +337,14 @@ public final class PhoneNumberUtility {
     }
 }
 
+/// Formats a number as the user types it.
+///
+/// Each formatter carries the digits entered so far, so it is a stateful object
+/// and deliberately not `Sendable`. Create one per input field and keep its use
+/// on a single concurrency domain.
 public final class AsYouTypeFormatter {
+    /// The wrapped Objective-C formatter. See ``PhoneNumberUtility/objc`` for
+    /// how this escape hatch is meant to be used.
     public let objc: NBAsYouTypeFormatter
 
     public init(regionCode: String) {

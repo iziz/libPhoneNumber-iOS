@@ -28,4 +28,14 @@ ObjectiveC.gcda
 
 # SPM
 .build
-.swiftpm
+
+# Track only the generated package workspace. xcodebuild picks
+# libPhoneNumber.xcodeproj over Package.swift when both sit in the repository
+# root, so building the package's own schemes needs this file to exist in a
+# fresh checkout. Everything else under .swiftpm is per-user Xcode state.
+.swiftpm/*
+!.swiftpm/xcode/
+.swiftpm/xcode/*
+!.swiftpm/xcode/package.xcworkspace/
+.swiftpm/xcode/package.xcworkspace/*
+!.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata

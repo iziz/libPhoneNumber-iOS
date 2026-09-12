@@ -4,7 +4,10 @@ import libPhoneNumberSwiftCore
 import libPhoneNumberTimeZones
 #endif
 
-public final class PhoneNumberTimeZonesMapper {
+/// The Objective-C timezone mapper is safe to share across threads: every SQLite
+/// statement it owns is used under `@synchronized(self)`. Sendable is asserted
+/// rather than checked, because the compiler cannot see that locking.
+public final class PhoneNumberTimeZonesMapper: @unchecked Sendable {
     public static let shared = PhoneNumberTimeZonesMapper()
     public static let unknownTimeZone = NBPhoneNumberToTimeZonesMapper.unknownTimeZone()
 

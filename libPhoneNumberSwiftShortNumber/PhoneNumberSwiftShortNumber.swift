@@ -15,7 +15,11 @@ public enum ShortNumberCost: UInt, Codable, Sendable {
     }
 }
 
-public final class ShortNumberUtility {
+/// The Objective-C short-number utility is safe to share across threads: it
+/// reads immutable metadata and delegates pattern matching to the shared,
+/// lock-protected regular-expression cache. Sendable is asserted rather than
+/// checked, because the compiler cannot see the Objective-C side's locking.
+public final class ShortNumberUtility: @unchecked Sendable {
     public static let shared = ShortNumberUtility()
 
     public let objc: NBShortNumberUtil

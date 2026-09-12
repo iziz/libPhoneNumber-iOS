@@ -26,10 +26,14 @@ Use the Objective-C API when you need source-compatible legacy integration. Use 
 | tvOS | 15.0 |
 | watchOS | 9.0 |
 | macOS | 12.0 |
+| visionOS | 1.0 |
 
 These are the lowest deployment targets Xcode 27 accepts. Version 1.7.x
 supports iOS 12, tvOS 12, watchOS 4, and macOS 10.13, but cannot be built
 with Xcode 27.
+
+The Swift package requires Swift 6 tools and builds in the Swift 6 language
+mode. The CocoaPods specs accept Swift 5.9 or 6.0.
 
 ## Recommended Setup
 
@@ -203,6 +207,23 @@ value.regionCode
 value.nationalSignificantNumber
 value.type
 ```
+
+### Concurrency
+
+`PhoneNumberUtility`, `PhoneNumberGeocoder`, `ShortNumberUtility`,
+`PhoneNumberCarrierMapper`, and `PhoneNumberTimeZonesMapper` are `Sendable`.
+Their shared instances can be used from any task without a Swift 6 concurrency
+error. The conformances are `@unchecked`, resting on the locking inside the
+Objective-C core, and the package's concurrency tests exercise the shared
+instances under load with the thread sanitizer enabled.
+
+Two types are deliberately not `Sendable`:
+
+- `PhoneNumber` (the Objective-C model object) is a mutable reference type. Keep
+  it inside the scope that parsed it and use `PhoneNumberValue` for anything
+  that is stored, encoded, or crosses an actor boundary.
+- `AsYouTypeFormatter` accumulates the digits entered so far. Create one per
+  input field.
 
 ### As-You-Type Formatting
 
@@ -488,6 +509,12 @@ swift scripts/testXcodeSchemes.swift
    swift scripts/publishPodspecs.swift
    swift scripts/publishPodspecs.swift --publish
    ```
+
+## Contributing
+
+- [Changelog](CHANGELOG.md)
+- [Contributing guide](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
 
 ## Maintenance Guides
 
