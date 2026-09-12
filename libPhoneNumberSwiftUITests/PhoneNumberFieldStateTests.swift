@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 import libPhoneNumberSwiftCore
 import libPhoneNumberSwiftUI
@@ -19,18 +20,18 @@ struct PhoneNumberFieldStateTests {
         #expect(state.error == nil)
     }
 
-    /// The state carries a concrete error, so callers can switch over it and
-    /// compare two states for equality.
-    @Test("An unparseable entry reports a typed error")
-    func typedError() {
+    /// The state carries the error raised by the Objective-C core, so callers
+    /// keep access to its domain and code.
+    @Test("An unparseable entry reports the underlying error")
+    func underlyingError() {
         let state = formatter.state(for: "abc", defaultRegion: "US")
 
         #expect(state.e164 == nil)
         #expect(!state.isValid)
-        guard case .underlying = state.error else {
-            Issue.record("Expected .underlying, got \(String(describing: state.error))")
-            return
-        }
+
+        let error = state.error as NSError?
+        #expect(error != nil)
+        #expect(error?.localizedDescription.isEmpty == false)
     }
 
     @Test("States compare equal when their contents match")
@@ -55,12 +56,19 @@ struct PhoneNumberFieldStateTests {
         #expect(formatter.formattedText(for: "6502530000", defaultRegion: "US") == "(650) 253-0000")
     }
 
-    @Test("Field state crosses concurrency domains")
-    func stateIsSendable() async {
+    /// PhoneNumberFieldState holds an existential Error and is deliberately not
+    /// Sendable. Use PhoneNumberValue, which is, for anything that leaves the
+    /// field's concurrency domain.
+    @Test("The value derived from a state crosses concurrency domains")
+    func valueIsSendable() async throws {
         let state = formatter.state(for: "6502530000", defaultRegion: "US")
+        let e164 = try #require(state.e164)
+        let value = try PhoneNumberUtility.shared
+            .value(from: e164, defaultRegion: state.regionCode)
+            .get()
 
-        let echoed = await Task { state }.value
+        let echoed = await Task { value }.value
 
-        #expect(echoed == state)
+        #expect(echoed == value)
     }
 }

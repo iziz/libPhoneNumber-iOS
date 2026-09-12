@@ -9,8 +9,12 @@ as described in `docs/RELEASE_RUNBOOK.md`.
 
 ## Unreleased
 
-This release carries breaking API changes and must be published as a major
-version.
+Additive. No public API is removed or changed, so this is a minor release.
+
+The one compatibility note is the toolchain: the Swift package now requires
+Swift 6 tools, so Swift Package Manager consumers need Xcode 16 or later.
+Deployment targets are unchanged, and the CocoaPods specs accept Swift 5.9 or
+6.0.
 
 ### Fixed
 
@@ -42,6 +46,9 @@ version.
   podspec sets `visionos.deployment_target`, and CI builds every product for it.
 - All Swift facade entry points are `Sendable`, so `PhoneNumberUtility.shared`
   and its siblings can be used from Swift 6 code without a concurrency error.
+  `PhoneNumberFieldState` stays non-`Sendable` because it carries the error
+  raised by the Objective-C core, whose domain and code callers rely on; use
+  `PhoneNumberValue` for state that leaves the field's concurrency domain.
   The conformances are `@unchecked` and documented against the Objective-C
   core's locking, and the concurrency test suite exercises the shared instances
   from many tasks at once under the thread sanitizer.
@@ -61,12 +68,6 @@ version.
 
 - The package requires Swift 6 tools (`swift-tools-version:6.0`) and builds in
   the Swift 6 language mode. Podspecs accept Swift 5.9 or 6.0.
-- **Breaking.** `PhoneNumberFieldState.error` is a `PhoneNumberValueError?`
-  rather than an existential `Error?`. The state is now `Sendable` and its
-  `Equatable` conformance is synthesized instead of comparing error descriptions.
-  Code that reads `state.error` as an `NSError` needs to switch over the enum.
-- **Breaking.** `PhoneNumberEnriching` requires `Sendable`. Existing conformances
-  compile unchanged unless they capture non-`Sendable` state.
 - `PhoneNumberUtility.phoneNumber(from:)` reports failures through
   `PhoneNumberValueError(_:)`, consistent with the other `Result`-returning APIs.
 - The regular-expression cache compiles patterns outside its lock, so a cache hit

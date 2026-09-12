@@ -5,11 +5,7 @@ import UIKit
 #endif
 
 /// The result of parsing the field's current text.
-///
-/// `error` is a concrete ``PhoneNumberValueError`` rather than an existential
-/// `Error` so the state can be compared, sent across concurrency domains, and
-/// switched over by callers.
-public struct PhoneNumberFieldState: Equatable, Sendable {
+public struct PhoneNumberFieldState: Equatable {
     public let text: String
     public let e164: String?
     public let regionCode: String?
@@ -18,7 +14,7 @@ public struct PhoneNumberFieldState: Equatable, Sendable {
     public let enrichment: PhoneNumberEnrichment?
     public let isPossible: Bool
     public let isValid: Bool
-    public let error: PhoneNumberValueError?
+    public let error: Error?
 
     public init(
         text: String,
@@ -29,7 +25,7 @@ public struct PhoneNumberFieldState: Equatable, Sendable {
         enrichment: PhoneNumberEnrichment?,
         isPossible: Bool,
         isValid: Bool,
-        error: PhoneNumberValueError?
+        error: Error?
     ) {
         self.text = text
         self.e164 = e164
@@ -40,6 +36,18 @@ public struct PhoneNumberFieldState: Equatable, Sendable {
         self.isPossible = isPossible
         self.isValid = isValid
         self.error = error
+    }
+
+    public static func == (lhs: PhoneNumberFieldState, rhs: PhoneNumberFieldState) -> Bool {
+        lhs.text == rhs.text &&
+        lhs.e164 == rhs.e164 &&
+        lhs.regionCode == rhs.regionCode &&
+        lhs.type == rhs.type &&
+        lhs.validationResult == rhs.validationResult &&
+        lhs.enrichment == rhs.enrichment &&
+        lhs.isPossible == rhs.isPossible &&
+        lhs.isValid == rhs.isValid &&
+        String(describing: lhs.error) == String(describing: rhs.error)
     }
 }
 
@@ -53,7 +61,7 @@ public struct PhoneNumberEnrichment: Equatable, Sendable {
     }
 }
 
-public protocol PhoneNumberEnriching: Sendable {
+public protocol PhoneNumberEnriching {
     func enrichment(for number: PhoneNumber, regionCode: String?) -> PhoneNumberEnrichment
 }
 
@@ -87,7 +95,7 @@ public struct PhoneNumberFieldStyle: Sendable {
     public static let automatic = PhoneNumberFieldStyle()
 }
 
-public struct PhoneNumberFieldFormatter: Sendable {
+public struct PhoneNumberFieldFormatter {
     private let utility: PhoneNumberUtility
     private let enricher: PhoneNumberEnriching?
 
@@ -135,7 +143,7 @@ public struct PhoneNumberFieldFormatter: Sendable {
                 enrichment: nil,
                 isPossible: false,
                 isValid: false,
-                error: PhoneNumberValueError(error)
+                error: error
             )
         }
     }
