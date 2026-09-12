@@ -288,6 +288,9 @@ let package = Package(
             name: "libPhoneNumberSwiftCoreTests",
             dependencies: [
                 "libPhoneNumberSwiftCore",
+                // Needed by the enum bridging tests, which compare the Swift
+                // facade's raw values against the Objective-C constants.
+                "libPhoneNumber",
             ],
             path: "libPhoneNumberSwiftCoreTests"
         ),
@@ -304,6 +307,8 @@ let package = Package(
             dependencies: [
                 "libPhoneNumberSwiftCore",
                 "libPhoneNumberSwiftShortNumber",
+                // Needed by the enum bridging test.
+                "libPhoneNumberShortNumber",
             ],
             path: "libPhoneNumberSwiftShortNumberTests"
         ),
