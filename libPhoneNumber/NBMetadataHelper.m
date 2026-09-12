@@ -8,6 +8,8 @@
 
 #import "NBMetadataHelper.h"
 
+#import <os/lock.h>
+
 #import <NBGeneratedPhoneNumberMetaData.h>
 #import "NBPhoneMetaData.h"
 
@@ -34,7 +36,11 @@ static NSString *StringByTrimming(NSString *aString) {
 @implementation NBMetadataHelper {
  @private
   NSDictionary *_phoneNumberDataDictionary;
+  // Lazily derived from _phoneNumberDataDictionary. Guarded by
+  // _countryCodeToCountryNumberLock because the helper is shared by the
+  // NBPhoneNumberUtil singleton and can be reached from multiple threads.
   NSDictionary *_countryCodeToCountryNumberDictionary;
+  os_unfair_lock _countryCodeToCountryNumberLock;
 }
 
 - (instancetype)init {
@@ -55,6 +61,7 @@ static NSString *StringByTrimming(NSString *aString) {
   self = [super init];
 
   if (self != nil) {
+    _countryCodeToCountryNumberLock = OS_UNFAIR_LOCK_INIT;
     _metadataCache = [[NSCache alloc] init];
     _metadataMapCache = [[NSCache alloc] init];
     _phoneNumberDataDictionary =
@@ -74,6 +81,8 @@ static NSString *StringByTrimming(NSString *aString) {
  */
 
 - (NSDictionary *)countryCodeToCountryNumberDictionary {
+  os_unfair_lock_lock(&_countryCodeToCountryNumberLock);
+
   if (_countryCodeToCountryNumberDictionary == nil) {
     NSDictionary *countryCodeToRegionCodeMap = [self countryCodeToRegionCodeDictionary];
     NSMutableDictionary *map = [[NSMutableDictionary alloc] init];
@@ -86,7 +95,10 @@ static NSString *StringByTrimming(NSString *aString) {
     _countryCodeToCountryNumberDictionary = [map copy];
   }
 
-  return _countryCodeToCountryNumberDictionary;
+  NSDictionary *result = _countryCodeToCountryNumberDictionary;
+  os_unfair_lock_unlock(&_countryCodeToCountryNumberLock);
+
+  return result;
 }
 
 - (NSDictionary *)countryCodeToRegionCodeDictionary {
