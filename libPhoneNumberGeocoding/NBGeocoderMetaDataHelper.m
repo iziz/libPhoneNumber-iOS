@@ -48,6 +48,10 @@ static NSString *const preparedStatement = @"WITH recursive count(x)"
     _countryCode = countryCode;
     _language = languageCode;
 
+    if (bundle == nil) {
+      return self;
+    }
+
     NSString *shortLanguageCode = [[languageCode componentsSeparatedByString:@"-"] firstObject];
     NSURL *databaseURL = [[bundle resourceURL]
         URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.db", shortLanguageCode]];
@@ -69,25 +73,108 @@ static NSString *const preparedStatement = @"WITH recursive count(x)"
 }
 
 - (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)languageCode {
-  NSBundle *bundle = [NSBundle bundleForClass:self.classForCoder];
-  NSURL *resourceURL =
-      [[bundle resourceURL] URLByAppendingPathComponent:@"GeocodingMetaData.bundle"];
-  NSBundle *databaseBundle = [NSBundle bundleWithURL:resourceURL];
-  return [self initWithCountryCode:countryCode withLanguage:languageCode withBundle:databaseBundle];
+  return [self initWithCountryCode:countryCode
+                      withLanguage:languageCode
+                        withBundle:[NBGeocoderMetaDataHelper defaultMetadataBundle]];
+}
+
+// Locates GeocodingMetaData.bundle wherever the integration put it.
+//
+// Appending the payload to -[NSBundle bundleForClass:].resourceURL only works
+// for CocoaPods and manual integration, where the databases land next to the
+// consuming binary. SwiftPM nests them one level deeper, inside a generated
+// wrapper bundle, and emits that wrapper flat up to Xcode 26 but
+// macOS-structured (Contents/Resources) from Xcode 27. Without this search the
+// databases are simply not found and every lookup falls back to the country
+// name, with no error and no crash.
++ (NSBundle * _Nullable)defaultMetadataBundle {
+  static NSBundle *cachedBundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    NSMutableArray<NSBundle *> *searchBundles = [NSMutableArray arrayWithArray:NSBundle.allBundles];
+    [searchBundles addObjectsFromArray:NSBundle.allFrameworks];
+    [searchBundles addObject:[NSBundle bundleForClass:self]];
+    [searchBundles addObject:[NSBundle mainBundle]];
+
+    for (NSBundle *bundle in searchBundles) {
+      NSMutableArray<NSURL *> *baseURLs = [NSMutableArray array];
+      if (bundle.resourceURL != nil) {
+        [baseURLs addObject:bundle.resourceURL];
+      }
+      if (bundle.bundleURL != nil) {
+        [baseURLs addObject:bundle.bundleURL];
+      }
+
+      NSURL *parentURL = bundle.bundleURL;
+      for (NSUInteger index = 0; index < 5 && parentURL != nil; index++) {
+        parentURL = [parentURL URLByDeletingLastPathComponent];
+        if (parentURL != nil) {
+          [baseURLs addObject:parentURL];
+        }
+      }
+
+      for (NSURL *baseURL in baseURLs) {
+        NSURL *resourcesURL = [baseURL URLByAppendingPathComponent:@"Contents/Resources"];
+        NSURL *wrapperURL = [baseURL
+            URLByAppendingPathComponent:@"libPhoneNumber_libPhoneNumberGeocodingMetaData.bundle"];
+        NSURL *wrapperResourcesURL =
+            [wrapperURL URLByAppendingPathComponent:@"Contents/Resources"];
+        NSArray<NSURL *> *candidateURLs = @[
+          [baseURL URLByAppendingPathComponent:@"GeocodingMetaData.bundle"],
+          [resourcesURL URLByAppendingPathComponent:@"GeocodingMetaData.bundle"],
+          [wrapperURL URLByAppendingPathComponent:@"GeocodingMetaData.bundle"],
+          [wrapperResourcesURL URLByAppendingPathComponent:@"GeocodingMetaData.bundle"],
+        ];
+
+        for (NSURL *candidateURL in candidateURLs) {
+          // en.db ships in every build of the payload, so it identifies a
+          // populated bundle rather than an empty directory of the right name.
+          NSURL *databaseURL = [candidateURL URLByAppendingPathComponent:@"en.db"];
+          if ([[NSFileManager defaultManager] fileExistsAtPath:databaseURL.path]) {
+            cachedBundle = [NSBundle bundleWithURL:candidateURL];
+            return;
+          }
+        }
+      }
+    }
+  });
+
+  return cachedBundle;
 }
 
 - (NSString * _Nullable)searchPhoneNumber:(NBPhoneNumber *)phoneNumber {
   @synchronized(self) {
-    if (_database == NULL || _selectStatement == NULL) {
+    if (_database == NULL) {
       return nil;
     }
 
-    if (![phoneNumber.countryCode isEqualToNumber:_countryCode]) {
+    // Each database holds one table per country calling code, and only the
+    // English database covers every country. Preparing a statement for a
+    // country this database does not carry fails, which is an ordinary "no
+    // data for this number" answer -- not a broken helper. Leaving the failed
+    // statement in place used to disable the helper permanently, so a single
+    // lookup for an uncovered country downgraded every later lookup in that
+    // language to a country name.
+    if (_selectStatement == NULL || ![phoneNumber.countryCode isEqualToNumber:_countryCode]) {
       _countryCode = phoneNumber.countryCode;
-      sqlite3_finalize(_selectStatement);
-      sqlite3_prepare_v2(_database,
-                         [[NSString stringWithFormat:preparedStatement, _countryCode] UTF8String],
-                         -1, &_selectStatement, NULL);
+
+      if (_selectStatement != NULL) {
+        sqlite3_finalize(_selectStatement);
+        _selectStatement = NULL;
+      }
+
+      sqlite3_stmt *statement = NULL;
+      int prepareResult = sqlite3_prepare_v2(
+          _database, [[NSString stringWithFormat:preparedStatement, _countryCode] UTF8String], -1,
+          &statement, NULL);
+      if (prepareResult != SQLITE_OK || statement == NULL) {
+        if (statement != NULL) {
+          sqlite3_finalize(statement);
+        }
+        return nil;
+      }
+
+      _selectStatement = statement;
     }
 
     int sqlCommandResults = [self createSelectStatement:phoneNumber];

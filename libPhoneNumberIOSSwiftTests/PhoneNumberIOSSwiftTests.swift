@@ -29,6 +29,6 @@ final class PhoneNumberIOSSwiftTests: XCTestCase {
         let geocoder = PhoneNumberGeocoder.shared
         let number = try util.parse("16502530000", defaultRegion: "US")
 
-        XCTAssertEqual("United States", geocoder.description(for: number, languageCode: "en"))
+        XCTAssertEqual("Mountain View, CA", geocoder.description(for: number, languageCode: "en"))
     }
 }
