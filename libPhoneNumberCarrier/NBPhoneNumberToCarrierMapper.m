@@ -164,10 +164,17 @@ static NSString *const NBMobilePortableRegionSelectStatement =
     }
 
     for (NSURL *baseURL in baseURLs) {
+      // SwiftPM emitted its resource bundle flat up to Xcode 26 and emits it
+      // macOS-structured (Contents/Resources) from Xcode 27, so look under both.
+      NSURL *resourcesURL = [baseURL URLByAppendingPathComponent:@"Contents/Resources"];
+      NSURL *wrapperURL = [baseURL URLByAppendingPathComponent:@"libPhoneNumber_libPhoneNumberCarrierMetaData.bundle"];
+      NSURL *wrapperResourcesURL =
+          [wrapperURL URLByAppendingPathComponent:@"Contents/Resources"];
       NSArray<NSURL *> *candidateURLs = @[
         [baseURL URLByAppendingPathComponent:@"CarrierMetaData.bundle"],
-        [[baseURL URLByAppendingPathComponent:@"libPhoneNumber_libPhoneNumberCarrierMetaData.bundle"]
-            URLByAppendingPathComponent:@"CarrierMetaData.bundle"],
+        [resourcesURL URLByAppendingPathComponent:@"CarrierMetaData.bundle"],
+        [wrapperURL URLByAppendingPathComponent:@"CarrierMetaData.bundle"],
+        [wrapperResourcesURL URLByAppendingPathComponent:@"CarrierMetaData.bundle"],
       ];
 
       for (NSURL *candidateURL in candidateURLs) {

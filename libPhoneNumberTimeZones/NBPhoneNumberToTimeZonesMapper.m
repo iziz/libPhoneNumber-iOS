@@ -143,10 +143,17 @@ static NSString *const NBCountryLevelTimeZoneSelectStatement =
     }
 
     for (NSURL *baseURL in baseURLs) {
+      // SwiftPM emitted its resource bundle flat up to Xcode 26 and emits it
+      // macOS-structured (Contents/Resources) from Xcode 27, so look under both.
+      NSURL *resourcesURL = [baseURL URLByAppendingPathComponent:@"Contents/Resources"];
+      NSURL *wrapperURL = [baseURL URLByAppendingPathComponent:@"libPhoneNumber_libPhoneNumberTimeZonesMetaData.bundle"];
+      NSURL *wrapperResourcesURL =
+          [wrapperURL URLByAppendingPathComponent:@"Contents/Resources"];
       NSArray<NSURL *> *candidateURLs = @[
         [baseURL URLByAppendingPathComponent:@"TimeZonesMetaData.bundle"],
-        [[baseURL URLByAppendingPathComponent:@"libPhoneNumber_libPhoneNumberTimeZonesMetaData.bundle"]
-            URLByAppendingPathComponent:@"TimeZonesMetaData.bundle"],
+        [resourcesURL URLByAppendingPathComponent:@"TimeZonesMetaData.bundle"],
+        [wrapperURL URLByAppendingPathComponent:@"TimeZonesMetaData.bundle"],
+        [wrapperResourcesURL URLByAppendingPathComponent:@"TimeZonesMetaData.bundle"],
       ];
 
       for (NSURL *candidateURL in candidateURLs) {
