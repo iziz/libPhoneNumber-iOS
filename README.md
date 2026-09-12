@@ -245,6 +245,10 @@ let number = try phoneUtil.parse("16502530000", defaultRegion: "US")
 let description = geocoder.description(for: number, languageCode: "en")
 ```
 
+Only the English database carries worldwide coverage. The other languages ship
+their own country, so a lookup outside it falls back to the localized country
+name rather than a locality.
+
 ### Carrier
 
 ```swift
