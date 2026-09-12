@@ -50,16 +50,32 @@ static NSString *const INVALID_REGION_CODE = @"ZZ";
   return instance;
 }
 
+// Returns the cached helper for |languageCode|, creating it on first use.
+//
+// The lookup and the insertion are performed under a single lock so concurrent
+// callers cannot each open their own SQLite connection for the same language.
+- (NBGeocoderMetaDataHelper *)metadataHelperForLanguageCode:(NSString *)languageCode
+                                                countryCode:(NSNumber *)countryCode {
+  @synchronized(self) {
+    NBGeocoderMetaDataHelper *helper = [_metadataHelpers objectForKey:languageCode];
+    if (helper == nil) {
+      helper = _metadataHelperFactory(countryCode, languageCode);
+      if (helper != nil) {
+        [_metadataHelpers setObject:helper forKey:languageCode];
+      }
+    }
+    return helper;
+  }
+}
+
 - (nullable NSString *)descriptionForValidNumber:(NBPhoneNumber *)phoneNumber
                                 withLanguageCode:(NSString *)languageCode {
   // If the NSCache doesn't contain a key equivalent to languageCode, create a
   // new NBGeocoderMetadataHelper object with a language set equal to
   // languageCode and default country code to United States / Canada
-  if ([_metadataHelpers objectForKey:languageCode] == nil) {
-    [_metadataHelpers setObject:_metadataHelperFactory(phoneNumber.countryCode, languageCode)
-                         forKey:languageCode];
-  }
-  NSString *result = [[_metadataHelpers objectForKey:languageCode] searchPhoneNumber:phoneNumber];
+  NBGeocoderMetaDataHelper *helper =
+      [self metadataHelperForLanguageCode:languageCode countryCode:phoneNumber.countryCode];
+  NSString *result = [helper searchPhoneNumber:phoneNumber];
   if (result == nil) {
     return [self countryNameForNumber:phoneNumber withLanguageCode:languageCode];
   } else {

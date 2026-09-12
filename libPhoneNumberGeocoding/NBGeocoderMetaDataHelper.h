@@ -29,9 +29,25 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (instancetype)initWithCountryCode:(NSNumber *)countryCode
                        withLanguage:(NSString *)languageCode
-                         withBundle:(NSBundle *)bundle;
+                         withBundle:(nullable NSBundle *)bundle;
 
+/**
+ * Initializer that resolves the shipped geocoding databases automatically.
+ *
+ * The payload is located by searching the loaded bundles, which covers
+ * CocoaPods, Carthage, manual integration, and the nested wrapper bundle
+ * SwiftPM generates. A helper created when no payload can be found answers
+ * every query with nil, and the geocoder falls back to country names.
+ */
 - (instancetype)initWithCountryCode:(NSNumber *)countryCode withLanguage:(NSString *)languageCode;
+
+/**
+ * The bundle holding the geocoding databases, or nil when none was found.
+ *
+ * Exposed so integrators can check whether the metadata resolved at all,
+ * instead of silently receiving country-level descriptions.
+ */
++ (nullable NSBundle *)defaultMetadataBundle;
 
 /**
  * Returns a text description for the given phone number. The description will be based on the
