@@ -82,14 +82,123 @@ jobs:
 
       - name: Lint podspecs
         run: |
+          set -euo pipefail
+          # Every podspec in the repository, so a broken spec cannot ship
+          # unnoticed. The core spec has no internal dependencies to resolve.
           pod lib lint libPhoneNumber-iOS.podspec --allow-warnings
-          pod lib lint libPhoneNumberGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
-          pod lib lint libPhoneNumberShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
-          pod lib lint libPhoneNumber-iOS-SwiftCore.podspec --allow-warnings --include-podspecs='*.podspec'
-          pod lib lint libPhoneNumber-iOS-SwiftGeocoding.podspec --allow-warnings --include-podspecs='*.podspec'
-          pod lib lint libPhoneNumber-iOS-SwiftShortNumber.podspec --allow-warnings --include-podspecs='*.podspec'
-          pod lib lint libPhoneNumber-iOS-SwiftUI.podspec --allow-warnings --include-podspecs='*.podspec'
-          pod lib lint libPhoneNumber-iOS-Swift.podspec --allow-warnings --include-podspecs='*.podspec'
+          for podspec in \
+            libPhoneNumberGeocoding.podspec \
+            libPhoneNumberShortNumber.podspec \
+            libPhoneNumberCarrier.podspec \
+            libPhoneNumberTimeZones.podspec \
+            libPhoneNumber-iOS-SwiftCore.podspec \
+            libPhoneNumber-iOS-SwiftGeocoding.podspec \
+            libPhoneNumber-iOS-SwiftShortNumber.podspec \
+            libPhoneNumber-iOS-SwiftCarrier.podspec \
+            libPhoneNumber-iOS-SwiftTimeZones.podspec \
+            libPhoneNumber-iOS-SwiftUI.podspec \
+            libPhoneNumber-iOS-SwiftUIEnrichment.podspec \
+            libPhoneNumber-iOS-Swift.podspec
+          do
+            pod lib lint "$podspec" --allow-warnings --include-podspecs='*.podspec'
+          done
+
+      - name: Check every podspec is linted
+        run: |
+          set -euo pipefail
+          missing=0
+          for podspec in *.podspec; do
+            if ! grep -q "$podspec" .github/workflows/ci.yml; then
+              echo "Podspec not covered by the lint job: $podspec" >&2
+              missing=1
+            fi
+          done
+          exit "$missing"
+
+  platform-builds:
+    name: Build for ${{ matrix.platform }}
+    runs-on: macos-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: iOS
+            destination: generic/platform=iOS
+          - platform: tvOS
+            destination: generic/platform=tvOS
+          - platform: watchOS
+            destination: generic/platform=watchOS
+          - platform: visionOS
+            destination: generic/platform=visionOS
+          - platform: macCatalyst
+            destination: platform=macOS,variant=Mac Catalyst
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.0
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      # Package.swift declares macOS, iOS, macCatalyst, tvOS, watchOS and
+      # visionOS. `swift test` only covers macOS, so each of the others is
+      # built here; without this a platform-specific break ships unnoticed.
+      - name: Build all products
+        run: |
+          xcodebuild build \
+            -workspace .swiftpm/xcode/package.xcworkspace \
+            -scheme libPhoneNumber-Package \
+            -destination "${{ matrix.destination }}" \
+            -derivedDataPath "$RUNNER_TEMP/dd-${{ matrix.platform }}"
+
+  thread-sanitizer:
+    name: Thread sanitizer
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.0
+
+      # The Swift facades are declared @unchecked Sendable on the strength of
+      # the Objective-C core's internal locking. The concurrency tests exercise
+      # the shared instances from many tasks at once; under TSan they check that
+      # claim instead of merely asserting it.
+      - name: Run SwiftPM tests under the thread sanitizer
+        run: swift test --sanitize=thread
+
+  code-coverage:
+    name: Code coverage
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.0
+
+      - name: Run SwiftPM tests with coverage
+        run: swift test --enable-code-coverage
+
+      - name: Export coverage report
+        run: |
+          set -euo pipefail
+          mkdir -p .build/coverage
+          xcrun llvm-cov export \
+            -format=lcov \
+            -instr-profile "$(swift test --show-codecov-path | xargs dirname)/default.profdata" \
+            "$(swift build --show-bin-path)/libPhoneNumberPackageTests.xctest/Contents/MacOS/libPhoneNumberPackageTests" \
+            > .build/coverage/coverage.lcov
+          xcrun llvm-cov report \
+            -instr-profile "$(swift test --show-codecov-path | xargs dirname)/default.profdata" \
+            "$(swift build --show-bin-path)/libPhoneNumberPackageTests.xctest/Contents/MacOS/libPhoneNumberPackageTests" \
+            | tail -40
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: coverage
+          path: .build/coverage
+          if-no-files-found: warn
 
   xcode-schemes:
     name: Xcode schemes

@@ -148,7 +148,12 @@ func parsePodspec(at path: String) throws -> Podspec {
   guard result.exitCode == 0 else {
     throw ScriptError.commandFailed("pod ipc spec failed for \(path):\n\(result.output)")
   }
-  guard let data = result.output.data(using: .utf8),
+  // `pod ipc spec` writes its JSON to stdout, but CocoaPods also warns on
+  // stderr when the terminal is not set to UTF-8, and runCapturing merges the
+  // two. Start from the first brace so an unrelated warning does not look like
+  // a malformed podspec.
+  let jsonText = result.output.firstIndex(of: "{").map { String(result.output[$0...]) } ?? result.output
+  guard let data = jsonText.data(using: .utf8),
         let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
         let name = json["name"] as? String,
         let version = json["version"] as? String else {

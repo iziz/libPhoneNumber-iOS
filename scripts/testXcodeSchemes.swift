@@ -9,7 +9,9 @@ let defaultSchemes = [
 ]
 
 struct Options {
-  var destination = "platform=iOS Simulator,name=iPhone 16"
+  // Resolved from the installed simulators when --destination is not given, so
+  // the script does not fail on a machine that simply has a different iPhone.
+  var destination: String?
   var derivedDataRoot: URL?
   var schemes: [String] = []
 }
@@ -38,7 +40,7 @@ func usage() -> String {
     swift scripts/testXcodeSchemes.swift [options] [scheme ...]
 
   Options:
-    --destination <value>        xcodebuild destination. Default: platform=iOS Simulator,name=iPhone 16.
+    --destination <value>        xcodebuild destination. Default: the first available iPhone simulator.
     --derived-data-root <dir>    Use a separate derived data directory per scheme.
     --help                      Print this help.
 
@@ -55,6 +57,40 @@ func absoluteURL(forPath path: String) -> URL {
     return url
   }
   return repositoryRoot.appendingPathComponent(path)
+}
+
+/// Returns `id=<udid>` for the first available iPhone simulator.
+///
+/// Naming a device model in the destination is brittle: every Xcode release
+/// ships a different set, so a pinned name fails with "Unable to find a device
+/// matching the provided destination specifier" on any machine that happens not
+/// to have it. Asking simctl what is installed avoids that.
+func firstAvailableIPhoneDestination() throws -> String {
+  let process = Process()
+  process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+  process.arguments = ["xcrun", "simctl", "list", "devices", "available"]
+  let pipe = Pipe()
+  process.standardOutput = pipe
+  process.standardError = FileHandle.nullDevice
+
+  try process.run()
+  let data = pipe.fileHandleForReading.readDataToEndOfFile()
+  process.waitUntilExit()
+
+  let output = String(data: data, encoding: .utf8) ?? ""
+  for line in output.split(separator: "\n") where line.contains("iPhone") {
+    // Lines look like: "    iPhone Air (UDID) (Shutdown)"
+    let components = line.split(separator: "(", omittingEmptySubsequences: false)
+    guard components.count >= 2 else { continue }
+    let candidate = components[1].prefix(while: { $0 != ")" })
+    if candidate.count == 36 {
+      return "id=\(candidate)"
+    }
+  }
+
+  throw ScriptError.invalidArguments(
+    "No available iPhone simulator found. Install one, or pass --destination explicitly."
+  )
 }
 
 func parseOptions(_ arguments: [String]) throws -> Options {
@@ -135,13 +171,13 @@ func run(_ command: String, _ arguments: [String]) throws {
   }
 }
 
-func testScheme(_ scheme: String, options: Options) throws {
+func testScheme(_ scheme: String, destination: String, options: Options) throws {
   var arguments = [
     "test",
     "-scheme",
     scheme,
     "-destination",
-    options.destination,
+    destination,
   ]
 
   if let derivedDataRoot = options.derivedDataRoot {
@@ -156,15 +192,16 @@ func testScheme(_ scheme: String, options: Options) throws {
 
 do {
   let options = try parseOptions(Array(CommandLine.arguments.dropFirst()))
+  let destination = try options.destination ?? firstAvailableIPhoneDestination()
 
-  print("Destination: \(options.destination)")
+  print("Destination: \(destination)")
   print("Schemes: \(options.schemes.joined(separator: ", "))")
   if let derivedDataRoot = options.derivedDataRoot {
     print("Derived data root: \(derivedDataRoot.path)")
   }
 
   for scheme in options.schemes {
-    try testScheme(scheme, options: options)
+    try testScheme(scheme, destination: destination, options: options)
   }
 
   print("\nAll Xcode schemes passed.")
