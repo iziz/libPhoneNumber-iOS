@@ -141,6 +141,18 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
+      # xcodebuild resolves libPhoneNumber.xcodeproj rather than Package.swift
+      # when both are in the repository root, and that project carries only the
+      # three Objective-C schemes. Building the package's own schemes requires
+      # the workspace below, so fail with a clear message if it is missing
+      # rather than with "does not contain a scheme named libPhoneNumber-Package".
+      - name: Check the package workspace is present
+        run: |
+          if [ ! -f .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata ]; then
+            echo "Missing .swiftpm/xcode/package.xcworkspace; see the .swiftpm rules in .gitignore." >&2
+            exit 1
+          fi
+
       # Package.swift declares macOS, iOS, macCatalyst, tvOS, watchOS and
       # visionOS. `swift test` only covers macOS, so each of the others is
       # built here; without this a platform-specific break ships unnoticed.
