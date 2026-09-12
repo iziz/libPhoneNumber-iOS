@@ -4,7 +4,10 @@ import libPhoneNumberSwiftCore
 import libPhoneNumberCarrier
 #endif
 
-public final class PhoneNumberCarrierMapper {
+/// The Objective-C carrier mapper is safe to share across threads: every SQLite
+/// statement it owns is used under `@synchronized(self)`. Sendable is asserted
+/// rather than checked, because the compiler cannot see that locking.
+public final class PhoneNumberCarrierMapper: @unchecked Sendable {
     public static let shared = PhoneNumberCarrierMapper()
 
     public let objc: NBPhoneNumberToCarrierMapper

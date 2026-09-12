@@ -21,8 +21,9 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = "12.0"
   s.watchos.deployment_target = "9.0"
   s.tvos.deployment_target = "15.0"
+  s.visionos.deployment_target = "1.0"
 
-  s.swift_version = "5.5"
+  s.swift_versions = ["5.9", "6.0"]
   s.requires_arc = true
 
   s.dependency 'libPhoneNumber-iOS', '~> 2.0.1'

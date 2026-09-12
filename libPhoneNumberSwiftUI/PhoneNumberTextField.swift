@@ -4,7 +4,12 @@ import libPhoneNumberSwiftCore
 import UIKit
 #endif
 
-public struct PhoneNumberFieldState: Equatable {
+/// The result of parsing the field's current text.
+///
+/// `error` is a concrete ``PhoneNumberValueError`` rather than an existential
+/// `Error` so the state can be compared, sent across concurrency domains, and
+/// switched over by callers.
+public struct PhoneNumberFieldState: Equatable, Sendable {
     public let text: String
     public let e164: String?
     public let regionCode: String?
@@ -13,18 +18,28 @@ public struct PhoneNumberFieldState: Equatable {
     public let enrichment: PhoneNumberEnrichment?
     public let isPossible: Bool
     public let isValid: Bool
-    public let error: Error?
+    public let error: PhoneNumberValueError?
 
-    public static func == (lhs: PhoneNumberFieldState, rhs: PhoneNumberFieldState) -> Bool {
-        lhs.text == rhs.text &&
-        lhs.e164 == rhs.e164 &&
-        lhs.regionCode == rhs.regionCode &&
-        lhs.type == rhs.type &&
-        lhs.validationResult == rhs.validationResult &&
-        lhs.enrichment == rhs.enrichment &&
-        lhs.isPossible == rhs.isPossible &&
-        lhs.isValid == rhs.isValid &&
-        String(describing: lhs.error) == String(describing: rhs.error)
+    public init(
+        text: String,
+        e164: String?,
+        regionCode: String?,
+        type: PhoneNumberType,
+        validationResult: ValidationResult?,
+        enrichment: PhoneNumberEnrichment?,
+        isPossible: Bool,
+        isValid: Bool,
+        error: PhoneNumberValueError?
+    ) {
+        self.text = text
+        self.e164 = e164
+        self.regionCode = regionCode
+        self.type = type
+        self.validationResult = validationResult
+        self.enrichment = enrichment
+        self.isPossible = isPossible
+        self.isValid = isValid
+        self.error = error
     }
 }
 
@@ -38,11 +53,11 @@ public struct PhoneNumberEnrichment: Equatable, Sendable {
     }
 }
 
-public protocol PhoneNumberEnriching {
+public protocol PhoneNumberEnriching: Sendable {
     func enrichment(for number: PhoneNumber, regionCode: String?) -> PhoneNumberEnrichment
 }
 
-public struct PhoneNumberFieldStyle {
+public struct PhoneNumberFieldStyle: Sendable {
     public let validatesWhileEditing: Bool
     public let formatsWhileEditing: Bool
     #if os(iOS) || os(tvOS)
@@ -72,7 +87,7 @@ public struct PhoneNumberFieldStyle {
     public static let automatic = PhoneNumberFieldStyle()
 }
 
-public struct PhoneNumberFieldFormatter {
+public struct PhoneNumberFieldFormatter: Sendable {
     private let utility: PhoneNumberUtility
     private let enricher: PhoneNumberEnriching?
 
@@ -120,7 +135,7 @@ public struct PhoneNumberFieldFormatter {
                 enrichment: nil,
                 isPossible: false,
                 isValid: false,
-                error: error
+                error: PhoneNumberValueError(error)
             )
         }
     }

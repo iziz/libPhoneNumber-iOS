@@ -4,7 +4,11 @@ import libPhoneNumberSwiftCore
 import libPhoneNumberGeocoding
 #endif
 
-public final class PhoneNumberGeocoder {
+/// The Objective-C geocoder is safe to share across threads: its per-language
+/// SQLite helpers are created under a lock and every query on a helper is
+/// serialized by that helper. Sendable is asserted rather than checked, because
+/// the compiler cannot see the Objective-C side's locking.
+public final class PhoneNumberGeocoder: @unchecked Sendable {
     public static let shared = PhoneNumberGeocoder()
 
     public let objc: NBPhoneNumberOfflineGeocoder

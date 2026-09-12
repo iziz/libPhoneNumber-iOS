@@ -1,5 +1,7 @@
-// swift-tools-version:5.5
+// swift-tools-version:6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
+// Swift 6 tools are required so the Swift facade targets can build in the
+// Swift 6 language mode and so visionOS can be declared as a platform.
 import PackageDescription
 
 let package = Package(
@@ -9,7 +11,8 @@ let package = Package(
         .macCatalyst(.v15),
         .iOS(.v15),
         .tvOS(.v15),
-        .watchOS("9.0")
+        .watchOS("9.0"),
+        .visionOS(.v1)
     ],
     products: [
         .library(
@@ -92,7 +95,7 @@ let package = Package(
                 .headerSearchPath("Internal")
             ],
             linkerSettings: [
-                .linkedFramework("Contacts", .when(platforms: [.iOS, .macOS, .macCatalyst, .watchOS])),
+                .linkedFramework("Contacts", .when(platforms: [.iOS, .macOS, .macCatalyst, .watchOS, .visionOS])),
             ]
         ),
         .testTarget(
