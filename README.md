@@ -510,6 +510,12 @@ swift scripts/testXcodeSchemes.swift
    swift scripts/publishPodspecs.swift --publish
    ```
 
+## Contributing
+
+- [Changelog](CHANGELOG.md)
+- [Contributing guide](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
+
 ## Maintenance Guides
 
 - [Upstream parity guide](docs/UPSTREAM_PARITY.md)

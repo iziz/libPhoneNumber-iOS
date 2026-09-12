@@ -1,0 +1,45 @@
+name: Metadata or numbering plan issue
+description: A numbering plan changed, or a valid number is rejected because the bundled metadata is out of date.
+labels: ["metadata"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Metadata comes from Google's libphonenumber and is refreshed as a whole
+        rather than patched per number. See `docs/METADATA_PATCH_POLICY.md` for
+        when a local override is acceptable.
+
+  - type: input
+    id: number
+    attributes:
+      label: Phone number and region
+      placeholder: "+256 79 412 3456, region UG"
+    validations:
+      required: true
+
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Current and expected classification
+      placeholder: |
+        Current: isValidNumber false, type UNKNOWN
+        Expected: isValidNumber true, type MOBILE
+    validations:
+      required: true
+
+  - type: input
+    id: upstream_ref
+    attributes:
+      label: Upstream reference
+      description: >
+        The Google libphonenumber release or commit that carries the corrected
+        metadata, if you know it.
+      placeholder: "v9.0.38"
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Regulator source
+      description: >
+        A link to the telecom regulator's announcement, if this is a numbering
+        plan change that upstream has not picked up yet.

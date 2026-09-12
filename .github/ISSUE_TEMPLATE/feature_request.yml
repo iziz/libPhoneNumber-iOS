@@ -1,0 +1,33 @@
+name: Feature request
+description: Suggest an API or module addition.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Behavior changes to parsing, formatting, or validation belong upstream in
+        Google's libphonenumber. This form is for the Apple-platform surface:
+        Swift APIs, module layout, packaging, and the SwiftUI component.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What are you trying to do, and what makes it awkward today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed API
+      description: Sketch the call site you would like to write.
+      render: swift
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you do instead today
+      description: >
+        Including whether the existing `objc` escape hatch on the facades covers
+        it.
