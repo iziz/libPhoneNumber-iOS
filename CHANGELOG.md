@@ -9,6 +9,8 @@ as described in `docs/RELEASE_RUNBOOK.md`.
 
 ## Unreleased
 
+## 2.1.0
+
 Additive. No public API is removed or changed, so this is a minor release.
 
 The one compatibility note is the toolchain: the Swift package now requires
@@ -75,6 +77,9 @@ Deployment targets are unchanged, and the CocoaPods specs accept Swift 5.9 or
 
 ### Maintenance
 
+- Refresh Google libphonenumber metadata from `v9.0.38` to `v9.0.39`, including
+  phone-number, carrier, and geocoding changes. The timezone source data is
+  unchanged; see `docs/METADATA_UPDATE_LOG.md` for the comparison and checks.
 - `scripts/testXcodeSchemes.swift` resolves an installed iPhone simulator
   instead of defaulting to a pinned model name. The pinned name fails outright
   on any machine whose Xcode ships a different set of simulators.

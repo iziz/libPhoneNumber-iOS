@@ -4,6 +4,51 @@ This file records upstream comparison results for metadata updates. Keep entries
 
 Metadata-only updates should ship as patch releases. Use a minor release only when the update also adds public API, new modules, or additive behavior beyond metadata freshness.
 
+## 2026-09-17: Google libphonenumber v9.0.39
+
+### Scope
+
+- The previous local metadata baseline was `v9.0.38`.
+- Updated main phone-number metadata to `v9.0.39`; generated testing and short-number metadata were unchanged.
+- Regenerated geocoding metadata from `v9.0.39`; only `en.db` changed.
+- Regenerated carrier metadata from `v9.0.39`; the packed database has 31,056 prefix rows and 107 mobile portable regions.
+- Regenerated timezone metadata from `v9.0.39`; the source remained unchanged at 3,290 prefix rows and 285 unique timezone IDs, while the bundle baseline ref advanced.
+- Set the release version to `2.1.0` because the commits since `2.0.1` also add visionOS support and public Swift 6 concurrency APIs. These changes are documented in `CHANGELOG.md`.
+
+### Upstream Logic And Resource Comparison
+
+- Compared tracked Google files from `v9.0.38` (`796d807ebb61`) to `v9.0.39` (`670015c8aec4`). Nine files changed: generated JavaScript phone-number metadata, phone-number and short-number XML resources, five carrier resources, and one geocoding resource.
+- Tracked JavaScript implementation, test, and public API files did not change. Upstream test and API parity checks passed, so no Objective-C logic or test port was needed for this update.
+- Compared `v9.0.39` to Google `master` (`806ee32e8c8c`); zero tracked source or resource files differed.
+
+### Validation
+
+```bash
+swift scripts/updateMetadata.swift v9.0.39 --dry-run --output-root .build/metadata-update/v9.0.39-dry-run
+swift scripts/checkUpstreamSourceDrift.swift --current-ref v9.0.38 --upstream-ref v9.0.39 --output .build/upstream-source-drift-v9.0.38-to-v9.0.39
+swift scripts/checkUpstreamTestParity.swift --upstream-ref v9.0.39
+swift scripts/checkUpstreamAPIParity.swift --upstream-ref v9.0.39
+swift scripts/updateMetadata.swift v9.0.39 --output-root .build/metadata-update/v9.0.39
+swift scripts/updateProjectVersions.swift 2.1.0
+swift scripts/checkVersionConsistency.swift
+swift test --scratch-path .build/validation-2.0.2-default
+LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test --scratch-path .build/validation-2.0.2-ko
+swift build -c release --scratch-path .build/validation-2.0.2-release
+swift scripts/testXcodeSchemes.swift --destination 'id=04DC65D3-F0FF-465D-9CFB-2AC923C471FB' --derived-data-root /tmp/libphone-2.0.2-xcode
+swift test --sanitize=thread --scratch-path .build/validation-2.1.0-tsan
+swift scripts/checkUpstreamSourceDrift.swift --current-ref v9.0.39 --upstream-ref master --output .build/upstream-source-drift-v9.0.39-to-master
+swift scripts/checkMetadataFreshness.swift --current-ref v9.0.39 --output .build/metadata-freshness-v9.0.39-final --fail-on-update
+swift scripts/publishPodspecs.swift --lint
+git diff --check
+```
+
+- Scheduled Upstream Drift run `35175467837` detected `v9.0.39`. Its metadata freshness job failed as intended for an available update; source drift and Google master parity jobs passed.
+- The dry run and checked-in generation completed. All 34 generated geocoding databases matched the bundled databases by SHA-256.
+- Upstream `v9.0.39` parity passed for 173 JavaScript tests and 66 public prototype methods against 181 local Objective-C tests and 93 selectors.
+- Version consistency passed for `2.1.0`, and the final freshness check passed.
+- SwiftPM tests passed in the default and Korean locales: 231 XCTest tests and 43 Swift Testing tests in each run. The release build and thread sanitizer test run passed.
+- Xcode tests passed for `libPhoneNumber` (150), `libPhoneNumberGeocoding` (20), and `libPhoneNumberShortNumber` (31) on the iPhone 17 / iOS simulator.
+
 ## 2026-08-29: Google libphonenumber v9.0.38
 
 ### Scope

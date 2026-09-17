@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumberGeocoding"
-  s.version      = "2.0.1"
+  s.version      = "2.1.0"
   s.summary      = "Geocoding Features for libPhoneNumber-iOS"
   s.description  = "libPhoneNumberGeocoding for iOS. iOS library for gathering region descriptions for any phone number. This library stores geocoding metadata on disk space."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   
   s.resources    = "libPhoneNumberGeocodingMetaData/*.bundle"
 
-  s.dependency 'libPhoneNumber-iOS', '~> 2.0.1'
+  s.dependency 'libPhoneNumber-iOS', '~> 2.1.0'
   
   s.source_files = [
                     'libPhoneNumberGeocoding/**/*.{h,m}',

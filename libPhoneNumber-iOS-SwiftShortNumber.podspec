@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumber-iOS-SwiftShortNumber"
   s.module_name  = "libPhoneNumberSwiftShortNumber"
-  s.version      = "2.0.1"
+  s.version      = "2.1.0"
   s.summary      = "Swift-first short-number facade for libPhoneNumber-iOS"
   s.description  = "Swift-first short-number facade over libPhoneNumberShortNumber."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
@@ -26,8 +26,8 @@ Pod::Spec.new do |s|
   s.swift_versions = ["5.9", "6.0"]
   s.requires_arc = true
 
-  s.dependency 'libPhoneNumber-iOS-SwiftCore', '~> 2.0.1'
-  s.dependency 'libPhoneNumberShortNumber', '~> 2.0.1'
+  s.dependency 'libPhoneNumber-iOS-SwiftCore', '~> 2.1.0'
+  s.dependency 'libPhoneNumberShortNumber', '~> 2.1.0'
 
   s.source_files = [
                     'libPhoneNumberSwiftShortNumber/**/*.swift',
