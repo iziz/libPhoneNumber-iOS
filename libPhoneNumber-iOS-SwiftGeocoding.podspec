@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "libPhoneNumber-iOS-SwiftGeocoding"
   s.module_name  = "libPhoneNumberSwiftGeocoding"
-  s.version      = "2.0.1"
+  s.version      = "2.1.0"
   s.summary      = "Swift-first geocoding facade for libPhoneNumber-iOS"
   s.description  = "Swift-first geocoding facade over libPhoneNumberGeocoding."
   s.homepage     = "https://github.com/iziz/libPhoneNumber-iOS.git"
@@ -26,8 +26,8 @@ Pod::Spec.new do |s|
   s.swift_versions = ["5.9", "6.0"]
   s.requires_arc = true
 
-  s.dependency 'libPhoneNumber-iOS-SwiftCore', '~> 2.0.1'
-  s.dependency 'libPhoneNumberGeocoding', '~> 2.0.1'
+  s.dependency 'libPhoneNumber-iOS-SwiftCore', '~> 2.1.0'
+  s.dependency 'libPhoneNumberGeocoding', '~> 2.1.0'
 
   s.source_files = [
                     'libPhoneNumberSwiftGeocoding/**/*.swift',

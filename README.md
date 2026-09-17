@@ -63,13 +63,13 @@ Use the umbrella product when you want one non-UI import for core, geocoding, an
 For CocoaPods Swift apps:
 
 ```ruby
-pod 'libPhoneNumber-iOS-SwiftCore', '~> 2.0'
+pod 'libPhoneNumber-iOS-SwiftCore', '~> 2.1'
 ```
 
 For the CocoaPods umbrella facade:
 
 ```ruby
-pod 'libPhoneNumber-iOS-Swift', '~> 2.0'
+pod 'libPhoneNumber-iOS-Swift', '~> 2.1'
 ```
 
 Then import the umbrella module as:
@@ -138,34 +138,34 @@ Objective-C-compatible products are also available:
 Core Objective-C API:
 
 ```ruby
-pod 'libPhoneNumber-iOS', '~> 2.0'
+pod 'libPhoneNumber-iOS', '~> 2.1'
 ```
 
 Swift facade modules:
 
 ```ruby
-pod 'libPhoneNumber-iOS-SwiftCore', '~> 2.0'
-pod 'libPhoneNumber-iOS-SwiftGeocoding', '~> 2.0'
-pod 'libPhoneNumber-iOS-SwiftShortNumber', '~> 2.0'
-pod 'libPhoneNumber-iOS-SwiftCarrier', '~> 2.0'
-pod 'libPhoneNumber-iOS-SwiftTimeZones', '~> 2.0'
-pod 'libPhoneNumber-iOS-SwiftUI', '~> 2.0'
-pod 'libPhoneNumber-iOS-SwiftUIEnrichment', '~> 2.0'
+pod 'libPhoneNumber-iOS-SwiftCore', '~> 2.1'
+pod 'libPhoneNumber-iOS-SwiftGeocoding', '~> 2.1'
+pod 'libPhoneNumber-iOS-SwiftShortNumber', '~> 2.1'
+pod 'libPhoneNumber-iOS-SwiftCarrier', '~> 2.1'
+pod 'libPhoneNumber-iOS-SwiftTimeZones', '~> 2.1'
+pod 'libPhoneNumber-iOS-SwiftUI', '~> 2.1'
+pod 'libPhoneNumber-iOS-SwiftUIEnrichment', '~> 2.1'
 ```
 
 Swift umbrella facade:
 
 ```ruby
-pod 'libPhoneNumber-iOS-Swift', '~> 2.0'
+pod 'libPhoneNumber-iOS-Swift', '~> 2.1'
 ```
 
 Objective-C optional modules:
 
 ```ruby
-pod 'libPhoneNumberGeocoding', '~> 2.0'
-pod 'libPhoneNumberShortNumber', '~> 2.0'
-pod 'libPhoneNumberCarrier', '~> 2.0'
-pod 'libPhoneNumberTimeZones', '~> 2.0'
+pod 'libPhoneNumberGeocoding', '~> 2.1'
+pod 'libPhoneNumberShortNumber', '~> 2.1'
+pod 'libPhoneNumberCarrier', '~> 2.1'
+pod 'libPhoneNumberTimeZones', '~> 2.1'
 ```
 
 ### Carthage
