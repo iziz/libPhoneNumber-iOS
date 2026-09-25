@@ -9,6 +9,13 @@ as described in `docs/RELEASE_RUNBOOK.md`.
 
 ## Unreleased
 
+## 2.1.1
+
+Patch release. Refresh Google libphonenumber metadata from `v9.0.39` to
+`v9.0.40`, including phone-number, carrier, geocoding, and timezone data.
+The testing and short-number metadata are unchanged. See
+`docs/METADATA_UPDATE_LOG.md` for the upstream comparison and validation.
+
 ## 2.1.0
 
 Additive. No public API is removed or changed, so this is a minor release.

@@ -4,6 +4,30 @@ This file records upstream comparison results for metadata updates. Keep entries
 
 Metadata-only updates should ship as patch releases. Use a minor release only when the update also adds public API, new modules, or additive behavior beyond metadata freshness.
 
+## 2026-09-26: Google libphonenumber v9.0.40
+
+### Scope
+
+- Previous local metadata baseline: `v9.0.39`; new Google tag: `v9.0.40` (`9d77a67180fc7d342bf04da469968501317bbc91`).
+- Regenerated main phone-number, carrier, geocoding, and timezone metadata; generated testing and short-number metadata are unchanged.
+- Carrier data contains 31,061 prefix rows and 107 mobile-portable regions. Timezone data contains 3,291 prefix rows and 285 unique timezone IDs. The geocoding updater regenerated 34 databases; `en.db` changed in the checked-in bundle.
+- Set the release version to `2.1.1` for this metadata-only patch.
+
+### Upstream Logic And Resource Comparison
+
+- Compared tracked Google files from `v9.0.39` (`670015c8aec4`) to `v9.0.40` (`9d77a67180fc`): 17 files changed. Changes are generated JavaScript phone-number metadata, phone-number XML, 12 carrier resources, two English geocoding resources, and timezone map data.
+- Tracked JavaScript implementation and test files did not change. Test parity covers 173 upstream JavaScript tests and 181 local Objective-C tests; API parity covers 66 upstream public prototype methods and 93 local selectors. Both checks passed.
+- Scheduled Upstream Drift run `36087389938` detected the new tag. Its metadata freshness job failed as designed; Google master parity and tracked source/resource drift jobs passed.
+
+### Validation
+
+- `swift scripts/updateMetadata.swift v9.0.40 --dry-run --output-root .build/metadata-update/v9.0.40-dry-run` passed.
+- `swift scripts/checkUpstreamSourceDrift.swift --current-ref v9.0.39 --upstream-ref v9.0.40 --output .build/upstream-source-drift-v9.0.39-to-v9.0.40` completed.
+- `swift scripts/checkUpstreamTestParity.swift --upstream-ref v9.0.40` and `swift scripts/checkUpstreamAPIParity.swift --upstream-ref v9.0.40` passed.
+- `swift scripts/updateMetadata.swift v9.0.40 --output-root .build/metadata-update/v9.0.40` passed; its freshness check reports `v9.0.40` up to date.
+- `swift scripts/updateProjectVersions.swift 2.1.1` and its version consistency check passed.
+- The remaining test, build, Xcode, and podspec lint results are recorded in the release pull request.
+
 ## 2026-09-17: Google libphonenumber v9.0.39
 
 ### Scope
