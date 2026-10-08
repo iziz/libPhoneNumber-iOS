@@ -4,6 +4,39 @@ This file records upstream comparison results for metadata updates. Keep entries
 
 Metadata-only updates should ship as patch releases. Use a minor release only when the update also adds public API, new modules, or additive behavior beyond metadata freshness.
 
+## 2026-10-08: Google libphonenumber v9.0.41
+
+### Scope
+
+- Previous local metadata baseline: `v9.0.40`; new Google tag: `v9.0.41` (`b68df884d42d5e9860fc1956a99ce6afae361100`).
+- Regenerated all metadata families. Main phone-number, short-number, carrier, and timezone data changed; testing and all 34 geocoding databases are unchanged.
+- Main phone-number changes affect `CN`, `IR`, `NG`, and `US`; short-number changes affect `CN`.
+- Carrier data contains 31,065 prefix rows and 107 mobile-portable regions. Timezone data contains 3,240 prefix rows and 285 unique timezone IDs.
+- Set all Xcode project and 13 podspec versions to `2.1.2` for this metadata-only patch.
+
+### Upstream Logic And Resource Comparison
+
+- Compared tracked Google files from `v9.0.40` (`9d77a67180fc`) to `v9.0.41` (`b68df884d42d`): 13 files changed, covering generated JavaScript phone-number and short-number metadata, their XML resources, eight carrier resources, and timezone map data.
+- Tracked JavaScript implementation and test files did not change. Test parity covers 173 upstream JavaScript tests and 181 local Objective-C tests; API parity covers 66 upstream public prototype methods and 93 local selectors. Both checks passed.
+- Scheduled [Upstream Drift run `37719977917`](https://github.com/iziz/libPhoneNumber-iOS/actions/runs/37719977917) detected the new tag. Its metadata freshness job exited with code 2 because an update was available; Google master parity and tracked source/resource drift jobs passed.
+
+### Validation
+
+- `swift scripts/updateMetadata.swift v9.0.41 --dry-run --output-root .build/metadata-update/v9.0.41-dry-run` passed.
+- `swift scripts/checkUpstreamSourceDrift.swift --current-ref v9.0.40 --upstream-ref v9.0.41 --output .build/release-2.1.2/source-drift` completed.
+- `swift scripts/checkUpstreamTestParity.swift --upstream-ref v9.0.41` and `swift scripts/checkUpstreamAPIParity.swift --upstream-ref v9.0.41` passed.
+- `swift scripts/updateMetadata.swift v9.0.41 --output-root .build/metadata-update/v9.0.41` passed; its freshness check reports `v9.0.41` up to date.
+- `swift scripts/updateProjectVersions.swift 2.1.2` and its version consistency check passed.
+- Decompressed the generated Objective-C gzip arrays and verified they match the generated JSON, including declared expanded lengths. All 34 regenerated geocoding databases match the bundled SHA-256 digests.
+- SQLite integrity checks passed for both carrier and timezone databases. Every bundled row matches the generated review JSON, and both databases record `upstream_ref` `v9.0.41`.
+- `swift test --scratch-path .build/validation-2.1.2` and `LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test --scratch-path .build/validation-2.1.2` passed, each with 229 XCTest tests and 43 Swift Testing tests.
+- `swift build -c release --scratch-path .build/validation-2.1.2` passed.
+- `swift scripts/testXcodeSchemes.swift --destination 'id=80FE1FB5-892C-4402-9CA1-64A11DF26E15' --derived-data-root /tmp/libphone-2.1.2-xcode` passed on the iPhone 18 Pro / iOS 27.0 simulator: `libPhoneNumber` (150 tests), `libPhoneNumberGeocoding` (20), and `libPhoneNumberShortNumber` (31).
+- `swift scripts/checkUpstreamSourceDrift.swift --current-ref v9.0.41 --upstream-ref master --output .build/release-2.1.2/source-drift-master` found zero tracked source or resource changes at Google master `33be56643436`.
+- `swift scripts/checkMetadataFreshness.swift --current-ref v9.0.41 --output .build/release-2.1.2/final-freshness --fail-on-update` passed.
+- `LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 swift scripts/publishPodspecs.swift --lint` passed for all 13 podspecs in dependency order.
+- `git diff --check` passed; the release diff contains only generated metadata, version alignment, and release documentation.
+
 ## 2026-09-26: Google libphonenumber v9.0.40
 
 ### Scope
