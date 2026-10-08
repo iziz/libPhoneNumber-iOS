@@ -9,6 +9,15 @@ as described in `docs/RELEASE_RUNBOOK.md`.
 
 ## Unreleased
 
+## 2.1.2
+
+Patch release. Refresh Google libphonenumber metadata from `v9.0.40` to
+`v9.0.41`, including phone-number, short-number, carrier, and timezone data.
+Phone-number metadata changes affect China, Iran, Nigeria, and the United
+States; short-number changes affect China. Testing and geocoding metadata are
+unchanged. See `docs/METADATA_UPDATE_LOG.md` for the upstream comparison and
+validation.
+
 ## 2.1.1
 
 Patch release. Refresh Google libphonenumber metadata from `v9.0.39` to
