@@ -9,6 +9,20 @@ as described in `docs/RELEASE_RUNBOOK.md`.
 
 ## Unreleased
 
+## 2.1.3
+
+Patch release. Refresh Google libphonenumber metadata from `v9.0.41` to
+`v9.0.42`, including phone-number, short-number, carrier, and geocoding data.
+Phone-number metadata changes affect 21 regions: Australia, Åland Islands,
+Botswana, Cocos (Keeling) Islands, China, Colombia, Costa Rica, Cape Verde,
+Christmas Island, Denmark, Spain, Finland, Ghana, Guyana, India, Kenya, Kuwait,
+Papua New Guinea, Paraguay, Russia, and Saint Helena. Short-number changes
+affect Botswana and Colombia. Carrier metadata gains Kazakh (`kk`) carrier
+names and grows from 31,065 to 32,099 prefix rows. Geocoding changes are
+limited to the English and Chinese databases. Testing metadata and timezone
+data are unchanged. See `docs/METADATA_UPDATE_LOG.md` for the upstream
+comparison and validation.
+
 ## 2.1.2
 
 Patch release. Refresh Google libphonenumber metadata from `v9.0.40` to
