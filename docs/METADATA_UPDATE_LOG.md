@@ -4,6 +4,40 @@ This file records upstream comparison results for metadata updates. Keep entries
 
 Metadata-only updates should ship as patch releases. Use a minor release only when the update also adds public API, new modules, or additive behavior beyond metadata freshness.
 
+## 2026-10-30: Google libphonenumber v9.0.42
+
+### Scope
+
+- Previous local metadata baseline: `v9.0.41`; new Google tag: `v9.0.42` (`8d8d75272c351b60b87163db5328e439c53a6b56`).
+- Regenerated all metadata families. Main phone-number, short-number, carrier, and geocoding data changed; testing metadata is unchanged, and the timezone rows are byte-identical with only the recorded `upstream_ref` advancing.
+- Main phone-number changes affect 21 regions: `AU`, `AX`, `BW`, `CC`, `CN`, `CO`, `CR`, `CV`, `CX`, `DK`, `ES`, `FI`, `GH`, `GY`, `IN`, `KE`, `KW`, `PG`, `PY`, `RU`, and `SH`. Short-number changes affect `BW` and `CO`.
+- Carrier data contains 32,099 prefix rows (up from 31,065) and 107 mobile-portable regions, and adds a tenth locale, Kazakh (`kk`), from the new upstream `resources/carrier/kk/7.txt`. Timezone data contains 3,240 prefix rows and 285 unique timezone IDs.
+- The geocoding updater regenerated all 34 databases; `en.db` and `zh.db` changed in the checked-in bundle, matching the upstream `resources/geocoding` changes for `233`, `267`, `86`, and `91`. The other 32 databases were regenerated with identical contents and were left at their committed bytes, so the release diff carries no SQLite page churn.
+- Set all Xcode project and 13 podspec versions to `2.1.3` for this metadata-only patch.
+
+### Upstream Logic And Resource Comparison
+
+- Compared tracked Google files from `v9.0.41` (`b68df884d42d`) to `v9.0.42` (`8d8d75272c35`): 27 files changed, covering generated JavaScript phone-number and short-number metadata, their XML resources, 17 carrier resources including one new Kazakh file, and five geocoding resources.
+- Tracked JavaScript implementation and test files did not change. Test parity covers 173 upstream JavaScript tests and 181 local Objective-C tests; API parity covers 66 upstream public prototype methods and 93 local selectors. Both checks passed.
+- Scheduled [Upstream Drift run `40992725501`](https://github.com/iziz/libPhoneNumber-iOS/actions/runs/40992725501) detected the new tag. Its metadata freshness job exited with code 2 because an update was available; Google master parity and tracked source/resource drift jobs passed.
+
+### Validation
+
+- `swift scripts/updateMetadata.swift v9.0.42 --dry-run --output-root .build/metadata-update/v9.0.42-dry-run` passed.
+- `swift scripts/checkUpstreamSourceDrift.swift --current-ref v9.0.41 --upstream-ref v9.0.42 --output .build/release-2.1.3/source-drift` completed.
+- `swift scripts/checkUpstreamTestParity.swift --upstream-ref v9.0.42` and `swift scripts/checkUpstreamAPIParity.swift --upstream-ref v9.0.42` passed.
+- `swift scripts/updateMetadata.swift v9.0.42 --output-root .build/metadata-update/v9.0.42` passed; its freshness check reports `v9.0.42` up to date.
+- `swift scripts/updateProjectVersions.swift 2.1.3` and its version consistency check passed.
+- Decompressed the generated Objective-C gzip arrays and verified they decode to the generated JSON for 254 phone-number and 241 short-number regions, with declared expanded lengths of 353,206 and 156,520 bytes.
+- SQLite integrity checks passed for the carrier, timezone, `en`, and `zh` databases. Both the carrier and timezone databases record `upstream_ref` `v9.0.42`, and the timezone source digest is unchanged from `v9.0.41`.
+- `swift test --scratch-path .build/validation-2.1.3` and `LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8 swift test --scratch-path .build/validation-2.1.3` passed, each with 231 XCTest cases and 43 Swift Testing tests.
+- `swift build -c release --scratch-path .build/validation-2.1.3` passed.
+- `swift scripts/testXcodeSchemes.swift --destination 'id=80FE1FB5-892C-4402-9CA1-64A11DF26E15' --derived-data-root /tmp/libphone-2.1.3-xcode` passed on the iPhone 18 Pro / iOS 27.0 simulator: `libPhoneNumber` (150 tests), `libPhoneNumberGeocoding` (20), and `libPhoneNumberShortNumber` (31).
+- `swift scripts/checkUpstreamSourceDrift.swift --current-ref v9.0.42 --upstream-ref master --output .build/release-2.1.3/source-drift-master` found zero tracked source or resource changes at Google master `1ae0d623301b`.
+- `swift scripts/checkMetadataFreshness.swift --current-ref v9.0.42 --output .build/release-2.1.3/final-freshness --fail-on-update` passed.
+- `LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 swift scripts/publishPodspecs.swift --lint` passed for all 13 podspecs in dependency order.
+- `git diff --check` passed; the release diff contains only generated metadata, version alignment, and release documentation.
+
 ## 2026-10-08: Google libphonenumber v9.0.41
 
 ### Scope
