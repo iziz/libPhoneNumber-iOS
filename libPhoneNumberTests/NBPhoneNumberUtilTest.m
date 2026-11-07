@@ -2663,6 +2663,57 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertTrue([shortNumber isEqual:[_aUtil parse:@"12" defaultRegion:@"NZ" error:&anError]]);
 }
 
+- (void)testParseRfc3966PhoneContextDomain {
+  NSArray<NSString *> *validInputs = @[
+    @"tel:253-0000;phone-context=a-b.example.com",
+    @"tel:253-0000;phone-context=a--b.example.com",
+    @"tel:253-0000;phone-context=example.c1",
+    @"tel:253-0000;phone-context=example.b2b",
+    @"tel:253-0000;phone-context=sub.example.a1-b2",
+    @"tel:253-0000;phone-context=example.xn--p1ai",
+    @"tel:253-0000;phone-context=a.b",
+    @"tel:253-0000;phone-context=www.google.com.",
+  ];
+  for (NSString *input in validInputs) {
+    NSError *anError = nil;
+    NBPhoneNumber *parsed = [_aUtil parse:input defaultRegion:@"US" error:&anError];
+    XCTAssertNil(anError, @"Should have parsed: %@", input);
+    XCTAssertTrue([self.usLocalNumber isEqual:parsed], @"Unexpected result for: %@", input);
+  }
+
+  // Inputs that made the previous domain-name pattern backtrack catastrophically.
+  NSMutableString *repeatedLabels = [@"tel:253-0000;phone-context=" mutableCopy];
+  for (NSUInteger i = 0; i < 30; i++) {
+    [repeatedLabels appendString:@"aa."];
+  }
+  [repeatedLabels appendString:@"aa!"];
+  NSMutableString *repeatedHyphens = [@"tel:253-0000;phone-context=" mutableCopy];
+  for (NSUInteger i = 0; i < 30; i++) {
+    [repeatedHyphens appendString:@"a-"];
+  }
+  [repeatedHyphens appendString:@"a!"];
+
+  NSArray<NSString *> *invalidInputs = @[
+    @"tel:253-0000;phone-context=-example.com",
+    @"tel:253-0000;phone-context=example-.com",
+    @"tel:253-0000;phone-context=example.-com",
+    @"tel:253-0000;phone-context=example.com-",
+    @"tel:253-0000;phone-context=.example.com",
+    @"tel:253-0000;phone-context=example..com",
+    @"tel:253-0000;phone-context=example.123",
+    @"tel:253-0000;phone-context=example.1a",
+    repeatedLabels,
+    repeatedHyphens,
+  ];
+  for (NSString *input in invalidInputs) {
+    NSError *anError = nil;
+    NBPhoneNumber *parsed = [_aUtil parse:input defaultRegion:@"US" error:&anError];
+    XCTAssertNil(parsed, @"Should have failed to parse: %@", input);
+    XCTAssertEqualObjects(@"NOT_A_NUMBER", anError.domain,
+                          @"Wrong error type stored in exception for: %@", input);
+  }
+}
+
 - (void)testParseNumberWithAlphaCharacters {
   NSError *anError;
   // Test case with alpha characters.

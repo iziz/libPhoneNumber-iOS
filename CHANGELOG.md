@@ -9,6 +9,25 @@ as described in `docs/RELEASE_RUNBOOK.md`.
 
 ## Unreleased
 
+## 2.1.4
+
+Patch release. Refresh Google libphonenumber metadata from `v9.0.42` to
+`v9.0.43`, including phone-number, carrier, and geocoding data. Phone-number
+metadata changes affect nine regions: Benin, China, Germany, Ecuador,
+Ethiopia, Georgia, Laos, Romania, and Zimbabwe. Carrier metadata grows from
+32,099 to 32,255 prefix rows. Geocoding changes are limited to the English
+(Zimbabwe and one Australian prefix) and Chinese databases. Short-number,
+testing, and timezone data are unchanged. See `docs/METADATA_UPDATE_LOG.md`
+for the upstream comparison and validation.
+
+### Fixed
+
+- Parsing an RFC3966 `tel:` URI with a long, invalid `phone-context` domain
+  name no longer hangs. The domain-label patterns now follow Google's fix for
+  catastrophic regular-expression backtracking
+  ([google/libphonenumber#4070](https://github.com/google/libphonenumber/pull/4070)),
+  and `testParseRfc3966PhoneContextDomain` is ported from upstream.
+
 ## 2.1.3
 
 Patch release. Refresh Google libphonenumber metadata from `v9.0.41` to
