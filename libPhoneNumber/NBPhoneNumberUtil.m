@@ -550,10 +550,13 @@ static NSArray *GEO_MOBILE_COUNTRIES;
                                    rfc3966PhoneDigit];
 
     NSString *alphaNumeric = [NSString stringWithFormat:@"%@%@", VALID_ALPHA, NB_VALID_DIGITS_STRING];
+    // Each hyphen run must be followed by at least one alphanumeric so the
+    // repetitions cannot overlap; this avoids catastrophic backtracking on
+    // long invalid domain names (google/libphonenumber#4070).
     NSString *domainLabel =
-        [NSString stringWithFormat:@"[%@]+((\\-)*[%@])*", alphaNumeric, alphaNumeric];
+        [NSString stringWithFormat:@"[%@]+(\\-+[%@]+)*", alphaNumeric, alphaNumeric];
     NSString *topLabel =
-        [NSString stringWithFormat:@"[%@]+((\\-)*[%@])*", VALID_ALPHA, alphaNumeric];
+        [NSString stringWithFormat:@"[%@][%@]*(\\-+[%@]+)*", VALID_ALPHA, alphaNumeric, alphaNumeric];
     RFC3966_DOMAINNAME_PATTERN =
         [NSString stringWithFormat:@"^(%@\\.)*%@\\.?$", domainLabel, topLabel];
   });
