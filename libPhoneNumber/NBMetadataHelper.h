@@ -13,20 +13,28 @@
 
 @interface NBMetadataHelper : NSObject
 
+// Preserve the existing Swift parameter import and implementation-only annotations.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
 + (BOOL)hasValue:(NSString *)string;
+#pragma clang diagnostic pop
 
-- (instancetype)initWithZippedData:(NSData *)data expandedLength:(NSUInteger)expandedLength;
+- (instancetype _Null_unspecified)initWithZippedData:(NSData * _Null_unspecified)data expandedLength:(NSUInteger)expandedLength;
 
-- (instancetype)init;
+- (instancetype _Nonnull)init;
 
-- (NSArray *)regionCodeFromCountryCode:(NSNumber *)countryCodeNumber;
-- (NSString *)countryCodeFromRegionCode:(NSString *)regionCode;
+- (NSArray * _Nullable)regionCodeFromCountryCode:(NSNumber * _Null_unspecified)countryCodeNumber;
+- (NSString * _Nullable)countryCodeFromRegionCode:(NSString * _Null_unspecified)regionCode;
 
-- (NBPhoneMetaData *)getMetadataForNonGeographicalRegion:(NSNumber *)countryCallingCode;
-- (NBPhoneMetaData *)getMetadataForRegion:(NSString *)regionCode;
+// These parameter contracts remain unaudited.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
+- (NBPhoneMetaData * _Nullable)getMetadataForNonGeographicalRegion:(NSNumber *)countryCallingCode;
+- (NBPhoneMetaData * _Nullable)getMetadataForRegion:(NSString *)regionCode;
+#pragma clang diagnostic pop
 
-- (NSDictionary *)countryCodeToCountryNumberDictionary;
-- (NSDictionary *)countryCodeToRegionCodeDictionary;
-- (NSArray *)getAllMetadata;
+- (NSDictionary * _Nonnull)countryCodeToCountryNumberDictionary;
+- (NSDictionary * _Null_unspecified)countryCodeToRegionCodeDictionary;
+- (NSArray * _Nonnull)getAllMetadata;
 
 @end

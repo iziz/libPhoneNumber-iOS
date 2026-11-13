@@ -12,17 +12,17 @@
 
 @interface NBAsYouTypeFormatter : NSObject
 
-- (instancetype)initWithRegionCode:(NSString *)regionCode;
-- (instancetype)initWithRegionCode:(NSString *)regionCode metadataHelper:(NBMetadataHelper *)helper;
+- (instancetype _Nonnull)initWithRegionCode:(NSString * _Nullable)regionCode;
+- (instancetype _Nonnull)initWithRegionCode:(NSString * _Nullable)regionCode metadataHelper:(NBMetadataHelper * _Nonnull)helper;
 
-- (NSString *)inputString:(NSString *)string;
-- (NSString *)inputStringAndRememberPosition:(NSString *)string;
+- (NSString * _Nonnull)inputString:(NSString * _Nullable)string;
+- (NSString * _Nonnull)inputStringAndRememberPosition:(NSString * _Nullable)string;
 
-- (NSString *)inputDigit:(NSString *)nextChar;
-- (NSString *)inputDigitAndRememberPosition:(NSString *)nextChar;
+- (NSString * _Nonnull)inputDigit:(NSString * _Nullable)nextChar;
+- (NSString * _Nonnull)inputDigitAndRememberPosition:(NSString * _Nullable)nextChar;
 
-- (NSString *)removeLastDigit;
-- (NSString *)removeLastDigitAndRememberPosition;
+- (NSString * _Nonnull)removeLastDigit;
+- (NSString * _Nonnull)removeLastDigitAndRememberPosition;
 
 - (NSInteger)getRememberedPosition;
 
