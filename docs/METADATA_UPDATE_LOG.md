@@ -4,6 +4,34 @@ This file records upstream comparison results for metadata updates. Keep entries
 
 Metadata-only updates should ship as patch releases. Use a minor release only when the update also adds public API, new modules, or additive behavior beyond metadata freshness.
 
+## 2026-11-19: Google libphonenumber v9.0.44
+
+### Scope
+
+- Updated the metadata baseline from `v9.0.43` to `v9.0.44` (`2a2aee91ebd03897a1d3894692b3e553bff35944`).
+- Updated main phone-number data for `BF`, `CN`, `DZ`, `EE`, `GY`, `HK`, `KR`, `NO`, `NZ`, `PA`, `PK`, `RU`, `SN`, and `YE`. Short-number data changed for `CR`, `KR`, `NZ`, and `TW`.
+- Carrier data contains 32,379 prefix rows across 10 locales and 107 mobile-portable regions. The timezone bundle records the new upstream ref and retains its 3,240 prefix rows and 285 unique timezone IDs. Testing metadata is identical to the previous baseline.
+- Regenerated 34 geocoding databases. The English database changes Burkina Faso and China entries, and the Chinese database changes China entries. The other databases retain their committed bytes after schema and row comparison.
+- Aligned all four Xcode projects and 13 podspecs to patch version `2.1.5`.
+
+### Upstream Logic And Resource Comparison
+
+- Compared the two tags and found 20 tracked changes across JavaScript sources, tests, and generated metadata, XML metadata, and carrier and geocoding resources. The comparison from `v9.0.44` to Google `master` (`a82c3ec0ceaf`) found zero tracked changes.
+- Ported the 10-zero cap from [google/libphonenumber#4098](https://github.com/google/libphonenumber/pull/4098) to the Objective-C national significant number helper, which short-number validation already uses. Added the two upstream test counterparts and removed the unused duplicate short-number helper.
+- [Upstream Drift run `44445393395`](https://github.com/iziz/libPhoneNumber-iOS/actions/runs/44445393395) reported that `v9.0.44` was available and detected both missing Objective-C tests. The new core test reproduced the mismatch before the fix with 11 requested zeros.
+
+### Validation
+
+- The metadata updater completed both dry-run and checked-in generation for `v9.0.44`. The update's freshness check reported the metadata up to date.
+- `swift scripts/checkMetadataFreshness.swift --fail-on-update` also passed using the baseline from this log.
+- Test parity passed against both `v9.0.44` and `master` with 176 upstream tests and 184 local tests. API parity passed against both refs with 66 upstream methods and 93 local selectors.
+- Decoded the embedded phone-number, short-number, and testing data and verified that they match the generated JSON and declared expanded lengths.
+- SQLite integrity checks passed for the carrier, timezone, and all 34 geocoding databases. Carrier and timezone rows match the generators' review JSON, and both bundles record `upstream_ref` `v9.0.44`.
+- `swift scripts/updateProjectVersions.swift 2.1.5` passed, including its version consistency check.
+- Both leading-zero regression tests passed. `swift test` passed under the default and Korean locales, each with 234 XCTest cases and 43 Swift Testing tests. `swift build -c release` passed.
+- `swift scripts/testXcodeSchemes.swift` passed on the iPhone 18 Pro simulator with iOS 27.0. The core, geocoding, and short-number schemes passed 152, 20, and 32 tests, respectively.
+- All 13 CocoaPods specifications passed `pod lib lint --allow-warnings`. `git diff --check` passed.
+
 ## 2026-11-07: Google libphonenumber v9.0.43
 
 ### Scope

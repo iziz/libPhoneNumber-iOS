@@ -9,6 +9,20 @@ as described in `docs/RELEASE_RUNBOOK.md`.
 
 ## Unreleased
 
+## 2.1.5
+
+Patch release. Refresh Google libphonenumber metadata from `v9.0.43` to
+`v9.0.44`, including phone-number data for 14 regions, short-number data for
+Costa Rica, New Zealand, South Korea, and Taiwan, and English and Chinese
+geocoding data. Carrier metadata grows from 32,255 to 32,379 prefix rows.
+See `docs/METADATA_UPDATE_LOG.md` for the upstream comparison and validation.
+
+### Fixed
+
+- Cap leading-zero padding at 10 digits when constructing a national significant
+  number, including for short-number validation. This follows Google's
+  [leading-zero fix](https://github.com/google/libphonenumber/pull/4098).
+
 ## 2.1.4
 
 Patch release. Refresh Google libphonenumber metadata from `v9.0.42` to
