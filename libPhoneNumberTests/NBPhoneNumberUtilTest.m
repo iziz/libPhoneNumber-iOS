@@ -626,6 +626,25 @@ static NSArray *PhoneNumberDescEntryForNationalNumberPattern(NSString *numberPat
   XCTAssertEqualObjects(@"650", [_aUtil getNationalSignificantNumber:number]);
 }
 
+- (void)testGetNationalSignificantNumber_CapsLeadingZeros {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @1;
+  number.nationalNumber = @650;
+  number.italianLeadingZero = YES;
+
+  number.numberOfLeadingZeros = @10;
+  XCTAssertEqualObjects(@"0000000000650", [_aUtil getNationalSignificantNumber:number]);
+
+  number.numberOfLeadingZeros = @11;
+  XCTAssertEqualObjects(@"0000000000650", [_aUtil getNationalSignificantNumber:number]);
+
+  number.numberOfLeadingZeros = @(NSUIntegerMax);
+  XCTAssertEqualObjects(@"0000000000650", [_aUtil getNationalSignificantNumber:number]);
+
+  number.italianLeadingZero = NO;
+  XCTAssertEqualObjects(@"650", [_aUtil getNationalSignificantNumber:number]);
+}
+
 - (void)testGetExampleNumber {
   XCTAssertTrue([self.deNumber isEqual:[_aUtil getExampleNumber:@"DE" error:nil]]);
 

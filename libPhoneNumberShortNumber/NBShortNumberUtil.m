@@ -285,28 +285,6 @@ static NSString *const PLUS_CHARS_PATTERN = @"[+\uFF0B]+";
   return [regionCodes containsObject:regionCode];
 }
 
-/**
- * Gets the national significant number of the a phone number. Note a national significant number
- * doesn't contain a national prefix or any formatting.
- * <p>
- * This is a temporary duplicate of the {@code getNationalSignificantNumber} method from
- * {@code PhoneNumberUtil}. Ultimately a canonical static version should exist in a separate
- * utility class (to prevent {@code ShortNumberInfo} needing to depend on PhoneNumberUtil).
- *
- * @param number  the phone number for which the national significant number is needed
- * @return  the national significant number of the PhoneNumber object passed in
- */
-+ (NSString * _Nonnull)nationalSignificantNumberFromPhoneNumber:(NBPhoneNumber * _Nonnull)phoneNumber {
-  // If leading zero(s) have been set, we prefix this now. Note this is not a national prefix.
-  NSMutableString *nationalNumber = [[NSMutableString alloc] init];
-  if (phoneNumber.italianLeadingZero) {
-    [nationalNumber appendFormat:@"%*d", [phoneNumber.numberOfLeadingZeros intValue], 0];
-  }
-  [nationalNumber appendString:[phoneNumber.nationalNumber stringValue]];
-
-  return [nationalNumber copy];
-}
-
 - (BOOL)matchesPossibleNumber:(NSString *)number andNationalNumber:(NBPhoneNumberDesc *)numberDesc {
   if (numberDesc.possibleLength.count > 0 &&
       ![numberDesc.possibleLength containsObject:@(number.length)]) {

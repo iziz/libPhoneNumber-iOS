@@ -61,6 +61,7 @@ const static NSUInteger MIN_LENGTH_FOR_NSN_ = 2;
 const static NSUInteger MAX_LENGTH_FOR_NSN_ = 16;
 const static NSUInteger MAX_LENGTH_COUNTRY_CODE_ = 3;
 const static NSUInteger MAX_INPUT_STRING_LENGTH_ = 250;
+const static NSUInteger MAX_NUMBER_OF_LEADING_ZEROS_ = 10;
 
 #pragma mark - Static String variables -
 static NSString *VALID_PUNCTUATION =
@@ -391,22 +392,25 @@ static NSArray *GEO_MOBILE_COUNTRIES;
  *     passed in.
  */
 - (NSString * _Nonnull)getNationalSignificantNumber:(NBPhoneNumber * _Nonnull)phoneNumber {
-  // If leading zero(s) have been set, we prefix this now. Note this is not a
-  // national prefix.
   NSString *nationalNumber = [phoneNumber.nationalNumber stringValue];
-  if (phoneNumber.italianLeadingZero) {
-    NSInteger numberOfLeadingZeros = phoneNumber.numberOfLeadingZeros.integerValue;
-    if (numberOfLeadingZeros <= 0) {
-      return nationalNumber;
-    }
-    NSString *zeroNumbers =
-        [@"" stringByPaddingToLength:(NSUInteger)numberOfLeadingZeros
-                          withString:@"0"
-                     startingAtIndex:0];
-    return [NSString stringWithFormat:@"%@%@", zeroNumbers, nationalNumber];
+  if (!phoneNumber.italianLeadingZero) {
+    return nationalNumber;
   }
 
-  return [phoneNumber.nationalNumber stringValue];
+  NSNumber *requestedZeros = phoneNumber.numberOfLeadingZeros;
+  if (requestedZeros == nil || [requestedZeros compare:@1] == NSOrderedAscending) {
+    return nationalNumber;
+  }
+
+  // Match upstream's cap before converting the NSNumber to a padding length.
+  NSUInteger leadingZeroCount =
+      [requestedZeros compare:@(MAX_NUMBER_OF_LEADING_ZEROS_)] == NSOrderedDescending
+          ? MAX_NUMBER_OF_LEADING_ZEROS_
+          : requestedZeros.unsignedIntegerValue;
+  NSString *leadingZeros = [@"" stringByPaddingToLength:leadingZeroCount
+                                             withString:@"0"
+                                        startingAtIndex:0];
+  return [NSString stringWithFormat:@"%@%@", leadingZeros, nationalNumber];
 }
 
 - (NBPhoneMetaData * _Nullable)getMetadataForRegion:(NSString * _Nullable)regionCode {

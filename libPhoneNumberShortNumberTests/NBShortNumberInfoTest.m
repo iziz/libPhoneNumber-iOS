@@ -75,6 +75,19 @@
   XCTAssertTrue([_shortNumberUtil isPossibleShortNumber:possibleButInvalid]);
 }
 
+- (void)testOutOfRangeNumberOfLeadingZeros {
+  NBPhoneNumber *number = [[NBPhoneNumber alloc] init];
+  number.countryCode = @33;
+  number.nationalNumber = @1010;
+  XCTAssertTrue([_shortNumberUtil isPossibleShortNumber:number]);
+  XCTAssertTrue([_shortNumberUtil isValidShortNumber:number]);
+
+  number.italianLeadingZero = YES;
+  number.numberOfLeadingZeros = @(NSUIntegerMax);
+  XCTAssertFalse([_shortNumberUtil isPossibleShortNumber:number]);
+  XCTAssertFalse([_shortNumberUtil isValidShortNumber:number]);
+}
+
 - (void)testIsValidShortNumber {
   NBPhoneNumber *valid = [[NBPhoneNumber alloc] init];
   valid.countryCode = @33;
